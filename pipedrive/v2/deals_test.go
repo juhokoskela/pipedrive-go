@@ -106,3 +106,57 @@ func TestDealsService_ListPager(t *testing.T) {
 		t.Fatalf("unexpected ids: %v", ids)
 	}
 }
+
+func TestDealsService_ForEach(t *testing.T) {
+	t.Parallel()
+
+	var listCalls int
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/deals" {
+			http.NotFound(w, r)
+			return
+		}
+		listCalls++
+		cursor := r.URL.Query().Get("cursor")
+		w.Header().Set("Content-Type", "application/json")
+		if listCalls == 1 {
+			if cursor != "" {
+				t.Fatalf("expected no cursor on first page, got %q", cursor)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":1},{"id":2}],"additional_data":{"next_cursor":"c2"}}`))
+			return
+		}
+		if listCalls == 2 {
+			if cursor != "c2" {
+				t.Fatalf("expected cursor c2 on second page, got %q", cursor)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":3}],"additional_data":{"next_cursor":null}}`))
+			return
+		}
+		t.Fatalf("unexpected listCalls=%d", listCalls)
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{
+		BaseURL:    srv.URL,
+		HTTPClient: srv.Client(),
+	})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	var ids []DealID
+	err = client.Deals.ForEach(context.Background(), ListDealsRequest{Limit: 2}, func(d Deal) error {
+		ids = append(ids, d.ID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEach error: %v", err)
+	}
+	if want := []DealID{1, 2, 3}; len(ids) != len(want) || ids[0] != want[0] || ids[1] != want[1] || ids[2] != want[2] {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}

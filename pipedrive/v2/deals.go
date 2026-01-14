@@ -107,6 +107,10 @@ func (s *DealsService) ListPager(req ListDealsRequest, opts ...pipedrive.Request
 	})
 }
 
+func (s *DealsService) ForEach(ctx context.Context, req ListDealsRequest, fn func(Deal) error, opts ...pipedrive.RequestOption) error {
+	return s.ListPager(req, opts...).ForEach(ctx, fn)
+}
+
 func errorFromResponse(httpResp *http.Response, body []byte) error {
 	if httpResp.StatusCode == http.StatusTooManyRequests {
 		return pipedrive.RateLimitErrorFromResponse(httpResp, body, time.Now())
