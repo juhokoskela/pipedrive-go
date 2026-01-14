@@ -38,3 +38,18 @@ func (p *CursorPager[T]) Items() []T { return p.items }
 
 func (p *CursorPager[T]) Err() error { return p.err }
 
+func (p *CursorPager[T]) ForEach(ctx context.Context, fn func(T) error) error {
+	if fn == nil {
+		return nil
+	}
+
+	for p.Next(ctx) {
+		for _, item := range p.Items() {
+			if err := fn(item); err != nil {
+				p.err = err
+				return err
+			}
+		}
+	}
+	return p.Err()
+}

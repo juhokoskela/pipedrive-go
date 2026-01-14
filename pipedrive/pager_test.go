@@ -2,6 +2,7 @@ package pipedrive
 
 import (
 	"context"
+	"errors"
 	"testing"
 )
 
@@ -46,3 +47,24 @@ func TestCursorPager_IteratesPages(t *testing.T) {
 	}
 }
 
+func TestCursorPager_ForEachStopsOnError(t *testing.T) {
+	t.Parallel()
+
+	type item struct{ ID int }
+
+	pager := NewCursorPager(func(_ context.Context, _ *string) ([]item, *string, error) {
+		return []item{{ID: 1}, {ID: 2}}, nil, nil
+	})
+
+	wantErr := errors.New("stop")
+	err := pager.ForEach(context.Background(), func(it item) error {
+		if it.ID == 2 {
+			return wantErr
+		}
+		return nil
+	})
+
+	if !errors.Is(err, wantErr) {
+		t.Fatalf("expected stop error, got %v", err)
+	}
+}
