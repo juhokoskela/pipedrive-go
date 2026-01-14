@@ -182,3 +182,46 @@ func TestRetryTransport_DoesNotRetryWhenBodyNotReplayable(t *testing.T) {
 		t.Fatalf("expected 1 call, got %d", calls)
 	}
 }
+
+func TestRetryTransport_UsesPerRequestRetryPolicyOverride(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	next := roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		calls++
+		status := 502
+		if calls == 3 {
+			status = 200
+		}
+		return &http.Response{
+			StatusCode: status,
+			Header:     make(http.Header),
+			Body:       io.NopCloser(strings.NewReader("")),
+			Request:    req,
+		}, nil
+	})
+
+	sleep := func(_ context.Context, _ time.Duration) error { return nil }
+	policy := RetryPolicy{MaxAttempts: 2, BaseDelay: 0, Jitter: func(d time.Duration) time.Duration { return d }}
+	rt := newRetryTransport(next, policy, retryTransportOptions{
+		sleep: sleep,
+		now:   time.Now,
+	})
+
+	override := RetryPolicy{MaxAttempts: 3, BaseDelay: 0, Jitter: func(d time.Duration) time.Duration { return d }}
+	ctx := withRetryPolicy(context.Background(), override)
+	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "https://example.test", nil)
+
+	resp, err := rt.RoundTrip(req)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	if calls != 3 {
+		t.Fatalf("expected 3 calls, got %d", calls)
+	}
+	if resp.StatusCode != 200 {
+		t.Fatalf("expected status 200, got %d", resp.StatusCode)
+	}
+}

@@ -44,18 +44,7 @@ func newRetryTransport(next http.RoundTripper, policy RetryPolicy, opts retryTra
 	if next == nil {
 		next = http.DefaultTransport
 	}
-	if policy.MaxAttempts <= 0 {
-		policy.MaxAttempts = 1
-	}
-	if policy.BaseDelay < 0 {
-		policy.BaseDelay = 0
-	}
-	if policy.MaxDelay <= 0 {
-		policy.MaxDelay = policy.BaseDelay
-	}
-	if policy.Jitter == nil {
-		policy.Jitter = func(d time.Duration) time.Duration { return d }
-	}
+	policy = sanitizeRetryPolicy(policy)
 	if opts.sleep == nil {
 		opts.sleep = sleepWithContext
 	}
@@ -73,7 +62,13 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if req == nil {
 		return nil, nil
 	}
-	if isNoRetry(req.Context()) || t.policy.MaxAttempts <= 1 {
+
+	policy := t.policy
+	if override, ok := retryPolicyFromContext(req.Context()); ok {
+		policy = sanitizeRetryPolicy(override)
+	}
+
+	if isNoRetry(req.Context()) || policy.MaxAttempts <= 1 {
 		return t.next.RoundTrip(req)
 	}
 
@@ -94,11 +89,11 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 		}
 
 		resp, err := t.next.RoundTrip(attemptReq)
-		if !t.shouldRetry(attempt, attemptReq, canReplayBody, resp, err) {
+		if !t.shouldRetry(attempt, attemptReq, canReplayBody, resp, err, policy) {
 			return resp, err
 		}
 
-		delay := t.nextDelay(attempt, resp)
+		delay := t.nextDelay(attempt, resp, policy)
 		if resp != nil && resp.Body != nil {
 			_, _ = io.Copy(io.Discard, io.LimitReader(resp.Body, 1<<20))
 			_ = resp.Body.Close()
@@ -114,11 +109,11 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return t.next.RoundTrip(req)
 }
 
-func (t *retryTransport) shouldRetry(attempt int, req *http.Request, canReplayBody bool, resp *http.Response, err error) bool {
+func (t *retryTransport) shouldRetry(attempt int, req *http.Request, canReplayBody bool, resp *http.Response, err error, policy RetryPolicy) bool {
 	if err != nil || resp == nil {
 		return false
 	}
-	if attempt >= t.policy.MaxAttempts {
+	if attempt >= policy.MaxAttempts {
 		return false
 	}
 
@@ -129,29 +124,29 @@ func (t *retryTransport) shouldRetry(attempt int, req *http.Request, canReplayBo
 		if !canReplayBody {
 			return false
 		}
-		return t.policy.RetryAllMethods || isIdempotentMethod(req.Method)
+		return policy.RetryAllMethods || isIdempotentMethod(req.Method)
 	default:
 		return false
 	}
 }
 
-func (t *retryTransport) nextDelay(attempt int, resp *http.Response) time.Duration {
+func (t *retryTransport) nextDelay(attempt int, resp *http.Response, policy RetryPolicy) time.Duration {
 	if resp != nil && resp.StatusCode == 429 {
 		if ra := parseRetryAfter(resp.Header.Get("Retry-After"), t.opts.now()); ra > 0 {
 			return ra
 		}
 	}
 
-	if t.policy.BaseDelay <= 0 {
+	if policy.BaseDelay <= 0 {
 		return 0
 	}
 
-	exp := float64(t.policy.BaseDelay) * math.Pow(2, float64(attempt-1))
+	exp := float64(policy.BaseDelay) * math.Pow(2, float64(attempt-1))
 	delay := time.Duration(exp)
-	if delay > t.policy.MaxDelay {
-		delay = t.policy.MaxDelay
+	if delay > policy.MaxDelay {
+		delay = policy.MaxDelay
 	}
-	return t.policy.Jitter(delay)
+	return policy.Jitter(delay)
 }
 
 func isIdempotentMethod(method string) bool {
@@ -193,4 +188,31 @@ func withNoRetry(ctx context.Context) context.Context {
 func isNoRetry(ctx context.Context) bool {
 	disabled, _ := ctx.Value(noRetryKey{}).(bool)
 	return disabled
+}
+
+type retryPolicyKey struct{}
+
+func withRetryPolicy(ctx context.Context, policy RetryPolicy) context.Context {
+	return context.WithValue(ctx, retryPolicyKey{}, policy)
+}
+
+func retryPolicyFromContext(ctx context.Context) (RetryPolicy, bool) {
+	policy, ok := ctx.Value(retryPolicyKey{}).(RetryPolicy)
+	return policy, ok
+}
+
+func sanitizeRetryPolicy(policy RetryPolicy) RetryPolicy {
+	if policy.MaxAttempts <= 0 {
+		policy.MaxAttempts = 1
+	}
+	if policy.BaseDelay < 0 {
+		policy.BaseDelay = 0
+	}
+	if policy.MaxDelay <= 0 {
+		policy.MaxDelay = policy.BaseDelay
+	}
+	if policy.Jitter == nil {
+		policy.Jitter = func(d time.Duration) time.Duration { return d }
+	}
+	return policy
 }

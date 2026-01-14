@@ -62,3 +62,17 @@ func TestApplyRequestOptions_WithRequestEditor(t *testing.T) {
 	}
 }
 
+func TestApplyRequestOptions_WithRetryPolicy(t *testing.T) {
+	t.Parallel()
+
+	p := RetryPolicy{MaxAttempts: 2}
+	ctx, _ := ApplyRequestOptions(context.Background(), WithRetryPolicy(p))
+
+	got, ok := retryPolicyFromContext(ctx)
+	if !ok {
+		t.Fatalf("expected policy override to be set in returned context")
+	}
+	if got.MaxAttempts != 2 {
+		t.Fatalf("expected MaxAttempts=2, got %d", got.MaxAttempts)
+	}
+}

@@ -14,6 +14,8 @@ type requestOptions struct {
 	editors []RequestEditorFunc
 
 	noRetry bool
+
+	retryPolicy *RetryPolicy
 }
 
 func WithHeader(key, value string) RequestOption {
@@ -40,6 +42,12 @@ func WithNoRetry() RequestOption {
 	}
 }
 
+func WithRetryPolicy(policy RetryPolicy) RequestOption {
+	return func(o *requestOptions) {
+		o.retryPolicy = &policy
+	}
+}
+
 func ApplyRequestOptions(ctx context.Context, opts ...RequestOption) (context.Context, []RequestEditorFunc) {
 	if ctx == nil {
 		ctx = context.Background()
@@ -55,6 +63,9 @@ func ApplyRequestOptions(ctx context.Context, opts ...RequestOption) (context.Co
 
 	if o.noRetry {
 		ctx = withNoRetry(ctx)
+	}
+	if o.retryPolicy != nil {
+		ctx = withRetryPolicy(ctx, *o.retryPolicy)
 	}
 
 	editors := make([]RequestEditorFunc, 0, len(o.editors)+1)
@@ -74,4 +85,3 @@ func ApplyRequestOptions(ctx context.Context, opts ...RequestOption) (context.Co
 
 	return ctx, editors
 }
-
