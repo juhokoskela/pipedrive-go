@@ -1,0 +1,39 @@
+package v2
+
+import (
+	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
+	"github.com/juhokoskela/pipedrive-go/pipedrive"
+)
+
+const DefaultBaseURL = "https://api.pipedrive.com/api/v2"
+
+type Client struct {
+	Raw *pipedrive.RawClient
+
+	gen *genv2.ClientWithResponses
+}
+
+func NewClient(cfg pipedrive.Config) (*Client, error) {
+	baseURL := cfg.BaseURL
+	if baseURL == "" {
+		baseURL = DefaultBaseURL
+	}
+
+	httpClient := pipedrive.NewHTTPClient(cfg)
+
+	raw, err := pipedrive.NewRawClient(baseURL, httpClient)
+	if err != nil {
+		return nil, err
+	}
+
+	gen, err := genv2.NewClientWithResponses(baseURL, genv2.WithHTTPClient(httpClient))
+	if err != nil {
+		return nil, err
+	}
+
+	return &Client{
+		Raw: raw,
+		gen: gen,
+	}, nil
+}
+

@@ -3,6 +3,8 @@ package pipedrive
 import "net/http"
 
 type Config struct {
+	BaseURL string
+
 	HTTPClient *http.Client
 
 	Middleware []Middleware
