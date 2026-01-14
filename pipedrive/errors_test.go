@@ -17,7 +17,7 @@ func TestAPIErrorFromResponse_ExtractsRequestIDAndMessage(t *testing.T) {
 	}
 	body := []byte(`{"success":false,"error":"bad request","error_info":"details"}`)
 
-	err := apiErrorFromResponse(resp, body)
+	err := APIErrorFromResponse(resp, body)
 	if err.Status != 400 {
 		t.Fatalf("expected status=400, got %d", err.Status)
 	}
@@ -44,7 +44,7 @@ func TestRateLimitErrorFromResponse_ParsesHeaders(t *testing.T) {
 	}
 
 	body := []byte(`{"code":"rate_limit","message":"Too many requests"}`)
-	err := rateLimitErrorFromResponse(resp, body, now)
+	err := RateLimitErrorFromResponse(resp, body, now)
 
 	if err.Status != 429 {
 		t.Fatalf("expected status=429, got %d", err.Status)

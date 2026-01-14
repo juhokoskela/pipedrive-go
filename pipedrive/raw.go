@@ -93,9 +93,9 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		if resp.StatusCode == http.StatusTooManyRequests {
-			return rateLimitErrorFromResponse(resp, respBody, time.Now())
+			return RateLimitErrorFromResponse(resp, respBody, time.Now())
 		}
-		return apiErrorFromResponse(resp, respBody)
+		return APIErrorFromResponse(resp, respBody)
 	}
 
 	if out == nil || len(respBody) == 0 {
@@ -106,4 +106,3 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
 	}
 	return nil
 }
-

@@ -60,7 +60,7 @@ type pipedriveErrorPayload struct {
 	ErrorInfo string `json:"error_info"`
 }
 
-func apiErrorFromResponse(resp *http.Response, body []byte) *APIError {
+func APIErrorFromResponse(resp *http.Response, body []byte) *APIError {
 	err := &APIError{
 		Status:    resp.StatusCode,
 		Body:      body,
@@ -83,8 +83,8 @@ func apiErrorFromResponse(resp *http.Response, body []byte) *APIError {
 	return err
 }
 
-func rateLimitErrorFromResponse(resp *http.Response, body []byte, now time.Time) *RateLimitError {
-	apiErr := apiErrorFromResponse(resp, body)
+func RateLimitErrorFromResponse(resp *http.Response, body []byte, now time.Time) *RateLimitError {
+	apiErr := APIErrorFromResponse(resp, body)
 	rl := &RateLimitError{
 		APIError: apiErr,
 	}
@@ -142,4 +142,3 @@ func parseResetHeader(value string) time.Time {
 
 	return time.Time{}
 }
-
