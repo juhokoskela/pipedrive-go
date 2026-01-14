@@ -29,8 +29,9 @@ type DealsService struct {
 	client *Client
 }
 
-func (s *DealsService) Get(ctx context.Context, id DealID) (*Deal, error) {
-	resp, err := s.client.gen.GetDealWithResponse(ctx, int(id), nil)
+func (s *DealsService) Get(ctx context.Context, id DealID, opts ...pipedrive.RequestOption) (*Deal, error) {
+	ctx, editors := pipedrive.ApplyRequestOptions(ctx, opts...)
+	resp, err := s.client.gen.GetDealWithResponse(ctx, int(id), nil, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +51,9 @@ func (s *DealsService) Get(ctx context.Context, id DealID) (*Deal, error) {
 	return payload.Data, nil
 }
 
-func (s *DealsService) List(ctx context.Context, req ListDealsRequest) ([]Deal, *string, error) {
+func (s *DealsService) List(ctx context.Context, req ListDealsRequest, opts ...pipedrive.RequestOption) ([]Deal, *string, error) {
+	ctx, editors := pipedrive.ApplyRequestOptions(ctx, opts...)
+
 	params := &genv2.GetDealsParams{}
 	if req.Limit > 0 {
 		limit := req.Limit
@@ -61,7 +64,7 @@ func (s *DealsService) List(ctx context.Context, req ListDealsRequest) ([]Deal, 
 		params.Cursor = &cursor
 	}
 
-	resp, err := s.client.gen.GetDealsWithResponse(ctx, params)
+	resp, err := s.client.gen.GetDealsWithResponse(ctx, params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -86,7 +89,7 @@ func (s *DealsService) List(ctx context.Context, req ListDealsRequest) ([]Deal, 
 	return payload.Data, next, nil
 }
 
-func (s *DealsService) ListPager(req ListDealsRequest) *pipedrive.CursorPager[Deal] {
+func (s *DealsService) ListPager(req ListDealsRequest, opts ...pipedrive.RequestOption) *pipedrive.CursorPager[Deal] {
 	startCursor := req.Cursor
 	req.Cursor = ""
 
@@ -100,7 +103,7 @@ func (s *DealsService) ListPager(req ListDealsRequest) *pipedrive.CursorPager[De
 		if effective != nil {
 			pageReq.Cursor = *effective
 		}
-		return s.List(ctx, pageReq)
+		return s.List(ctx, pageReq, opts...)
 	})
 }
 
@@ -111,3 +114,13 @@ func errorFromResponse(httpResp *http.Response, body []byte) error {
 	return pipedrive.APIErrorFromResponse(httpResp, body)
 }
 
+func toRequestEditors(editors []pipedrive.RequestEditorFunc) []genv2.RequestEditorFn {
+	out := make([]genv2.RequestEditorFn, 0, len(editors))
+	for _, editor := range editors {
+		if editor == nil {
+			continue
+		}
+		out = append(out, genv2.RequestEditorFn(editor))
+	}
+	return out
+}

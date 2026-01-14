@@ -20,6 +20,9 @@ func TestDealsService_Get(t *testing.T) {
 		if r.URL.Path != "/deals/1" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "1" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":1,"title":"Test deal"}}`))
 	}))
@@ -33,7 +36,7 @@ func TestDealsService_Get(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	deal, err := client.Deals.Get(context.Background(), 1)
+	deal, err := client.Deals.Get(context.Background(), 1, pipedrive.WithHeader("X-Test", "1"))
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
 	}
@@ -103,4 +106,3 @@ func TestDealsService_ListPager(t *testing.T) {
 		t.Fatalf("unexpected ids: %v", ids)
 	}
 }
-
