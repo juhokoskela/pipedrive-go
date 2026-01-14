@@ -1,0 +1,11 @@
+# Go build/test artifacts
+*.test
+*.out
+/bin/
+
+# Editor/OS
+.DS_Store
+
+# Local env/secrets
+.env
+.env.*
