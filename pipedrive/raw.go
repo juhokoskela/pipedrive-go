@@ -37,10 +37,12 @@ func NewRawClient(baseURL string, httpClient *http.Client) (*RawClient, error) {
 	}, nil
 }
 
-func (c *RawClient) Do(ctx context.Context, method, path string, query url.Values, body any, out any) error {
+func (c *RawClient) Do(ctx context.Context, method, path string, query url.Values, body any, out any, opts ...RequestOption) error {
 	if c == nil {
 		return errors.New("nil RawClient")
 	}
+
+	ctx, editors := ApplyRequestOptions(ctx, opts...)
 
 	u := *c.baseURL
 	u.Path = strings.TrimSuffix(u.Path, "/") + "/" + strings.TrimPrefix(path, "/")
@@ -77,6 +79,15 @@ func (c *RawClient) Do(ctx context.Context, method, path string, query url.Value
 	if body != nil {
 		if _, ok := body.(io.Reader); !ok {
 			req.Header.Set("Content-Type", "application/json")
+		}
+	}
+
+	for _, editor := range editors {
+		if editor == nil {
+			continue
+		}
+		if err := editor(ctx, req); err != nil {
+			return err
 		}
 	}
 

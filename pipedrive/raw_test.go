@@ -37,6 +37,34 @@ func TestRawClient_Do_DecodesJSONResponse(t *testing.T) {
 	}
 }
 
+func TestRawClient_Do_AppliesRequestOptions(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if got := r.Header.Get("X-Test"); got != "1" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"ok":true}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	raw, err := NewRawClient(srv.URL, srv.Client())
+	if err != nil {
+		t.Fatalf("NewRawClient error: %v", err)
+	}
+
+	var out struct {
+		Ok bool `json:"ok"`
+	}
+	if err := raw.Do(context.Background(), http.MethodGet, "/", nil, nil, &out, WithHeader("X-Test", "1")); err != nil {
+		t.Fatalf("Do error: %v", err)
+	}
+	if !out.Ok {
+		t.Fatalf("expected ok=true")
+	}
+}
+
 func TestRawClient_Do_ReturnsAPIErrorOnNon2xx(t *testing.T) {
 	t.Parallel()
 
@@ -95,4 +123,3 @@ func TestRawClient_Do_ReturnsRateLimitErrorOn429(t *testing.T) {
 		t.Fatalf("unexpected limit headers: limit=%d remaining=%d", rlErr.Limit, rlErr.Remaining)
 	}
 }
-
