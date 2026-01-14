@@ -60,3 +60,21 @@ func TestNewHTTPClient_MiddlewareOrder(t *testing.T) {
 	}
 }
 
+func TestNewHTTPClient_DefaultRetryEnabled(t *testing.T) {
+	t.Parallel()
+
+	httpClient := NewHTTPClient(Config{
+		HTTPClient: &http.Client{Transport: roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: 200,
+				Header:     make(http.Header),
+				Body:       io.NopCloser(strings.NewReader("")),
+				Request:    req,
+			}, nil
+		})},
+	})
+
+	if _, ok := httpClient.Transport.(*retryTransport); !ok {
+		t.Fatalf("expected default transport to include retry transport, got %T", httpClient.Transport)
+	}
+}

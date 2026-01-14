@@ -40,9 +40,12 @@ func NewHTTPClient(cfg Config) *http.Client {
 
 	transport = chainMiddleware(transport, middleware)
 
-	if cfg.RetryPolicy != nil {
-		transport = newRetryTransport(transport, *cfg.RetryPolicy, retryTransportOptions{})
+	policy := cfg.RetryPolicy
+	if policy == nil {
+		p := DefaultRetryPolicy()
+		policy = &p
 	}
+	transport = newRetryTransport(transport, *policy, retryTransportOptions{})
 
 	clone.Transport = transport
 	return clone
