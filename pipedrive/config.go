@@ -8,6 +8,9 @@ type Config struct {
 	Middleware []Middleware
 
 	RetryPolicy *RetryPolicy
+
+	UserAgent string
+	Auth      AuthProvider
 }
 
 func NewHTTPClient(cfg Config) *http.Client {
@@ -24,7 +27,16 @@ func NewHTTPClient(cfg Config) *http.Client {
 		transport = http.DefaultTransport
 	}
 
-	transport = chainMiddleware(transport, cfg.Middleware)
+	middleware := make([]Middleware, 0, len(cfg.Middleware)+2)
+	middleware = append(middleware, cfg.Middleware...)
+	if cfg.UserAgent != "" {
+		middleware = append(middleware, userAgentMiddleware(cfg.UserAgent))
+	}
+	if cfg.Auth != nil {
+		middleware = append(middleware, authMiddleware(cfg.Auth))
+	}
+
+	transport = chainMiddleware(transport, middleware)
 
 	if cfg.RetryPolicy != nil {
 		transport = newRetryTransport(transport, *cfg.RetryPolicy, retryTransportOptions{})
@@ -33,4 +45,3 @@ func NewHTTPClient(cfg Config) *http.Client {
 	clone.Transport = transport
 	return clone
 }
-
