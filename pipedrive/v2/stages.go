@@ -323,7 +323,7 @@ func (s *StagesService) Create(ctx context.Context, opts ...CreateStageOption) (
 	cfg := newCreateStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	body := genv2.AddStageJSONBody{}
+	body := genv2.AddStageJSONRequestBody{}
 	if cfg.payload.name != nil {
 		body.Name = *cfg.payload.name
 	}
@@ -364,7 +364,7 @@ func (s *StagesService) Update(ctx context.Context, id StageID, opts ...UpdateSt
 	cfg := newUpdateStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	body := genv2.UpdateStageJSONBody{}
+	body := genv2.UpdateStageJSONRequestBody{}
 	if cfg.payload.name != nil {
 		body.Name = cfg.payload.name
 	}
