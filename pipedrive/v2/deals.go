@@ -4,14 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"time"
 
 	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
-
-type DealID int64
 
 type Deal struct {
 	ID           DealID                 `json:"id"`
@@ -20,17 +16,98 @@ type Deal struct {
 	CustomFields map[string]interface{} `json:"custom_fields,omitempty"`
 }
 
-type ListDealsRequest struct {
-	Limit  int
-	Cursor string
-}
-
 type DealsService struct {
 	client *Client
 }
 
-func (s *DealsService) Get(ctx context.Context, id DealID, opts ...pipedrive.RequestOption) (*Deal, error) {
-	ctx, editors := pipedrive.ApplyRequestOptions(ctx, opts...)
+type GetDealOption interface {
+	applyGetDeal(*getDealOptions)
+}
+
+type ListDealsOption interface {
+	applyListDeals(*listDealsOptions)
+}
+
+type DealRequestOption interface {
+	GetDealOption
+	ListDealsOption
+}
+
+type getDealOptions struct {
+	requestOptions []pipedrive.RequestOption
+}
+
+type listDealsOptions struct {
+	params         genv2.GetDealsParams
+	requestOptions []pipedrive.RequestOption
+}
+
+type dealRequestOptions struct {
+	requestOptions []pipedrive.RequestOption
+}
+
+func (o dealRequestOptions) applyGetDeal(cfg *getDealOptions) {
+	cfg.requestOptions = append(cfg.requestOptions, o.requestOptions...)
+}
+
+func (o dealRequestOptions) applyListDeals(cfg *listDealsOptions) {
+	cfg.requestOptions = append(cfg.requestOptions, o.requestOptions...)
+}
+
+type listDealsOptionFunc func(*listDealsOptions)
+
+func (f listDealsOptionFunc) applyListDeals(cfg *listDealsOptions) {
+	f(cfg)
+}
+
+func WithDealRequestOptions(opts ...pipedrive.RequestOption) DealRequestOption {
+	return dealRequestOptions{requestOptions: opts}
+}
+
+func WithDealsPageSize(limit int) ListDealsOption {
+	return listDealsOptionFunc(func(cfg *listDealsOptions) {
+		if limit <= 0 {
+			return
+		}
+		cfg.params.Limit = &limit
+	})
+}
+
+func WithDealsCursor(cursor string) ListDealsOption {
+	return listDealsOptionFunc(func(cfg *listDealsOptions) {
+		if cursor == "" {
+			return
+		}
+		cfg.params.Cursor = &cursor
+	})
+}
+
+func newGetDealOptions(opts []GetDealOption) getDealOptions {
+	var cfg getDealOptions
+	for _, opt := range opts {
+		if opt == nil {
+			continue
+		}
+		opt.applyGetDeal(&cfg)
+	}
+	return cfg
+}
+
+func newListDealsOptions(opts []ListDealsOption) listDealsOptions {
+	var cfg listDealsOptions
+	for _, opt := range opts {
+		if opt == nil {
+			continue
+		}
+		opt.applyListDeals(&cfg)
+	}
+	return cfg
+}
+
+func (s *DealsService) Get(ctx context.Context, id DealID, opts ...GetDealOption) (*Deal, error) {
+	cfg := newGetDealOptions(opts)
+	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
+
 	resp, err := s.client.gen.GetDealWithResponse(ctx, int(id), nil, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
@@ -51,20 +128,35 @@ func (s *DealsService) Get(ctx context.Context, id DealID, opts ...pipedrive.Req
 	return payload.Data, nil
 }
 
-func (s *DealsService) List(ctx context.Context, req ListDealsRequest, opts ...pipedrive.RequestOption) ([]Deal, *string, error) {
-	ctx, editors := pipedrive.ApplyRequestOptions(ctx, opts...)
+func (s *DealsService) List(ctx context.Context, opts ...ListDealsOption) ([]Deal, *string, error) {
+	cfg := newListDealsOptions(opts)
+	return s.list(ctx, cfg.params, cfg.requestOptions)
+}
 
-	params := &genv2.GetDealsParams{}
-	if req.Limit > 0 {
-		limit := req.Limit
-		params.Limit = &limit
-	}
-	if req.Cursor != "" {
-		cursor := req.Cursor
-		params.Cursor = &cursor
-	}
+func (s *DealsService) ListPager(opts ...ListDealsOption) *pipedrive.CursorPager[Deal] {
+	cfg := newListDealsOptions(opts)
+	startCursor := cfg.params.Cursor
+	cfg.params.Cursor = nil
 
-	resp, err := s.client.gen.GetDealsWithResponse(ctx, params, toRequestEditors(editors)...)
+	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Deal, *string, error) {
+		params := cfg.params
+		if cursor != nil {
+			params.Cursor = cursor
+		} else if startCursor != nil {
+			params.Cursor = startCursor
+		}
+		return s.list(ctx, params, cfg.requestOptions)
+	})
+}
+
+func (s *DealsService) ForEach(ctx context.Context, fn func(Deal) error, opts ...ListDealsOption) error {
+	return s.ListPager(opts...).ForEach(ctx, fn)
+}
+
+func (s *DealsService) list(ctx context.Context, params genv2.GetDealsParams, requestOptions []pipedrive.RequestOption) ([]Deal, *string, error) {
+	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
+
+	resp, err := s.client.gen.GetDealsWithResponse(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -87,44 +179,4 @@ func (s *DealsService) List(ctx context.Context, req ListDealsRequest, opts ...p
 		next = payload.AdditionalData.NextCursor
 	}
 	return payload.Data, next, nil
-}
-
-func (s *DealsService) ListPager(req ListDealsRequest, opts ...pipedrive.RequestOption) *pipedrive.CursorPager[Deal] {
-	startCursor := req.Cursor
-	req.Cursor = ""
-
-	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Deal, *string, error) {
-		effective := cursor
-		if effective == nil && startCursor != "" {
-			effective = &startCursor
-		}
-
-		pageReq := req
-		if effective != nil {
-			pageReq.Cursor = *effective
-		}
-		return s.List(ctx, pageReq, opts...)
-	})
-}
-
-func (s *DealsService) ForEach(ctx context.Context, req ListDealsRequest, fn func(Deal) error, opts ...pipedrive.RequestOption) error {
-	return s.ListPager(req, opts...).ForEach(ctx, fn)
-}
-
-func errorFromResponse(httpResp *http.Response, body []byte) error {
-	if httpResp.StatusCode == http.StatusTooManyRequests {
-		return pipedrive.RateLimitErrorFromResponse(httpResp, body, time.Now())
-	}
-	return pipedrive.APIErrorFromResponse(httpResp, body)
-}
-
-func toRequestEditors(editors []pipedrive.RequestEditorFunc) []genv2.RequestEditorFn {
-	out := make([]genv2.RequestEditorFn, 0, len(editors))
-	for _, editor := range editors {
-		if editor == nil {
-			continue
-		}
-		out = append(out, genv2.RequestEditorFn(editor))
-	}
-	return out
 }

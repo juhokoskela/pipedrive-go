@@ -36,7 +36,7 @@ func TestDealsService_Get(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	deal, err := client.Deals.Get(context.Background(), 1, pipedrive.WithHeader("X-Test", "1"))
+	deal, err := client.Deals.Get(context.Background(), 1, WithDealRequestOptions(pipedrive.WithHeader("X-Test", "1")))
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
 	}
@@ -63,12 +63,18 @@ func TestDealsService_ListPager(t *testing.T) {
 				if cursor != "" {
 					t.Fatalf("expected no cursor on first page, got %q", cursor)
 				}
+				if got := r.URL.Query().Get("limit"); got != "2" {
+					t.Fatalf("expected limit=2, got %q", got)
+				}
 				_, _ = w.Write([]byte(`{"data":[{"id":1},{"id":2}],"additional_data":{"next_cursor":"c2"}}`))
 				return
 			}
 			if listCalls == 2 {
 				if cursor != "c2" {
 					t.Fatalf("expected cursor c2 on second page, got %q", cursor)
+				}
+				if got := r.URL.Query().Get("limit"); got != "2" {
+					t.Fatalf("expected limit=2, got %q", got)
 				}
 				_, _ = w.Write([]byte(`{"data":[{"id":3}],"additional_data":{"next_cursor":null}}`))
 				return
@@ -91,7 +97,7 @@ func TestDealsService_ListPager(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	pager := client.Deals.ListPager(ListDealsRequest{Limit: 2})
+	pager := client.Deals.ListPager(WithDealsPageSize(2))
 
 	var ids []DealID
 	for pager.Next(context.Background()) {
@@ -126,12 +132,18 @@ func TestDealsService_ForEach(t *testing.T) {
 			if cursor != "" {
 				t.Fatalf("expected no cursor on first page, got %q", cursor)
 			}
+			if got := r.URL.Query().Get("limit"); got != "2" {
+				t.Fatalf("expected limit=2, got %q", got)
+			}
 			_, _ = w.Write([]byte(`{"data":[{"id":1},{"id":2}],"additional_data":{"next_cursor":"c2"}}`))
 			return
 		}
 		if listCalls == 2 {
 			if cursor != "c2" {
 				t.Fatalf("expected cursor c2 on second page, got %q", cursor)
+			}
+			if got := r.URL.Query().Get("limit"); got != "2" {
+				t.Fatalf("expected limit=2, got %q", got)
 			}
 			_, _ = w.Write([]byte(`{"data":[{"id":3}],"additional_data":{"next_cursor":null}}`))
 			return
@@ -149,10 +161,10 @@ func TestDealsService_ForEach(t *testing.T) {
 	}
 
 	var ids []DealID
-	err = client.Deals.ForEach(context.Background(), ListDealsRequest{Limit: 2}, func(d Deal) error {
+	err = client.Deals.ForEach(context.Background(), func(d Deal) error {
 		ids = append(ids, d.ID)
 		return nil
-	})
+	}, WithDealsPageSize(2))
 	if err != nil {
 		t.Fatalf("ForEach error: %v", err)
 	}
