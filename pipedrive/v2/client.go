@@ -13,6 +13,7 @@ type Client struct {
 	gen *genv2.ClientWithResponses
 
 	Deals          *DealsService
+	DealFields     *DealFieldsService
 	Persons        *PersonsService
 	Organizations  *OrganizationsService
 	Activities     *ActivitiesService
@@ -44,6 +45,7 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 		gen: gen,
 	}
 	c.Deals = &DealsService{client: c}
+	c.DealFields = &DealFieldsService{client: c}
 	c.Persons = &PersonsService{client: c}
 	c.Organizations = &OrganizationsService{client: c}
 	c.Activities = &ActivitiesService{client: c}
