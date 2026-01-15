@@ -6,6 +6,12 @@ type PersonID int64
 
 type OrganizationID int64
 
+type ProductID int64
+
+type ProductVariationID int64
+
+type ProductImageID int64
+
 type ActivityID int64
 
 type ProjectID int64
