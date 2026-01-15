@@ -4,14 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"time"
 
 	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
-
-type CurrencyID int64
 
 type Currency struct {
 	ID            CurrencyID `json:"id"`
@@ -56,22 +52,3 @@ func (s *CurrenciesService) List(ctx context.Context, req ListCurrenciesRequest,
 	}
 	return payload.Data, nil
 }
-
-func errorFromResponse(httpResp *http.Response, body []byte) error {
-	if httpResp.StatusCode == http.StatusTooManyRequests {
-		return pipedrive.RateLimitErrorFromResponse(httpResp, body, time.Now())
-	}
-	return pipedrive.APIErrorFromResponse(httpResp, body)
-}
-
-func toRequestEditors(editors []pipedrive.RequestEditorFunc) []genv1.RequestEditorFn {
-	out := make([]genv1.RequestEditorFn, 0, len(editors))
-	for _, editor := range editors {
-		if editor == nil {
-			continue
-		}
-		out = append(out, genv1.RequestEditorFn(editor))
-	}
-	return out
-}
-
