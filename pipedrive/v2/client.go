@@ -17,6 +17,7 @@ type Client struct {
 	Organizations *OrganizationsService
 	Activities    *ActivitiesService
 	Pipelines     *PipelinesService
+	Stages        *StagesService
 }
 
 func NewClient(cfg pipedrive.Config) (*Client, error) {
@@ -46,5 +47,6 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.Organizations = &OrganizationsService{client: c}
 	c.Activities = &ActivitiesService{client: c}
 	c.Pipelines = &PipelinesService{client: c}
+	c.Stages = &StagesService{client: c}
 	return c, nil
 }
