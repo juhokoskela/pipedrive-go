@@ -13,3 +13,7 @@ type FollowerChangelog struct {
 	FollowerUserID UserID     `json:"follower_user_id,omitempty"`
 	Time           *time.Time `json:"time,omitempty"`
 }
+
+type FollowerDeleteResult struct {
+	UserID UserID `json:"user_id"`
+}
