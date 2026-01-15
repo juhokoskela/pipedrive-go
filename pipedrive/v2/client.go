@@ -21,6 +21,7 @@ type Client struct {
 	Activities         *ActivitiesService
 	ActivityFields     *ActivityFieldsService
 	ProductFields      *ProductFieldsService
+	Leads              *LeadsService
 	ItemSearch         *ItemSearchService
 	Users              *UsersService
 	Pipelines          *PipelinesService
@@ -58,6 +59,7 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.Activities = &ActivitiesService{client: c}
 	c.ActivityFields = &ActivityFieldsService{client: c}
 	c.ProductFields = &ProductFieldsService{client: c}
+	c.Leads = &LeadsService{client: c}
 	c.ItemSearch = &ItemSearchService{client: c}
 	c.Users = &UsersService{client: c}
 	c.Pipelines = &PipelinesService{client: c}

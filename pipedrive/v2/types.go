@@ -10,6 +10,8 @@ type ActivityID int64
 
 type LeadID string
 
+type ConversionID string
+
 type UserID int64
 
 type SortDirection string
@@ -17,4 +19,14 @@ type SortDirection string
 const (
 	SortAsc  SortDirection = "asc"
 	SortDesc SortDirection = "desc"
+)
+
+type ConversionStatus string
+
+const (
+	ConversionStatusNotStarted ConversionStatus = "not_started"
+	ConversionStatusRunning    ConversionStatus = "running"
+	ConversionStatusCompleted  ConversionStatus = "completed"
+	ConversionStatusFailed     ConversionStatus = "failed"
+	ConversionStatusRejected   ConversionStatus = "rejected"
 )
