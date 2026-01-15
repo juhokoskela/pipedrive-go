@@ -2,6 +2,7 @@ package v2
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -112,5 +113,154 @@ func TestActivitiesService_List(t *testing.T) {
 	}
 	if len(activities) != 1 || activities[0].ID != 1 {
 		t.Fatalf("unexpected activities: %#v", activities)
+	}
+}
+
+func TestActivitiesService_Create(t *testing.T) {
+	t.Parallel()
+
+	personID := PersonID(7)
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/activities" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "2" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+
+		var payload map[string]interface{}
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			t.Fatalf("decode body: %v", err)
+		}
+		if payload["subject"] != "Call" {
+			t.Fatalf("unexpected subject: %v", payload["subject"])
+		}
+		if payload["type"] != "call" {
+			t.Fatalf("unexpected type: %v", payload["type"])
+		}
+		if payload["owner_id"] != float64(5) {
+			t.Fatalf("unexpected owner_id: %v", payload["owner_id"])
+		}
+		if payload["lead_id"] != "lead-123" {
+			t.Fatalf("unexpected lead_id: %v", payload["lead_id"])
+		}
+		location, ok := payload["location"].(map[string]interface{})
+		if !ok || location["value"] != "HQ" {
+			t.Fatalf("unexpected location: %#v", payload["location"])
+		}
+		participants, ok := payload["participants"].([]interface{})
+		if !ok || len(participants) != 1 {
+			t.Fatalf("unexpected participants: %#v", payload["participants"])
+		}
+		participant, ok := participants[0].(map[string]interface{})
+		if !ok || participant["person_id"] != float64(7) {
+			t.Fatalf("unexpected participant: %#v", participants[0])
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":1,"subject":"Call"}}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	activity, err := client.Activities.Create(
+		context.Background(),
+		WithActivitySubject("Call"),
+		WithActivityType("call"),
+		WithActivityOwnerID(UserID(5)),
+		WithActivityLeadID(LeadID("lead-123")),
+		WithActivityLocation(ActivityLocation{Value: "HQ"}),
+		WithActivityParticipants(ActivityParticipant{PersonID: &personID, Primary: true}),
+		WithActivityRequestOptions(pipedrive.WithHeader("X-Test", "2")),
+	)
+	if err != nil {
+		t.Fatalf("Create error: %v", err)
+	}
+	if activity.ID != 1 || activity.Subject != "Call" {
+		t.Fatalf("unexpected activity: %#v", activity)
+	}
+}
+
+func TestActivitiesService_Update(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPatch {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/activities/5" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+
+		var payload map[string]interface{}
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			t.Fatalf("decode body: %v", err)
+		}
+		if payload["done"] != true {
+			t.Fatalf("unexpected done: %v", payload["done"])
+		}
+		if payload["duration"] != "01:00:00" {
+			t.Fatalf("unexpected duration: %v", payload["duration"])
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":5,"subject":"Updated"}}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	activity, err := client.Activities.Update(
+		context.Background(),
+		ActivityID(5),
+		WithActivityDone(true),
+		WithActivityDuration("01:00:00"),
+	)
+	if err != nil {
+		t.Fatalf("Update error: %v", err)
+	}
+	if activity.ID != 5 || activity.Subject != "Updated" {
+		t.Fatalf("unexpected activity: %#v", activity)
+	}
+}
+
+func TestActivitiesService_Delete(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodDelete {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/activities/4" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":4}}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	result, err := client.Activities.Delete(context.Background(), ActivityID(4))
+	if err != nil {
+		t.Fatalf("Delete error: %v", err)
+	}
+	if result.ID != 4 {
+		t.Fatalf("unexpected delete result: %#v", result)
 	}
 }

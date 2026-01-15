@@ -8,6 +8,8 @@ type OrganizationID int64
 
 type ActivityID int64
 
+type ProjectID int64
+
 type LeadID string
 
 type ConversionID string
