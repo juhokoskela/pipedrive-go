@@ -1,0 +1,116 @@
+package v2
+
+import (
+	"context"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+	"time"
+
+	"github.com/juhokoskela/pipedrive-go/pipedrive"
+)
+
+func TestActivitiesService_List(t *testing.T) {
+	t.Parallel()
+
+	since := time.Date(2024, 5, 6, 8, 0, 0, 0, time.UTC)
+	until := time.Date(2024, 5, 7, 9, 0, 0, 0, time.UTC)
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/activities" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		q := r.URL.Query()
+		if got := q.Get("filter_id"); got != "2" {
+			t.Fatalf("unexpected filter_id: %q", got)
+		}
+		if got := q.Get("owner_id"); got != "5" {
+			t.Fatalf("unexpected owner_id: %q", got)
+		}
+		if got := q.Get("deal_id"); got != "9" {
+			t.Fatalf("unexpected deal_id: %q", got)
+		}
+		if got := q.Get("lead_id"); got != "lead-123" {
+			t.Fatalf("unexpected lead_id: %q", got)
+		}
+		if got := q.Get("person_id"); got != "7" {
+			t.Fatalf("unexpected person_id: %q", got)
+		}
+		if got := q.Get("org_id"); got != "8" {
+			t.Fatalf("unexpected org_id: %q", got)
+		}
+		if got := q.Get("done"); got != "true" {
+			t.Fatalf("unexpected done: %q", got)
+		}
+		if got := q.Get("updated_since"); got != since.Format(time.RFC3339) {
+			t.Fatalf("unexpected updated_since: %q", got)
+		}
+		if got := q.Get("updated_until"); got != until.Format(time.RFC3339) {
+			t.Fatalf("unexpected updated_until: %q", got)
+		}
+		if got := q.Get("sort_by"); got != "due_date" {
+			t.Fatalf("unexpected sort_by: %q", got)
+		}
+		if got := q.Get("sort_direction"); got != "desc" {
+			t.Fatalf("unexpected sort_direction: %q", got)
+		}
+		if got := q.Get("include_fields"); got != "attendees" {
+			t.Fatalf("unexpected include_fields: %q", got)
+		}
+		if got := q.Get("ids"); got != "1,2" {
+			t.Fatalf("unexpected ids: %q", got)
+		}
+		if got := q.Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		if got := q.Get("cursor"); got != "c3" {
+			t.Fatalf("unexpected cursor: %q", got)
+		}
+		if got := r.Header.Get("X-Test"); got != "1" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"id":1,"subject":"Call"}],"additional_data":{"next_cursor":null}}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{
+		BaseURL:    srv.URL,
+		HTTPClient: srv.Client(),
+	})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	activities, next, err := client.Activities.List(
+		context.Background(),
+		WithActivitiesFilterID(2),
+		WithActivitiesOwnerID(5),
+		WithActivitiesDealID(DealID(9)),
+		WithActivitiesLeadID(LeadID("lead-123")),
+		WithActivitiesPersonID(PersonID(7)),
+		WithActivitiesOrgID(OrganizationID(8)),
+		WithActivitiesDone(true),
+		WithActivitiesUpdatedSince(since),
+		WithActivitiesUpdatedUntil(until),
+		WithActivitiesSortBy(ActivitySortByDueDate),
+		WithActivitiesSortDirection(SortDesc),
+		WithActivitiesIncludeFields(ActivityIncludeFieldAttendees),
+		WithActivitiesIDs(ActivityID(1), ActivityID(2)),
+		WithActivitiesPageSize(2),
+		WithActivitiesCursor("c3"),
+		WithActivityRequestOptions(pipedrive.WithHeader("X-Test", "1")),
+	)
+	if err != nil {
+		t.Fatalf("List error: %v", err)
+	}
+	if next != nil {
+		t.Fatalf("expected nil cursor, got %q", *next)
+	}
+	if len(activities) != 1 || activities[0].ID != 1 {
+		t.Fatalf("unexpected activities: %#v", activities)
+	}
+}
