@@ -18,6 +18,8 @@ type DealID int64
 
 type LeadID string
 
+type LeadLabelID string
+
 type OrganizationID int64
 
 type PersonID int64
