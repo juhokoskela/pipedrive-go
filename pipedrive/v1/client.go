@@ -21,6 +21,7 @@ type Client struct {
 	LeadLabels      *LeadLabelsService
 	LeadSources     *LeadSourcesService
 	Leads           *LeadsService
+	LeadFields      *LeadFieldsService
 	UserConnections *UserConnectionsService
 	UserSettings    *UserSettingsService
 }
@@ -56,6 +57,7 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.LeadLabels = &LeadLabelsService{client: c}
 	c.LeadSources = &LeadSourcesService{client: c}
 	c.Leads = &LeadsService{client: c}
+	c.LeadFields = &LeadFieldsService{client: c}
 	c.UserConnections = &UserConnectionsService{client: c}
 	c.UserSettings = &UserSettingsService{client: c}
 	return c, nil
