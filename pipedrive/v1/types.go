@@ -6,6 +6,12 @@ type ActivityTypeID int64
 
 type CallLogID string
 
+type ChannelID string
+
+type ConversationID string
+
+type ChannelMessageID string
+
 type CurrencyID int64
 
 type DealID int64

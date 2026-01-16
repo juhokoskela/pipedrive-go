@@ -10,6 +10,7 @@ import (
 var v1TimeLayouts = []string{
 	time.RFC3339,
 	v1DateTimeLayout,
+	"2006-01-02 15:04",
 }
 
 type DateTime struct {
