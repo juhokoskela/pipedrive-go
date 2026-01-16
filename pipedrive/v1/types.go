@@ -18,6 +18,8 @@ type DealID int64
 
 type FieldID int64
 
+type FilterID int64
+
 type LeadID string
 
 type LeadLabelID string
