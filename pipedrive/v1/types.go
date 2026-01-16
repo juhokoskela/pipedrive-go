@@ -28,4 +28,6 @@ type PersonID int64
 
 type ProjectID int64
 
+type StageID int64
+
 type UserID int64
