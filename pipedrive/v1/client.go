@@ -30,6 +30,7 @@ type Client struct {
 	Stages             *StagesService
 	Filters            *FiltersService
 	Meetings           *MeetingsService
+	Webhooks           *WebhooksService
 	UserConnections    *UserConnectionsService
 	UserSettings       *UserSettingsService
 }
@@ -74,6 +75,7 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.Stages = &StagesService{client: c}
 	c.Filters = &FiltersService{client: c}
 	c.Meetings = &MeetingsService{client: c}
+	c.Webhooks = &WebhooksService{client: c}
 	c.UserConnections = &UserConnectionsService{client: c}
 	c.UserSettings = &UserSettingsService{client: c}
 	return c, nil
