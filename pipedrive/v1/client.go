@@ -20,6 +20,7 @@ type Client struct {
 	Billing       *BillingService
 	LeadLabels    *LeadLabelsService
 	LeadSources   *LeadSourcesService
+	Leads         *LeadsService
 }
 
 func NewClient(cfg pipedrive.Config) (*Client, error) {
@@ -52,5 +53,6 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.Billing = &BillingService{client: c}
 	c.LeadLabels = &LeadLabelsService{client: c}
 	c.LeadSources = &LeadSourcesService{client: c}
+	c.Leads = &LeadsService{client: c}
 	return c, nil
 }
