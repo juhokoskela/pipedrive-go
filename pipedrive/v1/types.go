@@ -4,6 +4,8 @@ type ActivityID int64
 
 type ActivityTypeID int64
 
+type CallLogID string
+
 type CurrencyID int64
 
 type DealID int64
