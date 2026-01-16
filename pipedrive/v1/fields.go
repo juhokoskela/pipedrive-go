@@ -34,3 +34,7 @@ type FieldPagination struct {
 	Limit                 int  `json:"limit,omitempty"`
 	MoreItemsInCollection bool `json:"more_items_in_collection,omitempty"`
 }
+
+type FieldDeleteResult struct {
+	IDs []FieldID `json:"id"`
+}
