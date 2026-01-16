@@ -12,15 +12,16 @@ type Client struct {
 
 	gen *genv1.ClientWithResponses
 
-	Currencies    *CurrenciesService
-	Activities    *ActivitiesService
-	ActivityTypes *ActivityTypesService
-	CallLogs      *CallLogsService
-	Channels      *ChannelsService
-	Billing       *BillingService
-	LeadLabels    *LeadLabelsService
-	LeadSources   *LeadSourcesService
-	Leads         *LeadsService
+	Currencies      *CurrenciesService
+	Activities      *ActivitiesService
+	ActivityTypes   *ActivityTypesService
+	CallLogs        *CallLogsService
+	Channels        *ChannelsService
+	Billing         *BillingService
+	LeadLabels      *LeadLabelsService
+	LeadSources     *LeadSourcesService
+	Leads           *LeadsService
+	UserConnections *UserConnectionsService
 }
 
 func NewClient(cfg pipedrive.Config) (*Client, error) {
@@ -54,5 +55,6 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.LeadLabels = &LeadLabelsService{client: c}
 	c.LeadSources = &LeadSourcesService{client: c}
 	c.Leads = &LeadsService{client: c}
+	c.UserConnections = &UserConnectionsService{client: c}
 	return c, nil
 }
