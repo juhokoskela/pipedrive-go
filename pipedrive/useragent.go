@@ -14,4 +14,3 @@ func userAgentMiddleware(userAgent string) Middleware {
 		})
 	}
 }
-

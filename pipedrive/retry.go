@@ -21,11 +21,11 @@ type RetryPolicy struct {
 
 func DefaultRetryPolicy() RetryPolicy {
 	return RetryPolicy{
-		MaxAttempts:      4,
-		BaseDelay:        200 * time.Millisecond,
-		MaxDelay:         5 * time.Second,
-		Jitter:           fullJitter,
-		RetryAllMethods:  false,
+		MaxAttempts:     4,
+		BaseDelay:       200 * time.Millisecond,
+		MaxDelay:        5 * time.Second,
+		Jitter:          fullJitter,
+		RetryAllMethods: false,
 	}
 }
 

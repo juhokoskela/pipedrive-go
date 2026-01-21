@@ -70,4 +70,3 @@ func authMiddleware(auth AuthProvider) Middleware {
 		})
 	}
 }
-

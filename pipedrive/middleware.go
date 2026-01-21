@@ -11,4 +11,3 @@ func chainMiddleware(base http.RoundTripper, middleware []Middleware) http.Round
 	}
 	return rt
 }
-
