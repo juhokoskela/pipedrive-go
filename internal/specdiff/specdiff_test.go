@@ -132,4 +132,3 @@ func hasMappingKey(mapping *yaml.Node, key string) bool {
 	}
 	return false
 }
-

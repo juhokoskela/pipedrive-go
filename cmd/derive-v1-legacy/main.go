@@ -48,4 +48,3 @@ func fatalIf(err error, msg string) {
 	fmt.Fprintf(os.Stderr, "%s: %v\n", msg, err)
 	os.Exit(1)
 }
-

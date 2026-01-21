@@ -221,4 +221,3 @@ func hasAnyHTTPMethod(pathItem *yaml.Node) bool {
 	}
 	return false
 }
-
