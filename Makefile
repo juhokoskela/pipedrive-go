@@ -2,10 +2,20 @@ OPENAPI_V1_URL := https://developers.pipedrive.com/docs/api/v1/openapi.yaml
 OPENAPI_V2_URL := https://developers.pipedrive.com/docs/api/v1/openapi-v2.yaml
 OAPI_CODEGEN_VERSION := v2.5.1
 OAPI_CODEGEN := go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@$(OAPI_CODEGEN_VERSION)
+GOLANGCI_LINT_VERSION := v2.8.0
+GOLANGCI_LINT := go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
 
 .PHONY: test
 test:
 	go test ./...
+
+.PHONY: fmt
+fmt:
+	gofmt -w .
+
+.PHONY: lint
+lint:
+	$(GOLANGCI_LINT) run ./...
 
 .PHONY: update-specs
 update-specs:
