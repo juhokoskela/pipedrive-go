@@ -39,4 +39,3 @@ func TestNewClient_ConfiguresRawClient(t *testing.T) {
 		t.Fatalf("expected ok=true")
 	}
 }
-
