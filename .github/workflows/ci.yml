@@ -24,6 +24,8 @@ jobs:
       - name: Format
         run: test -z "$(gofmt -l .)"
 
+      - name: Lint
+        run: make lint
+
       - name: Test
         run: go test ./...
-
