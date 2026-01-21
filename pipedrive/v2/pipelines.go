@@ -297,7 +297,7 @@ func (s *PipelinesService) Create(ctx context.Context, opts ...CreatePipelineOpt
 	cfg := newCreatePipelineOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	body := genv2.AddPipelineJSONBody{}
+	body := genv2.AddPipelineJSONRequestBody{}
 	if cfg.payload.name != nil {
 		body.Name = *cfg.payload.name
 	}
@@ -329,7 +329,7 @@ func (s *PipelinesService) Update(ctx context.Context, id PipelineID, opts ...Up
 	cfg := newUpdatePipelineOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	body := genv2.UpdatePipelineJSONBody{}
+	body := genv2.UpdatePipelineJSONRequestBody{}
 	if cfg.payload.name != nil {
 		body.Name = cfg.payload.name
 	}
