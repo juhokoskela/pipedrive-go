@@ -54,8 +54,8 @@ func TestDealsService_ListPager(t *testing.T) {
 			t.Fatalf("unexpected method: %s", r.Method)
 		}
 
-		switch {
-		case r.URL.Path == "/deals":
+		switch r.URL.Path {
+		case "/deals":
 			listCalls++
 			cursor := r.URL.Query().Get("cursor")
 			w.Header().Set("Content-Type", "application/json")

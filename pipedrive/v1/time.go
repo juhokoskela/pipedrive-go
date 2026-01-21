@@ -47,7 +47,7 @@ func (t *DateTime) UnmarshalJSON(data []byte) error {
 }
 
 func (t DateTime) MarshalJSON() ([]byte, error) {
-	if t.Time.IsZero() {
+	if t.IsZero() {
 		return []byte("null"), nil
 	}
 	return []byte(strconv.Quote(formatV1Time(t.Time))), nil
