@@ -39,4 +39,3 @@ func TestNewHTTPClient_AppliesUserAgentAndAPIToken(t *testing.T) {
 	}
 	_ = resp.Body.Close()
 }
-

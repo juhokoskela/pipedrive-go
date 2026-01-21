@@ -46,4 +46,3 @@ func TestCurrenciesService_List(t *testing.T) {
 		t.Fatalf("unexpected currencies: %#v", currs)
 	}
 }
-
