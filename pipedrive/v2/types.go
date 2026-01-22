@@ -2,6 +2,12 @@ package v2
 
 type DealID int64
 
+type DealProductAttachmentID int64
+
+type InstallmentID int64
+
+type AdditionalDiscountID string
+
 type PersonID int64
 
 type OrganizationID int64
