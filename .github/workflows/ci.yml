@@ -21,6 +21,11 @@ jobs:
           make generate
           git diff --exit-code
 
+      - name: Docs (drift check)
+        run: |
+          make docs
+          git diff --exit-code
+
       - name: Format
         run: test -z "$(gofmt -l .)"
 
