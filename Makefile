@@ -17,6 +17,10 @@ fmt:
 lint:
 	$(GOLANGCI_LINT) run ./...
 
+.PHONY: docs
+docs:
+	go run ./cmd/endpoint-docs -v1 openapi/derived/v1-legacy.yaml -v2 openapi/upstream/v2.yaml -out-dir docs
+
 .PHONY: update-specs
 update-specs:
 	mkdir -p openapi/upstream
