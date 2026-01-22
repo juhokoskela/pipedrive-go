@@ -27,6 +27,12 @@ go get github.com/juhokoskela/pipedrive-go@latest
 
 Go 1.25+ is required.
 
+To pin a specific version:
+
+```sh
+go get github.com/juhokoskela/pipedrive-go@v1.0.0
+```
+
 ## Quickstart (API token)
 
 v2:
