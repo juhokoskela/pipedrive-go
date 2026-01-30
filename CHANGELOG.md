@@ -10,6 +10,13 @@ Semantic Versioning.
 ### Added
 - Nothing yet.
 
+## [1.0.1] - 2026-01-30
+
+### Changed
+- Bump github.com/google/uuid to v1.6.0.
+- Bump golang.org/x/oauth2 to v0.34.0.
+- Update GitHub Actions: actions/checkout to v6, actions/setup-go to v6.
+
 ## [1.0.0] - 2026-01-22
 
 ### Added
