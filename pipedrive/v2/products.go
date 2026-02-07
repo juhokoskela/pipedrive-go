@@ -52,12 +52,14 @@ type ProductPrice struct {
 }
 
 type Product struct {
-	ID                     ProductID              `json:"id"`
-	Name                   string                 `json:"name,omitempty"`
-	Code                   string                 `json:"code,omitempty"`
-	Unit                   string                 `json:"unit,omitempty"`
-	Tax                    float64                `json:"tax,omitempty"`
-	Category               float64                `json:"category,omitempty"`
+	ID       ProductID `json:"id"`
+	Name     string    `json:"name,omitempty"`
+	Code     string    `json:"code,omitempty"`
+	Unit     string    `json:"unit,omitempty"`
+	Tax      float64   `json:"tax,omitempty"`
+	Category float64   `json:"category,omitempty"`
+	// CategoryName captures category labels when the API returns category as a string.
+	CategoryName           *string                `json:"-"`
 	OwnerID                *UserID                `json:"owner_id,omitempty"`
 	IsDeleted              bool                   `json:"is_deleted,omitempty"`
 	IsLinkable             bool                   `json:"is_linkable,omitempty"`
@@ -66,6 +68,47 @@ type Product struct {
 	BillingFrequency       BillingFrequency       `json:"billing_frequency,omitempty"`
 	BillingFrequencyCycles *int                   `json:"billing_frequency_cycles,omitempty"`
 	Prices                 []ProductPrice         `json:"prices,omitempty"`
+}
+
+func (p *Product) UnmarshalJSON(data []byte) error {
+	if p == nil {
+		return fmt.Errorf("v2.Product: UnmarshalJSON on nil receiver")
+	}
+
+	type productAlias Product
+	var aux struct {
+		productAlias
+		Category json.RawMessage `json:"category"`
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("v2.Product: decode: %w", err)
+	}
+
+	*p = Product(aux.productAlias)
+
+	if len(aux.Category) == 0 {
+		return nil
+	}
+	category := bytes.TrimSpace(aux.Category)
+	if len(category) == 0 || bytes.Equal(category, []byte("null")) {
+		p.CategoryName = nil
+		return nil
+	}
+
+	var numeric float64
+	if err := json.Unmarshal(category, &numeric); err == nil {
+		p.Category = numeric
+		p.CategoryName = nil
+		return nil
+	}
+
+	var label string
+	if err := json.Unmarshal(category, &label); err == nil {
+		p.CategoryName = &label
+		return nil
+	}
+
+	return fmt.Errorf("v2.Product: invalid category value %q", string(category))
 }
 
 type ProductSearchItem struct {
