@@ -192,6 +192,13 @@ var out struct {
 err := client.Raw.Do(context.Background(), http.MethodGet, "/pipelines", nil, nil, &out)
 ```
 
+## Known API quirks
+
+- Products `category` is documented as a numeric option ID on write, but some
+  responses return a string label. The v2 SDK tolerates both; string labels are
+  exposed via `Product.CategoryName`, while numeric IDs remain in
+  `Product.Category`.
+
 ## Integration checks
 
 Opt-in integration tests (skipped by default):
