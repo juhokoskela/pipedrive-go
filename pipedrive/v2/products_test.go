@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -132,6 +133,79 @@ func TestProductsService_Create(t *testing.T) {
 	}
 	if product.ID != 9 || product.Name != "Widget" {
 		t.Fatalf("unexpected product: %#v", product)
+	}
+}
+
+func TestProductsService_Get_CategoryFlexible(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name             string
+		categoryJSON     string
+		wantCategory     float64
+		wantCategoryName *string
+	}{
+		{
+			name:         "number",
+			categoryJSON: "12",
+			wantCategory: 12,
+		},
+		{
+			name:             "string",
+			categoryJSON:     `"Retail"`,
+			wantCategoryName: func() *string { v := "Retail"; return &v }(),
+		},
+		{
+			name:         "null",
+			categoryJSON: "null",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.Method != http.MethodGet {
+					t.Fatalf("unexpected method: %s", r.Method)
+				}
+				if r.URL.Path != "/products/1" {
+					t.Fatalf("unexpected path: %s", r.URL.Path)
+				}
+
+				w.Header().Set("Content-Type", "application/json")
+				body := fmt.Sprintf(`{"data":{"id":1,"name":"Widget","category":%s}}`, tt.categoryJSON)
+				_, _ = w.Write([]byte(body))
+			}))
+			t.Cleanup(srv.Close)
+
+			client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+			if err != nil {
+				t.Fatalf("NewClient error: %v", err)
+			}
+
+			product, err := client.Products.Get(context.Background(), ProductID(1))
+			if err != nil {
+				t.Fatalf("Get error: %v", err)
+			}
+
+			if product.Category != tt.wantCategory {
+				t.Fatalf("unexpected category: %v", product.Category)
+			}
+			if tt.wantCategoryName == nil {
+				if product.CategoryName != nil {
+					t.Fatalf("expected nil CategoryName, got %q", *product.CategoryName)
+				}
+			} else {
+				if product.CategoryName == nil {
+					t.Fatalf("expected CategoryName %q, got nil", *tt.wantCategoryName)
+				}
+				if got := *product.CategoryName; got != *tt.wantCategoryName {
+					t.Fatalf("unexpected CategoryName: %q", got)
+				}
+			}
+		})
 	}
 }
 

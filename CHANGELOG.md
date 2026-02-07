@@ -7,8 +7,13 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-02-07
+
 ### Added
-- Nothing yet.
+- v2 products: expose `CategoryName` for string categories returned by the API.
+
+### Fixed
+- v2 products: tolerate string `category` values in responses to avoid unmarshal errors.
 
 ## [1.0.1] - 2026-01-30
 
