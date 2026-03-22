@@ -109,23 +109,13 @@ func (r *responseLimitReadCloser) Read(p []byte) (int, error) {
 		}
 	}
 
-	readBuf := p
-	if int64(len(readBuf)) > r.remaining {
-		readBuf = p[:int(r.remaining)+1]
+	if int64(len(p)) > r.remaining {
+		p = p[:int(r.remaining)]
 	}
 
-	n, err := r.body.Read(readBuf)
-	if int64(n) <= r.remaining {
-		r.remaining -= int64(n)
-		return n, err
-	}
-
-	n = int(r.remaining)
-	r.remaining = 0
-	if n < 0 {
-		n = 0
-	}
-	return n, &ResponseTooLargeError{Limit: r.limit}
+	n, err := r.body.Read(p)
+	r.remaining -= int64(n)
+	return n, err
 }
 
 func (r *responseLimitReadCloser) Close() error {

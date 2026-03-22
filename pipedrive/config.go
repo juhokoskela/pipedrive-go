@@ -11,6 +11,8 @@ type Config struct {
 
 	RetryPolicy *RetryPolicy
 
+	// MaxResponseSize caps successful response bodies in bytes.
+	// Zero uses the default 64 MiB cap. Negative values disable the cap.
 	MaxResponseSize int64
 
 	UserAgent string
