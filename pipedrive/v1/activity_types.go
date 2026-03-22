@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 
-	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
@@ -22,10 +21,6 @@ type ActivityType struct {
 	IsCustom   bool           `json:"is_custom_flag,omitempty"`
 	AddTime    *DateTime      `json:"add_time,omitempty"`
 	UpdateTime *DateTime      `json:"update_time,omitempty"`
-}
-
-type ActivityTypeDeleteResult struct {
-	IDs []ActivityTypeID `json:"id"`
 }
 
 type ActivityTypesService struct {
@@ -48,16 +43,11 @@ type DeleteActivityTypeOption interface {
 	applyDeleteActivityType(*deleteActivityTypeOptions)
 }
 
-type DeleteActivityTypesOption interface {
-	applyDeleteActivityTypes(*deleteActivityTypesOptions)
-}
-
 type ActivityTypesRequestOption interface {
 	ListActivityTypesOption
 	CreateActivityTypeOption
 	UpdateActivityTypeOption
 	DeleteActivityTypeOption
-	DeleteActivityTypesOption
 }
 
 type ActivityTypeOption interface {
@@ -80,10 +70,6 @@ type updateActivityTypeOptions struct {
 }
 
 type deleteActivityTypeOptions struct {
-	requestOptions []pipedrive.RequestOption
-}
-
-type deleteActivityTypesOptions struct {
 	requestOptions []pipedrive.RequestOption
 }
 
@@ -111,10 +97,6 @@ func (o activityTypesRequestOptions) applyUpdateActivityType(cfg *updateActivity
 }
 
 func (o activityTypesRequestOptions) applyDeleteActivityType(cfg *deleteActivityTypeOptions) {
-	cfg.requestOptions = append(cfg.requestOptions, o.requestOptions...)
-}
-
-func (o activityTypesRequestOptions) applyDeleteActivityTypes(cfg *deleteActivityTypesOptions) {
 	cfg.requestOptions = append(cfg.requestOptions, o.requestOptions...)
 }
 
@@ -202,17 +184,6 @@ func newDeleteActivityTypeOptions(opts []DeleteActivityTypeOption) deleteActivit
 			continue
 		}
 		opt.applyDeleteActivityType(&cfg)
-	}
-	return cfg
-}
-
-func newDeleteActivityTypesOptions(opts []DeleteActivityTypesOption) deleteActivityTypesOptions {
-	var cfg deleteActivityTypesOptions
-	for _, opt := range opts {
-		if opt == nil {
-			continue
-		}
-		opt.applyDeleteActivityTypes(&cfg)
 	}
 	return cfg
 }
@@ -347,41 +318,6 @@ func (s *ActivityTypesService) Delete(ctx context.Context, id ActivityTypeID, op
 		return nil, fmt.Errorf("missing activity type data in response")
 	}
 	return payload.Data, nil
-}
-
-func (s *ActivityTypesService) DeleteBulk(ctx context.Context, ids []ActivityTypeID, opts ...DeleteActivityTypesOption) (*ActivityTypeDeleteResult, error) {
-	if len(ids) == 0 {
-		return nil, fmt.Errorf("activity type IDs are required")
-	}
-	cfg := newDeleteActivityTypesOptions(opts)
-	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-
-	params := genv1.DeleteActivityTypesParams{Ids: joinIDs(ids)}
-	resp, err := s.client.gen.DeleteActivityTypes(ctx, &params, toRequestEditors(editors)...)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("read response: %w", err)
-	}
-	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		return nil, errorFromResponse(resp, respBody)
-	}
-
-	var payload struct {
-		Data *struct {
-			IDs []ActivityTypeID `json:"id"`
-		} `json:"data"`
-	}
-	if err := json.Unmarshal(respBody, &payload); err != nil {
-		return nil, fmt.Errorf("decode response: %w", err)
-	}
-	if payload.Data == nil {
-		return nil, fmt.Errorf("missing activity type delete data in response")
-	}
-	return &ActivityTypeDeleteResult{IDs: payload.Data.IDs}, nil
 }
 
 func (p activityTypePayload) toMap(includeOrder bool) map[string]interface{} {

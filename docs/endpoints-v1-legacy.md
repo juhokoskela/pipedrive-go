@@ -2,15 +2,12 @@
 
 Generated from `openapi/derived/v1-legacy.yaml` by `cmd/endpoint-docs`. Do not edit manually.
 
-Total operations: 194
+Total operations: 177
 
 | Method | Path | Summary | Operation ID |
 | --- | --- | --- | --- |
-| DELETE | `/activities` | Delete multiple activities in bulk | `deleteActivities` |
-| GET | `/activities/collection` | Get all activities collection | `getActivitiesCollection` |
 | GET | `/activityTypes` | Get all activity types | `getActivityTypes` |
 | POST | `/activityTypes` | Add new activity type | `addActivityType` |
-| DELETE | `/activityTypes` | Delete multiple activity types in bulk | `deleteActivityTypes` |
 | PUT | `/activityTypes/{id}` | Update an activity type | `updateActivityType` |
 | DELETE | `/activityTypes/{id}` | Delete an activity type | `deleteActivityType` |
 | GET | `/billing/subscriptions/addons` | Get all add-ons for a single company | `getCompanyAddons` |
@@ -25,13 +22,10 @@ Total operations: 194
 | DELETE | `/channels/{id}` | Delete a channel | `deleteChannel` |
 | GET | `/currencies` | Get all supported currencies | `getCurrencies` |
 | DELETE | `/dealFields` | Delete multiple deal fields in bulk | `deleteDealFields` |
-| DELETE | `/deals` | Delete multiple deals in bulk | `deleteDeals` |
-| GET | `/deals/collection` | Get all deals collection | `getDealsCollection` |
 | GET | `/deals/summary` | Get deals summary | `getDealsSummary` |
 | GET | `/deals/summary/archived` | Get archived deals summary | `getArchivedDealsSummary` |
 | GET | `/deals/timeline` | Get deals timeline | `getDealsTimeline` |
 | GET | `/deals/timeline/archived` | Get archived deals timeline | `getArchivedDealsTimeline` |
-| GET | `/deals/{id}/activities` | List activities associated with a deal | `getDealActivities` |
 | GET | `/deals/{id}/changelog` | List updates about deal field values | `getDealChangelog` |
 | POST | `/deals/{id}/duplicate` | Duplicate deal | `duplicateDeal` |
 | GET | `/deals/{id}/files` | List files attached to a deal | `getDealFiles` |
@@ -43,7 +37,6 @@ Total operations: 194
 | DELETE | `/deals/{id}/participants/{deal_participant_id}` | Delete a participant from a deal | `deleteDealParticipant` |
 | GET | `/deals/{id}/participantsChangelog` | List updates about participants of a deal | `getDealParticipantsChangelog` |
 | GET | `/deals/{id}/permittedUsers` | List permitted users | `getDealUsers` |
-| GET | `/deals/{id}/persons` | List all persons associated with a deal | `getDealPersons` |
 | GET | `/files` | Get all files | `getFiles` |
 | POST | `/files` | Add file | `addFile` |
 | POST | `/files/remote` | Create a remote file and link it to an item | `addFileAndLinkIt` |
@@ -113,26 +106,17 @@ Total operations: 194
 | GET | `/organizationRelationships/{id}` | Get one organization relationship | `getOrganizationRelationship` |
 | PUT | `/organizationRelationships/{id}` | Update an organization relationship | `updateOrganizationRelationship` |
 | DELETE | `/organizationRelationships/{id}` | Delete an organization relationship | `deleteOrganizationRelationship` |
-| DELETE | `/organizations` | Delete multiple organizations in bulk | `deleteOrganizations` |
-| GET | `/organizations/collection` | Get all organizations collection | `getOrganizationsCollection` |
-| GET | `/organizations/{id}/activities` | List activities associated with an organization | `getOrganizationActivities` |
 | GET | `/organizations/{id}/changelog` | List updates about organization field values | `getOrganizationChangelog` |
-| GET | `/organizations/{id}/deals` | List deals associated with an organization | `getOrganizationDeals` |
 | GET | `/organizations/{id}/files` | List files attached to an organization | `getOrganizationFiles` |
 | GET | `/organizations/{id}/flow` | List updates about an organization | `getOrganizationUpdates` |
 | GET | `/organizations/{id}/mailMessages` | List mail messages associated with an organization | `getOrganizationMailMessages` |
 | PUT | `/organizations/{id}/merge` | Merge two organizations | `mergeOrganizations` |
 | GET | `/organizations/{id}/permittedUsers` | List permitted users | `getOrganizationUsers` |
-| GET | `/organizations/{id}/persons` | List persons of an organization | `getOrganizationPersons` |
 | GET | `/permissionSets` | Get all permission sets | `getPermissionSets` |
 | GET | `/permissionSets/{id}` | Get one permission set | `getPermissionSet` |
 | GET | `/permissionSets/{id}/assignments` | List permission set assignments | `getPermissionSetAssignments` |
 | DELETE | `/personFields` | Delete multiple person fields in bulk | `deletePersonFields` |
-| DELETE | `/persons` | Delete multiple persons in bulk | `deletePersons` |
-| GET | `/persons/collection` | Get all persons collection | `getPersonsCollection` |
-| GET | `/persons/{id}/activities` | List activities associated with a person | `getPersonActivities` |
 | GET | `/persons/{id}/changelog` | List updates about person field values | `getPersonChangelog` |
-| GET | `/persons/{id}/deals` | List deals associated with a person | `getPersonDeals` |
 | GET | `/persons/{id}/files` | List files attached to a person | `getPersonFiles` |
 | GET | `/persons/{id}/flow` | List updates about a person | `getPersonUpdates` |
 | GET | `/persons/{id}/mailMessages` | List mail messages associated with a person | `getPersonMailMessages` |
@@ -179,7 +163,6 @@ Total operations: 194
 | PUT | `/roles/{id}/pipelines` | Update pipeline visibility for a role | `updateRolePipelines` |
 | GET | `/roles/{id}/settings` | List role settings | `getRoleSettings` |
 | POST | `/roles/{id}/settings` | Add or update role setting | `addOrUpdateRoleSetting` |
-| DELETE | `/stages` | Delete multiple stages in bulk | `deleteStages` |
 | GET | `/stages/{id}/deals` | Get deals in a stage | `getStageDeals` |
 | GET | `/tasks` | Get all tasks | `getTasks` |
 | POST | `/tasks` | Add a task | `addTask` |

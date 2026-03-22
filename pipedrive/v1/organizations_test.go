@@ -4,68 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"net/url"
 	"testing"
 )
-
-func TestOrganizationsService_ListCollection(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/organizations/collection" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("limit"); got != "1" {
-			t.Fatalf("unexpected limit: %q", got)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":1,"name":"Org"}],"additional_data":{"next_cursor":"c1"}}`))
-	})
-
-	query := url.Values{}
-	query.Set("limit", "1")
-	orgs, page, err := client.Organizations.ListCollection(context.Background(), WithOrganizationsQuery(query))
-	if err != nil {
-		t.Fatalf("ListCollection error: %v", err)
-	}
-	if len(orgs) != 1 || orgs[0].ID != 1 || orgs[0].Name != "Org" {
-		t.Fatalf("unexpected orgs: %#v", orgs)
-	}
-	if page == nil || page.NextCursor == nil || *page.NextCursor != "c1" {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
-func TestOrganizationsService_Delete(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodDelete {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/organizations" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("ids"); got != "2,3" {
-			t.Fatalf("unexpected ids: %q", got)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true}`))
-	})
-
-	ok, err := client.Organizations.Delete(context.Background(), []OrganizationID{2, 3})
-	if err != nil {
-		t.Fatalf("Delete error: %v", err)
-	}
-	if !ok {
-		t.Fatalf("expected delete success")
-	}
-}
 
 func TestOrganizationsService_Merge(t *testing.T) {
 	t.Parallel()
@@ -99,33 +39,6 @@ func TestOrganizationsService_Merge(t *testing.T) {
 	}
 }
 
-func TestOrganizationsService_ListActivities(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/organizations/7/activities" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":1,"subject":"Call"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
-	})
-
-	activities, page, err := client.Organizations.ListActivities(context.Background(), OrganizationID(7))
-	if err != nil {
-		t.Fatalf("ListActivities error: %v", err)
-	}
-	if len(activities) != 1 || activities[0].ID != 1 {
-		t.Fatalf("unexpected activities: %#v", activities)
-	}
-	if page == nil || page.Limit != 1 {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
 func TestOrganizationsService_Changelog(t *testing.T) {
 	t.Parallel()
 
@@ -149,33 +62,6 @@ func TestOrganizationsService_Changelog(t *testing.T) {
 		t.Fatalf("unexpected changes: %#v", changes)
 	}
 	if page == nil || page.NextCursor == nil || *page.NextCursor != "c2" {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
-func TestOrganizationsService_ListDeals(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/organizations/11/deals" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":2,"title":"Deal"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
-	})
-
-	deals, page, err := client.Organizations.ListDeals(context.Background(), OrganizationID(11))
-	if err != nil {
-		t.Fatalf("ListDeals error: %v", err)
-	}
-	if len(deals) != 1 || deals[0].ID != 2 {
-		t.Fatalf("unexpected deals: %#v", deals)
-	}
-	if page == nil || page.Limit != 1 {
 		t.Fatalf("unexpected page: %#v", page)
 	}
 }
@@ -228,33 +114,6 @@ func TestOrganizationsService_ListMailMessages(t *testing.T) {
 	}
 	if len(messages) != 1 || messages[0].ID != 9 {
 		t.Fatalf("unexpected messages: %#v", messages)
-	}
-	if page == nil || page.Limit != 1 {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
-func TestOrganizationsService_ListPersons(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/organizations/17/persons" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":3,"name":"Person"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
-	})
-
-	people, page, err := client.Organizations.ListPersons(context.Background(), OrganizationID(17))
-	if err != nil {
-		t.Fatalf("ListPersons error: %v", err)
-	}
-	if len(people) != 1 || people[0].ID != 3 {
-		t.Fatalf("unexpected people: %#v", people)
 	}
 	if page == nil || page.Limit != 1 {
 		t.Fatalf("unexpected page: %#v", page)

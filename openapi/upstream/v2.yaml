@@ -19,7 +19,7 @@ tags:
       Deal fields represent the schema for a deal in the context of the company of the authorized user. Each company can have a different schema for their deals, with various custom fields.
   - name: Products
     description: |
-      Products are the goods or services you are dealing with. Each product can have N different price points - firstly, each product can have a price in N different currencies, and secondly, each product can have N variations of itself, each having N prices in different currencies. Note that only one price per variation per currency is supported. Products can be instantiated to deals. In the context of instatiation, a custom price, quantity and discount can be applied.
+      Products are the goods or services you are dealing with. Each product can have N different price points - firstly, each product can have a price in N different currencies, and secondly, each product can have N variations of itself, each having N prices in different currencies. Note that only one price per variation per currency is supported. Products can be instantiated to deals. In the context of instantiation, a custom price, quantity and discount can be applied.
   - name: ProductFields
     description: |
       Product fields represent the schema for a product in the context of the company of the authorized user. Each company can have a different schema for their products, with various custom fields.
@@ -179,7 +179,6 @@ paths:
                         description: Activities array
                         items:
                           type: object
-                          title: ActivityItem
                           properties:
                             id:
                               type: integer
@@ -539,7 +538,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: ActivityItem
                         properties:
                           id:
                             type: integer
@@ -686,7 +684,6 @@ paths:
                           note:
                             type: string
                             description: The note of the activity
-                        description: The activity object
               example:
                 success: true
                 data:
@@ -823,7 +820,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: ActivityItem
                         properties:
                           id:
                             type: integer
@@ -970,7 +966,6 @@ paths:
                           note:
                             type: string
                             description: The note of the activity
-                        description: The activity object
               example:
                 success: true
                 data:
@@ -1182,7 +1177,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: ActivityItem
                         properties:
                           id:
                             type: integer
@@ -1329,7 +1323,6 @@ paths:
                           note:
                             type: string
                             description: The note of the activity
-                        description: The activity object
               example:
                 success: true
                 data:
@@ -1888,6 +1881,7 @@ paths:
               - last_incoming_mail_time
               - last_outgoing_mail_time
               - smart_bcc_email
+              - source_lead_id
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
@@ -1927,7 +1921,6 @@ paths:
                         description: Deals array
                         items:
                           type: object
-                          title: DealItem
                           properties:
                             id:
                               type: integer
@@ -2019,6 +2012,11 @@ paths:
                               type: string
                               nullable: true
                               description: The optional ID to further distinguish the Marketing channel.
+                            source_lead_id:
+                              type: string
+                              format: uuid
+                              nullable: true
+                              description: The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
                             arr:
                               type: number
                               nullable: true
@@ -2095,6 +2093,7 @@ paths:
                     origin_id: null
                     channel: 52
                     channel_id: Jun23 Billboards
+                    source_lead_id: 35b0d604-eb0d-42d0-be11-eac8832051f0
                     acv: 120
                     arr: 120
                     mrr: 10
@@ -2211,7 +2210,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: DealItem
                         properties:
                           id:
                             type: integer
@@ -2303,6 +2301,11 @@ paths:
                             type: string
                             nullable: true
                             description: The optional ID to further distinguish the Marketing channel.
+                          source_lead_id:
+                            type: string
+                            format: uuid
+                            nullable: true
+                            description: The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
                           arr:
                             type: number
                             nullable: true
@@ -2334,7 +2337,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The deal object
               example:
                 success: true
                 data:
@@ -2373,6 +2375,7 @@ paths:
                   origin_id: null
                   channel: 52
                   channel_id: Jun23 Billboards
+                  source_lead_id: 35b0d604-eb0d-42d0-be11-eac8832051f0
                   acv: 120
                   arr: 120
                   mrr: 10
@@ -2487,6 +2490,7 @@ paths:
               - last_incoming_mail_time
               - last_outgoing_mail_time
               - smart_bcc_email
+              - source_lead_id
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
@@ -2526,7 +2530,6 @@ paths:
                         description: Deals array
                         items:
                           type: object
-                          title: DealItem
                           properties:
                             id:
                               type: integer
@@ -2618,6 +2621,11 @@ paths:
                               type: string
                               nullable: true
                               description: The optional ID to further distinguish the Marketing channel.
+                            source_lead_id:
+                              type: string
+                              format: uuid
+                              nullable: true
+                              description: The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
                             arr:
                               type: number
                               nullable: true
@@ -2694,6 +2702,7 @@ paths:
                     origin_id: null
                     channel: 52
                     channel_id: Jun23 Billboards
+                    source_lead_id: 35b0d604-eb0d-42d0-be11-eac8832051f0
                     acv: 120
                     arr: 120
                     mrr: 10
@@ -2783,6 +2792,7 @@ paths:
               - last_incoming_mail_time
               - last_outgoing_mail_time
               - smart_bcc_email
+              - source_lead_id
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
@@ -2808,7 +2818,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: DealItem
                         properties:
                           id:
                             type: integer
@@ -2900,6 +2909,11 @@ paths:
                             type: string
                             nullable: true
                             description: The optional ID to further distinguish the Marketing channel.
+                          source_lead_id:
+                            type: string
+                            format: uuid
+                            nullable: true
+                            description: The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
                           arr:
                             type: number
                             nullable: true
@@ -2931,7 +2945,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The deal object
               example:
                 success: true
                 data:
@@ -2970,6 +2983,7 @@ paths:
                   origin_id: null
                   channel: 52
                   channel_id: Jun23 Billboards
+                  source_lead_id: 35b0d604-eb0d-42d0-be11-eac8832051f0
                   acv: 120
                   arr: 120
                   mrr: 10
@@ -3089,7 +3103,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: DealItem
                         properties:
                           id:
                             type: integer
@@ -3181,6 +3194,11 @@ paths:
                             type: string
                             nullable: true
                             description: The optional ID to further distinguish the Marketing channel.
+                          source_lead_id:
+                            type: string
+                            format: uuid
+                            nullable: true
+                            description: The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
                           arr:
                             type: number
                             nullable: true
@@ -3212,7 +3230,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The deal object
               example:
                 success: true
                 data:
@@ -3251,6 +3268,7 @@ paths:
                   origin_id: null
                   channel: 52
                   channel_id: Jun23 Billboards
+                  source_lead_id: 35b0d604-eb0d-42d0-be11-eac8832051f0
                   acv: 120
                   arr: 120
                   mrr: 10
@@ -3310,7 +3328,6 @@ paths:
                         description: Followers array
                         items:
                           type: object
-                          title: FollowerItem
                           properties:
                             user_id:
                               type: integer
@@ -3381,7 +3398,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: FollowerItem
                         properties:
                           user_id:
                             type: integer
@@ -3389,7 +3405,6 @@ paths:
                           add_time:
                             type: string
                             description: The add time of the following
-                        description: The follower object
               example:
                 success: true
                 data:
@@ -5272,7 +5287,7 @@ paths:
                     updated_by: 1
     post:
       summary: Add a discount to a deal
-      description: 'Adds a discount to a deal changing, the deal value if the deal has one-time products attached.'
+      description: 'Adds a discount to a deal, changing the deal value if the deal has one-time products attached.'
       x-tool-description: 'Applies new discount to deal, automatically recalculating values for one-time products. Essential for negotiations, promotional campaigns, volume discounts, and maintaining accurate financial tracking.'
       x-token-cost: 5
       operationId: postAdditionalDiscount
@@ -5533,7 +5548,6 @@ paths:
       operationId: getInstallments
       tags:
         - Deals
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -5605,7 +5619,7 @@ paths:
                           description: The installment amount.
                         billing_date:
                           type: string
-                          description: The date which the installment will be charged.
+                          description: The date on which the installment will be charged.
                         description:
                           type: string
                           description: The name of installment.
@@ -5635,7 +5649,6 @@ paths:
       operationId: postInstallment
       tags:
         - Deals
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -5666,7 +5679,7 @@ paths:
                   description: The installment amount. Must be a positive number (excluding 0).
                 billing_date:
                   type: string
-                  description: The date which the installment will be charged. Must be in the format YYYY-MM-DD.
+                  description: The date on which the installment will be charged. Must be in the format YYYY-MM-DD.
       responses:
         '200':
           description: Installment added to deal
@@ -5690,7 +5703,7 @@ paths:
                         description: The installment amount.
                       billing_date:
                         type: string
-                        description: The date which the installment will be charged.
+                        description: The date on which the installment will be charged.
                       description:
                         type: string
                         description: The name of installment.
@@ -5717,7 +5730,6 @@ paths:
       operationId: updateInstallment
       tags:
         - Deals
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -5750,7 +5762,7 @@ paths:
                   description: The installment amount. Must be a positive number (excluding 0).
                 billing_date:
                   type: string
-                  description: The date which the installment will be charged. Must be in the format YYYY-MM-DD.
+                  description: The date on which the installment will be charged. Must be in the format YYYY-MM-DD.
       responses:
         '200':
           description: Edited installment.
@@ -5774,7 +5786,7 @@ paths:
                         description: The installment amount.
                       billing_date:
                         type: string
-                        description: The date which the installment will be charged.
+                        description: The date on which the installment will be charged.
                       description:
                         type: string
                         description: The name of installment.
@@ -5800,7 +5812,6 @@ paths:
       operationId: deleteInstallment
       tags:
         - Deals
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -5849,8 +5860,7 @@ paths:
             - 'deals:full'
       tags:
         - Deals
-        - Beta
-      summary: Convert a deal to a lead (BETA)
+      summary: Convert a deal to a lead
       description: 'Initiates a conversion of a deal to a lead. The return value is an ID of a job that was assigned to perform the conversion. Related entities (notes, files, emails, activities, ...) are transferred during the process to the target entity. There are exceptions for entities like invoices or history that are not transferred and remain linked to the original deal. If the conversion is successful, the deal is marked as deleted. To retrieve the created entity ID and the result of the conversion, call the <a href="https://developers.pipedrive.com/docs/api/v1/Deals#getDealConversionStatus">/api/v2/deals/{deal_id}/convert/status/{conversion_id}</a> endpoint.'
       operationId: convertDealToLead
       x-token-cost: 40
@@ -6276,7 +6286,7 @@ paths:
                   description: Field name
                 field_type:
                   type: string
-                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
+                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
                   enum:
                     - varchar
                     - text
@@ -7440,8 +7450,7 @@ paths:
             - 'deals:read'
       tags:
         - Deals
-        - Beta
-      summary: Get Deal conversion status (BETA)
+      summary: Get Deal conversion status
       description: 'Returns information about the conversion. Status is always present and its value (not_started, running, completed, failed, rejected) represents the current state of the conversion. Lead ID is only present if the conversion was successfully finished. This data is only temporary and removed after a few days.'
       operationId: getDealConversionStatus
       x-token-cost: 1
@@ -7639,6 +7648,7 @@ paths:
               - last_outgoing_mail_time
               - marketing_status
               - doi_status
+              - smart_bcc_email
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
@@ -7919,7 +7929,7 @@ paths:
                         type: boolean
                         description: Whether the email is primary or not
                       label:
-                        type: boolean
+                        type: string
                         description: The email address classification label
                 phones:
                   type: array
@@ -7934,7 +7944,7 @@ paths:
                         type: boolean
                         description: Whether the phone number is primary or not
                       label:
-                        type: boolean
+                        type: string
                         description: The phone number classification label
                 visible_to:
                   type: integer
@@ -7952,6 +7962,10 @@ paths:
                     - unsubscribed
                     - subscribed
                     - archived
+                custom_fields:
+                  type: object
+                  additionalProperties: true
+                  description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
       responses:
         '200':
           description: Add person
@@ -8103,7 +8117,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The person object
               example:
                 success: true
                 data:
@@ -8247,6 +8260,7 @@ paths:
               - last_outgoing_mail_time
               - marketing_status
               - doi_status
+              - smart_bcc_email
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
@@ -8403,7 +8417,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The person object
               example:
                 success: true
                 data:
@@ -8510,7 +8523,7 @@ paths:
                         type: boolean
                         description: Whether the email is primary or not
                       label:
-                        type: boolean
+                        type: string
                         description: The email address classification label
                 phones:
                   type: array
@@ -8525,7 +8538,7 @@ paths:
                         type: boolean
                         description: Whether the phone number is primary or not
                       label:
-                        type: boolean
+                        type: string
                         description: The phone number classification label
                 visible_to:
                   type: integer
@@ -8543,6 +8556,10 @@ paths:
                     - unsubscribed
                     - subscribed
                     - archived
+                custom_fields:
+                  type: object
+                  additionalProperties: true
+                  description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
       responses:
         '200':
           description: Edit person
@@ -8694,7 +8711,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The person object
               example:
                 success: true
                 data:
@@ -8803,7 +8819,6 @@ paths:
                         description: Followers array
                         items:
                           type: object
-                          title: FollowerItem
                           properties:
                             user_id:
                               type: integer
@@ -8873,7 +8888,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: FollowerItem
                         properties:
                           user_id:
                             type: integer
@@ -8881,7 +8895,6 @@ paths:
                           add_time:
                             type: string
                             description: The add time of the following
-                        description: The follower object
               example:
                 success: true
                 data:
@@ -9394,7 +9407,7 @@ paths:
                   description: Field name
                 field_type:
                   type: string
-                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
+                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
                   enum:
                     - varchar
                     - text
@@ -10443,7 +10456,7 @@ paths:
           name: owner_id
           schema:
             type: integer
-          description: 'If supplied, only organization owned by the specified user are returned. If filter_id is provided, this is ignored.'
+          description: 'If supplied, only organizations owned by the specified user are returned. If filter_id is provided, this is ignored.'
         - in: query
           name: updated_since
           schema:
@@ -10497,6 +10510,7 @@ paths:
               - related_won_deals_count
               - lost_deals_count
               - related_lost_deals_count
+              - smart_bcc_email
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
@@ -10536,7 +10550,6 @@ paths:
                         description: Organizations array
                         items:
                           type: object
-                          title: OrganizationItem
                           properties:
                             id:
                               type: integer
@@ -10737,7 +10750,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: OrganizationItem
                         properties:
                           id:
                             type: integer
@@ -10804,7 +10816,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The organization object
               example:
                 success: true
                 data:
@@ -10916,6 +10927,7 @@ paths:
               - related_won_deals_count
               - lost_deals_count
               - related_lost_deals_count
+              - smart_bcc_email
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
@@ -10941,7 +10953,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: OrganizationItem
                         properties:
                           id:
                             type: integer
@@ -11008,7 +11019,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The organization object
               example:
                 success: true
                 data:
@@ -11139,7 +11149,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: OrganizationItem
                         properties:
                           id:
                             type: integer
@@ -11206,7 +11215,6 @@ paths:
                             type: object
                             additionalProperties: true
                             description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-                        description: The organization object
               example:
                 success: true
                 data:
@@ -11288,7 +11296,6 @@ paths:
                         description: Followers array
                         items:
                           type: object
-                          title: FollowerItem
                           properties:
                             user_id:
                               type: integer
@@ -11358,7 +11365,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: FollowerItem
                         properties:
                           user_id:
                             type: integer
@@ -11366,7 +11372,6 @@ paths:
                           add_time:
                             type: string
                             description: The add time of the following
-                        description: The follower object
               example:
                 success: true
                 data:
@@ -11668,6 +11673,15 @@ paths:
                             details_visible_flag:
                               type: boolean
                               description: Whether the field is shown in the details view
+                            org_detail_visible_flag:
+                              type: boolean
+                              description: Whether the field is shown in the organization details view
+                            person_detail_visible_flag:
+                              type: boolean
+                              description: Whether the field is shown in the person details view
+                            deal_detail_visible_flag:
+                              type: boolean
+                              description: Whether the field is shown in the deal details view
                             show_in_add_deal_dialog:
                               type: object
                               description: Configuration for showing the field in the add deal dialog
@@ -11730,6 +11744,9 @@ paths:
                     ui_visibility:
                       add_visible_flag: true
                       details_visible_flag: true
+                      org_detail_visible_flag: true
+                      person_detail_visible_flag: true
+                      deal_detail_visible_flag: true
                       show_in_add_deal_dialog:
                         show: true
                         order: 1
@@ -11782,6 +11799,9 @@ paths:
                     ui_visibility:
                       add_visible_flag: true
                       details_visible_flag: true
+                      org_detail_visible_flag: true
+                      person_detail_visible_flag: true
+                      deal_detail_visible_flag: false
                       show_in_add_deal_dialog:
                         show: true
                         order: 2
@@ -11812,6 +11832,9 @@ paths:
                     ui_visibility:
                       add_visible_flag: true
                       details_visible_flag: true
+                      org_detail_visible_flag: false
+                      person_detail_visible_flag: true
+                      deal_detail_visible_flag: true
                       show_in_add_deal_dialog:
                         show: false
                         order: null
@@ -11854,7 +11877,7 @@ paths:
                   description: Field name
                 field_type:
                   type: string
-                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
+                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
                   enum:
                     - varchar
                     - text
@@ -12072,6 +12095,15 @@ paths:
                           details_visible_flag:
                             type: boolean
                             description: Whether the field is shown in the details view
+                          org_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the organization details view
+                          person_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the person details view
+                          deal_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the deal details view
                           show_in_add_deal_dialog:
                             type: object
                             description: Configuration for showing the field in the add deal dialog
@@ -12133,6 +12165,9 @@ paths:
                   ui_visibility:
                     add_visible_flag: true
                     details_visible_flag: true
+                    org_detail_visible_flag: true
+                    person_detail_visible_flag: false
+                    deal_detail_visible_flag: false
                     show_in_add_deal_dialog:
                       show: false
                       order: null
@@ -12301,6 +12336,15 @@ paths:
                           details_visible_flag:
                             type: boolean
                             description: Whether the field is shown in the details view
+                          org_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the organization details view
+                          person_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the person details view
+                          deal_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the deal details view
                           show_in_add_deal_dialog:
                             type: object
                             description: Configuration for showing the field in the add deal dialog
@@ -12356,6 +12400,9 @@ paths:
                   ui_visibility:
                     add_visible_flag: true
                     details_visible_flag: true
+                    org_detail_visible_flag: true
+                    person_detail_visible_flag: true
+                    deal_detail_visible_flag: true
                     show_in_add_deal_dialog:
                       show: true
                       order: 1
@@ -12589,6 +12636,15 @@ paths:
                           details_visible_flag:
                             type: boolean
                             description: Whether the field is shown in the details view
+                          org_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the organization details view
+                          person_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the person details view
+                          deal_detail_visible_flag:
+                            type: boolean
+                            description: Whether the field is shown in the deal details view
                           show_in_add_deal_dialog:
                             type: object
                             description: Configuration for showing the field in the add deal dialog
@@ -12644,6 +12700,9 @@ paths:
                   ui_visibility:
                     add_visible_flag: true
                     details_visible_flag: true
+                    org_detail_visible_flag: true
+                    person_detail_visible_flag: true
+                    deal_detail_visible_flag: true
                     show_in_add_deal_dialog:
                       show: true
                       order: 1
@@ -13057,7 +13116,7 @@ paths:
                                       default: 0
                                     is_deleted:
                                       type: boolean
-                                      description: Whether this product will be made marked as deleted or not
+                                      description: Whether this product will be marked as deleted or not
                                       default: false
                                     is_linkable:
                                       type: boolean
@@ -13229,6 +13288,10 @@ paths:
                       items:
                         type: object
                       description: 'An array of objects, each containing: `currency` (string), `price` (number), `cost` (number, optional), `direct_cost` (number, optional). Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
+                    custom_fields:
+                      type: object
+                      additionalProperties: true
+                      description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
                 - type: object
                   properties:
                     billing_frequency:
@@ -13299,7 +13362,7 @@ paths:
                                 default: 0
                               is_deleted:
                                 type: boolean
-                                description: Whether this product will be made marked as deleted or not
+                                description: Whether this product will be marked as deleted or not
                                 default: false
                               is_linkable:
                                 type: boolean
@@ -13451,7 +13514,6 @@ paths:
                         description: Followers array
                         items:
                           type: object
-                          title: FollowerItem
                           properties:
                             user_id:
                               type: integer
@@ -13521,7 +13583,6 @@ paths:
                     properties:
                       data:
                         type: object
-                        title: FollowerItem
                         properties:
                           user_id:
                             type: integer
@@ -13529,7 +13590,6 @@ paths:
                           add_time:
                             type: string
                             description: The add time of the following
-                        description: The follower object
               example:
                 success: true
                 data:
@@ -13896,7 +13956,7 @@ paths:
                                 default: 0
                               is_deleted:
                                 type: boolean
-                                description: Whether this product will be made marked as deleted or not
+                                description: Whether this product will be marked as deleted or not
                                 default: false
                               is_linkable:
                                 type: boolean
@@ -14064,6 +14124,10 @@ paths:
                       items:
                         type: object
                       description: 'An array of objects, each containing: `currency` (string), `price` (number), `cost` (number, optional), `direct_cost` (number, optional). Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
+                    custom_fields:
+                      type: object
+                      additionalProperties: true
+                      description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
                 - type: object
                   properties:
                     billing_frequency:
@@ -14132,7 +14196,7 @@ paths:
                                 default: 0
                               is_deleted:
                                 type: boolean
-                                description: Whether this product will be made marked as deleted or not
+                                description: Whether this product will be marked as deleted or not
                                 default: false
                               is_linkable:
                                 type: boolean
@@ -14285,7 +14349,7 @@ paths:
                                 default: 0
                               is_deleted:
                                 type: boolean
-                                description: Whether this product will be made marked as deleted or not
+                                description: Whether this product will be marked as deleted or not
                                 default: false
                               is_linkable:
                                 type: boolean
@@ -14682,7 +14746,6 @@ paths:
       operationId: getProductImage
       tags:
         - Products
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -14749,7 +14812,6 @@ paths:
       operationId: uploadProductImage
       tags:
         - Products
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -14815,7 +14877,6 @@ paths:
       operationId: updateProductImage
       tags:
         - Products
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -14881,7 +14942,6 @@ paths:
       operationId: deleteProductImage
       tags:
         - Products
-        - Beta
       security:
         - api_key: []
         - oauth2:
@@ -15162,7 +15222,7 @@ paths:
                   description: Field name
                 field_type:
                   type: string
-                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
+                  description: 'The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>'
                   enum:
                     - varchar
                     - text
@@ -16192,8 +16252,7 @@ paths:
             - 'leads:full'
       tags:
         - Leads
-        - Beta
-      summary: Convert a lead to a deal (BETA)
+      summary: Convert a lead to a deal
       description: 'Initiates a conversion of a lead to a deal. The return value is an ID of a job that was assigned to perform the conversion. Related entities (notes, files, emails, activities, ...) are transferred during the process to the target entity. If the conversion is successful, the lead is marked as deleted. To retrieve the created entity ID and the result of the conversion, call the <a href="https://developers.pipedrive.com/docs/api/v1/Leads#getLeadConversionStatus">/api/v2/leads/{lead_id}/convert/status/{conversion_id}</a> endpoint.'
       operationId: convertLeadToDeal
       x-token-cost: 40
@@ -16288,8 +16347,7 @@ paths:
             - 'leads:read'
       tags:
         - Leads
-        - Beta
-      summary: Get Lead conversion status (BETA)
+      summary: Get Lead conversion status
       description: 'Returns data about the conversion. Status is always present and its value (not_started, running, completed, failed, rejected) represents the current state of the conversion. Deal ID is only present if the conversion was successfully finished. This data is only temporary and removed after a few days.'
       operationId: getLeadConversionStatus
       x-token-cost: 1
@@ -17932,7 +17990,6 @@ paths:
                         description: Followers array
                         items:
                           type: object
-                          title: FollowerItem
                           properties:
                             user_id:
                               type: integer
@@ -17955,6 +18012,494 @@ paths:
                 additional_data:
                   next_cursor: eyJmaWVsZCI6ImlkIiwiZmllbGRWYWx1ZSI6Nywic29ydERpcmVjdGlvbiI6ImFzYyIsImlkIjo3fQ
 components:
+  schemas:
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the activity
+        subject:
+          type: string
+          description: The subject of the activity
+        type:
+          type: string
+          description: The type of the activity
+        owner_id:
+          type: integer
+          description: The ID of the user who owns the activity
+        creator_user_id:
+          type: integer
+          description: The ID of the user who created the activity
+        is_deleted:
+          type: boolean
+          description: Whether the activity is deleted or not
+        add_time:
+          type: string
+          description: The creation date and time of the activity
+        update_time:
+          type: string
+          description: The last updated date and time of the activity
+        deal_id:
+          type: integer
+          description: The ID of the deal linked to the activity
+        lead_id:
+          type: string
+          description: The ID of the lead linked to the activity
+        person_id:
+          type: integer
+          description: The ID of the person linked to the activity
+        org_id:
+          type: integer
+          description: The ID of the organization linked to the activity
+        project_id:
+          type: integer
+          description: The ID of the project linked to the activity
+        due_date:
+          type: string
+          description: The due date of the activity
+        due_time:
+          type: string
+          description: The due time of the activity
+        duration:
+          type: string
+          description: The duration of the activity
+        busy:
+          type: boolean
+          description: Whether the activity marks the assignee as busy or not in their calendar
+        done:
+          type: boolean
+          description: Whether the activity is marked as done or not
+        marked_as_done_time:
+          type: string
+          description: The date and time when the activity was marked as done
+        location:
+          type: object
+          description: Location of the activity
+          properties:
+            value:
+              type: string
+              description: The full address of the activity
+            country:
+              type: string
+              description: Country of the activity
+            admin_area_level_1:
+              type: string
+              description: Admin area level 1 (e.g. state) of the activity
+            admin_area_level_2:
+              type: string
+              description: Admin area level 2 (e.g. county) of the activity
+            locality:
+              type: string
+              description: Locality (e.g. city) of the activity
+            sublocality:
+              type: string
+              description: Sublocality (e.g. neighborhood) of the activity
+            route:
+              type: string
+              description: Route (e.g. street) of the activity
+            street_number:
+              type: string
+              description: Street number of the activity
+            subpremise:
+              type: string
+              description: Subpremise (e.g. apartment/suite number) of the activity
+            postal_code:
+              type: string
+              description: Postal code of the activity
+        participants:
+          type: array
+          description: The participants of the activity
+          items:
+            type: object
+            properties:
+              person_id:
+                type: integer
+                description: The ID of the person
+              primary:
+                type: boolean
+                description: Whether the person is the primary participant or not
+        attendees:
+          type: array
+          description: The attendees of the activity
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                description: The email address of the attendee
+              name:
+                type: string
+                description: The name of the attendee
+              status:
+                type: string
+                description: The status of the attendee
+              is_organizer:
+                type: boolean
+                description: Whether the attendee is the organizer or not
+              person_id:
+                type: integer
+                description: The ID of the person if the attendee has a person record
+              user_id:
+                type: integer
+                description: The ID of the user if the attendee is a user
+        conference_meeting_client:
+          type: string
+          description: The client used for the conference meeting
+        conference_meeting_url:
+          type: string
+          description: The URL of the conference meeting
+        conference_meeting_id:
+          type: string
+          description: The ID of the conference meeting
+        public_description:
+          type: string
+          description: The public description of the activity
+        priority:
+          type: integer
+          description: The priority of the activity. Mappable to a specific string using activityFields API.
+        note:
+          type: string
+          description: The note of the activity
+    Deal:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the deal
+        title:
+          type: string
+          description: The title of the deal
+        owner_id:
+          type: integer
+          description: The ID of the user who owns the deal
+        person_id:
+          type: integer
+          description: The ID of the person linked to the deal
+        org_id:
+          type: integer
+          description: The ID of the organization linked to the deal
+        pipeline_id:
+          type: integer
+          description: The ID of the pipeline associated with the deal
+        stage_id:
+          type: integer
+          description: The ID of the deal stage
+        value:
+          type: number
+          description: The value of the deal
+        currency:
+          type: string
+          description: The currency associated with the deal
+        add_time:
+          type: string
+          description: The creation date and time of the deal
+        update_time:
+          type: string
+          description: The last updated date and time of the deal
+        stage_change_time:
+          type: string
+          description: The last updated date and time of the deal stage
+        is_deleted:
+          type: boolean
+          description: Whether the deal is deleted or not
+        is_archived:
+          type: boolean
+          description: Whether the deal is archived or not
+        status:
+          type: string
+          description: The status of the deal
+        probability:
+          type: number
+          nullable: true
+          description: The success probability percentage of the deal
+        lost_reason:
+          type: string
+          nullable: true
+          description: The reason for losing the deal
+        visible_to:
+          type: integer
+          description: The visibility of the deal
+        close_time:
+          type: string
+          nullable: true
+          description: The date and time of closing the deal
+        won_time:
+          type: string
+          description: The date and time of changing the deal status as won
+        lost_time:
+          type: string
+          description: The date and time of changing the deal status as lost
+        expected_close_date:
+          type: string
+          format: date
+          description: The expected close date of the deal
+        label_ids:
+          type: array
+          description: The IDs of labels assigned to the deal
+          items:
+            type: integer
+        origin:
+          type: string
+          description: The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
+        origin_id:
+          type: string
+          nullable: true
+          description: The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this Deal.
+        channel:
+          type: integer
+          nullable: true
+          description: 'The ID of your Marketing channel this Deal was created from. Recognized Marketing channels can be configured in your <a href="https://app.pipedrive.com/settings/fields" target="_blank" rel="noopener noreferrer">Company settings</a>.'
+        channel_id:
+          type: string
+          nullable: true
+          description: The optional ID to further distinguish the Marketing channel.
+        source_lead_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+        arr:
+          type: number
+          nullable: true
+          description: |
+            Only available in Growth and above plans
+
+            The Annual Recurring Revenue of the deal
+
+            Null if there are no products attached to the deal
+        mrr:
+          type: number
+          nullable: true
+          description: |
+            Only available in Growth and above plans
+
+            The Monthly Recurring Revenue of the deal
+
+            Null if there are no products attached to the deal
+        acv:
+          type: number
+          nullable: true
+          description: |
+            Only available in Growth and above plans
+
+            The Annual Contract Value of the deal
+
+            Null if there are no products attached to the deal
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+    FollowerItem:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: The ID of the user following the entity
+        add_time:
+          type: string
+          description: The add time of the following
+    OrganizationItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the organization
+        name:
+          type: string
+          description: The name of the organization
+        owner_id:
+          type: integer
+          description: The ID of the user who owns the organization
+        add_time:
+          type: string
+          description: The creation date and time of the organization
+        update_time:
+          type: string
+          description: The last updated date and time of the organization
+        is_deleted:
+          type: boolean
+          description: Whether the organization is deleted or not
+        visible_to:
+          type: integer
+          description: The visibility of the organization
+        address:
+          description: The address of the organization
+          type: object
+          title: OrganizationItemAddress
+          properties:
+            value:
+              type: string
+              description: The full address of the organization
+            country:
+              type: string
+              description: Country of the organization
+            admin_area_level_1:
+              type: string
+              description: Admin area level 1 (e.g. state) of the organization
+            admin_area_level_2:
+              type: string
+              description: Admin area level 2 (e.g. county) of the organization
+            locality:
+              type: string
+              description: Locality (e.g. city) of the organization
+            sublocality:
+              type: string
+              description: Sublocality (e.g. neighborhood) of the organization
+            route:
+              type: string
+              description: Route (e.g. street) of the organization
+            street_number:
+              type: string
+              description: Street number of the organization
+            subpremise:
+              type: string
+              description: Subpremise (e.g. apartment/suite number) of the organization
+            postal_code:
+              type: string
+              description: Postal code of the organization
+        label_ids:
+          type: array
+          description: The IDs of labels assigned to the organization
+          items:
+            type: integer
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+    Person:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the person
+        name:
+          type: string
+          description: The name of the person
+        first_name:
+          type: string
+          description: The first name of the person
+        last_name:
+          type: string
+          description: The last name of the person
+        owner_id:
+          type: integer
+          description: The ID of the user who owns the person
+        org_id:
+          type: integer
+          description: The ID of the organization linked to the person
+        add_time:
+          type: string
+          description: The creation date and time of the person
+        update_time:
+          type: string
+          description: The last updated date and time of the person
+        emails:
+          type: array
+          description: The emails of the person
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: The email address of the person
+              primary:
+                type: boolean
+                description: Whether the email is primary or not
+              label:
+                type: string
+                description: The email address classification label
+        phones:
+          type: array
+          description: The phones of the person
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: The phone number of the person
+              primary:
+                type: boolean
+                description: Whether the phone number is primary or not
+              label:
+                type: string
+                description: The phone number classification label
+        is_deleted:
+          type: boolean
+          description: Whether the person is deleted or not
+        visible_to:
+          type: integer
+          description: The visibility of the person
+        label_ids:
+          type: array
+          description: The IDs of labels assigned to the person
+          items:
+            type: integer
+        picture_id:
+          type: integer
+          description: The ID of the picture associated with the person
+        postal_address:
+          type: object
+          description: 'Postal address of the person, included if contact sync is enabled for the company'
+          properties:
+            value:
+              type: string
+              description: The full address of the person
+            country:
+              type: string
+              description: Country of the person
+            admin_area_level_1:
+              type: string
+              description: Admin area level 1 (e.g. state) of the person
+            admin_area_level_2:
+              type: string
+              description: Admin area level 2 (e.g. county) of the person
+            locality:
+              type: string
+              description: Locality (e.g. city) of the person
+            sublocality:
+              type: string
+              description: Sublocality (e.g. neighborhood) of the person
+            route:
+              type: string
+              description: Route (e.g. street) of the person
+            street_number:
+              type: string
+              description: Street number of the person
+            subpremise:
+              type: string
+              description: Subpremise (e.g. apartment/suite number) of the person
+            postal_code:
+              type: string
+              description: Postal code of the person
+        notes:
+          type: string
+          description: 'Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company'
+        im:
+          type: array
+          description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: The instant messaging account of the person
+              primary:
+                type: boolean
+                description: Whether the instant messaging account is primary or not
+              label:
+                type: string
+                description: The instant messaging account classification label
+        birthday:
+          type: string
+          description: 'The birthday of the person, included if contact sync is enabled for the company'
+        job_title:
+          type: string
+          description: 'The job title of the person, included if contact sync is enabled for the company'
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
   securitySchemes:
     basic_authentication:
       type: http

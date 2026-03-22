@@ -148,6 +148,7 @@ const (
 	GetDealsParamsIncludeFieldsParticipantsCount     GetDealsParamsIncludeFields = "participants_count"
 	GetDealsParamsIncludeFieldsProductsCount         GetDealsParamsIncludeFields = "products_count"
 	GetDealsParamsIncludeFieldsSmartBccEmail         GetDealsParamsIncludeFields = "smart_bcc_email"
+	GetDealsParamsIncludeFieldsSourceLeadId          GetDealsParamsIncludeFields = "source_lead_id"
 	GetDealsParamsIncludeFieldsUndoneActivitiesCount GetDealsParamsIncludeFields = "undone_activities_count"
 )
 
@@ -188,6 +189,7 @@ const (
 	GetArchivedDealsParamsIncludeFieldsParticipantsCount     GetArchivedDealsParamsIncludeFields = "participants_count"
 	GetArchivedDealsParamsIncludeFieldsProductsCount         GetArchivedDealsParamsIncludeFields = "products_count"
 	GetArchivedDealsParamsIncludeFieldsSmartBccEmail         GetArchivedDealsParamsIncludeFields = "smart_bcc_email"
+	GetArchivedDealsParamsIncludeFieldsSourceLeadId          GetArchivedDealsParamsIncludeFields = "source_lead_id"
 	GetArchivedDealsParamsIncludeFieldsUndoneActivitiesCount GetArchivedDealsParamsIncludeFields = "undone_activities_count"
 )
 
@@ -254,6 +256,7 @@ const (
 	GetDealParamsIncludeFieldsParticipantsCount     GetDealParamsIncludeFields = "participants_count"
 	GetDealParamsIncludeFieldsProductsCount         GetDealParamsIncludeFields = "products_count"
 	GetDealParamsIncludeFieldsSmartBccEmail         GetDealParamsIncludeFields = "smart_bcc_email"
+	GetDealParamsIncludeFieldsSourceLeadId          GetDealParamsIncludeFields = "source_lead_id"
 	GetDealParamsIncludeFieldsUndoneActivitiesCount GetDealParamsIncludeFields = "undone_activities_count"
 )
 
@@ -486,6 +489,7 @@ const (
 	GetOrganizationsParamsIncludeFieldsRelatedLostDealsCount   GetOrganizationsParamsIncludeFields = "related_lost_deals_count"
 	GetOrganizationsParamsIncludeFieldsRelatedOpenDealsCount   GetOrganizationsParamsIncludeFields = "related_open_deals_count"
 	GetOrganizationsParamsIncludeFieldsRelatedWonDealsCount    GetOrganizationsParamsIncludeFields = "related_won_deals_count"
+	GetOrganizationsParamsIncludeFieldsSmartBccEmail           GetOrganizationsParamsIncludeFields = "smart_bcc_email"
 	GetOrganizationsParamsIncludeFieldsUndoneActivitiesCount   GetOrganizationsParamsIncludeFields = "undone_activities_count"
 	GetOrganizationsParamsIncludeFieldsWonDealsCount           GetOrganizationsParamsIncludeFields = "won_deals_count"
 )
@@ -516,6 +520,7 @@ const (
 	GetOrganizationParamsIncludeFieldsRelatedLostDealsCount   GetOrganizationParamsIncludeFields = "related_lost_deals_count"
 	GetOrganizationParamsIncludeFieldsRelatedOpenDealsCount   GetOrganizationParamsIncludeFields = "related_open_deals_count"
 	GetOrganizationParamsIncludeFieldsRelatedWonDealsCount    GetOrganizationParamsIncludeFields = "related_won_deals_count"
+	GetOrganizationParamsIncludeFieldsSmartBccEmail           GetOrganizationParamsIncludeFields = "smart_bcc_email"
 	GetOrganizationParamsIncludeFieldsUndoneActivitiesCount   GetOrganizationParamsIncludeFields = "undone_activities_count"
 	GetOrganizationParamsIncludeFieldsWonDealsCount           GetOrganizationParamsIncludeFields = "won_deals_count"
 )
@@ -598,6 +603,7 @@ const (
 	GetPersonsParamsIncludeFieldsRelatedLostDealsCount       GetPersonsParamsIncludeFields = "related_lost_deals_count"
 	GetPersonsParamsIncludeFieldsRelatedOpenDealsCount       GetPersonsParamsIncludeFields = "related_open_deals_count"
 	GetPersonsParamsIncludeFieldsRelatedWonDealsCount        GetPersonsParamsIncludeFields = "related_won_deals_count"
+	GetPersonsParamsIncludeFieldsSmartBccEmail               GetPersonsParamsIncludeFields = "smart_bcc_email"
 	GetPersonsParamsIncludeFieldsUndoneActivitiesCount       GetPersonsParamsIncludeFields = "undone_activities_count"
 	GetPersonsParamsIncludeFieldsWonDealsCount               GetPersonsParamsIncludeFields = "won_deals_count"
 )
@@ -647,6 +653,7 @@ const (
 	RelatedLostDealsCount       GetPersonParamsIncludeFields = "related_lost_deals_count"
 	RelatedOpenDealsCount       GetPersonParamsIncludeFields = "related_open_deals_count"
 	RelatedWonDealsCount        GetPersonParamsIncludeFields = "related_won_deals_count"
+	SmartBccEmail               GetPersonParamsIncludeFields = "smart_bcc_email"
 	UndoneActivitiesCount       GetPersonParamsIncludeFields = "undone_activities_count"
 	WonDealsCount               GetPersonParamsIncludeFields = "won_deals_count"
 )
@@ -1119,7 +1126,7 @@ type AddDealFieldJSONBody struct {
 	// FieldName Field name
 	FieldName string `json:"field_name"`
 
-	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
+	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
 	FieldType AddDealFieldJSONBodyFieldType `json:"field_type"`
 
 	// ImportantFields Configuration for highlighting the field at specific stages.
@@ -1701,7 +1708,7 @@ type PostInstallmentJSONBody struct {
 	// Amount The installment amount. Must be a positive number (excluding 0).
 	Amount float32 `json:"amount"`
 
-	// BillingDate The date which the installment will be charged. Must be in the format YYYY-MM-DD.
+	// BillingDate The date on which the installment will be charged. Must be in the format YYYY-MM-DD.
 	BillingDate string `json:"billing_date"`
 
 	// Description The name of the installment.
@@ -1713,7 +1720,7 @@ type UpdateInstallmentJSONBody struct {
 	// Amount The installment amount. Must be a positive number (excluding 0).
 	Amount *float32 `json:"amount,omitempty"`
 
-	// BillingDate The date which the installment will be charged. Must be in the format YYYY-MM-DD.
+	// BillingDate The date on which the installment will be charged. Must be in the format YYYY-MM-DD.
 	BillingDate *string `json:"billing_date,omitempty"`
 
 	// Description The name of the installment.
@@ -2097,7 +2104,7 @@ type AddOrganizationFieldJSONBody struct {
 	// FieldName Field name
 	FieldName string `json:"field_name"`
 
-	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
+	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
 	FieldType AddOrganizationFieldJSONBodyFieldType `json:"field_type"`
 
 	// ImportantFields Configuration for highlighting the field at specific stages.
@@ -2265,7 +2272,7 @@ type GetOrganizationsParams struct {
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
 	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
 
-	// OwnerId If supplied, only organization owned by the specified user are returned. If filter_id is provided, this is ignored.
+	// OwnerId If supplied, only organizations owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
 
 	// UpdatedSince If set, only organizations with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.
@@ -2496,7 +2503,7 @@ type AddPersonFieldJSONBody struct {
 	// FieldName Field name
 	FieldName string `json:"field_name"`
 
-	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
+	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
 	FieldType AddPersonFieldJSONBodyFieldType `json:"field_type"`
 
 	// ImportantFields Configuration for highlighting the field at specific stages.
@@ -2694,10 +2701,13 @@ type AddPersonJSONBody struct {
 	// AddTime The creation date and time of the person
 	AddTime *string `json:"add_time,omitempty"`
 
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
 	// Emails The emails of the person
 	Emails *[]struct {
 		// Label The email address classification label
-		Label *bool `json:"label,omitempty"`
+		Label *string `json:"label,omitempty"`
 
 		// Primary Whether the email is primary or not
 		Primary *bool `json:"primary,omitempty"`
@@ -2724,7 +2734,7 @@ type AddPersonJSONBody struct {
 	// Phones The phones of the person
 	Phones *[]struct {
 		// Label The phone number classification label
-		Label *bool `json:"label,omitempty"`
+		Label *string `json:"label,omitempty"`
 
 		// Primary Whether the phone number is primary or not
 		Primary *bool `json:"primary,omitempty"`
@@ -2790,10 +2800,13 @@ type UpdatePersonJSONBody struct {
 	// AddTime The creation date and time of the person
 	AddTime *string `json:"add_time,omitempty"`
 
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
 	// Emails The emails of the person
 	Emails *[]struct {
 		// Label The email address classification label
-		Label *bool `json:"label,omitempty"`
+		Label *string `json:"label,omitempty"`
 
 		// Primary Whether the email is primary or not
 		Primary *bool `json:"primary,omitempty"`
@@ -2820,7 +2833,7 @@ type UpdatePersonJSONBody struct {
 	// Phones The phones of the person
 	Phones *[]struct {
 		// Label The phone number classification label
-		Label *bool `json:"label,omitempty"`
+		Label *string `json:"label,omitempty"`
 
 		// Primary Whether the phone number is primary or not
 		Primary *bool `json:"primary,omitempty"`
@@ -2925,7 +2938,7 @@ type AddProductFieldJSONBody struct {
 	// FieldName Field name
 	FieldName string `json:"field_name"`
 
-	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
+	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
 	FieldType AddProductFieldJSONBodyFieldType `json:"field_type"`
 
 	// Options Field options (required for enum and set field types)
@@ -3062,6 +3075,9 @@ type AddProductJSONBody struct {
 	// Code The product code
 	Code *string `json:"code,omitempty"`
 
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
 	// Description The product description
 	Description *string `json:"description,omitempty"`
 
@@ -3145,6 +3161,9 @@ type UpdateProductJSONBody struct {
 
 	// Code The product code
 	Code *string `json:"code,omitempty"`
+
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// Description The product description
 	Description *string `json:"description,omitempty"`
@@ -16590,7 +16609,6 @@ type AddActivityResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The activity object
 		Data *struct {
 			// AddTime The creation date and time of the activity
 			AddTime *string `json:"add_time,omitempty"`
@@ -16786,7 +16804,6 @@ type GetActivityResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The activity object
 		Data *struct {
 			// AddTime The creation date and time of the activity
 			AddTime *string `json:"add_time,omitempty"`
@@ -16952,7 +16969,6 @@ type UpdateActivityResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The activity object
 		Data *struct {
 			// AddTime The creation date and time of the activity
 			AddTime *string `json:"add_time,omitempty"`
@@ -18002,6 +18018,9 @@ type GetDealsResponse struct {
 			// Probability The success probability percentage of the deal
 			Probability *float32 `json:"probability"`
 
+			// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
+
 			// StageChangeTime The last updated date and time of the deal stage
 			StageChangeTime *string `json:"stage_change_time,omitempty"`
 
@@ -18052,7 +18071,6 @@ type AddDealResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The deal object
 		Data *struct {
 			// Acv Only available in Growth and above plans
 			//
@@ -18134,6 +18152,9 @@ type AddDealResponse struct {
 
 			// Probability The success probability percentage of the deal
 			Probability *float32 `json:"probability"`
+
+			// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
 			StageChangeTime *string `json:"stage_change_time,omitempty"`
@@ -18274,6 +18295,9 @@ type GetArchivedDealsResponse struct {
 			// Probability The success probability percentage of the deal
 			Probability *float32 `json:"probability"`
 
+			// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
+
 			// StageChangeTime The last updated date and time of the deal stage
 			StageChangeTime *string `json:"stage_change_time,omitempty"`
 
@@ -18329,7 +18353,7 @@ type GetInstallmentsResponse struct {
 			// Amount The installment amount.
 			Amount *float32 `json:"amount,omitempty"`
 
-			// BillingDate The date which the installment will be charged.
+			// BillingDate The date on which the installment will be charged.
 			BillingDate *string `json:"billing_date,omitempty"`
 
 			// DealId The ID of the deal the installment was added to.
@@ -18610,7 +18634,6 @@ type GetDealResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The deal object
 		Data *struct {
 			// Acv Only available in Growth and above plans
 			//
@@ -18692,6 +18715,9 @@ type GetDealResponse struct {
 
 			// Probability The success probability percentage of the deal
 			Probability *float32 `json:"probability"`
+
+			// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
 			StageChangeTime *string `json:"stage_change_time,omitempty"`
@@ -18743,7 +18769,6 @@ type UpdateDealResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The deal object
 		Data *struct {
 			// Acv Only available in Growth and above plans
 			//
@@ -18825,6 +18850,9 @@ type UpdateDealResponse struct {
 
 			// Probability The success probability percentage of the deal
 			Probability *float32 `json:"probability"`
+
+			// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
 			StageChangeTime *string `json:"stage_change_time,omitempty"`
@@ -19206,7 +19234,6 @@ type AddDealFollowerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON201      *struct {
-		// Data The follower object
 		Data *struct {
 			// AddTime The add time of the following
 			AddTime *string `json:"add_time,omitempty"`
@@ -19320,7 +19347,7 @@ type PostInstallmentResponse struct {
 			// Amount The installment amount.
 			Amount *float32 `json:"amount,omitempty"`
 
-			// BillingDate The date which the installment will be charged.
+			// BillingDate The date on which the installment will be charged.
 			BillingDate *string `json:"billing_date,omitempty"`
 
 			// DealId The ID of the deal the installment was added to.
@@ -19392,7 +19419,7 @@ type UpdateInstallmentResponse struct {
 			// Amount The installment amount.
 			Amount *float32 `json:"amount,omitempty"`
 
-			// BillingDate The date which the installment will be charged.
+			// BillingDate The date on which the installment will be charged.
 			BillingDate *string `json:"billing_date,omitempty"`
 
 			// DealId The ID of the deal the installment was added to.
@@ -20287,8 +20314,17 @@ type GetOrganizationFieldsResponse struct {
 				// AddVisibleFlag Whether the field is shown in the add modal
 				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+				// DealDetailVisibleFlag Whether the field is shown in the deal details view
+				DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 				// DetailsVisibleFlag Whether the field is shown in the details view
 				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+				// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+				OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+				// PersonDetailVisibleFlag Whether the field is shown in the person details view
+				PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 				// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 				ShowInAddDealDialog *struct {
@@ -20402,8 +20438,17 @@ type AddOrganizationFieldResponse struct {
 				// AddVisibleFlag Whether the field is shown in the add modal
 				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+				// DealDetailVisibleFlag Whether the field is shown in the deal details view
+				DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 				// DetailsVisibleFlag Whether the field is shown in the details view
 				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+				// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+				OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+				// PersonDetailVisibleFlag Whether the field is shown in the person details view
+				PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 				// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 				ShowInAddDealDialog *struct {
@@ -20565,8 +20610,17 @@ type GetOrganizationFieldResponse struct {
 				// AddVisibleFlag Whether the field is shown in the add modal
 				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+				// DealDetailVisibleFlag Whether the field is shown in the deal details view
+				DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 				// DetailsVisibleFlag Whether the field is shown in the details view
 				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+				// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+				OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+				// PersonDetailVisibleFlag Whether the field is shown in the person details view
+				PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 				// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 				ShowInAddDealDialog *struct {
@@ -20680,8 +20734,17 @@ type UpdateOrganizationFieldResponse struct {
 				// AddVisibleFlag Whether the field is shown in the add modal
 				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+				// DealDetailVisibleFlag Whether the field is shown in the deal details view
+				DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 				// DetailsVisibleFlag Whether the field is shown in the details view
 				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+				// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+				OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+				// PersonDetailVisibleFlag Whether the field is shown in the person details view
+				PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 				// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 				ShowInAddDealDialog *struct {
@@ -20919,7 +20982,6 @@ type AddOrganizationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The organization object
 		Data *struct {
 			// AddTime The creation date and time of the organization
 			AddTime *string `json:"add_time,omitempty"`
@@ -21102,7 +21164,6 @@ type GetOrganizationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The organization object
 		Data *struct {
 			// AddTime The creation date and time of the organization
 			AddTime *string `json:"add_time,omitempty"`
@@ -21190,7 +21251,6 @@ type UpdateOrganizationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The organization object
 		Data *struct {
 			// AddTime The creation date and time of the organization
 			AddTime *string `json:"add_time,omitempty"`
@@ -21318,7 +21378,6 @@ type AddOrganizationFollowerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON201      *struct {
-		// Data The follower object
 		Data *struct {
 			// AddTime The add time of the following
 			AddTime *string `json:"add_time,omitempty"`
@@ -22151,7 +22210,6 @@ type AddPersonResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The person object
 		Data *struct {
 			// AddTime The creation date and time of the person
 			AddTime *string `json:"add_time,omitempty"`
@@ -22401,7 +22459,6 @@ type GetPersonResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The person object
 		Data *struct {
 			// AddTime The creation date and time of the person
 			AddTime *string `json:"add_time,omitempty"`
@@ -22546,7 +22603,6 @@ type UpdatePersonResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The person object
 		Data *struct {
 			// AddTime The creation date and time of the person
 			AddTime *string `json:"add_time,omitempty"`
@@ -22731,7 +22787,6 @@ type AddPersonFollowerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON201      *struct {
-		// Data The follower object
 		Data *struct {
 			// AddTime The add time of the following
 			AddTime *string `json:"add_time,omitempty"`
@@ -23639,7 +23694,7 @@ type GetProductsResponse struct {
 				// Id The ID of the product
 				Id *float32 `json:"id,omitempty"`
 
-				// IsDeleted Whether this product will be made marked as deleted or not
+				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// IsLinkable Whether this product can be added to a deal or not
@@ -23723,7 +23778,7 @@ type AddProductResponse struct {
 			// Id The ID of the product
 			Id *float32 `json:"id,omitempty"`
 
-			// IsDeleted Whether this product will be made marked as deleted or not
+			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// IsLinkable Whether this product can be added to a deal or not
@@ -23895,7 +23950,7 @@ type GetProductResponse struct {
 			// Id The ID of the product
 			Id *float32 `json:"id,omitempty"`
 
-			// IsDeleted Whether this product will be made marked as deleted or not
+			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// IsLinkable Whether this product can be added to a deal or not
@@ -23975,7 +24030,7 @@ type UpdateProductResponse struct {
 			// Id The ID of the product
 			Id *float32 `json:"id,omitempty"`
 
-			// IsDeleted Whether this product will be made marked as deleted or not
+			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// IsLinkable Whether this product can be added to a deal or not
@@ -24055,7 +24110,7 @@ type DuplicateProductResponse struct {
 			// Id The ID of the product
 			Id *float32 `json:"id,omitempty"`
 
-			// IsDeleted Whether this product will be made marked as deleted or not
+			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// IsLinkable Whether this product can be added to a deal or not
@@ -24147,7 +24202,6 @@ type AddProductFollowerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON201      *struct {
-		// Data The follower object
 		Data *struct {
 			// AddTime The add time of the following
 			AddTime *string `json:"add_time,omitempty"`
@@ -26555,7 +26609,6 @@ func ParseAddActivityResponse(rsp *http.Response) (*AddActivityResponse, error) 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The activity object
 			Data *struct {
 				// AddTime The creation date and time of the activity
 				AddTime *string `json:"add_time,omitempty"`
@@ -26759,7 +26812,6 @@ func ParseGetActivityResponse(rsp *http.Response) (*GetActivityResponse, error) 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The activity object
 			Data *struct {
 				// AddTime The creation date and time of the activity
 				AddTime *string `json:"add_time,omitempty"`
@@ -26929,7 +26981,6 @@ func ParseUpdateActivityResponse(rsp *http.Response) (*UpdateActivityResponse, e
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The activity object
 			Data *struct {
 				// AddTime The creation date and time of the activity
 				AddTime *string `json:"add_time,omitempty"`
@@ -28013,6 +28064,9 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				// Probability The success probability percentage of the deal
 				Probability *float32 `json:"probability"`
 
+				// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
+
 				// StageChangeTime The last updated date and time of the deal stage
 				StageChangeTime *string `json:"stage_change_time,omitempty"`
 
@@ -28067,7 +28121,6 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The deal object
 			Data *struct {
 				// Acv Only available in Growth and above plans
 				//
@@ -28149,6 +28202,9 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 
 				// Probability The success probability percentage of the deal
 				Probability *float32 `json:"probability"`
+
+				// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
 				StageChangeTime *string `json:"stage_change_time,omitempty"`
@@ -28293,6 +28349,9 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				// Probability The success probability percentage of the deal
 				Probability *float32 `json:"probability"`
 
+				// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
+
 				// StageChangeTime The last updated date and time of the deal stage
 				StageChangeTime *string `json:"stage_change_time,omitempty"`
 
@@ -28352,7 +28411,7 @@ func ParseGetInstallmentsResponse(rsp *http.Response) (*GetInstallmentsResponse,
 				// Amount The installment amount.
 				Amount *float32 `json:"amount,omitempty"`
 
-				// BillingDate The date which the installment will be charged.
+				// BillingDate The date on which the installment will be charged.
 				BillingDate *string `json:"billing_date,omitempty"`
 
 				// DealId The ID of the deal the installment was added to.
@@ -28646,7 +28705,6 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The deal object
 			Data *struct {
 				// Acv Only available in Growth and above plans
 				//
@@ -28728,6 +28786,9 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 
 				// Probability The success probability percentage of the deal
 				Probability *float32 `json:"probability"`
+
+				// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
 				StageChangeTime *string `json:"stage_change_time,omitempty"`
@@ -28783,7 +28844,6 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The deal object
 			Data *struct {
 				// Acv Only available in Growth and above plans
 				//
@@ -28865,6 +28925,9 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 
 				// Probability The success probability percentage of the deal
 				Probability *float32 `json:"probability"`
+
+				// SourceLeadId The ID of the lead if the deal was converted from a lead. Only included when requested via include_fields parameter.
+				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
 				StageChangeTime *string `json:"stage_change_time,omitempty"`
@@ -29286,7 +29349,6 @@ func ParseAddDealFollowerResponse(rsp *http.Response) (*AddDealFollowerResponse,
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
-			// Data The follower object
 			Data *struct {
 				// AddTime The add time of the following
 				AddTime *string `json:"add_time,omitempty"`
@@ -29412,7 +29474,7 @@ func ParsePostInstallmentResponse(rsp *http.Response) (*PostInstallmentResponse,
 				// Amount The installment amount.
 				Amount *float32 `json:"amount,omitempty"`
 
-				// BillingDate The date which the installment will be charged.
+				// BillingDate The date on which the installment will be charged.
 				BillingDate *string `json:"billing_date,omitempty"`
 
 				// DealId The ID of the deal the installment was added to.
@@ -29492,7 +29554,7 @@ func ParseUpdateInstallmentResponse(rsp *http.Response) (*UpdateInstallmentRespo
 				// Amount The installment amount.
 				Amount *float32 `json:"amount,omitempty"`
 
-				// BillingDate The date which the installment will be charged.
+				// BillingDate The date on which the installment will be charged.
 				BillingDate *string `json:"billing_date,omitempty"`
 
 				// DealId The ID of the deal the installment was added to.
@@ -30434,8 +30496,17 @@ func ParseGetOrganizationFieldsResponse(rsp *http.Response) (*GetOrganizationFie
 					// AddVisibleFlag Whether the field is shown in the add modal
 					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+					// DealDetailVisibleFlag Whether the field is shown in the deal details view
+					DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 					// DetailsVisibleFlag Whether the field is shown in the details view
 					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+					// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+					OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+					// PersonDetailVisibleFlag Whether the field is shown in the person details view
+					PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 					// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 					ShowInAddDealDialog *struct {
@@ -30552,8 +30623,17 @@ func ParseAddOrganizationFieldResponse(rsp *http.Response) (*AddOrganizationFiel
 					// AddVisibleFlag Whether the field is shown in the add modal
 					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+					// DealDetailVisibleFlag Whether the field is shown in the deal details view
+					DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 					// DetailsVisibleFlag Whether the field is shown in the details view
 					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+					// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+					OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+					// PersonDetailVisibleFlag Whether the field is shown in the person details view
+					PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 					// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 					ShowInAddDealDialog *struct {
@@ -30722,8 +30802,17 @@ func ParseGetOrganizationFieldResponse(rsp *http.Response) (*GetOrganizationFiel
 					// AddVisibleFlag Whether the field is shown in the add modal
 					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+					// DealDetailVisibleFlag Whether the field is shown in the deal details view
+					DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 					// DetailsVisibleFlag Whether the field is shown in the details view
 					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+					// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+					OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+					// PersonDetailVisibleFlag Whether the field is shown in the person details view
+					PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 					// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 					ShowInAddDealDialog *struct {
@@ -30840,8 +30929,17 @@ func ParseUpdateOrganizationFieldResponse(rsp *http.Response) (*UpdateOrganizati
 					// AddVisibleFlag Whether the field is shown in the add modal
 					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 
+					// DealDetailVisibleFlag Whether the field is shown in the deal details view
+					DealDetailVisibleFlag *bool `json:"deal_detail_visible_flag,omitempty"`
+
 					// DetailsVisibleFlag Whether the field is shown in the details view
 					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+
+					// OrgDetailVisibleFlag Whether the field is shown in the organization details view
+					OrgDetailVisibleFlag *bool `json:"org_detail_visible_flag,omitempty"`
+
+					// PersonDetailVisibleFlag Whether the field is shown in the person details view
+					PersonDetailVisibleFlag *bool `json:"person_detail_visible_flag,omitempty"`
 
 					// ShowInAddDealDialog Configuration for showing the field in the add deal dialog
 					ShowInAddDealDialog *struct {
@@ -31098,7 +31196,6 @@ func ParseAddOrganizationResponse(rsp *http.Response) (*AddOrganizationResponse,
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The organization object
 			Data *struct {
 				// AddTime The creation date and time of the organization
 				AddTime *string `json:"add_time,omitempty"`
@@ -31293,7 +31390,6 @@ func ParseGetOrganizationResponse(rsp *http.Response) (*GetOrganizationResponse,
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The organization object
 			Data *struct {
 				// AddTime The creation date and time of the organization
 				AddTime *string `json:"add_time,omitempty"`
@@ -31385,7 +31481,6 @@ func ParseUpdateOrganizationResponse(rsp *http.Response) (*UpdateOrganizationRes
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The organization object
 			Data *struct {
 				// AddTime The creation date and time of the organization
 				AddTime *string `json:"add_time,omitempty"`
@@ -31521,7 +31616,6 @@ func ParseAddOrganizationFollowerResponse(rsp *http.Response) (*AddOrganizationF
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
-			// Data The follower object
 			Data *struct {
 				// AddTime The add time of the following
 				AddTime *string `json:"add_time,omitempty"`
@@ -32398,7 +32492,6 @@ func ParseAddPersonResponse(rsp *http.Response) (*AddPersonResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The person object
 			Data *struct {
 				// AddTime The creation date and time of the person
 				AddTime *string `json:"add_time,omitempty"`
@@ -32660,7 +32753,6 @@ func ParseGetPersonResponse(rsp *http.Response) (*GetPersonResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The person object
 			Data *struct {
 				// AddTime The creation date and time of the person
 				AddTime *string `json:"add_time,omitempty"`
@@ -32809,7 +32901,6 @@ func ParseUpdatePersonResponse(rsp *http.Response) (*UpdatePersonResponse, error
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The person object
 			Data *struct {
 				// AddTime The creation date and time of the person
 				AddTime *string `json:"add_time,omitempty"`
@@ -33002,7 +33093,6 @@ func ParseAddPersonFollowerResponse(rsp *http.Response) (*AddPersonFollowerRespo
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
-			// Data The follower object
 			Data *struct {
 				// AddTime The add time of the following
 				AddTime *string `json:"add_time,omitempty"`
@@ -33974,7 +34064,7 @@ func ParseGetProductsResponse(rsp *http.Response) (*GetProductsResponse, error) 
 					// Id The ID of the product
 					Id *float32 `json:"id,omitempty"`
 
-					// IsDeleted Whether this product will be made marked as deleted or not
+					// IsDeleted Whether this product will be marked as deleted or not
 					IsDeleted *bool `json:"is_deleted,omitempty"`
 
 					// IsLinkable Whether this product can be added to a deal or not
@@ -34060,7 +34150,7 @@ func ParseAddProductResponse(rsp *http.Response) (*AddProductResponse, error) {
 				// Id The ID of the product
 				Id *float32 `json:"id,omitempty"`
 
-				// IsDeleted Whether this product will be made marked as deleted or not
+				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// IsLinkable Whether this product can be added to a deal or not
@@ -34242,7 +34332,7 @@ func ParseGetProductResponse(rsp *http.Response) (*GetProductResponse, error) {
 				// Id The ID of the product
 				Id *float32 `json:"id,omitempty"`
 
-				// IsDeleted Whether this product will be made marked as deleted or not
+				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// IsLinkable Whether this product can be added to a deal or not
@@ -34324,7 +34414,7 @@ func ParseUpdateProductResponse(rsp *http.Response) (*UpdateProductResponse, err
 				// Id The ID of the product
 				Id *float32 `json:"id,omitempty"`
 
-				// IsDeleted Whether this product will be made marked as deleted or not
+				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// IsLinkable Whether this product can be added to a deal or not
@@ -34406,7 +34496,7 @@ func ParseDuplicateProductResponse(rsp *http.Response) (*DuplicateProductRespons
 				// Id The ID of the product
 				Id *float32 `json:"id,omitempty"`
 
-				// IsDeleted Whether this product will be made marked as deleted or not
+				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// IsLinkable Whether this product can be added to a deal or not
@@ -34504,7 +34594,6 @@ func ParseAddProductFollowerResponse(rsp *http.Response) (*AddProductFollowerRes
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
-			// Data The follower object
 			Data *struct {
 				// AddTime The add time of the following
 				AddTime *string `json:"add_time,omitempty"`
