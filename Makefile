@@ -4,6 +4,10 @@ OAPI_CODEGEN_VERSION := v2.5.1
 OAPI_CODEGEN := go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@$(OAPI_CODEGEN_VERSION)
 GOLANGCI_LINT_VERSION := v2.8.0
 GOLANGCI_LINT := go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
+GOVULNCHECK_VERSION := v1.1.4
+GOVULNCHECK := go run golang.org/x/vuln/cmd/govulncheck@$(GOVULNCHECK_VERSION)
+GOSEC_VERSION := v2.24.7
+GOSEC := go run github.com/securego/gosec/v2/cmd/gosec@$(GOSEC_VERSION)
 
 .PHONY: test
 test:
@@ -16,6 +20,17 @@ fmt:
 .PHONY: lint
 lint:
 	$(GOLANGCI_LINT) run ./...
+
+.PHONY: govulncheck
+govulncheck:
+	$(GOVULNCHECK) ./...
+
+.PHONY: gosec
+gosec:
+	$(GOSEC) ./...
+
+.PHONY: security
+security: govulncheck gosec
 
 .PHONY: docs
 docs:
