@@ -7,6 +7,12 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-03-22
+
+### Added
+- Support for `PersonID`, `OrganizationID` and `IncludeFields` parameters in search options for leads
+- Support for `OrganizationID` and `IncludeFields` parameters in search options for persons
+
 ## [1.0.3] - 2026-03-22
 
 ### Added
