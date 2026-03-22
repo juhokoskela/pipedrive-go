@@ -4,69 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"net/url"
 	"strings"
 	"testing"
 )
-
-func TestPersonsService_ListCollection(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/persons/collection" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("limit"); got != "1" {
-			t.Fatalf("unexpected limit: %q", got)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":1,"name":"Alice"}],"additional_data":{"next_cursor":"c1"}}`))
-	})
-
-	query := url.Values{}
-	query.Set("limit", "1")
-	persons, page, err := client.Persons.ListCollection(context.Background(), WithPersonsQuery(query))
-	if err != nil {
-		t.Fatalf("ListCollection error: %v", err)
-	}
-	if len(persons) != 1 || persons[0].ID != 1 || persons[0].Name != "Alice" {
-		t.Fatalf("unexpected persons: %#v", persons)
-	}
-	if page == nil || page.NextCursor == nil || *page.NextCursor != "c1" {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
-func TestPersonsService_Delete(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodDelete {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/persons" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("ids"); got != "2,3" {
-			t.Fatalf("unexpected ids: %q", got)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true}`))
-	})
-
-	ok, err := client.Persons.Delete(context.Background(), []PersonID{2, 3})
-	if err != nil {
-		t.Fatalf("Delete error: %v", err)
-	}
-	if !ok {
-		t.Fatalf("expected delete success")
-	}
-}
 
 func TestPersonsService_Merge(t *testing.T) {
 	t.Parallel()
@@ -100,33 +40,6 @@ func TestPersonsService_Merge(t *testing.T) {
 	}
 }
 
-func TestPersonsService_ListActivities(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/persons/7/activities" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":1,"subject":"Call"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
-	})
-
-	activities, page, err := client.Persons.ListActivities(context.Background(), PersonID(7))
-	if err != nil {
-		t.Fatalf("ListActivities error: %v", err)
-	}
-	if len(activities) != 1 || activities[0].ID != 1 {
-		t.Fatalf("unexpected activities: %#v", activities)
-	}
-	if page == nil || page.Limit != 1 {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
 func TestPersonsService_Changelog(t *testing.T) {
 	t.Parallel()
 
@@ -150,33 +63,6 @@ func TestPersonsService_Changelog(t *testing.T) {
 		t.Fatalf("unexpected changes: %#v", changes)
 	}
 	if page == nil || page.NextCursor == nil || *page.NextCursor != "c2" {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
-func TestPersonsService_ListDeals(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/persons/11/deals" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":2,"title":"Deal"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
-	})
-
-	deals, page, err := client.Persons.ListDeals(context.Background(), PersonID(11))
-	if err != nil {
-		t.Fatalf("ListDeals error: %v", err)
-	}
-	if len(deals) != 1 || deals[0].ID != 2 {
-		t.Fatalf("unexpected deals: %#v", deals)
-	}
-	if page == nil || page.Limit != 1 {
 		t.Fatalf("unexpected page: %#v", page)
 	}
 }

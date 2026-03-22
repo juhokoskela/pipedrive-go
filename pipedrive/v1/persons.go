@@ -63,39 +63,6 @@ func newPersonsOptions(opts []PersonsOption) personsOptions {
 	return cfg
 }
 
-func (s *PersonsService) ListCollection(ctx context.Context, opts ...PersonsOption) ([]Person, *CollectionPagination, error) {
-	cfg := newPersonsOptions(opts)
-
-	var payload struct {
-		Data           []Person              `json:"data"`
-		AdditionalData *CollectionPagination `json:"additional_data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, "/persons/collection", cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, nil, err
-	}
-	return payload.Data, payload.AdditionalData, nil
-}
-
-func (s *PersonsService) Delete(ctx context.Context, ids []PersonID, opts ...PersonsOption) (bool, error) {
-	cfg := newPersonsOptions(opts)
-	query := mergeQueryValues(url.Values{}, cfg.query)
-	if len(ids) == 0 {
-		return false, fmt.Errorf("at least one person id is required")
-	}
-	query.Set("ids", joinIDs(ids))
-
-	var payload struct {
-		Success *bool `json:"success"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodDelete, "/persons", query, nil, &payload, cfg.requestOptions...); err != nil {
-		return false, err
-	}
-	if payload.Success == nil {
-		return false, fmt.Errorf("missing persons delete success in response")
-	}
-	return *payload.Success, nil
-}
-
 func (s *PersonsService) Merge(ctx context.Context, id PersonID, mergeWithID PersonID, opts ...PersonsOption) (*Person, error) {
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/merge", id)
@@ -113,26 +80,6 @@ func (s *PersonsService) Merge(ctx context.Context, id PersonID, mergeWithID Per
 	return payload.Data, nil
 }
 
-func (s *PersonsService) ListActivities(ctx context.Context, id PersonID, opts ...PersonsOption) ([]Activity, *Pagination, error) {
-	cfg := newPersonsOptions(opts)
-	path := fmt.Sprintf("/persons/%d/activities", id)
-
-	var payload struct {
-		Data           []Activity `json:"data"`
-		AdditionalData *struct {
-			Pagination *Pagination `json:"pagination"`
-		} `json:"additional_data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, nil, err
-	}
-	var page *Pagination
-	if payload.AdditionalData != nil {
-		page = payload.AdditionalData.Pagination
-	}
-	return payload.Data, page, nil
-}
-
 func (s *PersonsService) Changelog(ctx context.Context, id PersonID, opts ...PersonsOption) ([]map[string]any, *CollectionPagination, error) {
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/changelog", id)
@@ -145,26 +92,6 @@ func (s *PersonsService) Changelog(ctx context.Context, id PersonID, opts ...Per
 		return nil, nil, err
 	}
 	return payload.Data, payload.AdditionalData, nil
-}
-
-func (s *PersonsService) ListDeals(ctx context.Context, id PersonID, opts ...PersonsOption) ([]Deal, *Pagination, error) {
-	cfg := newPersonsOptions(opts)
-	path := fmt.Sprintf("/persons/%d/deals", id)
-
-	var payload struct {
-		Data           []Deal `json:"data"`
-		AdditionalData *struct {
-			Pagination *Pagination `json:"pagination"`
-		} `json:"additional_data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, nil, err
-	}
-	var page *Pagination
-	if payload.AdditionalData != nil {
-		page = payload.AdditionalData.Pagination
-	}
-	return payload.Data, page, nil
 }
 
 func (s *PersonsService) ListFiles(ctx context.Context, id PersonID, opts ...PersonsOption) ([]File, *Pagination, error) {

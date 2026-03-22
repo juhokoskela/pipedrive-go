@@ -6,48 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
-
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
-
-func TestDealsService_ListCollection(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/deals/collection" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("limit"); got != "1" {
-			t.Fatalf("unexpected limit: %q", got)
-		}
-		if got := r.Header.Get("X-Test"); got != "1" {
-			t.Fatalf("unexpected header X-Test: %q", got)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":1,"title":"Deal A"}],"additional_data":{"next_cursor":"c1"}}`))
-	})
-
-	query := url.Values{}
-	query.Set("limit", "1")
-	deals, page, err := client.Deals.ListCollection(
-		context.Background(),
-		WithDealsQuery(query),
-		WithDealsRequestOptions(pipedrive.WithHeader("X-Test", "1")),
-	)
-	if err != nil {
-		t.Fatalf("ListCollection error: %v", err)
-	}
-	if len(deals) != 1 || deals[0].ID != 1 || deals[0].Title != "Deal A" {
-		t.Fatalf("unexpected deals: %#v", deals)
-	}
-	if page == nil || page.NextCursor == nil || *page.NextCursor != "c1" {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
 
 func TestDealsService_Summary(t *testing.T) {
 	t.Parallel()
@@ -144,38 +103,6 @@ func TestDealsService_ArchivedTimeline(t *testing.T) {
 	_, err := client.Deals.ArchivedTimeline(context.Background())
 	if err != nil {
 		t.Fatalf("ArchivedTimeline error: %v", err)
-	}
-}
-
-func TestDealsService_ListActivities(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/deals/7/activities" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("limit"); got != "2" {
-			t.Fatalf("unexpected limit: %q", got)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":3,"subject":"Call"}],"additional_data":{"pagination":{"start":0,"limit":2,"more_items_in_collection":false}}}`))
-	})
-
-	query := url.Values{}
-	query.Set("limit", "2")
-	activities, page, err := client.Deals.ListActivities(context.Background(), DealID(7), WithDealsQuery(query))
-	if err != nil {
-		t.Fatalf("ListActivities error: %v", err)
-	}
-	if len(activities) != 1 || activities[0].ID != 3 {
-		t.Fatalf("unexpected activities: %#v", activities)
-	}
-	if page == nil || page.Limit != 2 {
-		t.Fatalf("unexpected page: %#v", page)
 	}
 }
 
@@ -370,33 +297,6 @@ func TestDealsService_ParticipantsChangelog(t *testing.T) {
 	}
 }
 
-func TestDealsService_ListPersons(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/deals/15/persons" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":31,"name":"Person"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
-	})
-
-	people, page, err := client.Deals.ListPersons(context.Background(), DealID(15))
-	if err != nil {
-		t.Fatalf("ListPersons error: %v", err)
-	}
-	if len(people) != 1 || people[0].ID != 31 {
-		t.Fatalf("unexpected people: %#v", people)
-	}
-	if page == nil || page.Limit != 1 {
-		t.Fatalf("unexpected page: %#v", page)
-	}
-}
-
 func TestDealsService_ListUpdates(t *testing.T) {
 	t.Parallel()
 
@@ -501,32 +401,5 @@ func TestDealsService_Duplicate(t *testing.T) {
 	}
 	if deal.ID != 99 {
 		t.Fatalf("unexpected deal: %#v", deal)
-	}
-}
-
-func TestDealsService_Delete(t *testing.T) {
-	t.Parallel()
-
-	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodDelete {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/deals" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("ids"); got != "1,2" {
-			t.Fatalf("unexpected ids: %q", got)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true}`))
-	})
-
-	ok, err := client.Deals.Delete(context.Background(), []DealID{1, 2})
-	if err != nil {
-		t.Fatalf("Delete error: %v", err)
-	}
-	if !ok {
-		t.Fatalf("expected delete success")
 	}
 }

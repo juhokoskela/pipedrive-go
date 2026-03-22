@@ -92,19 +92,6 @@ func newDealsOptions(opts []DealsOption) dealsOptions {
 	return cfg
 }
 
-func (s *DealsService) ListCollection(ctx context.Context, opts ...DealsOption) ([]Deal, *CollectionPagination, error) {
-	cfg := newDealsOptions(opts)
-
-	var payload struct {
-		Data           []Deal                `json:"data"`
-		AdditionalData *CollectionPagination `json:"additional_data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, "/deals/collection", cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, nil, err
-	}
-	return payload.Data, payload.AdditionalData, nil
-}
-
 func (s *DealsService) Summary(ctx context.Context, opts ...DealsOption) (*DealsSummary, error) {
 	cfg := newDealsOptions(opts)
 
@@ -157,26 +144,6 @@ func (s *DealsService) ArchivedTimeline(ctx context.Context, opts ...DealsOption
 		return nil, err
 	}
 	return payload.Data, nil
-}
-
-func (s *DealsService) ListActivities(ctx context.Context, id DealID, opts ...DealsOption) ([]Activity, *Pagination, error) {
-	cfg := newDealsOptions(opts)
-	path := fmt.Sprintf("/deals/%d/activities", id)
-
-	var payload struct {
-		Data           []Activity `json:"data"`
-		AdditionalData *struct {
-			Pagination *Pagination `json:"pagination"`
-		} `json:"additional_data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, nil, err
-	}
-	var page *Pagination
-	if payload.AdditionalData != nil {
-		page = payload.AdditionalData.Pagination
-	}
-	return payload.Data, page, nil
 }
 
 func (s *DealsService) Changelog(ctx context.Context, id DealID, opts ...DealsOption) ([]map[string]any, *CollectionPagination, error) {
@@ -300,26 +267,6 @@ func (s *DealsService) ParticipantsChangelog(ctx context.Context, id DealID, opt
 	return payload.Data, payload.AdditionalData, nil
 }
 
-func (s *DealsService) ListPersons(ctx context.Context, id DealID, opts ...DealsOption) ([]Person, *Pagination, error) {
-	cfg := newDealsOptions(opts)
-	path := fmt.Sprintf("/deals/%d/persons", id)
-
-	var payload struct {
-		Data           []Person `json:"data"`
-		AdditionalData *struct {
-			Pagination *Pagination `json:"pagination"`
-		} `json:"additional_data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, nil, err
-	}
-	var page *Pagination
-	if payload.AdditionalData != nil {
-		page = payload.AdditionalData.Pagination
-	}
-	return payload.Data, page, nil
-}
-
 func (s *DealsService) ListUpdates(ctx context.Context, id DealID, opts ...DealsOption) ([]map[string]any, *Pagination, error) {
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/flow", id)
@@ -384,24 +331,4 @@ func (s *DealsService) Duplicate(ctx context.Context, id DealID, opts ...DealsOp
 		return nil, fmt.Errorf("missing duplicated deal data in response")
 	}
 	return payload.Data, nil
-}
-
-func (s *DealsService) Delete(ctx context.Context, ids []DealID, opts ...DealsOption) (bool, error) {
-	cfg := newDealsOptions(opts)
-	query := mergeQueryValues(url.Values{}, cfg.query)
-	if len(ids) == 0 {
-		return false, fmt.Errorf("at least one deal id is required")
-	}
-	query.Set("ids", joinIDs(ids))
-
-	var payload struct {
-		Success *bool `json:"success"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodDelete, "/deals", query, nil, &payload, cfg.requestOptions...); err != nil {
-		return false, err
-	}
-	if payload.Success == nil {
-		return false, fmt.Errorf("missing deal delete success in response")
-	}
-	return *payload.Success, nil
 }
