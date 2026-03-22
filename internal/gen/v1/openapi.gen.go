@@ -137,14 +137,6 @@ const (
 	ReceiveMessageJSONBodyStatusSent      ReceiveMessageJSONBodyStatus = "sent"
 )
 
-// Defines values for GetDealsCollectionParamsStatus.
-const (
-	GetDealsCollectionParamsStatusDeleted GetDealsCollectionParamsStatus = "deleted"
-	GetDealsCollectionParamsStatusLost    GetDealsCollectionParamsStatus = "lost"
-	GetDealsCollectionParamsStatusOpen    GetDealsCollectionParamsStatus = "open"
-	GetDealsCollectionParamsStatusWon     GetDealsCollectionParamsStatus = "won"
-)
-
 // Defines values for GetDealsSummaryParamsStatus.
 const (
 	GetDealsSummaryParamsStatusLost GetDealsSummaryParamsStatus = "lost"
@@ -185,12 +177,6 @@ const (
 const (
 	GetArchivedDealsTimelineParamsExcludeDealsN0 GetArchivedDealsTimelineParamsExcludeDeals = 0
 	GetArchivedDealsTimelineParamsExcludeDealsN1 GetArchivedDealsTimelineParamsExcludeDeals = 1
-)
-
-// Defines values for GetDealActivitiesParamsDone.
-const (
-	GetDealActivitiesParamsDoneN0 GetDealActivitiesParamsDone = 0
-	GetDealActivitiesParamsDoneN1 GetDealActivitiesParamsDone = 1
 )
 
 // Defines values for AddFileAndLinkItFormdataBodyFileType.
@@ -548,27 +534,6 @@ const (
 	UpdateOrganizationRelationshipJSONBodyTypeRelated UpdateOrganizationRelationshipJSONBodyType = "related"
 )
 
-// Defines values for GetOrganizationActivitiesParamsDone.
-const (
-	GetOrganizationActivitiesParamsDoneN0 GetOrganizationActivitiesParamsDone = 0
-	GetOrganizationActivitiesParamsDoneN1 GetOrganizationActivitiesParamsDone = 1
-)
-
-// Defines values for GetOrganizationDealsParamsStatus.
-const (
-	GetOrganizationDealsParamsStatusAllNotDeleted GetOrganizationDealsParamsStatus = "all_not_deleted"
-	GetOrganizationDealsParamsStatusDeleted       GetOrganizationDealsParamsStatus = "deleted"
-	GetOrganizationDealsParamsStatusLost          GetOrganizationDealsParamsStatus = "lost"
-	GetOrganizationDealsParamsStatusOpen          GetOrganizationDealsParamsStatus = "open"
-	GetOrganizationDealsParamsStatusWon           GetOrganizationDealsParamsStatus = "won"
-)
-
-// Defines values for GetOrganizationDealsParamsOnlyPrimaryAssociation.
-const (
-	GetOrganizationDealsParamsOnlyPrimaryAssociationN0 GetOrganizationDealsParamsOnlyPrimaryAssociation = 0
-	GetOrganizationDealsParamsOnlyPrimaryAssociationN1 GetOrganizationDealsParamsOnlyPrimaryAssociation = 1
-)
-
 // Defines values for GetPermissionSetsParamsApp.
 const (
 	GetPermissionSetsParamsAppAccountSettings GetPermissionSetsParamsApp = "account_settings"
@@ -576,21 +541,6 @@ const (
 	GetPermissionSetsParamsAppGlobal          GetPermissionSetsParamsApp = "global"
 	GetPermissionSetsParamsAppProjects        GetPermissionSetsParamsApp = "projects"
 	GetPermissionSetsParamsAppSales           GetPermissionSetsParamsApp = "sales"
-)
-
-// Defines values for GetPersonActivitiesParamsDone.
-const (
-	GetPersonActivitiesParamsDoneN0 GetPersonActivitiesParamsDone = 0
-	GetPersonActivitiesParamsDoneN1 GetPersonActivitiesParamsDone = 1
-)
-
-// Defines values for GetPersonDealsParamsStatus.
-const (
-	GetPersonDealsParamsStatusAllNotDeleted GetPersonDealsParamsStatus = "all_not_deleted"
-	GetPersonDealsParamsStatusDeleted       GetPersonDealsParamsStatus = "deleted"
-	GetPersonDealsParamsStatusLost          GetPersonDealsParamsStatus = "lost"
-	GetPersonDealsParamsStatusOpen          GetPersonDealsParamsStatus = "open"
-	GetPersonDealsParamsStatusWon           GetPersonDealsParamsStatus = "won"
 )
 
 // Defines values for GetPipelineDealsParamsEveryone.
@@ -607,11 +557,11 @@ const (
 
 // Defines values for GetProductDealsParamsStatus.
 const (
-	GetProductDealsParamsStatusAllNotDeleted GetProductDealsParamsStatus = "all_not_deleted"
-	GetProductDealsParamsStatusDeleted       GetProductDealsParamsStatus = "deleted"
-	GetProductDealsParamsStatusLost          GetProductDealsParamsStatus = "lost"
-	GetProductDealsParamsStatusOpen          GetProductDealsParamsStatus = "open"
-	GetProductDealsParamsStatusWon           GetProductDealsParamsStatus = "won"
+	AllNotDeleted GetProductDealsParamsStatus = "all_not_deleted"
+	Deleted       GetProductDealsParamsStatus = "deleted"
+	Lost          GetProductDealsParamsStatus = "lost"
+	Open          GetProductDealsParamsStatus = "open"
+	Won           GetProductDealsParamsStatus = "won"
 )
 
 // Defines values for GetRecentsParamsItems.
@@ -715,42 +665,6 @@ const (
 	N10 AddWebhookJSONBodyVersion = "1.0"
 	N20 AddWebhookJSONBodyVersion = "2.0"
 )
-
-// DeleteActivitiesParams defines parameters for DeleteActivities.
-type DeleteActivitiesParams struct {
-	// Ids The comma-separated IDs of activities that will be deleted
-	Ids string `form:"ids" json:"ids"`
-}
-
-// GetActivitiesCollectionParams defines parameters for GetActivitiesCollection.
-type GetActivitiesCollectionParams struct {
-	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
-	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Since The time boundary that points to the start of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Since *string `form:"since,omitempty" json:"since,omitempty"`
-
-	// Until The time boundary that points to the end of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Until *string `form:"until,omitempty" json:"until,omitempty"`
-
-	// UserId The ID of the user whose activities will be fetched. If omitted, all activities are returned.
-	UserId *int `form:"user_id,omitempty" json:"user_id,omitempty"`
-
-	// Done Whether the activity is done or not. `false` = Not done, `true` = Done. If omitted, returns both done and not done activities.
-	Done *bool `form:"done,omitempty" json:"done,omitempty"`
-
-	// Type The type of the activity, can be one type or multiple types separated by a comma. This is in correlation with the `key_string` parameter of ActivityTypes.
-	Type *string `form:"type,omitempty" json:"type,omitempty"`
-}
-
-// DeleteActivityTypesParams defines parameters for DeleteActivityTypes.
-type DeleteActivityTypesParams struct {
-	// Ids The comma-separated activity type IDs
-	Ids string `form:"ids" json:"ids"`
-}
 
 // AddActivityTypeJSONBody defines parameters for AddActivityType.
 type AddActivityTypeJSONBody struct {
@@ -938,39 +852,6 @@ type DeleteDealFieldsParams struct {
 	Ids string `form:"ids" json:"ids"`
 }
 
-// DeleteDealsParams defines parameters for DeleteDeals.
-type DeleteDealsParams struct {
-	// Ids The comma-separated IDs that will be deleted
-	Ids string `form:"ids" json:"ids"`
-}
-
-// GetDealsCollectionParams defines parameters for GetDealsCollection.
-type GetDealsCollectionParams struct {
-	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
-	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Since The time boundary that points to the start of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Since *string `form:"since,omitempty" json:"since,omitempty"`
-
-	// Until The time boundary that points to the end of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Until *string `form:"until,omitempty" json:"until,omitempty"`
-
-	// UserId If supplied, only deals matching the given user will be returned
-	UserId *int `form:"user_id,omitempty" json:"user_id,omitempty"`
-
-	// StageId If supplied, only deals within the given stage will be returned
-	StageId *int `form:"stage_id,omitempty" json:"stage_id,omitempty"`
-
-	// Status Only fetch deals with a specific status. If omitted, all not deleted deals are returned. If set to deleted, deals that have been deleted up to 30 days ago will be included.
-	Status *GetDealsCollectionParamsStatus `form:"status,omitempty" json:"status,omitempty"`
-}
-
-// GetDealsCollectionParamsStatus defines parameters for GetDealsCollection.
-type GetDealsCollectionParamsStatus string
-
 // GetDealsSummaryParams defines parameters for GetDealsSummary.
 type GetDealsSummaryParams struct {
 	// Status Only fetch deals with a specific status. open = Open, won = Won, lost = Lost.
@@ -1085,24 +966,6 @@ type GetArchivedDealsTimelineParamsInterval string
 // GetArchivedDealsTimelineParamsExcludeDeals defines parameters for GetArchivedDealsTimeline.
 type GetArchivedDealsTimelineParamsExcludeDeals float32
 
-// GetDealActivitiesParams defines parameters for GetDealActivities.
-type GetDealActivitiesParams struct {
-	// Start Pagination start
-	Start *int `form:"start,omitempty" json:"start,omitempty"`
-
-	// Limit Items shown per page
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Done Whether the activity is done or not. 0 = Not done, 1 = Done. If omitted, returns both Done and Not done activities.
-	Done *GetDealActivitiesParamsDone `form:"done,omitempty" json:"done,omitempty"`
-
-	// Exclude A comma-separated string of activity IDs to exclude from result
-	Exclude *string `form:"exclude,omitempty" json:"exclude,omitempty"`
-}
-
-// GetDealActivitiesParamsDone defines parameters for GetDealActivities.
-type GetDealActivitiesParamsDone float32
-
 // GetDealChangelogParams defines parameters for GetDealChangelog.
 type GetDealChangelogParams struct {
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -1176,15 +1039,6 @@ type GetDealParticipantsChangelogParams struct {
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
 	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-}
-
-// GetDealPersonsParams defines parameters for GetDealPersons.
-type GetDealPersonsParams struct {
-	// Start Pagination start
-	Start *int `form:"start,omitempty" json:"start,omitempty"`
-
-	// Limit Items shown per page
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // GetFilesParams defines parameters for GetFiles.
@@ -1479,6 +1333,9 @@ type GetLeadsParams struct {
 
 	// FilterId The ID of the filter to use
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
+
+	// UpdatedSince If set, only leads with an `update_time` later than or equal to this time are returned. In ISO 8601 format, e.g. 2025-01-01T10:20:00Z.
+	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
 
 	// Sort The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys).
 	Sort *GetLeadsParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
@@ -1798,6 +1655,9 @@ type GetNotesParams struct {
 	// EndDate The date in format of YYYY-MM-DD until which notes to fetch to
 	EndDate *openapi_types.Date `form:"end_date,omitempty" json:"end_date,omitempty"`
 
+	// UpdatedSince If set, only notes with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.
+	UpdatedSince *time.Time `form:"updated_since,omitempty" json:"updated_since,omitempty"`
+
 	// PinnedToLeadFlag If set, the results are filtered by note to lead pinning state
 	PinnedToLeadFlag *GetNotesParamsPinnedToLeadFlag `form:"pinned_to_lead_flag,omitempty" json:"pinned_to_lead_flag,omitempty"`
 
@@ -2070,51 +1930,6 @@ type UpdateOrganizationRelationshipJSONBody struct {
 // UpdateOrganizationRelationshipJSONBodyType defines parameters for UpdateOrganizationRelationship.
 type UpdateOrganizationRelationshipJSONBodyType string
 
-// DeleteOrganizationsParams defines parameters for DeleteOrganizations.
-type DeleteOrganizationsParams struct {
-	// Ids The comma-separated IDs that will be deleted
-	Ids string `form:"ids" json:"ids"`
-}
-
-// GetOrganizationsCollectionParams defines parameters for GetOrganizationsCollection.
-type GetOrganizationsCollectionParams struct {
-	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
-	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Since The time boundary that points to the start of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Since *string `form:"since,omitempty" json:"since,omitempty"`
-
-	// Until The time boundary that points to the end of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Until *string `form:"until,omitempty" json:"until,omitempty"`
-
-	// OwnerId If supplied, only organizations owned by the given user will be returned
-	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
-
-	// FirstChar If supplied, only organizations whose name starts with the specified letter will be returned (case-insensitive)
-	FirstChar *string `form:"first_char,omitempty" json:"first_char,omitempty"`
-}
-
-// GetOrganizationActivitiesParams defines parameters for GetOrganizationActivities.
-type GetOrganizationActivitiesParams struct {
-	// Start Pagination start
-	Start *int `form:"start,omitempty" json:"start,omitempty"`
-
-	// Limit Items shown per page
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Done Whether the activity is done or not. 0 = Not done, 1 = Done. If omitted returns both Done and Not done activities.
-	Done *GetOrganizationActivitiesParamsDone `form:"done,omitempty" json:"done,omitempty"`
-
-	// Exclude A comma-separated string of activity IDs to exclude from result
-	Exclude *string `form:"exclude,omitempty" json:"exclude,omitempty"`
-}
-
-// GetOrganizationActivitiesParamsDone defines parameters for GetOrganizationActivities.
-type GetOrganizationActivitiesParamsDone float32
-
 // GetOrganizationChangelogParams defines parameters for GetOrganizationChangelog.
 type GetOrganizationChangelogParams struct {
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2123,30 +1938,6 @@ type GetOrganizationChangelogParams struct {
 	// Limit Items shown per page
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 }
-
-// GetOrganizationDealsParams defines parameters for GetOrganizationDeals.
-type GetOrganizationDealsParams struct {
-	// Start Pagination start
-	Start *int `form:"start,omitempty" json:"start,omitempty"`
-
-	// Limit Items shown per page
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Status Only fetch deals with a specific status. If omitted, all not deleted deals are returned. If set to deleted, deals that have been deleted up to 30 days ago will be included.
-	Status *GetOrganizationDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
-
-	// Sort The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys).
-	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
-
-	// OnlyPrimaryAssociation If set, only deals that are directly associated to the organization are fetched. If not set (default), all deals are fetched that are either directly or indirectly related to the organization. Indirect relations include relations through custom, organization-type fields and through persons of the given organization.
-	OnlyPrimaryAssociation *GetOrganizationDealsParamsOnlyPrimaryAssociation `form:"only_primary_association,omitempty" json:"only_primary_association,omitempty"`
-}
-
-// GetOrganizationDealsParamsStatus defines parameters for GetOrganizationDeals.
-type GetOrganizationDealsParamsStatus string
-
-// GetOrganizationDealsParamsOnlyPrimaryAssociation defines parameters for GetOrganizationDeals.
-type GetOrganizationDealsParamsOnlyPrimaryAssociation float32
 
 // GetOrganizationFilesParams defines parameters for GetOrganizationFiles.
 type GetOrganizationFilesParams struct {
@@ -2190,15 +1981,6 @@ type MergeOrganizationsJSONBody struct {
 	MergeWithId int `json:"merge_with_id"`
 }
 
-// GetOrganizationPersonsParams defines parameters for GetOrganizationPersons.
-type GetOrganizationPersonsParams struct {
-	// Start Pagination start
-	Start *int `form:"start,omitempty" json:"start,omitempty"`
-
-	// Limit Items shown per page
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-}
-
 // GetPermissionSetsParams defines parameters for GetPermissionSets.
 type GetPermissionSetsParams struct {
 	// App The app to filter the permission sets by
@@ -2223,51 +2005,6 @@ type DeletePersonFieldsParams struct {
 	Ids string `form:"ids" json:"ids"`
 }
 
-// DeletePersonsParams defines parameters for DeletePersons.
-type DeletePersonsParams struct {
-	// Ids The comma-separated IDs that will be deleted
-	Ids string `form:"ids" json:"ids"`
-}
-
-// GetPersonsCollectionParams defines parameters for GetPersonsCollection.
-type GetPersonsCollectionParams struct {
-	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
-	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Since The time boundary that points to the start of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Since *string `form:"since,omitempty" json:"since,omitempty"`
-
-	// Until The time boundary that points to the end of the range of data. Datetime in ISO 8601 format. E.g. 2022-11-01 08:55:59. Operates on the `update_time` field.
-	Until *string `form:"until,omitempty" json:"until,omitempty"`
-
-	// OwnerId If supplied, only persons owned by the given user will be returned
-	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
-
-	// FirstChar If supplied, only persons whose name starts with the specified letter will be returned (case-insensitive)
-	FirstChar *string `form:"first_char,omitempty" json:"first_char,omitempty"`
-}
-
-// GetPersonActivitiesParams defines parameters for GetPersonActivities.
-type GetPersonActivitiesParams struct {
-	// Start Pagination start
-	Start *int `form:"start,omitempty" json:"start,omitempty"`
-
-	// Limit Items shown per page
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Done Whether the activity is done or not. 0 = Not done, 1 = Done. If omitted, returns both Done and Not done activities.
-	Done *GetPersonActivitiesParamsDone `form:"done,omitempty" json:"done,omitempty"`
-
-	// Exclude A comma-separated string of activity IDs to exclude from result
-	Exclude *string `form:"exclude,omitempty" json:"exclude,omitempty"`
-}
-
-// GetPersonActivitiesParamsDone defines parameters for GetPersonActivities.
-type GetPersonActivitiesParamsDone float32
-
 // GetPersonChangelogParams defines parameters for GetPersonChangelog.
 type GetPersonChangelogParams struct {
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2276,24 +2013,6 @@ type GetPersonChangelogParams struct {
 	// Limit Items shown per page
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 }
-
-// GetPersonDealsParams defines parameters for GetPersonDeals.
-type GetPersonDealsParams struct {
-	// Start Pagination start
-	Start *int `form:"start,omitempty" json:"start,omitempty"`
-
-	// Limit Items shown per page
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Status Only fetch deals with a specific status. If omitted, all not deleted deals are returned. If set to deleted, deals that have been deleted up to 30 days ago will be included.
-	Status *GetPersonDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
-
-	// Sort The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys).
-	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
-}
-
-// GetPersonDealsParamsStatus defines parameters for GetPersonDeals.
-type GetPersonDealsParamsStatus string
 
 // GetPersonFilesParams defines parameters for GetPersonFiles.
 type GetPersonFilesParams struct {
@@ -2486,8 +2205,8 @@ type GetProjectsParams struct {
 
 // AddProjectJSONBody defines parameters for AddProject.
 type AddProjectJSONBody struct {
-	// BoardId The ID of a project board
-	BoardId float32 `json:"board_id"`
+	// BoardId The ID of the board this project is associated with
+	BoardId *float32 `json:"board_id,omitempty"`
 
 	// DealIds An array of IDs of the deals this project is associated with
 	DealIds *[]int `json:"deal_ids,omitempty"`
@@ -2510,8 +2229,8 @@ type AddProjectJSONBody struct {
 	// PersonId The ID of the person this project is associated with
 	PersonId *float32 `json:"person_id,omitempty"`
 
-	// PhaseId The ID of a phase on a project board
-	PhaseId float32 `json:"phase_id"`
+	// PhaseId The ID of the phase this project is associated with
+	PhaseId *float32 `json:"phase_id,omitempty"`
 
 	// StartDate The start date of the project. Format: YYYY-MM-DD.
 	StartDate *openapi_types.Date `json:"start_date,omitempty"`
@@ -2680,12 +2399,6 @@ type AddOrUpdateRoleSettingJSONBodySettingKey string
 
 // AddOrUpdateRoleSettingJSONBodyValue defines parameters for AddOrUpdateRoleSetting.
 type AddOrUpdateRoleSettingJSONBodyValue int
-
-// DeleteStagesParams defines parameters for DeleteStages.
-type DeleteStagesParams struct {
-	// Ids The comma-separated stage IDs to delete
-	Ids string `form:"ids" json:"ids"`
-}
 
 // GetStageDealsParams defines parameters for GetStageDeals.
 type GetStageDealsParams struct {
@@ -3343,15 +3056,6 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
-	// DeleteActivities request
-	DeleteActivities(ctx context.Context, params *DeleteActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetActivitiesCollection request
-	GetActivitiesCollection(ctx context.Context, params *GetActivitiesCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteActivityTypes request
-	DeleteActivityTypes(ctx context.Context, params *DeleteActivityTypesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetActivityTypes request
 	GetActivityTypes(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3410,12 +3114,6 @@ type ClientInterface interface {
 	// DeleteDealFields request
 	DeleteDealFields(ctx context.Context, params *DeleteDealFieldsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteDeals request
-	DeleteDeals(ctx context.Context, params *DeleteDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetDealsCollection request
-	GetDealsCollection(ctx context.Context, params *GetDealsCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetDealsSummary request
 	GetDealsSummary(ctx context.Context, params *GetDealsSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3427,9 +3125,6 @@ type ClientInterface interface {
 
 	// GetArchivedDealsTimeline request
 	GetArchivedDealsTimeline(ctx context.Context, params *GetArchivedDealsTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetDealActivities request
-	GetDealActivities(ctx context.Context, id int, params *GetDealActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDealChangelog request
 	GetDealChangelog(ctx context.Context, id int, params *GetDealChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3467,9 +3162,6 @@ type ClientInterface interface {
 
 	// GetDealUsers request
 	GetDealUsers(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetDealPersons request
-	GetDealPersons(ctx context.Context, id int, params *GetDealPersonsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetFiles request
 	GetFiles(ctx context.Context, params *GetFilesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3728,20 +3420,8 @@ type ClientInterface interface {
 
 	UpdateOrganizationRelationship(ctx context.Context, id int, body UpdateOrganizationRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteOrganizations request
-	DeleteOrganizations(ctx context.Context, params *DeleteOrganizationsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetOrganizationsCollection request
-	GetOrganizationsCollection(ctx context.Context, params *GetOrganizationsCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetOrganizationActivities request
-	GetOrganizationActivities(ctx context.Context, id int, params *GetOrganizationActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetOrganizationChangelog request
 	GetOrganizationChangelog(ctx context.Context, id int, params *GetOrganizationChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetOrganizationDeals request
-	GetOrganizationDeals(ctx context.Context, id int, params *GetOrganizationDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetOrganizationFiles request
 	GetOrganizationFiles(ctx context.Context, id int, params *GetOrganizationFilesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3760,9 +3440,6 @@ type ClientInterface interface {
 	// GetOrganizationUsers request
 	GetOrganizationUsers(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetOrganizationPersons request
-	GetOrganizationPersons(ctx context.Context, id int, params *GetOrganizationPersonsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetPermissionSets request
 	GetPermissionSets(ctx context.Context, params *GetPermissionSetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3775,20 +3452,8 @@ type ClientInterface interface {
 	// DeletePersonFields request
 	DeletePersonFields(ctx context.Context, params *DeletePersonFieldsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeletePersons request
-	DeletePersons(ctx context.Context, params *DeletePersonsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetPersonsCollection request
-	GetPersonsCollection(ctx context.Context, params *GetPersonsCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetPersonActivities request
-	GetPersonActivities(ctx context.Context, id int, params *GetPersonActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetPersonChangelog request
 	GetPersonChangelog(ctx context.Context, id int, params *GetPersonChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetPersonDeals request
-	GetPersonDeals(ctx context.Context, id int, params *GetPersonDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetPersonFiles request
 	GetPersonFiles(ctx context.Context, id int, params *GetPersonFilesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3950,9 +3615,6 @@ type ClientInterface interface {
 
 	AddOrUpdateRoleSetting(ctx context.Context, id int, body AddOrUpdateRoleSettingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteStages request
-	DeleteStages(ctx context.Context, params *DeleteStagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetStageDeals request
 	GetStageDeals(ctx context.Context, id int, params *GetStageDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4022,42 +3684,6 @@ type ClientInterface interface {
 
 	// DeleteWebhook request
 	DeleteWebhook(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-}
-
-func (c *Client) DeleteActivities(ctx context.Context, params *DeleteActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteActivitiesRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetActivitiesCollection(ctx context.Context, params *GetActivitiesCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetActivitiesCollectionRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteActivityTypes(ctx context.Context, params *DeleteActivityTypesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteActivityTypesRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
 }
 
 func (c *Client) GetActivityTypes(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -4312,30 +3938,6 @@ func (c *Client) DeleteDealFields(ctx context.Context, params *DeleteDealFieldsP
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteDeals(ctx context.Context, params *DeleteDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteDealsRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetDealsCollection(ctx context.Context, params *GetDealsCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetDealsCollectionRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) GetDealsSummary(ctx context.Context, params *GetDealsSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetDealsSummaryRequest(c.Server, params)
 	if err != nil {
@@ -4374,18 +3976,6 @@ func (c *Client) GetDealsTimeline(ctx context.Context, params *GetDealsTimelineP
 
 func (c *Client) GetArchivedDealsTimeline(ctx context.Context, params *GetArchivedDealsTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetArchivedDealsTimelineRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetDealActivities(ctx context.Context, id int, params *GetDealActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetDealActivitiesRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -4542,18 +4132,6 @@ func (c *Client) GetDealParticipantsChangelog(ctx context.Context, id int, param
 
 func (c *Client) GetDealUsers(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetDealUsersRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetDealPersons(ctx context.Context, id int, params *GetDealPersonsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetDealPersonsRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -5692,56 +5270,8 @@ func (c *Client) UpdateOrganizationRelationship(ctx context.Context, id int, bod
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteOrganizations(ctx context.Context, params *DeleteOrganizationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteOrganizationsRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetOrganizationsCollection(ctx context.Context, params *GetOrganizationsCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetOrganizationsCollectionRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetOrganizationActivities(ctx context.Context, id int, params *GetOrganizationActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetOrganizationActivitiesRequest(c.Server, id, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) GetOrganizationChangelog(ctx context.Context, id int, params *GetOrganizationChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetOrganizationChangelogRequest(c.Server, id, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetOrganizationDeals(ctx context.Context, id int, params *GetOrganizationDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetOrganizationDealsRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -5824,18 +5354,6 @@ func (c *Client) GetOrganizationUsers(ctx context.Context, id int, reqEditors ..
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetOrganizationPersons(ctx context.Context, id int, params *GetOrganizationPersonsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetOrganizationPersonsRequest(c.Server, id, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) GetPermissionSets(ctx context.Context, params *GetPermissionSetsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPermissionSetsRequest(c.Server, params)
 	if err != nil {
@@ -5884,56 +5402,8 @@ func (c *Client) DeletePersonFields(ctx context.Context, params *DeletePersonFie
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeletePersons(ctx context.Context, params *DeletePersonsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeletePersonsRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetPersonsCollection(ctx context.Context, params *GetPersonsCollectionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPersonsCollectionRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetPersonActivities(ctx context.Context, id int, params *GetPersonActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPersonActivitiesRequest(c.Server, id, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) GetPersonChangelog(ctx context.Context, id int, params *GetPersonChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPersonChangelogRequest(c.Server, id, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetPersonDeals(ctx context.Context, id int, params *GetPersonDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPersonDealsRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -6628,18 +6098,6 @@ func (c *Client) AddOrUpdateRoleSetting(ctx context.Context, id int, body AddOrU
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteStages(ctx context.Context, params *DeleteStagesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteStagesRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) GetStageDeals(ctx context.Context, id int, params *GetStageDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetStageDealsRequest(c.Server, id, params)
 	if err != nil {
@@ -6938,241 +6396,6 @@ func (c *Client) DeleteWebhook(ctx context.Context, id int, reqEditors ...Reques
 		return nil, err
 	}
 	return c.Client.Do(req)
-}
-
-// NewDeleteActivitiesRequest generates requests for DeleteActivities
-func NewDeleteActivitiesRequest(server string, params *DeleteActivitiesParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/activities")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
-				}
-			}
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetActivitiesCollectionRequest generates requests for GetActivitiesCollection
-func NewGetActivitiesCollectionRequest(server string, params *GetActivitiesCollectionParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/activities/collection")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Since != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "since", runtime.ParamLocationQuery, *params.Since); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Until != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "until", runtime.ParamLocationQuery, *params.Until); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.UserId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "user_id", runtime.ParamLocationQuery, *params.UserId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Done != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "done", runtime.ParamLocationQuery, *params.Done); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Type != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "type", runtime.ParamLocationQuery, *params.Type); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewDeleteActivityTypesRequest generates requests for DeleteActivityTypes
-func NewDeleteActivityTypesRequest(server string, params *DeleteActivityTypesParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/activityTypes")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
-				}
-			}
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
 }
 
 // NewGetActivityTypesRequest generates requests for GetActivityTypes
@@ -7808,196 +7031,6 @@ func NewDeleteDealFieldsRequest(server string, params *DeleteDealFieldsParams) (
 	return req, nil
 }
 
-// NewDeleteDealsRequest generates requests for DeleteDeals
-func NewDeleteDealsRequest(server string, params *DeleteDealsParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/deals")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
-				}
-			}
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetDealsCollectionRequest generates requests for GetDealsCollection
-func NewGetDealsCollectionRequest(server string, params *GetDealsCollectionParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/deals/collection")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Since != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "since", runtime.ParamLocationQuery, *params.Since); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Until != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "until", runtime.ParamLocationQuery, *params.Until); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.UserId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "user_id", runtime.ParamLocationQuery, *params.UserId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.StageId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "stage_id", runtime.ParamLocationQuery, *params.StageId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Status != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewGetDealsSummaryRequest generates requests for GetDealsSummary
 func NewGetDealsSummaryRequest(server string, params *GetDealsSummaryParams) (*http.Request, error) {
 	var err error
@@ -8522,110 +7555,6 @@ func NewGetArchivedDealsTimelineRequest(server string, params *GetArchivedDealsT
 		if params.TotalsConvertCurrency != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "totals_convert_currency", runtime.ParamLocationQuery, *params.TotalsConvertCurrency); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetDealActivitiesRequest generates requests for GetDealActivities
-func NewGetDealActivitiesRequest(server string, id int, params *GetDealActivitiesParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/deals/%s/activities", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Start != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Done != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "done", runtime.ParamLocationQuery, *params.Done); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Exclude != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "exclude", runtime.ParamLocationQuery, *params.Exclude); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -9323,78 +8252,6 @@ func NewGetDealUsersRequest(server string, id int) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetDealPersonsRequest generates requests for GetDealPersons
-func NewGetDealPersonsRequest(server string, id int, params *GetDealPersonsParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/deals/%s/persons", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Start != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
@@ -10804,6 +9661,22 @@ func NewGetLeadsRequest(server string, params *GetLeadsParams) (*http.Request, e
 
 		}
 
+		if params.UpdatedSince != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_since", runtime.ParamLocationQuery, *params.UpdatedSince); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Sort != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
@@ -12154,6 +11027,22 @@ func NewGetNotesRequest(server string, params *GetNotesParams) (*http.Request, e
 
 		}
 
+		if params.UpdatedSince != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_since", runtime.ParamLocationQuery, *params.UpdatedSince); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.PinnedToLeadFlag != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "pinned_to_lead_flag", runtime.ParamLocationQuery, *params.PinnedToLeadFlag); err != nil {
@@ -13101,284 +11990,6 @@ func NewUpdateOrganizationRelationshipRequestWithBody(server string, id int, con
 	return req, nil
 }
 
-// NewDeleteOrganizationsRequest generates requests for DeleteOrganizations
-func NewDeleteOrganizationsRequest(server string, params *DeleteOrganizationsParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/organizations")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
-				}
-			}
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetOrganizationsCollectionRequest generates requests for GetOrganizationsCollection
-func NewGetOrganizationsCollectionRequest(server string, params *GetOrganizationsCollectionParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/organizations/collection")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Since != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "since", runtime.ParamLocationQuery, *params.Since); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Until != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "until", runtime.ParamLocationQuery, *params.Until); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OwnerId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "owner_id", runtime.ParamLocationQuery, *params.OwnerId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.FirstChar != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "first_char", runtime.ParamLocationQuery, *params.FirstChar); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetOrganizationActivitiesRequest generates requests for GetOrganizationActivities
-func NewGetOrganizationActivitiesRequest(server string, id int, params *GetOrganizationActivitiesParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/organizations/%s/activities", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Start != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Done != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "done", runtime.ParamLocationQuery, *params.Done); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Exclude != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "exclude", runtime.ParamLocationQuery, *params.Exclude); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewGetOrganizationChangelogRequest generates requests for GetOrganizationChangelog
 func NewGetOrganizationChangelogRequest(server string, id int, params *GetOrganizationChangelogParams) (*http.Request, error) {
 	var err error
@@ -13427,126 +12038,6 @@ func NewGetOrganizationChangelogRequest(server string, id int, params *GetOrgani
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetOrganizationDealsRequest generates requests for GetOrganizationDeals
-func NewGetOrganizationDealsRequest(server string, id int, params *GetOrganizationDealsParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/organizations/%s/deals", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Start != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Status != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Sort != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OnlyPrimaryAssociation != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "only_primary_association", runtime.ParamLocationQuery, *params.OnlyPrimaryAssociation); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13916,78 +12407,6 @@ func NewGetOrganizationUsersRequest(server string, id int) (*http.Request, error
 	return req, nil
 }
 
-// NewGetOrganizationPersonsRequest generates requests for GetOrganizationPersons
-func NewGetOrganizationPersonsRequest(server string, id int, params *GetOrganizationPersonsParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/organizations/%s/persons", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Start != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewGetPermissionSetsRequest generates requests for GetPermissionSets
 func NewGetPermissionSetsRequest(server string, params *GetPermissionSetsParams) (*http.Request, error) {
 	var err error
@@ -14188,284 +12607,6 @@ func NewDeletePersonFieldsRequest(server string, params *DeletePersonFieldsParam
 	return req, nil
 }
 
-// NewDeletePersonsRequest generates requests for DeletePersons
-func NewDeletePersonsRequest(server string, params *DeletePersonsParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/persons")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
-				}
-			}
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetPersonsCollectionRequest generates requests for GetPersonsCollection
-func NewGetPersonsCollectionRequest(server string, params *GetPersonsCollectionParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/persons/collection")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Since != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "since", runtime.ParamLocationQuery, *params.Since); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Until != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "until", runtime.ParamLocationQuery, *params.Until); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OwnerId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "owner_id", runtime.ParamLocationQuery, *params.OwnerId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.FirstChar != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "first_char", runtime.ParamLocationQuery, *params.FirstChar); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetPersonActivitiesRequest generates requests for GetPersonActivities
-func NewGetPersonActivitiesRequest(server string, id int, params *GetPersonActivitiesParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/persons/%s/activities", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Start != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Done != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "done", runtime.ParamLocationQuery, *params.Done); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Exclude != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "exclude", runtime.ParamLocationQuery, *params.Exclude); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewGetPersonChangelogRequest generates requests for GetPersonChangelog
 func NewGetPersonChangelogRequest(server string, id int, params *GetPersonChangelogParams) (*http.Request, error) {
 	var err error
@@ -14514,110 +12655,6 @@ func NewGetPersonChangelogRequest(server string, id int, params *GetPersonChange
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetPersonDealsRequest generates requests for GetPersonDeals
-func NewGetPersonDealsRequest(server string, id int, params *GetPersonDealsParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/persons/%s/deals", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Start != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Status != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Sort != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -17176,51 +15213,6 @@ func NewAddOrUpdateRoleSettingRequestWithBody(server string, id int, contentType
 	return req, nil
 }
 
-// NewDeleteStagesRequest generates requests for DeleteStages
-func NewDeleteStagesRequest(server string, params *DeleteStagesParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/stages")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
-				}
-			}
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewGetStageDealsRequest generates requests for GetStageDeals
 func NewGetStageDealsRequest(server string, id int, params *GetStageDealsParams) (*http.Request, error) {
 	var err error
@@ -18199,15 +16191,6 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
-	// DeleteActivitiesWithResponse request
-	DeleteActivitiesWithResponse(ctx context.Context, params *DeleteActivitiesParams, reqEditors ...RequestEditorFn) (*DeleteActivitiesResponse, error)
-
-	// GetActivitiesCollectionWithResponse request
-	GetActivitiesCollectionWithResponse(ctx context.Context, params *GetActivitiesCollectionParams, reqEditors ...RequestEditorFn) (*GetActivitiesCollectionResponse, error)
-
-	// DeleteActivityTypesWithResponse request
-	DeleteActivityTypesWithResponse(ctx context.Context, params *DeleteActivityTypesParams, reqEditors ...RequestEditorFn) (*DeleteActivityTypesResponse, error)
-
 	// GetActivityTypesWithResponse request
 	GetActivityTypesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetActivityTypesResponse, error)
 
@@ -18266,12 +16249,6 @@ type ClientWithResponsesInterface interface {
 	// DeleteDealFieldsWithResponse request
 	DeleteDealFieldsWithResponse(ctx context.Context, params *DeleteDealFieldsParams, reqEditors ...RequestEditorFn) (*DeleteDealFieldsResponse, error)
 
-	// DeleteDealsWithResponse request
-	DeleteDealsWithResponse(ctx context.Context, params *DeleteDealsParams, reqEditors ...RequestEditorFn) (*DeleteDealsResponse, error)
-
-	// GetDealsCollectionWithResponse request
-	GetDealsCollectionWithResponse(ctx context.Context, params *GetDealsCollectionParams, reqEditors ...RequestEditorFn) (*GetDealsCollectionResponse, error)
-
 	// GetDealsSummaryWithResponse request
 	GetDealsSummaryWithResponse(ctx context.Context, params *GetDealsSummaryParams, reqEditors ...RequestEditorFn) (*GetDealsSummaryResponse, error)
 
@@ -18283,9 +16260,6 @@ type ClientWithResponsesInterface interface {
 
 	// GetArchivedDealsTimelineWithResponse request
 	GetArchivedDealsTimelineWithResponse(ctx context.Context, params *GetArchivedDealsTimelineParams, reqEditors ...RequestEditorFn) (*GetArchivedDealsTimelineResponse, error)
-
-	// GetDealActivitiesWithResponse request
-	GetDealActivitiesWithResponse(ctx context.Context, id int, params *GetDealActivitiesParams, reqEditors ...RequestEditorFn) (*GetDealActivitiesResponse, error)
 
 	// GetDealChangelogWithResponse request
 	GetDealChangelogWithResponse(ctx context.Context, id int, params *GetDealChangelogParams, reqEditors ...RequestEditorFn) (*GetDealChangelogResponse, error)
@@ -18323,9 +16297,6 @@ type ClientWithResponsesInterface interface {
 
 	// GetDealUsersWithResponse request
 	GetDealUsersWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetDealUsersResponse, error)
-
-	// GetDealPersonsWithResponse request
-	GetDealPersonsWithResponse(ctx context.Context, id int, params *GetDealPersonsParams, reqEditors ...RequestEditorFn) (*GetDealPersonsResponse, error)
 
 	// GetFilesWithResponse request
 	GetFilesWithResponse(ctx context.Context, params *GetFilesParams, reqEditors ...RequestEditorFn) (*GetFilesResponse, error)
@@ -18584,20 +16555,8 @@ type ClientWithResponsesInterface interface {
 
 	UpdateOrganizationRelationshipWithResponse(ctx context.Context, id int, body UpdateOrganizationRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateOrganizationRelationshipResponse, error)
 
-	// DeleteOrganizationsWithResponse request
-	DeleteOrganizationsWithResponse(ctx context.Context, params *DeleteOrganizationsParams, reqEditors ...RequestEditorFn) (*DeleteOrganizationsResponse, error)
-
-	// GetOrganizationsCollectionWithResponse request
-	GetOrganizationsCollectionWithResponse(ctx context.Context, params *GetOrganizationsCollectionParams, reqEditors ...RequestEditorFn) (*GetOrganizationsCollectionResponse, error)
-
-	// GetOrganizationActivitiesWithResponse request
-	GetOrganizationActivitiesWithResponse(ctx context.Context, id int, params *GetOrganizationActivitiesParams, reqEditors ...RequestEditorFn) (*GetOrganizationActivitiesResponse, error)
-
 	// GetOrganizationChangelogWithResponse request
 	GetOrganizationChangelogWithResponse(ctx context.Context, id int, params *GetOrganizationChangelogParams, reqEditors ...RequestEditorFn) (*GetOrganizationChangelogResponse, error)
-
-	// GetOrganizationDealsWithResponse request
-	GetOrganizationDealsWithResponse(ctx context.Context, id int, params *GetOrganizationDealsParams, reqEditors ...RequestEditorFn) (*GetOrganizationDealsResponse, error)
 
 	// GetOrganizationFilesWithResponse request
 	GetOrganizationFilesWithResponse(ctx context.Context, id int, params *GetOrganizationFilesParams, reqEditors ...RequestEditorFn) (*GetOrganizationFilesResponse, error)
@@ -18616,9 +16575,6 @@ type ClientWithResponsesInterface interface {
 	// GetOrganizationUsersWithResponse request
 	GetOrganizationUsersWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetOrganizationUsersResponse, error)
 
-	// GetOrganizationPersonsWithResponse request
-	GetOrganizationPersonsWithResponse(ctx context.Context, id int, params *GetOrganizationPersonsParams, reqEditors ...RequestEditorFn) (*GetOrganizationPersonsResponse, error)
-
 	// GetPermissionSetsWithResponse request
 	GetPermissionSetsWithResponse(ctx context.Context, params *GetPermissionSetsParams, reqEditors ...RequestEditorFn) (*GetPermissionSetsResponse, error)
 
@@ -18631,20 +16587,8 @@ type ClientWithResponsesInterface interface {
 	// DeletePersonFieldsWithResponse request
 	DeletePersonFieldsWithResponse(ctx context.Context, params *DeletePersonFieldsParams, reqEditors ...RequestEditorFn) (*DeletePersonFieldsResponse, error)
 
-	// DeletePersonsWithResponse request
-	DeletePersonsWithResponse(ctx context.Context, params *DeletePersonsParams, reqEditors ...RequestEditorFn) (*DeletePersonsResponse, error)
-
-	// GetPersonsCollectionWithResponse request
-	GetPersonsCollectionWithResponse(ctx context.Context, params *GetPersonsCollectionParams, reqEditors ...RequestEditorFn) (*GetPersonsCollectionResponse, error)
-
-	// GetPersonActivitiesWithResponse request
-	GetPersonActivitiesWithResponse(ctx context.Context, id int, params *GetPersonActivitiesParams, reqEditors ...RequestEditorFn) (*GetPersonActivitiesResponse, error)
-
 	// GetPersonChangelogWithResponse request
 	GetPersonChangelogWithResponse(ctx context.Context, id int, params *GetPersonChangelogParams, reqEditors ...RequestEditorFn) (*GetPersonChangelogResponse, error)
-
-	// GetPersonDealsWithResponse request
-	GetPersonDealsWithResponse(ctx context.Context, id int, params *GetPersonDealsParams, reqEditors ...RequestEditorFn) (*GetPersonDealsResponse, error)
 
 	// GetPersonFilesWithResponse request
 	GetPersonFilesWithResponse(ctx context.Context, id int, params *GetPersonFilesParams, reqEditors ...RequestEditorFn) (*GetPersonFilesResponse, error)
@@ -18806,9 +16750,6 @@ type ClientWithResponsesInterface interface {
 
 	AddOrUpdateRoleSettingWithResponse(ctx context.Context, id int, body AddOrUpdateRoleSettingJSONRequestBody, reqEditors ...RequestEditorFn) (*AddOrUpdateRoleSettingResponse, error)
 
-	// DeleteStagesWithResponse request
-	DeleteStagesWithResponse(ctx context.Context, params *DeleteStagesParams, reqEditors ...RequestEditorFn) (*DeleteStagesResponse, error)
-
 	// GetStageDealsWithResponse request
 	GetStageDealsWithResponse(ctx context.Context, id int, params *GetStageDealsParams, reqEditors ...RequestEditorFn) (*GetStageDealsResponse, error)
 
@@ -18878,209 +16819,6 @@ type ClientWithResponsesInterface interface {
 
 	// DeleteWebhookWithResponse request
 	DeleteWebhookWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteWebhookResponse, error)
-}
-
-type DeleteActivitiesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *struct {
-			// Id An array of the IDs of activities that were deleted
-			Id *[]int `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteActivitiesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteActivitiesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetActivitiesCollectionResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
-		} `json:"additional_data,omitempty"`
-		Data *[]struct {
-			// ActiveFlag Whether the activity is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-			BusyFlag *bool `json:"busy_flag,omitempty"`
-
-			// CompanyId The user's company ID
-			CompanyId *int `json:"company_id,omitempty"`
-
-			// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-			ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-			// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-			ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-			// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-			ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-			// DealId The ID of the deal this activity is associated with
-			DealId *int `json:"deal_id,omitempty"`
-
-			// Done Whether the activity is done or not
-			Done *bool `json:"done,omitempty"`
-
-			// DueDate The due date of the activity. Format: YYYY-MM-DD
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// DueTime The due time of the activity in UTC. Format: HH:MM
-			DueTime *string `json:"due_time,omitempty"`
-
-			// Duration The duration of the activity. Format: HH:MM
-			Duration *string `json:"duration,omitempty"`
-
-			// Id The ID of the activity, generated when the activity was created
-			Id *int `json:"id,omitempty"`
-
-			// LeadId The ID of the lead in the UUID format this activity is associated with
-			LeadId *openapi_types.UUID `json:"lead_id"`
-
-			// Location The address of the activity.
-			Location *string `json:"location,omitempty"`
-
-			// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-			LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-			// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-			LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-			// LocationCountry A subfield of the location field. Indicates country.
-			LocationCountry *string `json:"location_country,omitempty"`
-
-			// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-			LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-			// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-			LocationLocality *string `json:"location_locality,omitempty"`
-
-			// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-			LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-			// LocationRoute A subfield of the location field. Indicates street name.
-			LocationRoute *string `json:"location_route,omitempty"`
-
-			// LocationStreetNumber A subfield of the location field. Indicates house number.
-			LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-			// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-			LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-			// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-			LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-			// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// OrgId The ID of the organization this activity is associated with
-			OrgId *int `json:"org_id,omitempty"`
-
-			// PersonId The ID of the person this activity is associated with
-			PersonId *int `json:"person_id,omitempty"`
-
-			// ProjectId The ID of the project this activity is associated with
-			ProjectId *int `json:"project_id"`
-
-			// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-			PublicDescription *string `json:"public_description,omitempty"`
-
-			// SourceTimezone The timezone the activity was created in an external calendar
-			SourceTimezone *string `json:"source_timezone,omitempty"`
-
-			// Subject The subject of the activity
-			Subject *string `json:"subject,omitempty"`
-
-			// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-			Type *string `json:"type,omitempty"`
-
-			// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// UpdateUserId The ID of the user who was the last to update this activity
-			UpdateUserId *int `json:"update_user_id,omitempty"`
-
-			// UserId The ID of the user whom the activity is assigned to
-			UserId *int `json:"user_id,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-	JSON403 *struct {
-		// Error The error message
-		Error *string `json:"error,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetActivitiesCollectionResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetActivitiesCollectionResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteActivityTypesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *struct {
-			// Id The IDs of the deleted activity types
-			Id *[]int `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteActivityTypesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteActivityTypesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
 }
 
 type GetActivityTypesResponse struct {
@@ -20104,138 +17842,6 @@ func (r DeleteDealFieldsResponse) StatusCode() int {
 	return 0
 }
 
-type DeleteDealsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *struct {
-			// Id The list of deleted deals IDs
-			Id *[]int `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteDealsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteDealsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetDealsCollectionResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
-		} `json:"additional_data,omitempty"`
-		Data *[]struct {
-			// AddTime The creation date and time of the deal in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// CloseTime The date and time of closing the deal in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			CloseTime *string `json:"close_time"`
-
-			// CreatorUserId The ID of the deal creator
-			CreatorUserId *int `json:"creator_user_id,omitempty"`
-
-			// Currency The currency associated with the deal
-			Currency *string `json:"currency,omitempty"`
-
-			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
-
-			// Id The ID of the deal
-			Id *int `json:"id,omitempty"`
-
-			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
-
-			// LostReason The reason for losing the deal
-			LostReason *string `json:"lost_reason"`
-
-			// LostTime The date and time of changing the deal status to lost in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			LostTime *string `json:"lost_time,omitempty"`
-
-			// OrgId The ID of the organization associated with the deal
-			OrgId *int `json:"org_id,omitempty"`
-
-			// PersonId The ID of the person associated with the deal
-			PersonId *int `json:"person_id,omitempty"`
-
-			// PipelineId The ID of the pipeline associated with the deal
-			PipelineId *int `json:"pipeline_id,omitempty"`
-
-			// Probability The success probability percentage of the deal
-			Probability *float32 `json:"probability"`
-
-			// StageId The ID of the deal stage
-			StageId *int `json:"stage_id,omitempty"`
-
-			// Status The status of the deal
-			Status *string `json:"status,omitempty"`
-
-			// Title The title of the deal
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The last update date and time of the deal in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// UserId The ID of the user
-			UserId *int `json:"user_id,omitempty"`
-
-			// Value The value of the deal
-			Value *float32 `json:"value,omitempty"`
-
-			// VisibleTo The visibility of the deal
-			VisibleTo *string `json:"visible_to,omitempty"`
-
-			// WonTime The date and time of changing the deal status to won in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			WonTime *string `json:"won_time,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-	JSON403 *struct {
-		// Error The error message
-		Error *string `json:"error,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetDealsCollectionResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetDealsCollectionResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type GetDealsSummaryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -20964,362 +18570,6 @@ func (r GetArchivedDealsTimelineResponse) StatusCode() int {
 	return 0
 }
 
-type GetDealActivitiesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *struct {
-			// ActivityDistribution The distribution of activities related to the organization grouped by the user ID
-			ActivityDistribution *struct {
-				// ASSIGNEDTOUSERID The ID of the user
-				ASSIGNEDTOUSERID *struct {
-					// Activities The count of activities related to the user grouped by activity type
-					Activities *struct {
-						// ACTIVITYTYPENAME The count of activities related to a specific type
-						ACTIVITYTYPENAME *int `json:"ACTIVITY_TYPE_NAME,omitempty"`
-					} `json:"activities,omitempty"`
-
-					// ActivityCount The overall count of activities for the user
-					ActivityCount *int `json:"activity_count,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// Share The percentage of activities belongs to the user
-					Share *int `json:"share,omitempty"`
-				} `json:"ASSIGNED_TO_USER_ID,omitempty"`
-			} `json:"activity_distribution,omitempty"`
-
-			// Limit Items shown per page
-			Limit *int `json:"limit,omitempty"`
-
-			// MoreItemsInCollection If there are more list items in the collection than displayed or not
-			MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-			// Start Pagination start
-			Start *int `json:"start,omitempty"`
-		} `json:"additional_data,omitempty"`
-
-		// Data The array of activities
-		Data *[]struct {
-			// ActiveFlag Whether the activity is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// AssignedToUserId The ID of the user to whom the activity is assigned to. Equal to `user_id`.
-			AssignedToUserId *int `json:"assigned_to_user_id,omitempty"`
-
-			// Attendees The attendees of the activity. This can be either your existing Pipedrive contacts or an external email address.
-			Attendees *[]map[string]interface{} `json:"attendees"`
-
-			// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-			BusyFlag *bool `json:"busy_flag,omitempty"`
-
-			// CalendarSyncIncludeContext For activities that sync to an external calendar, this setting indicates if the activity syncs with context (what are the deals, persons, organizations this activity is related to)
-			CalendarSyncIncludeContext *string `json:"calendar_sync_include_context,omitempty"`
-
-			// CompanyId The user's company ID
-			CompanyId *int `json:"company_id,omitempty"`
-
-			// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-			ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-			// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-			ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-			// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-			ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-			// CreatedByUserId The ID of the user who created the activity
-			CreatedByUserId *int `json:"created_by_user_id,omitempty"`
-
-			// DealDropboxBcc The BCC email address of the deal
-			DealDropboxBcc *string `json:"deal_dropbox_bcc,omitempty"`
-
-			// DealId The ID of the deal this activity is associated with
-			DealId *int `json:"deal_id,omitempty"`
-
-			// DealTitle The name of the deal this activity is associated with
-			DealTitle *string `json:"deal_title,omitempty"`
-
-			// Done Whether the activity is done or not
-			Done *bool `json:"done,omitempty"`
-
-			// DueDate The due date of the activity. Format: YYYY-MM-DD
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// DueTime The due time of the activity in UTC. Format: HH:MM
-			DueTime *string `json:"due_time,omitempty"`
-
-			// Duration The duration of the activity. Format: HH:MM
-			Duration *string `json:"duration,omitempty"`
-
-			// File The file that is attached to this activity. For example, this can be a reference to an audio note file generated with Pipedrive mobile app.
-			File *map[string]interface{} `json:"file,omitempty"`
-
-			// GcalEventId For the activity which syncs to Google calendar, this is the Google event ID. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GcalEventId *string `json:"gcal_event_id,omitempty"`
-
-			// GoogleCalendarEtag The Google calendar API etag (version) that is used for syncing this activity. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GoogleCalendarEtag *string `json:"google_calendar_etag,omitempty"`
-
-			// GoogleCalendarId The Google calendar ID that this activity syncs to. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GoogleCalendarId *string `json:"google_calendar_id,omitempty"`
-
-			// Id The ID of the activity, generated when the activity was created
-			Id *int `json:"id,omitempty"`
-
-			// LastNotificationTime The date and time of latest notifications sent about this activity to the participants or the attendees of this activity
-			LastNotificationTime *string `json:"last_notification_time,omitempty"`
-
-			// LastNotificationUserId The ID of the user who triggered the sending of the latest notifications about this activity to the participants or the attendees of this activity
-			LastNotificationUserId *int `json:"last_notification_user_id,omitempty"`
-
-			// LeadId The ID of the lead in the UUID format this activity is associated with
-			LeadId *openapi_types.UUID `json:"lead_id"`
-
-			// Location The address of the activity.
-			Location *string `json:"location,omitempty"`
-
-			// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-			LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-			// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-			LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-			// LocationCountry A subfield of the location field. Indicates country.
-			LocationCountry *string `json:"location_country,omitempty"`
-
-			// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-			LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-			// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-			LocationLocality *string `json:"location_locality,omitempty"`
-
-			// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-			LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-			// LocationRoute A subfield of the location field. Indicates street name.
-			LocationRoute *string `json:"location_route,omitempty"`
-
-			// LocationStreetNumber A subfield of the location field. Indicates house number.
-			LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-			// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-			LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-			// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-			LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-			// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// Note The note of the activity (HTML format)
-			Note *string `json:"note,omitempty"`
-
-			// NotificationLanguageId The ID of the language the notifications are sent in
-			NotificationLanguageId *int `json:"notification_language_id,omitempty"`
-
-			// OrgId The ID of the organization this activity is associated with
-			OrgId *int `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization this activity is associated with
-			OrgName *string `json:"org_name,omitempty"`
-
-			// OwnerName The name of the user this activity is owned by
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// Participants List of multiple persons (participants) this activity is associated with
-			Participants *[]map[string]interface{} `json:"participants"`
-
-			// PersonDropboxBcc The BCC email address of the person
-			PersonDropboxBcc *string `json:"person_dropbox_bcc,omitempty"`
-
-			// PersonId The ID of the person this activity is associated with
-			PersonId *int `json:"person_id,omitempty"`
-
-			// PersonName The name of the person this activity is associated with
-			PersonName *string `json:"person_name,omitempty"`
-
-			// ProjectId The ID of the project this activity is associated with
-			ProjectId *int `json:"project_id"`
-
-			// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-			PublicDescription *string `json:"public_description,omitempty"`
-
-			// RecMasterActivityId The ID of parent activity for a recurrent activity if the current activity is an exception to recurrence rules
-			RecMasterActivityId *int `json:"rec_master_activity_id,omitempty"`
-
-			// RecRule The rule for the recurrence of the activity. Is important for activities synced into Pipedrive from an external calendar. Example: "RRULE:FREQ=WEEKLY;BYDAY=WE"
-			RecRule *string `json:"rec_rule,omitempty"`
-
-			// RecRuleExtension Additional rules for the recurrence of the activity, extend the `rec_rule`. Is important for activities synced into Pipedrive from an external calendar.
-			RecRuleExtension *string `json:"rec_rule_extension,omitempty"`
-
-			// ReferenceId Together with the `reference_type`, gives the ID of the other object
-			ReferenceId *int `json:"reference_id,omitempty"`
-
-			// ReferenceType If the activity references some other object, it is indicated here. For example, value `Salesphone` refers to activities created with Caller.
-			ReferenceType *string `json:"reference_type,omitempty"`
-
-			// Series The list of recurring activity instances. It is in a structure as follows: `[{due_date: "2020-06-24", due_time: "10:00:00"}]`
-			Series *[]map[string]interface{} `json:"series,omitempty"`
-
-			// SourceTimezone The timezone the activity was created in an external calendar
-			SourceTimezone *string `json:"source_timezone,omitempty"`
-
-			// Subject The subject of the activity
-			Subject *string `json:"subject,omitempty"`
-
-			// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-			Type *string `json:"type,omitempty"`
-
-			// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// UpdateUserId The ID of the user who was the last to update this activity
-			UpdateUserId *int `json:"update_user_id,omitempty"`
-
-			// UserId The ID of the user whom the activity is assigned to
-			UserId *int `json:"user_id,omitempty"`
-		} `json:"data,omitempty"`
-		RelatedObjects *struct {
-			Deal *struct {
-				// DEALID The ID of the deal which is associated with the item
-				DEALID *struct {
-					// Currency The currency of the deal value
-					Currency *string `json:"currency,omitempty"`
-
-					// Id The ID of the deal associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// PipelineId The ID of the pipeline the deal is in
-					PipelineId *int `json:"pipeline_id,omitempty"`
-
-					// StageId The ID of the stage the deal is currently at
-					StageId *int `json:"stage_id,omitempty"`
-
-					// Status The status of the deal associated with the item
-					Status *string `json:"status,omitempty"`
-
-					// Title The title of the deal associated with the item
-					Title *string `json:"title,omitempty"`
-
-					// Value The value of the deal that is associated with the item
-					Value *float32 `json:"value,omitempty"`
-				} `json:"DEAL_ID,omitempty"`
-			} `json:"deal,omitempty"`
-			Organization *struct {
-				// ORGANIZATIONID The ID of the organization associated with the item
-				ORGANIZATIONID *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Id The ID of the organization associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-				} `json:"ORGANIZATION_ID,omitempty"`
-			} `json:"organization,omitempty"`
-			Person *struct {
-				// PERSONID The ID of the person associated with the item
-				PERSONID *struct {
-					// ActiveFlag Whether the associated person is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The emails of the person associated with the item
-					Email *[]struct {
-						// Label The type of the email
-						Label *string `json:"label,omitempty"`
-
-						// Primary Whether this is the primary email or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The email of the associated person
-						Value *string `json:"value,omitempty"`
-					} `json:"email,omitempty"`
-
-					// Id The ID of the person associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the person associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the person that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// Phone The phone numbers of the person associated with the item
-					Phone *[]struct {
-						// Label The type of the phone number
-						Label *string `json:"label,omitempty"`
-
-						// Primary Whether this is the primary phone number or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The phone number of the person associated with the item
-						Value *string `json:"value,omitempty"`
-					} `json:"phone,omitempty"`
-				} `json:"PERSON_ID,omitempty"`
-			} `json:"person,omitempty"`
-			User *struct {
-				USERID *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-				} `json:"USER_ID,omitempty"`
-			} `json:"user,omitempty"`
-		} `json:"related_objects,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetDealActivitiesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetDealActivitiesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type GetDealChangelogResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -21810,10 +19060,10 @@ type GetDealUpdatesResponse struct {
 				// ORGANIZATIONID The ID of the organization associated with the item
 				ORGANIZATIONID *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -22432,213 +19682,352 @@ type GetDealParticipantsResponse struct {
 
 		// Data The array of participants
 		Data *[]struct {
-			// ActiveFlag Whether the person is active or not
+			// ActiveFlag Whether the participant is active or not
 			ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// ActivitiesCount The count of activities related to the person
-			ActivitiesCount *int `json:"activities_count,omitempty"`
+			// AddTime The date and time when the participant was added. Format: YYYY-MM-DD HH:MM:SS
+			AddTime       *string `json:"add_time,omitempty"`
+			AddedByUserId *struct {
+				Data *struct {
+					Access *[]struct {
+						Admin           *bool                                                 `json:"admin,omitempty"`
+						App             *GetDealParticipants200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+						PermissionSetId *string                                               `json:"permission_set_id,omitempty"`
+					} `json:"access,omitempty"`
 
-			// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-			AddTime *string `json:"add_time,omitempty"`
+					// Activated Boolean that indicates whether the user is activated
+					Activated *bool `json:"activated,omitempty"`
 
-			// CcEmail The BCC email associated with the person
-			CcEmail *string `json:"cc_email,omitempty"`
+					// ActiveFlag Boolean that indicates whether the user is activated
+					ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// ClosedDealsCount The count of closed deals related with the item
-			ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+					// Created The creation date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+					Created *string `json:"created,omitempty"`
 
-			// CompanyId The ID of the company related to the person
-			CompanyId *int `json:"company_id,omitempty"`
+					// DefaultCurrency The user default currency
+					DefaultCurrency *string `json:"default_currency,omitempty"`
 
-			// DoneActivitiesCount The count of done activities related to the person
-			DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+					// Email The user email
+					Email *string `json:"email,omitempty"`
 
-			// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-			Email *[]struct {
-				// Label The label that indicates the type of the email. (Possible values - work, home or other)
-				Label *string `json:"label,omitempty"`
+					// HasCreatedCompany Boolean that indicates whether the user has created a company
+					HasCreatedCompany *bool `json:"has_created_company,omitempty"`
 
-				// Primary Boolean that indicates if email is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
+					// IconUrl The user icon URL
+					IconUrl *string `json:"icon_url"`
 
-				// Value Email
-				Value *string `json:"value,omitempty"`
-			} `json:"email,omitempty"`
+					// Id The user ID
+					Id *int `json:"id,omitempty"`
 
-			// EmailMessagesCount The count of email messages related to the person
-			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+					// IsDeleted Boolean that indicates whether the user is deleted from the company
+					IsDeleted *bool `json:"is_deleted,omitempty"`
 
-			// FilesCount The count of files related to the person
-			FilesCount *int `json:"files_count,omitempty"`
+					// IsYou Boolean that indicates if the requested user is the same which is logged in (in this case, always true)
+					IsYou *bool `json:"is_you,omitempty"`
 
-			// FirstChar The first letter of the name of the person
-			FirstChar *string `json:"first_char,omitempty"`
+					// Lang The user language ID
+					Lang *int `json:"lang,omitempty"`
 
-			// FirstName The first name of the person
-			FirstName *string `json:"first_name,omitempty"`
+					// LastLogin The last login date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+					LastLogin *string `json:"last_login,omitempty"`
 
-			// FollowersCount The count of followers related to the person
-			FollowersCount *int `json:"followers_count,omitempty"`
+					// Locale The user locale
+					Locale *string `json:"locale,omitempty"`
 
-			// Id The ID of the person
-			Id *int `json:"id,omitempty"`
+					// Modified The last modification date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+					Modified *string `json:"modified"`
 
-			// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-			Label *int `json:"label,omitempty"`
+					// Name The user name
+					Name *string `json:"name,omitempty"`
 
-			// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-			LabelIds *[]int `json:"label_ids,omitempty"`
+					// Phone The user phone
+					Phone *string `json:"phone"`
 
-			// LastActivityDate The date of the last activity associated with the deal
-			LastActivityDate *string `json:"last_activity_date"`
+					// RoleId The ID of the user role
+					RoleId *int `json:"role_id,omitempty"`
 
-			// LastActivityId The ID of the last activity associated with the deal
-			LastActivityId *int `json:"last_activity_id"`
+					// TimezoneName The user timezone name
+					TimezoneName *string `json:"timezone_name,omitempty"`
 
-			// LastIncomingMailTime The date and time of the last incoming email associated with the person
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+					// TimezoneOffset The user timezone offset
+					TimezoneOffset *string `json:"timezone_offset,omitempty"`
+				} `json:"data,omitempty"`
 
-			// LastName The last name of the person
-			LastName *string `json:"last_name,omitempty"`
+				// Success If the response is successful or not
+				Success *bool `json:"success,omitempty"`
+			} `json:"added_by_user_id,omitempty"`
 
-			// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-			// LostDealsCount The count of lost deals related with the item
-			LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-			// Name The name of the person
-			Name *string `json:"name,omitempty"`
-
-			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date"`
-
-			// NextActivityId The ID of the next activity associated with the deal
-			NextActivityId *int `json:"next_activity_id"`
-
-			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time"`
-
-			// NotesCount The count of notes related to the person
-			NotesCount *int `json:"notes_count,omitempty"`
-
-			// OpenDealsCount The count of open deals related with the item
-			OpenDealsCount *int `json:"open_deals_count,omitempty"`
-			OrgId          *struct {
-				// ActiveFlag Whether the associated organization is active or not
+			// Id The ID of the participant
+			Id     *int `json:"id,omitempty"`
+			Person *struct {
+				// ActiveFlag Whether the person is active or not
 				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				// ActivitiesCount The count of activities related to the person
+				ActivitiesCount *int `json:"activities_count,omitempty"`
 
-				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Name The name of the organization associated with the item
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the organization that is associated with the item
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// PeopleCount The number of people connected with the organization that is associated with the item
-				PeopleCount *int `json:"people_count,omitempty"`
-
-				// Value The ID of the organization
-				Value *int `json:"value,omitempty"`
-			} `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization associated with the person
-			OrgName *string `json:"org_name,omitempty"`
-			OwnerId *struct {
-				// ActiveFlag Whether the user is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the user
-				Email *string `json:"email,omitempty"`
-
-				// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-				HasPic *int `json:"has_pic,omitempty"`
-
-				// Id The ID of the user
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the user
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The user picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the owner
-				Value *int `json:"value,omitempty"`
-			} `json:"owner_id,omitempty"`
-
-			// OwnerName The name of the owner associated with the person
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-			Phone *[]struct {
-				// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if phone number is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value The phone number
-				Value *string `json:"value,omitempty"`
-			} `json:"phone,omitempty"`
-			PictureId *struct {
-				// ActiveFlag Whether the associated picture is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The add time of the picture
+				// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
 				AddTime *string `json:"add_time,omitempty"`
 
-				// AddedByUserId The ID of the user who added the picture
-				AddedByUserId *int `json:"added_by_user_id,omitempty"`
+				// CcEmail The BCC email associated with the person
+				CcEmail *string `json:"cc_email"`
 
-				// Id The ID of the picture associated with the item
+				// ClosedDealsCount The count of closed deals related with the item
+				ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+
+				// CompanyId The ID of the company related to the person
+				CompanyId *int `json:"company_id,omitempty"`
+
+				// DoneActivitiesCount The count of done activities related to the person
+				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+
+				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
+				Email *[]struct {
+					// Label The label that indicates the type of the email. (Possible values - work, home or other)
+					Label *string `json:"label,omitempty"`
+
+					// Primary Boolean that indicates if email is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
+
+					// Value Email
+					Value *string `json:"value,omitempty"`
+				} `json:"email,omitempty"`
+
+				// EmailMessagesCount The count of email messages related to the person
+				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+
+				// FilesCount The count of files related to the person
+				FilesCount *int `json:"files_count,omitempty"`
+
+				// FirstChar The first letter of the name of the person
+				FirstChar *string `json:"first_char,omitempty"`
+
+				// FirstName The first name of the person
+				FirstName *string `json:"first_name,omitempty"`
+
+				// FollowersCount The count of followers related to the person
+				FollowersCount *int `json:"followers_count,omitempty"`
+
+				// Id The ID of the person
 				Id *int `json:"id,omitempty"`
 
-				// ItemId The ID of related item
-				ItemId *int `json:"item_id,omitempty"`
+				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
+				Label *int `json:"label"`
 
-				// ItemType The type of item the picture is related to
-				ItemType *string `json:"item_type,omitempty"`
-				Pictures *struct {
-					// N128 The URL of the 128*128 picture
-					N128 *string `json:"128,omitempty"`
+				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
+				LabelIds *[]int `json:"label_ids,omitempty"`
 
-					// N512 The URL of the 512*512 picture
-					N512 *string `json:"512,omitempty"`
-				} `json:"pictures,omitempty"`
+				// LastActivityDate The date of the last activity associated with the deal
+				LastActivityDate *string `json:"last_activity_date"`
 
-				// UpdateTime The update time of the picture
+				// LastActivityId The ID of the last activity associated with the deal
+				LastActivityId *int `json:"last_activity_id"`
+
+				// LastIncomingMailTime The date and time of the last incoming email associated with the person
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
+
+				// LastName The last name of the person
+				LastName *string `json:"last_name"`
+
+				// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
+
+				// LostDealsCount The count of lost deals related with the item
+				LostDealsCount *int `json:"lost_deals_count,omitempty"`
+
+				// Name The name of the person
+				Name *string `json:"name,omitempty"`
+
+				// NextActivityDate The date of the next activity associated with the deal
+				NextActivityDate *string `json:"next_activity_date"`
+
+				// NextActivityId The ID of the next activity associated with the deal
+				NextActivityId *int `json:"next_activity_id"`
+
+				// NextActivityTime The time of the next activity associated with the deal
+				NextActivityTime *string `json:"next_activity_time"`
+
+				// NotesCount The count of notes related to the person
+				NotesCount *int `json:"notes_count,omitempty"`
+
+				// OpenDealsCount The count of open deals related with the item
+				OpenDealsCount *int `json:"open_deals_count,omitempty"`
+				OrgId          *struct {
+					// ActiveFlag Whether the associated organization is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
+
+					// Address The address of the organization
+					Address *string `json:"address"`
+
+					// CcEmail The BCC email of the organization associated with the item
+					CcEmail *string `json:"cc_email"`
+
+					// LabelIds The IDs of labels assigned to the organization
+					LabelIds *[]int `json:"label_ids,omitempty"`
+
+					// Name The name of the organization associated with the item
+					Name *string `json:"name,omitempty"`
+
+					// OwnerId The ID of the owner of the organization that is associated with the item
+					OwnerId *int `json:"owner_id,omitempty"`
+
+					// PeopleCount The number of people connected with the organization that is associated with the item
+					PeopleCount *int `json:"people_count,omitempty"`
+
+					// Value The ID of the organization
+					Value *int `json:"value,omitempty"`
+				} `json:"org_id"`
+
+				// OrgName The name of the organization associated with the person
+				OrgName *string `json:"org_name"`
+				OwnerId *struct {
+					// ActiveFlag Whether the user is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
+
+					// Email The email of the user
+					Email *string `json:"email,omitempty"`
+
+					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
+					HasPic *int `json:"has_pic,omitempty"`
+
+					// Id The ID of the user
+					Id *int `json:"id,omitempty"`
+
+					// Name The name of the user
+					Name *string `json:"name,omitempty"`
+
+					// PicHash The user picture hash
+					PicHash *string `json:"pic_hash"`
+
+					// Value The ID of the owner
+					Value *int `json:"value,omitempty"`
+				} `json:"owner_id,omitempty"`
+
+				// OwnerName The name of the owner associated with the person
+				OwnerName *string `json:"owner_name,omitempty"`
+
+				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+				Phone *[]struct {
+					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+					Label *string `json:"label,omitempty"`
+
+					// Primary Boolean that indicates if phone number is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
+
+					// Value The phone number
+					Value *string `json:"value,omitempty"`
+				} `json:"phone,omitempty"`
+				PictureId *struct {
+					// ActiveFlag Whether the associated picture is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
+
+					// AddTime The add time of the picture
+					AddTime *string `json:"add_time,omitempty"`
+
+					// AddedByUserId The ID of the user who added the picture
+					AddedByUserId *int `json:"added_by_user_id,omitempty"`
+
+					// Id The ID of the picture associated with the item
+					Id *int `json:"id,omitempty"`
+
+					// ItemId The ID of related item
+					ItemId *int `json:"item_id,omitempty"`
+
+					// ItemType The type of item the picture is related to
+					ItemType *string `json:"item_type,omitempty"`
+					Pictures *struct {
+						// N128 The URL of the 128*128 picture
+						N128 *string `json:"128,omitempty"`
+
+						// N512 The URL of the 512*512 picture
+						N512 *string `json:"512,omitempty"`
+					} `json:"pictures,omitempty"`
+
+					// UpdateTime The update time of the picture
+					UpdateTime *string `json:"update_time,omitempty"`
+				} `json:"picture_id"`
+
+				// RelatedClosedDealsCount The count of related closed deals related with the item
+				RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+
+				// RelatedLostDealsCount The count of related lost deals related with the item
+				RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+
+				// RelatedOpenDealsCount The count of related open deals related with the item
+				RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+
+				// RelatedWonDealsCount The count of related won deals related with the item
+				RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+
+				// UndoneActivitiesCount The count of undone activities related to the person
+				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+
+				// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
 				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"picture_id,omitempty"`
 
-			// RelatedClosedDealsCount The count of related closed deals related with the item
-			RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+				// VisibleTo The visibility group ID of who can see the person
+				VisibleTo *string `json:"visible_to,omitempty"`
 
-			// RelatedLostDealsCount The count of related lost deals related with the item
-			RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+				// WonDealsCount The count of won deals related with the item
+				WonDealsCount *int `json:"won_deals_count,omitempty"`
+			} `json:"person,omitempty"`
 
-			// RelatedOpenDealsCount The count of related open deals related with the item
-			RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+			// PersonId The person data associated with the participant
+			PersonId *struct {
+				// ActiveFlag Whether the person is active or not
+				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// RelatedWonDealsCount The count of related won deals related with the item
-			RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+				// CompanyId The ID of the company related to the person
+				CompanyId *int `json:"company_id,omitempty"`
 
-			// UndoneActivitiesCount The count of undone activities related to the person
-			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" }]`. Please note that only `value` is required.
+				Email *[]struct {
+					// Label The label that indicates the type of the email. (Possible values - work, home or other)
+					Label *string `json:"label,omitempty"`
 
-			// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-			UpdateTime *string `json:"update_time,omitempty"`
+					// Primary Boolean that indicates if email is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
 
-			// VisibleTo The visibility group ID of who can see the person
-			VisibleTo *string `json:"visible_to,omitempty"`
+					// Value The email address
+					Value *string `json:"value,omitempty"`
+				} `json:"email,omitempty"`
 
-			// WonDealsCount The count of won deals related with the item
-			WonDealsCount *int `json:"won_deals_count,omitempty"`
+				// Name The name of the person
+				Name *string `json:"name,omitempty"`
+
+				// OwnerId The ID of the owner of the person
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+				Phone *[]struct {
+					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+					Label *string `json:"label,omitempty"`
+
+					// Primary Boolean that indicates if phone number is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
+
+					// Value The phone number
+					Value *string `json:"value,omitempty"`
+				} `json:"phone,omitempty"`
+
+				// Value The ID of the person
+				Value *int `json:"value,omitempty"`
+			} `json:"person_id,omitempty"`
+
+			// RelatedItemData Information about the related deal
+			RelatedItemData *struct {
+				// DealId The ID of the deal
+				DealId *int `json:"deal_id,omitempty"`
+
+				// Title The title of the deal
+				Title *string `json:"title,omitempty"`
+			} `json:"related_item_data,omitempty"`
+
+			// RelatedItemId The ID of the related item
+			RelatedItemId *int `json:"related_item_id,omitempty"`
+
+			// RelatedItemType The type of the related item
+			RelatedItemType *string `json:"related_item_type,omitempty"`
 		} `json:"data,omitempty"`
 		RelatedObjects *struct {
 			Organization *struct {
@@ -22648,10 +20037,10 @@ type GetDealParticipantsResponse struct {
 					ActiveFlag *bool `json:"active_flag,omitempty"`
 
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -22733,6 +20122,7 @@ type GetDealParticipantsResponse struct {
 		Success *bool `json:"success,omitempty"`
 	}
 }
+type GetDealParticipants200DataAddedByUserIdDataAccessApp string
 
 // Status returns HTTPResponse.Status
 func (r GetDealParticipantsResponse) Status() string {
@@ -22754,215 +20144,353 @@ type AddDealParticipantResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The object of participant
 		Data *struct {
-			// ActiveFlag Whether the person is active or not
+			// ActiveFlag Whether the participant is active or not
 			ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// ActivitiesCount The count of activities related to the person
-			ActivitiesCount *int `json:"activities_count,omitempty"`
+			// AddTime The date and time when the participant was added. Format: YYYY-MM-DD HH:MM:SS
+			AddTime       *string `json:"add_time,omitempty"`
+			AddedByUserId *struct {
+				Data *struct {
+					Access *[]struct {
+						Admin           *bool                                                `json:"admin,omitempty"`
+						App             *AddDealParticipant200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+						PermissionSetId *string                                              `json:"permission_set_id,omitempty"`
+					} `json:"access,omitempty"`
 
-			// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-			AddTime *string `json:"add_time,omitempty"`
+					// Activated Boolean that indicates whether the user is activated
+					Activated *bool `json:"activated,omitempty"`
 
-			// CcEmail The BCC email associated with the person
-			CcEmail *string `json:"cc_email,omitempty"`
+					// ActiveFlag Boolean that indicates whether the user is activated
+					ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// ClosedDealsCount The count of closed deals related with the item
-			ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+					// Created The creation date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+					Created *string `json:"created,omitempty"`
 
-			// CompanyId The ID of the company related to the person
-			CompanyId *int `json:"company_id,omitempty"`
+					// DefaultCurrency The user default currency
+					DefaultCurrency *string `json:"default_currency,omitempty"`
 
-			// DoneActivitiesCount The count of done activities related to the person
-			DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+					// Email The user email
+					Email *string `json:"email,omitempty"`
 
-			// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-			Email *[]struct {
-				// Label The label that indicates the type of the email. (Possible values - work, home or other)
-				Label *string `json:"label,omitempty"`
+					// HasCreatedCompany Boolean that indicates whether the user has created a company
+					HasCreatedCompany *bool `json:"has_created_company,omitempty"`
 
-				// Primary Boolean that indicates if email is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
+					// IconUrl The user icon URL
+					IconUrl *string `json:"icon_url"`
 
-				// Value Email
-				Value *string `json:"value,omitempty"`
-			} `json:"email,omitempty"`
+					// Id The user ID
+					Id *int `json:"id,omitempty"`
 
-			// EmailMessagesCount The count of email messages related to the person
-			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+					// IsDeleted Boolean that indicates whether the user is deleted from the company
+					IsDeleted *bool `json:"is_deleted,omitempty"`
 
-			// FilesCount The count of files related to the person
-			FilesCount *int `json:"files_count,omitempty"`
+					// IsYou Boolean that indicates if the requested user is the same which is logged in (in this case, always true)
+					IsYou *bool `json:"is_you,omitempty"`
 
-			// FirstChar The first letter of the name of the person
-			FirstChar *string `json:"first_char,omitempty"`
+					// Lang The user language ID
+					Lang *int `json:"lang,omitempty"`
 
-			// FirstName The first name of the person
-			FirstName *string `json:"first_name,omitempty"`
+					// LastLogin The last login date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+					LastLogin *string `json:"last_login,omitempty"`
 
-			// FollowersCount The count of followers related to the person
-			FollowersCount *int `json:"followers_count,omitempty"`
+					// Locale The user locale
+					Locale *string `json:"locale,omitempty"`
 
-			// Id The ID of the person
-			Id *int `json:"id,omitempty"`
+					// Modified The last modification date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+					Modified *string `json:"modified"`
 
-			// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-			Label *int `json:"label,omitempty"`
+					// Name The user name
+					Name *string `json:"name,omitempty"`
 
-			// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-			LabelIds *[]int `json:"label_ids,omitempty"`
+					// Phone The user phone
+					Phone *string `json:"phone"`
 
-			// LastActivityDate The date of the last activity associated with the deal
-			LastActivityDate *string `json:"last_activity_date"`
+					// RoleId The ID of the user role
+					RoleId *int `json:"role_id,omitempty"`
 
-			// LastActivityId The ID of the last activity associated with the deal
-			LastActivityId *int `json:"last_activity_id"`
+					// TimezoneName The user timezone name
+					TimezoneName *string `json:"timezone_name,omitempty"`
 
-			// LastIncomingMailTime The date and time of the last incoming email associated with the person
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+					// TimezoneOffset The user timezone offset
+					TimezoneOffset *string `json:"timezone_offset,omitempty"`
+				} `json:"data,omitempty"`
 
-			// LastName The last name of the person
-			LastName *string `json:"last_name,omitempty"`
+				// Success If the response is successful or not
+				Success *bool `json:"success,omitempty"`
+			} `json:"added_by_user_id,omitempty"`
 
-			// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-			// LostDealsCount The count of lost deals related with the item
-			LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-			// Name The name of the person
-			Name *string `json:"name,omitempty"`
-
-			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date"`
-
-			// NextActivityId The ID of the next activity associated with the deal
-			NextActivityId *int `json:"next_activity_id"`
-
-			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time"`
-
-			// NotesCount The count of notes related to the person
-			NotesCount *int `json:"notes_count,omitempty"`
-
-			// OpenDealsCount The count of open deals related with the item
-			OpenDealsCount *int `json:"open_deals_count,omitempty"`
-			OrgId          *struct {
-				// ActiveFlag Whether the associated organization is active or not
+			// Id The ID of the participant
+			Id     *int `json:"id,omitempty"`
+			Person *struct {
+				// ActiveFlag Whether the person is active or not
 				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				// ActivitiesCount The count of activities related to the person
+				ActivitiesCount *int `json:"activities_count,omitempty"`
 
-				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Name The name of the organization associated with the item
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the organization that is associated with the item
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// PeopleCount The number of people connected with the organization that is associated with the item
-				PeopleCount *int `json:"people_count,omitempty"`
-
-				// Value The ID of the organization
-				Value *int `json:"value,omitempty"`
-			} `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization associated with the person
-			OrgName *string `json:"org_name,omitempty"`
-			OwnerId *struct {
-				// ActiveFlag Whether the user is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the user
-				Email *string `json:"email,omitempty"`
-
-				// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-				HasPic *int `json:"has_pic,omitempty"`
-
-				// Id The ID of the user
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the user
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The user picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the owner
-				Value *int `json:"value,omitempty"`
-			} `json:"owner_id,omitempty"`
-
-			// OwnerName The name of the owner associated with the person
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-			Phone *[]struct {
-				// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if phone number is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value The phone number
-				Value *string `json:"value,omitempty"`
-			} `json:"phone,omitempty"`
-			PictureId *struct {
-				// ActiveFlag Whether the associated picture is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The add time of the picture
+				// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
 				AddTime *string `json:"add_time,omitempty"`
 
-				// AddedByUserId The ID of the user who added the picture
-				AddedByUserId *int `json:"added_by_user_id,omitempty"`
+				// CcEmail The BCC email associated with the person
+				CcEmail *string `json:"cc_email"`
 
-				// Id The ID of the picture associated with the item
+				// ClosedDealsCount The count of closed deals related with the item
+				ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+
+				// CompanyId The ID of the company related to the person
+				CompanyId *int `json:"company_id,omitempty"`
+
+				// DoneActivitiesCount The count of done activities related to the person
+				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+
+				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
+				Email *[]struct {
+					// Label The label that indicates the type of the email. (Possible values - work, home or other)
+					Label *string `json:"label,omitempty"`
+
+					// Primary Boolean that indicates if email is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
+
+					// Value Email
+					Value *string `json:"value,omitempty"`
+				} `json:"email,omitempty"`
+
+				// EmailMessagesCount The count of email messages related to the person
+				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+
+				// FilesCount The count of files related to the person
+				FilesCount *int `json:"files_count,omitempty"`
+
+				// FirstChar The first letter of the name of the person
+				FirstChar *string `json:"first_char,omitempty"`
+
+				// FirstName The first name of the person
+				FirstName *string `json:"first_name,omitempty"`
+
+				// FollowersCount The count of followers related to the person
+				FollowersCount *int `json:"followers_count,omitempty"`
+
+				// Id The ID of the person
 				Id *int `json:"id,omitempty"`
 
-				// ItemId The ID of related item
-				ItemId *int `json:"item_id,omitempty"`
+				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
+				Label *int `json:"label"`
 
-				// ItemType The type of item the picture is related to
-				ItemType *string `json:"item_type,omitempty"`
-				Pictures *struct {
-					// N128 The URL of the 128*128 picture
-					N128 *string `json:"128,omitempty"`
+				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
+				LabelIds *[]int `json:"label_ids,omitempty"`
 
-					// N512 The URL of the 512*512 picture
-					N512 *string `json:"512,omitempty"`
-				} `json:"pictures,omitempty"`
+				// LastActivityDate The date of the last activity associated with the deal
+				LastActivityDate *string `json:"last_activity_date"`
 
-				// UpdateTime The update time of the picture
+				// LastActivityId The ID of the last activity associated with the deal
+				LastActivityId *int `json:"last_activity_id"`
+
+				// LastIncomingMailTime The date and time of the last incoming email associated with the person
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
+
+				// LastName The last name of the person
+				LastName *string `json:"last_name"`
+
+				// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
+
+				// LostDealsCount The count of lost deals related with the item
+				LostDealsCount *int `json:"lost_deals_count,omitempty"`
+
+				// Name The name of the person
+				Name *string `json:"name,omitempty"`
+
+				// NextActivityDate The date of the next activity associated with the deal
+				NextActivityDate *string `json:"next_activity_date"`
+
+				// NextActivityId The ID of the next activity associated with the deal
+				NextActivityId *int `json:"next_activity_id"`
+
+				// NextActivityTime The time of the next activity associated with the deal
+				NextActivityTime *string `json:"next_activity_time"`
+
+				// NotesCount The count of notes related to the person
+				NotesCount *int `json:"notes_count,omitempty"`
+
+				// OpenDealsCount The count of open deals related with the item
+				OpenDealsCount *int `json:"open_deals_count,omitempty"`
+				OrgId          *struct {
+					// ActiveFlag Whether the associated organization is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
+
+					// Address The address of the organization
+					Address *string `json:"address"`
+
+					// CcEmail The BCC email of the organization associated with the item
+					CcEmail *string `json:"cc_email"`
+
+					// LabelIds The IDs of labels assigned to the organization
+					LabelIds *[]int `json:"label_ids,omitempty"`
+
+					// Name The name of the organization associated with the item
+					Name *string `json:"name,omitempty"`
+
+					// OwnerId The ID of the owner of the organization that is associated with the item
+					OwnerId *int `json:"owner_id,omitempty"`
+
+					// PeopleCount The number of people connected with the organization that is associated with the item
+					PeopleCount *int `json:"people_count,omitempty"`
+
+					// Value The ID of the organization
+					Value *int `json:"value,omitempty"`
+				} `json:"org_id"`
+
+				// OrgName The name of the organization associated with the person
+				OrgName *string `json:"org_name"`
+				OwnerId *struct {
+					// ActiveFlag Whether the user is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
+
+					// Email The email of the user
+					Email *string `json:"email,omitempty"`
+
+					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
+					HasPic *int `json:"has_pic,omitempty"`
+
+					// Id The ID of the user
+					Id *int `json:"id,omitempty"`
+
+					// Name The name of the user
+					Name *string `json:"name,omitempty"`
+
+					// PicHash The user picture hash
+					PicHash *string `json:"pic_hash"`
+
+					// Value The ID of the owner
+					Value *int `json:"value,omitempty"`
+				} `json:"owner_id,omitempty"`
+
+				// OwnerName The name of the owner associated with the person
+				OwnerName *string `json:"owner_name,omitempty"`
+
+				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+				Phone *[]struct {
+					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+					Label *string `json:"label,omitempty"`
+
+					// Primary Boolean that indicates if phone number is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
+
+					// Value The phone number
+					Value *string `json:"value,omitempty"`
+				} `json:"phone,omitempty"`
+				PictureId *struct {
+					// ActiveFlag Whether the associated picture is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
+
+					// AddTime The add time of the picture
+					AddTime *string `json:"add_time,omitempty"`
+
+					// AddedByUserId The ID of the user who added the picture
+					AddedByUserId *int `json:"added_by_user_id,omitempty"`
+
+					// Id The ID of the picture associated with the item
+					Id *int `json:"id,omitempty"`
+
+					// ItemId The ID of related item
+					ItemId *int `json:"item_id,omitempty"`
+
+					// ItemType The type of item the picture is related to
+					ItemType *string `json:"item_type,omitempty"`
+					Pictures *struct {
+						// N128 The URL of the 128*128 picture
+						N128 *string `json:"128,omitempty"`
+
+						// N512 The URL of the 512*512 picture
+						N512 *string `json:"512,omitempty"`
+					} `json:"pictures,omitempty"`
+
+					// UpdateTime The update time of the picture
+					UpdateTime *string `json:"update_time,omitempty"`
+				} `json:"picture_id"`
+
+				// RelatedClosedDealsCount The count of related closed deals related with the item
+				RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+
+				// RelatedLostDealsCount The count of related lost deals related with the item
+				RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+
+				// RelatedOpenDealsCount The count of related open deals related with the item
+				RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+
+				// RelatedWonDealsCount The count of related won deals related with the item
+				RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+
+				// UndoneActivitiesCount The count of undone activities related to the person
+				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+
+				// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
 				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"picture_id,omitempty"`
 
-			// RelatedClosedDealsCount The count of related closed deals related with the item
-			RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+				// VisibleTo The visibility group ID of who can see the person
+				VisibleTo *string `json:"visible_to,omitempty"`
 
-			// RelatedLostDealsCount The count of related lost deals related with the item
-			RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+				// WonDealsCount The count of won deals related with the item
+				WonDealsCount *int `json:"won_deals_count,omitempty"`
+			} `json:"person,omitempty"`
 
-			// RelatedOpenDealsCount The count of related open deals related with the item
-			RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+			// PersonId The person data associated with the participant
+			PersonId *struct {
+				// ActiveFlag Whether the person is active or not
+				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// RelatedWonDealsCount The count of related won deals related with the item
-			RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+				// CompanyId The ID of the company related to the person
+				CompanyId *int `json:"company_id,omitempty"`
 
-			// UndoneActivitiesCount The count of undone activities related to the person
-			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" }]`. Please note that only `value` is required.
+				Email *[]struct {
+					// Label The label that indicates the type of the email. (Possible values - work, home or other)
+					Label *string `json:"label,omitempty"`
 
-			// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-			UpdateTime *string `json:"update_time,omitempty"`
+					// Primary Boolean that indicates if email is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
 
-			// VisibleTo The visibility group ID of who can see the person
-			VisibleTo *string `json:"visible_to,omitempty"`
+					// Value The email address
+					Value *string `json:"value,omitempty"`
+				} `json:"email,omitempty"`
 
-			// WonDealsCount The count of won deals related with the item
-			WonDealsCount *int `json:"won_deals_count,omitempty"`
+				// Name The name of the person
+				Name *string `json:"name,omitempty"`
+
+				// OwnerId The ID of the owner of the person
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+				Phone *[]struct {
+					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+					Label *string `json:"label,omitempty"`
+
+					// Primary Boolean that indicates if phone number is primary for the person or not
+					Primary *bool `json:"primary,omitempty"`
+
+					// Value The phone number
+					Value *string `json:"value,omitempty"`
+				} `json:"phone,omitempty"`
+
+				// Value The ID of the person
+				Value *int `json:"value,omitempty"`
+			} `json:"person_id,omitempty"`
+
+			// RelatedItemData Information about the related deal
+			RelatedItemData *struct {
+				// DealId The ID of the deal
+				DealId *int `json:"deal_id,omitempty"`
+
+				// Title The title of the deal
+				Title *string `json:"title,omitempty"`
+			} `json:"related_item_data,omitempty"`
+
+			// RelatedItemId The ID of the related item
+			RelatedItemId *int `json:"related_item_id,omitempty"`
+
+			// RelatedItemType The type of the related item
+			RelatedItemType *string `json:"related_item_type,omitempty"`
 		} `json:"data,omitempty"`
 		RelatedObjects *struct {
 			Person *struct {
@@ -23032,6 +20560,7 @@ type AddDealParticipantResponse struct {
 		Success *bool `json:"success,omitempty"`
 	}
 }
+type AddDealParticipant200DataAddedByUserIdDataAccessApp string
 
 // Status returns HTTPResponse.Status
 func (r AddDealParticipantResponse) Status() string {
@@ -23150,302 +20679,6 @@ func (r GetDealUsersResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r GetDealUsersResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetDealPersonsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// Limit Items shown per page
-			Limit *int `json:"limit,omitempty"`
-
-			// MoreItemsInCollection If there are more list items in the collection than displayed or not
-			MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-			// Start Pagination start
-			Start *int `json:"start,omitempty"`
-		} `json:"additional_data,omitempty"`
-
-		// Data The array of persons
-		Data *[]struct {
-			// ActiveFlag Whether the person is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// ActivitiesCount The count of activities related to the person
-			ActivitiesCount *int `json:"activities_count,omitempty"`
-
-			// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-			AddTime *string `json:"add_time,omitempty"`
-
-			// CcEmail The BCC email associated with the person
-			CcEmail *string `json:"cc_email,omitempty"`
-
-			// ClosedDealsCount The count of closed deals related with the item
-			ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
-
-			// CompanyId The ID of the company related to the person
-			CompanyId *int `json:"company_id,omitempty"`
-
-			// DoneActivitiesCount The count of done activities related to the person
-			DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-			// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-			Email *[]struct {
-				// Label The label that indicates the type of the email. (Possible values - work, home or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if email is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value Email
-				Value *string `json:"value,omitempty"`
-			} `json:"email,omitempty"`
-
-			// EmailMessagesCount The count of email messages related to the person
-			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-			// FilesCount The count of files related to the person
-			FilesCount *int `json:"files_count,omitempty"`
-
-			// FirstChar The first letter of the name of the person
-			FirstChar *string `json:"first_char,omitempty"`
-
-			// FirstName The first name of the person
-			FirstName *string `json:"first_name,omitempty"`
-
-			// FollowersCount The count of followers related to the person
-			FollowersCount *int `json:"followers_count,omitempty"`
-
-			// Id The ID of the person
-			Id *int `json:"id,omitempty"`
-
-			// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-			Label *int `json:"label,omitempty"`
-
-			// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-			LabelIds *[]int `json:"label_ids,omitempty"`
-
-			// LastActivityDate The date of the last activity associated with the deal
-			LastActivityDate *string `json:"last_activity_date"`
-
-			// LastActivityId The ID of the last activity associated with the deal
-			LastActivityId *int `json:"last_activity_id"`
-
-			// LastIncomingMailTime The date and time of the last incoming email associated with the person
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-			// LastName The last name of the person
-			LastName *string `json:"last_name,omitempty"`
-
-			// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-			// LostDealsCount The count of lost deals related with the item
-			LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-			// Name The name of the person
-			Name *string `json:"name,omitempty"`
-
-			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date"`
-
-			// NextActivityId The ID of the next activity associated with the deal
-			NextActivityId *int `json:"next_activity_id"`
-
-			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time"`
-
-			// NotesCount The count of notes related to the person
-			NotesCount *int `json:"notes_count,omitempty"`
-
-			// OpenDealsCount The count of open deals related with the item
-			OpenDealsCount *int `json:"open_deals_count,omitempty"`
-			OrgId          *struct {
-				// ActiveFlag Whether the associated organization is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
-
-				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Name The name of the organization associated with the item
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the organization that is associated with the item
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// PeopleCount The number of people connected with the organization that is associated with the item
-				PeopleCount *int `json:"people_count,omitempty"`
-
-				// Value The ID of the organization
-				Value *int `json:"value,omitempty"`
-			} `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization associated with the person
-			OrgName *string `json:"org_name,omitempty"`
-			OwnerId *struct {
-				// ActiveFlag Whether the user is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the user
-				Email *string `json:"email,omitempty"`
-
-				// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-				HasPic *int `json:"has_pic,omitempty"`
-
-				// Id The ID of the user
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the user
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The user picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the owner
-				Value *int `json:"value,omitempty"`
-			} `json:"owner_id,omitempty"`
-
-			// OwnerName The name of the owner associated with the person
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-			Phone *[]struct {
-				// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if phone number is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value The phone number
-				Value *string `json:"value,omitempty"`
-			} `json:"phone,omitempty"`
-			PictureId *struct {
-				// ActiveFlag Whether the associated picture is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The add time of the picture
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AddedByUserId The ID of the user who added the picture
-				AddedByUserId *int `json:"added_by_user_id,omitempty"`
-
-				// Id The ID of the picture associated with the item
-				Id *int `json:"id,omitempty"`
-
-				// ItemId The ID of related item
-				ItemId *int `json:"item_id,omitempty"`
-
-				// ItemType The type of item the picture is related to
-				ItemType *string `json:"item_type,omitempty"`
-				Pictures *struct {
-					// N128 The URL of the 128*128 picture
-					N128 *string `json:"128,omitempty"`
-
-					// N512 The URL of the 512*512 picture
-					N512 *string `json:"512,omitempty"`
-				} `json:"pictures,omitempty"`
-
-				// UpdateTime The update time of the picture
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"picture_id,omitempty"`
-
-			// RelatedClosedDealsCount The count of related closed deals related with the item
-			RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
-
-			// RelatedLostDealsCount The count of related lost deals related with the item
-			RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
-
-			// RelatedOpenDealsCount The count of related open deals related with the item
-			RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
-
-			// RelatedWonDealsCount The count of related won deals related with the item
-			RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
-
-			// UndoneActivitiesCount The count of undone activities related to the person
-			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-			// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// VisibleTo The visibility group ID of who can see the person
-			VisibleTo *string `json:"visible_to,omitempty"`
-
-			// WonDealsCount The count of won deals related with the item
-			WonDealsCount *int `json:"won_deals_count,omitempty"`
-		} `json:"data,omitempty"`
-		RelatedObjects *struct {
-			Organization *struct {
-				// ORGANIZATIONID The ID of the organization associated with the item
-				ORGANIZATIONID *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Id The ID of the organization associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-				} `json:"ORGANIZATION_ID,omitempty"`
-			} `json:"organization,omitempty"`
-			User *struct {
-				USERID *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-				} `json:"USER_ID,omitempty"`
-			} `json:"user,omitempty"`
-		} `json:"related_objects,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetDealPersonsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetDealPersonsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -25258,6 +22491,9 @@ type GetLeadsResponse struct {
 			// PersonId The ID of a person which this lead is linked to
 			PersonId *int `json:"person_id"`
 
+			// SourceDealId The ID of the deal if the lead was converted from a deal.
+			SourceDealId *int `json:"source_deal_id"`
+
 			// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 			SourceName *string `json:"source_name,omitempty"`
 
@@ -25349,6 +22585,9 @@ type AddLeadResponse struct {
 
 			// PersonId The ID of a person which this lead is linked to
 			PersonId *int `json:"person_id"`
+
+			// SourceDealId The ID of the deal if the lead was converted from a deal.
+			SourceDealId *int `json:"source_deal_id"`
 
 			// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 			SourceName *string `json:"source_name,omitempty"`
@@ -25452,6 +22691,9 @@ type GetArchivedLeadsResponse struct {
 
 			// PersonId The ID of a person which this lead is linked to
 			PersonId *int `json:"person_id"`
+
+			// SourceDealId The ID of the deal if the lead was converted from a deal.
+			SourceDealId *int `json:"source_deal_id"`
 
 			// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 			SourceName *string `json:"source_name,omitempty"`
@@ -25583,6 +22825,9 @@ type GetLeadResponse struct {
 			// PersonId The ID of a person which this lead is linked to
 			PersonId *int `json:"person_id"`
 
+			// SourceDealId The ID of the deal if the lead was converted from a deal.
+			SourceDealId *int `json:"source_deal_id"`
+
 			// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 			SourceName *string `json:"source_name,omitempty"`
 
@@ -25685,6 +22930,9 @@ type UpdateLeadResponse struct {
 
 			// PersonId The ID of a person which this lead is linked to
 			PersonId *int `json:"person_id"`
+
+			// SourceDealId The ID of the deal if the lead was converted from a deal.
+			SourceDealId *int `json:"source_deal_id"`
 
 			// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 			SourceName *string `json:"source_name,omitempty"`
@@ -28390,10 +25638,10 @@ type GetOrganizationRelationshipsResponse struct {
 			Id             *int `json:"id,omitempty"`
 			RelLinkedOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28409,10 +25657,10 @@ type GetOrganizationRelationshipsResponse struct {
 			} `json:"rel_linked_org_id,omitempty"`
 			RelOwnerOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28441,10 +25689,10 @@ type GetOrganizationRelationshipsResponse struct {
 				// ORGANIZATIONID The ID of the organization associated with the item
 				ORGANIZATIONID *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -28497,10 +25745,10 @@ type AddOrganizationRelationshipResponse struct {
 			Id             *int `json:"id,omitempty"`
 			RelLinkedOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28516,10 +25764,10 @@ type AddOrganizationRelationshipResponse struct {
 			} `json:"rel_linked_org_id,omitempty"`
 			RelOwnerOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28545,10 +25793,10 @@ type AddOrganizationRelationshipResponse struct {
 				// ORGANIZATIONID The ID of the organization associated with the item
 				ORGANIZATIONID *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -28637,10 +25885,10 @@ type GetOrganizationRelationshipResponse struct {
 			Id             *int `json:"id,omitempty"`
 			RelLinkedOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28656,10 +25904,10 @@ type GetOrganizationRelationshipResponse struct {
 			} `json:"rel_linked_org_id,omitempty"`
 			RelOwnerOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28685,10 +25933,10 @@ type GetOrganizationRelationshipResponse struct {
 				// ORGANIZATIONID The ID of the organization associated with the item
 				ORGANIZATIONID *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -28741,10 +25989,10 @@ type UpdateOrganizationRelationshipResponse struct {
 			Id             *int `json:"id,omitempty"`
 			RelLinkedOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28760,10 +26008,10 @@ type UpdateOrganizationRelationshipResponse struct {
 			} `json:"rel_linked_org_id,omitempty"`
 			RelOwnerOrgId *struct {
 				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
+				Address *string `json:"address"`
 
 				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// Name The name of the organization associated with the item
 				Name *string `json:"name,omitempty"`
@@ -28789,10 +26037,10 @@ type UpdateOrganizationRelationshipResponse struct {
 				// ORGANIZATIONID The ID of the organization associated with the item
 				ORGANIZATIONID *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -28824,382 +26072,6 @@ func (r UpdateOrganizationRelationshipResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r UpdateOrganizationRelationshipResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteOrganizationsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *struct {
-			// Id The IDs of the organizations that were deleted
-			Id *[]float32 `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the request was successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteOrganizationsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteOrganizationsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetOrganizationsCollectionResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
-		} `json:"additional_data,omitempty"`
-		Data *[]struct {
-			// ActiveFlag Whether the organization is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// AddTime The date and time when the organization was added/created. Format: YYYY-MM-DD HH:MM:SS
-			AddTime *string `json:"add_time,omitempty"`
-
-			// Address The full address of the organization
-			Address *string `json:"address,omitempty"`
-
-			// AddressAdminAreaLevel1 The level 1 admin area of the organization location
-			AddressAdminAreaLevel1 *string `json:"address_admin_area_level_1,omitempty"`
-
-			// AddressAdminAreaLevel2 The level 2 admin area of the organization location
-			AddressAdminAreaLevel2 *string `json:"address_admin_area_level_2,omitempty"`
-
-			// AddressCountry The country of the organization location
-			AddressCountry *string `json:"address_country,omitempty"`
-
-			// AddressFormattedAddress The formatted organization location
-			AddressFormattedAddress *string `json:"address_formatted_address,omitempty"`
-
-			// AddressLocality The locality of the organization location
-			AddressLocality *string `json:"address_locality,omitempty"`
-
-			// AddressPostalCode The postal code of the organization location
-			AddressPostalCode *string `json:"address_postal_code,omitempty"`
-
-			// AddressRoute The route of the organization location
-			AddressRoute *string `json:"address_route,omitempty"`
-
-			// AddressStreetNumber The street number of the organization location
-			AddressStreetNumber *string `json:"address_street_number,omitempty"`
-
-			// AddressSublocality The sub-locality of the organization location
-			AddressSublocality *string `json:"address_sublocality,omitempty"`
-
-			// AddressSubpremise The sub-premise of the organization location
-			AddressSubpremise *string `json:"address_subpremise,omitempty"`
-
-			// CcEmail The BCC email associated with the organization
-			CcEmail *string `json:"cc_email,omitempty"`
-
-			// DeleteTime The date and time this organization was deleted. Format: YYYY-MM-DD HH:MM:SS
-			DeleteTime *string `json:"delete_time"`
-
-			// Id The ID of the organization
-			Id *int `json:"id,omitempty"`
-
-			// Label The label assigned to the organization. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-			Label *int `json:"label"`
-
-			// LabelIds The IDs of labels assigned to the organization. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-			LabelIds *[]int `json:"label_ids,omitempty"`
-
-			// Name The name of the organization
-			Name *string `json:"name,omitempty"`
-
-			// OwnerId The ID of the owner
-			OwnerId *int `json:"owner_id,omitempty"`
-
-			// UpdateTime The last updated date and time of the organization. Format: YYYY-MM-DD HH:MM:SS
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// VisibleTo The visibility group ID of who can see the organization
-			VisibleTo *string `json:"visible_to,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-	JSON403 *struct {
-		// Error The error message
-		Error *string `json:"error,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetOrganizationsCollectionResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetOrganizationsCollectionResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetOrganizationActivitiesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *struct {
-			// ActivityDistribution The distribution of activities related to the organization grouped by the user ID
-			ActivityDistribution *struct {
-				// ASSIGNEDTOUSERID The ID of the user
-				ASSIGNEDTOUSERID *struct {
-					// Activities The count of activities related to the user grouped by activity type
-					Activities *struct {
-						// ACTIVITYTYPENAME The count of activities related to a specific type
-						ACTIVITYTYPENAME *int `json:"ACTIVITY_TYPE_NAME,omitempty"`
-					} `json:"activities,omitempty"`
-
-					// ActivityCount The overall count of activities for the user
-					ActivityCount *int `json:"activity_count,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// Share The percentage of activities belongs to the user
-					Share *int `json:"share,omitempty"`
-				} `json:"ASSIGNED_TO_USER_ID,omitempty"`
-			} `json:"activity_distribution,omitempty"`
-
-			// Limit Items shown per page
-			Limit *int `json:"limit,omitempty"`
-
-			// MoreItemsInCollection If there are more list items in the collection than displayed or not
-			MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-			// Start Pagination start
-			Start *int `json:"start,omitempty"`
-		} `json:"additional_data,omitempty"`
-
-		// Data The array of activities
-		Data *[]struct {
-			// ActiveFlag Whether the activity is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// AssignedToUserId The ID of the user to whom the activity is assigned to. Equal to `user_id`.
-			AssignedToUserId *int `json:"assigned_to_user_id,omitempty"`
-
-			// Attendees The attendees of the activity. This can be either your existing Pipedrive contacts or an external email address.
-			Attendees *[]map[string]interface{} `json:"attendees"`
-
-			// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-			BusyFlag *bool `json:"busy_flag,omitempty"`
-
-			// CalendarSyncIncludeContext For activities that sync to an external calendar, this setting indicates if the activity syncs with context (what are the deals, persons, organizations this activity is related to)
-			CalendarSyncIncludeContext *string `json:"calendar_sync_include_context,omitempty"`
-
-			// CompanyId The user's company ID
-			CompanyId *int `json:"company_id,omitempty"`
-
-			// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-			ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-			// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-			ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-			// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-			ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-			// CreatedByUserId The ID of the user who created the activity
-			CreatedByUserId *int `json:"created_by_user_id,omitempty"`
-
-			// DealDropboxBcc The BCC email address of the deal
-			DealDropboxBcc *string `json:"deal_dropbox_bcc,omitempty"`
-
-			// DealId The ID of the deal this activity is associated with
-			DealId *int `json:"deal_id,omitempty"`
-
-			// DealTitle The name of the deal this activity is associated with
-			DealTitle *string `json:"deal_title,omitempty"`
-
-			// Done Whether the activity is done or not
-			Done *bool `json:"done,omitempty"`
-
-			// DueDate The due date of the activity. Format: YYYY-MM-DD
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// DueTime The due time of the activity in UTC. Format: HH:MM
-			DueTime *string `json:"due_time,omitempty"`
-
-			// Duration The duration of the activity. Format: HH:MM
-			Duration *string `json:"duration,omitempty"`
-
-			// File The file that is attached to this activity. For example, this can be a reference to an audio note file generated with Pipedrive mobile app.
-			File *map[string]interface{} `json:"file,omitempty"`
-
-			// GcalEventId For the activity which syncs to Google calendar, this is the Google event ID. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GcalEventId *string `json:"gcal_event_id,omitempty"`
-
-			// GoogleCalendarEtag The Google calendar API etag (version) that is used for syncing this activity. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GoogleCalendarEtag *string `json:"google_calendar_etag,omitempty"`
-
-			// GoogleCalendarId The Google calendar ID that this activity syncs to. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GoogleCalendarId *string `json:"google_calendar_id,omitempty"`
-
-			// Id The ID of the activity, generated when the activity was created
-			Id *int `json:"id,omitempty"`
-
-			// LastNotificationTime The date and time of latest notifications sent about this activity to the participants or the attendees of this activity
-			LastNotificationTime *string `json:"last_notification_time,omitempty"`
-
-			// LastNotificationUserId The ID of the user who triggered the sending of the latest notifications about this activity to the participants or the attendees of this activity
-			LastNotificationUserId *int `json:"last_notification_user_id,omitempty"`
-
-			// LeadId The ID of the lead in the UUID format this activity is associated with
-			LeadId *openapi_types.UUID `json:"lead_id"`
-
-			// Location The address of the activity.
-			Location *string `json:"location,omitempty"`
-
-			// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-			LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-			// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-			LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-			// LocationCountry A subfield of the location field. Indicates country.
-			LocationCountry *string `json:"location_country,omitempty"`
-
-			// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-			LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-			// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-			LocationLocality *string `json:"location_locality,omitempty"`
-
-			// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-			LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-			// LocationRoute A subfield of the location field. Indicates street name.
-			LocationRoute *string `json:"location_route,omitempty"`
-
-			// LocationStreetNumber A subfield of the location field. Indicates house number.
-			LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-			// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-			LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-			// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-			LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-			// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// Note The note of the activity (HTML format)
-			Note *string `json:"note,omitempty"`
-
-			// NotificationLanguageId The ID of the language the notifications are sent in
-			NotificationLanguageId *int `json:"notification_language_id,omitempty"`
-
-			// OrgId The ID of the organization this activity is associated with
-			OrgId *int `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization this activity is associated with
-			OrgName *string `json:"org_name,omitempty"`
-
-			// OwnerName The name of the user this activity is owned by
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// Participants List of multiple persons (participants) this activity is associated with
-			Participants *[]map[string]interface{} `json:"participants"`
-
-			// PersonDropboxBcc The BCC email address of the person
-			PersonDropboxBcc *string `json:"person_dropbox_bcc,omitempty"`
-
-			// PersonId The ID of the person this activity is associated with
-			PersonId *int `json:"person_id,omitempty"`
-
-			// PersonName The name of the person this activity is associated with
-			PersonName *string `json:"person_name,omitempty"`
-
-			// ProjectId The ID of the project this activity is associated with
-			ProjectId *int `json:"project_id"`
-
-			// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-			PublicDescription *string `json:"public_description,omitempty"`
-
-			// RecMasterActivityId The ID of parent activity for a recurrent activity if the current activity is an exception to recurrence rules
-			RecMasterActivityId *int `json:"rec_master_activity_id,omitempty"`
-
-			// RecRule The rule for the recurrence of the activity. Is important for activities synced into Pipedrive from an external calendar. Example: "RRULE:FREQ=WEEKLY;BYDAY=WE"
-			RecRule *string `json:"rec_rule,omitempty"`
-
-			// RecRuleExtension Additional rules for the recurrence of the activity, extend the `rec_rule`. Is important for activities synced into Pipedrive from an external calendar.
-			RecRuleExtension *string `json:"rec_rule_extension,omitempty"`
-
-			// ReferenceId Together with the `reference_type`, gives the ID of the other object
-			ReferenceId *int `json:"reference_id,omitempty"`
-
-			// ReferenceType If the activity references some other object, it is indicated here. For example, value `Salesphone` refers to activities created with Caller.
-			ReferenceType *string `json:"reference_type,omitempty"`
-
-			// Series The list of recurring activity instances. It is in a structure as follows: `[{due_date: "2020-06-24", due_time: "10:00:00"}]`
-			Series *[]map[string]interface{} `json:"series,omitempty"`
-
-			// SourceTimezone The timezone the activity was created in an external calendar
-			SourceTimezone *string `json:"source_timezone,omitempty"`
-
-			// Subject The subject of the activity
-			Subject *string `json:"subject,omitempty"`
-
-			// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-			Type *string `json:"type,omitempty"`
-
-			// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// UpdateUserId The ID of the user who was the last to update this activity
-			UpdateUserId *int `json:"update_user_id,omitempty"`
-
-			// UserId The ID of the user whom the activity is assigned to
-			UserId *int `json:"user_id,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetOrganizationActivitiesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetOrganizationActivitiesResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -29256,511 +26128,6 @@ func (r GetOrganizationChangelogResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r GetOrganizationChangelogResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetOrganizationDealsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// Limit Items shown per page
-			Limit *int `json:"limit,omitempty"`
-
-			// MoreItemsInCollection If there are more list items in the collection than displayed or not
-			MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-			// Start Pagination start
-			Start *int `json:"start,omitempty"`
-		} `json:"additional_data,omitempty"`
-
-		// Data The array of deals
-		Data *[]struct {
-			// Active Whether the deal is active or not
-			Active *bool `json:"active,omitempty"`
-
-			// ActivitiesCount The number of activities associated with the deal
-			ActivitiesCount *int `json:"activities_count,omitempty"`
-
-			// Acv Only available in Growth and above plans
-			//
-			// The Annual Contract Value of the deal
-			//
-			// Null if there are no products attached to the deal
-			Acv *float32 `json:"acv"`
-
-			// AcvCurrency Only available in Growth and above plans
-			//
-			// The Currency for Annual Contract Value of the deal
-			//
-			// If the `acv` is null, this will also be null
-			AcvCurrency *string `json:"acv_currency"`
-
-			// AddTime The creation date and time of the deal
-			AddTime *string `json:"add_time,omitempty"`
-
-			// Arr Only available in Growth and above plans
-			//
-			// The Annual Recurring Revenue of the deal
-			//
-			// Null if there are no products attached to the deal
-			Arr *float32 `json:"arr"`
-
-			// ArrCurrency Only available in Growth and above plans
-			//
-			// The Currency for Annual Recurring Revenue of the deal
-			//
-			// If the `arr` is null, this will also be null
-			ArrCurrency *string `json:"arr_currency"`
-
-			// CcEmail The BCC email of the deal
-			CcEmail *string `json:"cc_email,omitempty"`
-
-			// Channel The ID of your Marketing channel this Deal was created from. Recognized Marketing channels can be configured in your <a href="https://app.pipedrive.com/settings/fields" target="_blank" rel="noopener noreferrer">Company settings</a>.
-			Channel *int `json:"channel"`
-
-			// ChannelId The optional ID to further distinguish the Marketing channel.
-			ChannelId *string `json:"channel_id"`
-
-			// CloseTime The date and time of closing the deal
-			CloseTime *string `json:"close_time"`
-
-			// CreatorUserId The creator of the deal
-			CreatorUserId *struct {
-				// ActiveFlag Whether the creator is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the deal creator
-				Email *string `json:"email,omitempty"`
-
-				// HasPic If the creator has a picture or not
-				HasPic *bool `json:"has_pic,omitempty"`
-
-				// Id The ID of the deal creator
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the deal creator
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The creator picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the deal creator
-				Value *int `json:"value,omitempty"`
-			} `json:"creator_user_id,omitempty"`
-
-			// Currency The currency associated with the deal
-			Currency *string `json:"currency,omitempty"`
-
-			// Deleted Whether the deal is deleted or not
-			Deleted *bool `json:"deleted,omitempty"`
-
-			// DoneActivitiesCount The number of completed activities associated with the deal
-			DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-			// EmailMessagesCount The number of emails associated with the deal
-			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
-
-			// FilesCount The number of files associated with the deal
-			FilesCount *int `json:"files_count,omitempty"`
-
-			// FirstWonTime The date and time of the first time changing the deal status as won
-			FirstWonTime *string `json:"first_won_time,omitempty"`
-
-			// FollowersCount The number of followers associated with the deal
-			FollowersCount *int `json:"followers_count,omitempty"`
-
-			// FormattedValue The deal value formatted with selected currency. E.g. US$500
-			FormattedValue *string `json:"formatted_value,omitempty"`
-
-			// FormattedWeightedValue The weighted_value formatted with selected currency. E.g. US$500
-			FormattedWeightedValue *string `json:"formatted_weighted_value,omitempty"`
-
-			// Id The ID of the deal
-			Id *int `json:"id,omitempty"`
-
-			// IsArchived Whether the deal is archived or not
-			IsArchived *bool `json:"is_archived,omitempty"`
-
-			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
-
-			// LastActivityDate The date of the last activity associated with the deal
-			LastActivityDate *string `json:"last_activity_date"`
-
-			// LastActivityId The ID of the last activity associated with the deal
-			LastActivityId *int `json:"last_activity_id"`
-
-			// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-			// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-			// LostReason The reason for losing the deal
-			LostReason *string `json:"lost_reason"`
-
-			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
-
-			// Mrr Only available in Growth and above plans
-			//
-			// The Monthly Recurring Revenue of the deal
-			//
-			// Null if there are no products attached to the deal
-			Mrr *float32 `json:"mrr"`
-
-			// MrrCurrency Only available in Growth and above plans
-			//
-			// The Currency for Monthly Recurring Revenue of the deal
-			//
-			// If the `mrr` is null, this will also be null
-			MrrCurrency *string `json:"mrr_currency"`
-
-			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date,omitempty"`
-
-			// NextActivityDuration The duration of the next activity associated with the deal
-			NextActivityDuration *string `json:"next_activity_duration,omitempty"`
-
-			// NextActivityId The ID of the next activity associated with the deal
-			NextActivityId *int `json:"next_activity_id"`
-
-			// NextActivityNote The note of the next activity associated with the deal
-			NextActivityNote *string `json:"next_activity_note,omitempty"`
-
-			// NextActivitySubject The subject of the next activity associated with the deal
-			NextActivitySubject *string `json:"next_activity_subject,omitempty"`
-
-			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time,omitempty"`
-
-			// NextActivityType The type of the next activity associated with the deal
-			NextActivityType *string `json:"next_activity_type,omitempty"`
-
-			// NotesCount The number of notes associated with the deal
-			NotesCount *int `json:"notes_count,omitempty"`
-
-			// OrgHidden If the organization that is associated with the deal is hidden or not
-			OrgHidden *bool `json:"org_hidden,omitempty"`
-			OrgId     *struct {
-				// ActiveFlag Whether the associated organization is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Address The address of the organization that is associated with the deal
-				Address *string `json:"address,omitempty"`
-
-				// CcEmail The BCC email of the organization associated with the deal
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Name The name of the organization associated with the deal
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the organization that is associated with the deal
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// PeopleCount The number of people connected with the organization that is associated with the deal
-				PeopleCount *int `json:"people_count,omitempty"`
-
-				// Value The ID of the organization associated with the deal
-				Value *int `json:"value,omitempty"`
-			} `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization associated with the deal
-			OrgName *string `json:"org_name,omitempty"`
-
-			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
-			Origin *string `json:"origin,omitempty"`
-
-			// OriginId The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this Deal.
-			OriginId *string `json:"origin_id"`
-
-			// OwnerName The name of the deal owner
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// ParticipantsCount The number of participants associated with the deal
-			ParticipantsCount *int `json:"participants_count,omitempty"`
-
-			// PersonHidden If the person that is associated with the deal is hidden or not
-			PersonHidden *bool `json:"person_hidden,omitempty"`
-			PersonId     *struct {
-				// ActiveFlag Whether the associated person is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The emails of the person associated with the deal
-				Email *[]struct {
-					// Label The type of the email
-					Label *string `json:"label,omitempty"`
-
-					// Primary If this is the primary email or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The email of the associated person
-					Value *string `json:"value,omitempty"`
-				} `json:"email,omitempty"`
-
-				// Name The name of the person associated with the deal
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the person that is associated with the deal
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// Phone The phone numbers of the person associated with the deal
-				Phone *[]struct {
-					// Label The type of the phone number
-					Label *string `json:"label,omitempty"`
-
-					// Primary If this is the primary phone number or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The phone number of the person associated with the deal
-					Value *string `json:"value,omitempty"`
-				} `json:"phone,omitempty"`
-
-				// Value The ID of the person associated with the deal
-				Value *int `json:"value,omitempty"`
-			} `json:"person_id,omitempty"`
-
-			// PersonName The name of the person associated with the deal
-			PersonName *string `json:"person_name,omitempty"`
-
-			// PipelineId The ID of the pipeline associated with the deal
-			PipelineId *int `json:"pipeline_id,omitempty"`
-
-			// Probability The success probability percentage of the deal
-			Probability *float32 `json:"probability"`
-
-			// ProductsCount The number of products associated with the deal
-			ProductsCount *int `json:"products_count,omitempty"`
-
-			// RottenTime The date and time of changing the deal status as rotten
-			RottenTime *string `json:"rotten_time"`
-
-			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
-
-			// StageId The ID of the deal stage
-			StageId *int `json:"stage_id,omitempty"`
-
-			// StageOrderNr The order number of the deal stage associated with the deal
-			StageOrderNr *int `json:"stage_order_nr,omitempty"`
-
-			// Status The status of the deal
-			Status *string `json:"status,omitempty"`
-
-			// Title The title of the deal
-			Title *string `json:"title,omitempty"`
-
-			// UndoneActivitiesCount The number of incomplete activities associated with the deal
-			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
-			UserId     *struct {
-				// ActiveFlag Whether the user is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the user
-				Email *string `json:"email,omitempty"`
-
-				// HasPic If the user has a picture or not
-				HasPic *bool `json:"has_pic,omitempty"`
-
-				// Id The ID of the user
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the user
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The user picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the user
-				Value *int `json:"value,omitempty"`
-			} `json:"user_id,omitempty"`
-
-			// Value The value of the deal
-			Value *float32 `json:"value,omitempty"`
-
-			// VisibleTo The visibility of the deal
-			VisibleTo *string `json:"visible_to,omitempty"`
-
-			// WeightedValue Probability times deal value. Probability can either be deal probability or if not set, then stage probability.
-			WeightedValue *float32 `json:"weighted_value,omitempty"`
-
-			// WeightedValueCurrency The currency associated with the deal
-			WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
-
-			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
-		} `json:"data,omitempty"`
-		RelatedObjects *struct {
-			Organization *struct {
-				// ORGANIZATIONID The ID of the organization associated with the item
-				ORGANIZATIONID *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Id The ID of the organization associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-				} `json:"ORGANIZATION_ID,omitempty"`
-			} `json:"organization,omitempty"`
-			Person *struct {
-				// PERSONID The ID of the person associated with the item
-				PERSONID *struct {
-					// ActiveFlag Whether the associated person is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The emails of the person associated with the item
-					Email *[]struct {
-						// Label The type of the email
-						Label *string `json:"label,omitempty"`
-
-						// Primary Whether this is the primary email or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The email of the associated person
-						Value *string `json:"value,omitempty"`
-					} `json:"email,omitempty"`
-
-					// Id The ID of the person associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the person associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the person that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// Phone The phone numbers of the person associated with the item
-					Phone *[]struct {
-						// Label The type of the phone number
-						Label *string `json:"label,omitempty"`
-
-						// Primary Whether this is the primary phone number or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The phone number of the person associated with the item
-						Value *string `json:"value,omitempty"`
-					} `json:"phone,omitempty"`
-				} `json:"PERSON_ID,omitempty"`
-			} `json:"person,omitempty"`
-			Pipeline *struct {
-				// Active Whether this pipeline will be made inactive (hidden) or active
-				Active *bool `json:"active,omitempty"`
-
-				// AddTime The pipeline creation time. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// DealProbability Whether deal probability is disabled or enabled for this pipeline
-				DealProbability *bool `json:"deal_probability,omitempty"`
-
-				// Id The ID of the pipeline
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the pipeline
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr Defines the order of pipelines. First order (`order_nr=0`) is the default pipeline.
-				OrderNr *int `json:"order_nr,omitempty"`
-
-				// UpdateTime The pipeline update time. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// UrlTitle The pipeline title displayed in the URL
-				UrlTitle *string `json:"url_title,omitempty"`
-			} `json:"pipeline,omitempty"`
-			Stage *struct {
-				// ActiveFlag Whether the stage is active or deleted
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The stage creation time. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// DealProbability The success probability percentage of the deal. Used/shown when the deal weighted values are used.
-				DealProbability *int `json:"deal_probability,omitempty"`
-
-				// Id The ID of the stage
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the stage
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr Defines the order of the stage
-				OrderNr *int `json:"order_nr,omitempty"`
-
-				// PipelineId The ID of the pipeline to add the stage to
-				PipelineId *int `json:"pipeline_id,omitempty"`
-
-				// RottenDays The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
-				RottenDays *int `json:"rotten_days,omitempty"`
-
-				// RottenFlag Whether deals in this stage can become rotten
-				RottenFlag *bool `json:"rotten_flag,omitempty"`
-
-				// UpdateTime The stage update time. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"stage,omitempty"`
-			User *struct {
-				USERID *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-				} `json:"USER_ID,omitempty"`
-			} `json:"user,omitempty"`
-		} `json:"related_objects,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetOrganizationDealsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetOrganizationDealsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -29921,10 +26288,10 @@ type GetOrganizationUpdatesResponse struct {
 				// ORGANIZATIONID The ID of the organization associated with the item
 				ORGANIZATIONID *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -30285,302 +26652,6 @@ func (r GetOrganizationUsersResponse) StatusCode() int {
 	return 0
 }
 
-type GetOrganizationPersonsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// Limit Items shown per page
-			Limit *int `json:"limit,omitempty"`
-
-			// MoreItemsInCollection If there are more list items in the collection than displayed or not
-			MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-			// Start Pagination start
-			Start *int `json:"start,omitempty"`
-		} `json:"additional_data,omitempty"`
-
-		// Data The array of persons
-		Data *[]struct {
-			// ActiveFlag Whether the person is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// ActivitiesCount The count of activities related to the person
-			ActivitiesCount *int `json:"activities_count,omitempty"`
-
-			// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-			AddTime *string `json:"add_time,omitempty"`
-
-			// CcEmail The BCC email associated with the person
-			CcEmail *string `json:"cc_email,omitempty"`
-
-			// ClosedDealsCount The count of closed deals related with the item
-			ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
-
-			// CompanyId The ID of the company related to the person
-			CompanyId *int `json:"company_id,omitempty"`
-
-			// DoneActivitiesCount The count of done activities related to the person
-			DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-			// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-			Email *[]struct {
-				// Label The label that indicates the type of the email. (Possible values - work, home or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if email is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value Email
-				Value *string `json:"value,omitempty"`
-			} `json:"email,omitempty"`
-
-			// EmailMessagesCount The count of email messages related to the person
-			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-			// FilesCount The count of files related to the person
-			FilesCount *int `json:"files_count,omitempty"`
-
-			// FirstChar The first letter of the name of the person
-			FirstChar *string `json:"first_char,omitempty"`
-
-			// FirstName The first name of the person
-			FirstName *string `json:"first_name,omitempty"`
-
-			// FollowersCount The count of followers related to the person
-			FollowersCount *int `json:"followers_count,omitempty"`
-
-			// Id The ID of the person
-			Id *int `json:"id,omitempty"`
-
-			// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-			Label *int `json:"label,omitempty"`
-
-			// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-			LabelIds *[]int `json:"label_ids,omitempty"`
-
-			// LastActivityDate The date of the last activity associated with the deal
-			LastActivityDate *string `json:"last_activity_date"`
-
-			// LastActivityId The ID of the last activity associated with the deal
-			LastActivityId *int `json:"last_activity_id"`
-
-			// LastIncomingMailTime The date and time of the last incoming email associated with the person
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-			// LastName The last name of the person
-			LastName *string `json:"last_name,omitempty"`
-
-			// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-			// LostDealsCount The count of lost deals related with the item
-			LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-			// Name The name of the person
-			Name *string `json:"name,omitempty"`
-
-			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date"`
-
-			// NextActivityId The ID of the next activity associated with the deal
-			NextActivityId *int `json:"next_activity_id"`
-
-			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time"`
-
-			// NotesCount The count of notes related to the person
-			NotesCount *int `json:"notes_count,omitempty"`
-
-			// OpenDealsCount The count of open deals related with the item
-			OpenDealsCount *int `json:"open_deals_count,omitempty"`
-			OrgId          *struct {
-				// ActiveFlag Whether the associated organization is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Address The address of the organization
-				Address *string `json:"address,omitempty"`
-
-				// CcEmail The BCC email of the organization associated with the item
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Name The name of the organization associated with the item
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the organization that is associated with the item
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// PeopleCount The number of people connected with the organization that is associated with the item
-				PeopleCount *int `json:"people_count,omitempty"`
-
-				// Value The ID of the organization
-				Value *int `json:"value,omitempty"`
-			} `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization associated with the person
-			OrgName *string `json:"org_name,omitempty"`
-			OwnerId *struct {
-				// ActiveFlag Whether the user is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the user
-				Email *string `json:"email,omitempty"`
-
-				// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-				HasPic *int `json:"has_pic,omitempty"`
-
-				// Id The ID of the user
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the user
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The user picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the owner
-				Value *int `json:"value,omitempty"`
-			} `json:"owner_id,omitempty"`
-
-			// OwnerName The name of the owner associated with the person
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-			Phone *[]struct {
-				// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if phone number is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value The phone number
-				Value *string `json:"value,omitempty"`
-			} `json:"phone,omitempty"`
-			PictureId *struct {
-				// ActiveFlag Whether the associated picture is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The add time of the picture
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AddedByUserId The ID of the user who added the picture
-				AddedByUserId *int `json:"added_by_user_id,omitempty"`
-
-				// Id The ID of the picture associated with the item
-				Id *int `json:"id,omitempty"`
-
-				// ItemId The ID of related item
-				ItemId *int `json:"item_id,omitempty"`
-
-				// ItemType The type of item the picture is related to
-				ItemType *string `json:"item_type,omitempty"`
-				Pictures *struct {
-					// N128 The URL of the 128*128 picture
-					N128 *string `json:"128,omitempty"`
-
-					// N512 The URL of the 512*512 picture
-					N512 *string `json:"512,omitempty"`
-				} `json:"pictures,omitempty"`
-
-				// UpdateTime The update time of the picture
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"picture_id,omitempty"`
-
-			// RelatedClosedDealsCount The count of related closed deals related with the item
-			RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
-
-			// RelatedLostDealsCount The count of related lost deals related with the item
-			RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
-
-			// RelatedOpenDealsCount The count of related open deals related with the item
-			RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
-
-			// RelatedWonDealsCount The count of related won deals related with the item
-			RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
-
-			// UndoneActivitiesCount The count of undone activities related to the person
-			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-			// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// VisibleTo The visibility group ID of who can see the person
-			VisibleTo *string `json:"visible_to,omitempty"`
-
-			// WonDealsCount The count of won deals related with the item
-			WonDealsCount *int `json:"won_deals_count,omitempty"`
-		} `json:"data,omitempty"`
-		RelatedObjects *struct {
-			Organization *struct {
-				// ORGANIZATIONID The ID of the organization associated with the item
-				ORGANIZATIONID *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Id The ID of the organization associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-				} `json:"ORGANIZATION_ID,omitempty"`
-			} `json:"organization,omitempty"`
-			User *struct {
-				USERID *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-				} `json:"USER_ID,omitempty"`
-			} `json:"user,omitempty"`
-		} `json:"related_objects,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetOrganizationPersonsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetOrganizationPersonsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type GetPermissionSetsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -30743,379 +26814,6 @@ func (r DeletePersonFieldsResponse) StatusCode() int {
 	return 0
 }
 
-type DeletePersonsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *struct {
-			// Id The list of deleted persons IDs
-			Id *[]int `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeletePersonsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeletePersonsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetPersonsCollectionResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
-		} `json:"additional_data,omitempty"`
-		Data *[]struct {
-			// ActiveFlag Whether the person is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-			AddTime *string `json:"add_time,omitempty"`
-
-			// CcEmail The BCC email associated with the person
-			CcEmail *string `json:"cc_email,omitempty"`
-
-			// DeleteTime The date and time this person was deleted. Format: YYYY-MM-DD HH:MM:SS
-			DeleteTime *string `json:"delete_time"`
-
-			// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" }]`. Please note that only `value` is required.
-			Email *[]struct {
-				// Label The label that indicates the type of the email. (Possible values - work, home or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if email is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value The email
-				Value *string `json:"value,omitempty"`
-			} `json:"email,omitempty"`
-
-			// Id The ID of the person
-			Id *int `json:"id,omitempty"`
-
-			// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-			Label *int `json:"label"`
-
-			// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-			LabelIds *[]int `json:"label_ids,omitempty"`
-
-			// Name The name of the person
-			Name *string `json:"name,omitempty"`
-
-			// OrgId The ID of the organization related to the person
-			OrgId *int `json:"org_id,omitempty"`
-
-			// OwnerId The ID of the owner related to the person
-			OwnerId *int `json:"owner_id,omitempty"`
-
-			// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-			Phone *[]struct {
-				// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-				Label *string `json:"label,omitempty"`
-
-				// Primary Boolean that indicates if phone number is primary for the person or not
-				Primary *bool `json:"primary,omitempty"`
-
-				// Value The phone number
-				Value *string `json:"value,omitempty"`
-			} `json:"phone,omitempty"`
-
-			// PictureId The ID of the picture associated with the item
-			PictureId *int `json:"picture_id"`
-
-			// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// VisibleTo The visibility group ID of who can see the person
-			VisibleTo *string `json:"visible_to,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-	JSON403 *struct {
-		// Error The error message
-		Error *string `json:"error,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetPersonsCollectionResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetPersonsCollectionResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetPersonActivitiesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *struct {
-			// ActivityDistribution The distribution of activities related to the organization grouped by the user ID
-			ActivityDistribution *struct {
-				// ASSIGNEDTOUSERID The ID of the user
-				ASSIGNEDTOUSERID *struct {
-					// Activities The count of activities related to the user grouped by activity type
-					Activities *struct {
-						// ACTIVITYTYPENAME The count of activities related to a specific type
-						ACTIVITYTYPENAME *int `json:"ACTIVITY_TYPE_NAME,omitempty"`
-					} `json:"activities,omitempty"`
-
-					// ActivityCount The overall count of activities for the user
-					ActivityCount *int `json:"activity_count,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// Share The percentage of activities belongs to the user
-					Share *int `json:"share,omitempty"`
-				} `json:"ASSIGNED_TO_USER_ID,omitempty"`
-			} `json:"activity_distribution,omitempty"`
-
-			// Limit Items shown per page
-			Limit *int `json:"limit,omitempty"`
-
-			// MoreItemsInCollection If there are more list items in the collection than displayed or not
-			MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-			// Start Pagination start
-			Start *int `json:"start,omitempty"`
-		} `json:"additional_data,omitempty"`
-
-		// Data The array of activities
-		Data *[]struct {
-			// ActiveFlag Whether the activity is active or not
-			ActiveFlag *bool `json:"active_flag,omitempty"`
-
-			// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// AssignedToUserId The ID of the user to whom the activity is assigned to. Equal to `user_id`.
-			AssignedToUserId *int `json:"assigned_to_user_id,omitempty"`
-
-			// Attendees The attendees of the activity. This can be either your existing Pipedrive contacts or an external email address.
-			Attendees *[]map[string]interface{} `json:"attendees"`
-
-			// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-			BusyFlag *bool `json:"busy_flag,omitempty"`
-
-			// CalendarSyncIncludeContext For activities that sync to an external calendar, this setting indicates if the activity syncs with context (what are the deals, persons, organizations this activity is related to)
-			CalendarSyncIncludeContext *string `json:"calendar_sync_include_context,omitempty"`
-
-			// CompanyId The user's company ID
-			CompanyId *int `json:"company_id,omitempty"`
-
-			// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-			ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-			// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-			ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-			// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-			ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-			// CreatedByUserId The ID of the user who created the activity
-			CreatedByUserId *int `json:"created_by_user_id,omitempty"`
-
-			// DealDropboxBcc The BCC email address of the deal
-			DealDropboxBcc *string `json:"deal_dropbox_bcc,omitempty"`
-
-			// DealId The ID of the deal this activity is associated with
-			DealId *int `json:"deal_id,omitempty"`
-
-			// DealTitle The name of the deal this activity is associated with
-			DealTitle *string `json:"deal_title,omitempty"`
-
-			// Done Whether the activity is done or not
-			Done *bool `json:"done,omitempty"`
-
-			// DueDate The due date of the activity. Format: YYYY-MM-DD
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// DueTime The due time of the activity in UTC. Format: HH:MM
-			DueTime *string `json:"due_time,omitempty"`
-
-			// Duration The duration of the activity. Format: HH:MM
-			Duration *string `json:"duration,omitempty"`
-
-			// File The file that is attached to this activity. For example, this can be a reference to an audio note file generated with Pipedrive mobile app.
-			File *map[string]interface{} `json:"file,omitempty"`
-
-			// GcalEventId For the activity which syncs to Google calendar, this is the Google event ID. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GcalEventId *string `json:"gcal_event_id,omitempty"`
-
-			// GoogleCalendarEtag The Google calendar API etag (version) that is used for syncing this activity. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GoogleCalendarEtag *string `json:"google_calendar_etag,omitempty"`
-
-			// GoogleCalendarId The Google calendar ID that this activity syncs to. NB! This field is related to old Google calendar sync and will be deprecated soon.
-			GoogleCalendarId *string `json:"google_calendar_id,omitempty"`
-
-			// Id The ID of the activity, generated when the activity was created
-			Id *int `json:"id,omitempty"`
-
-			// LastNotificationTime The date and time of latest notifications sent about this activity to the participants or the attendees of this activity
-			LastNotificationTime *string `json:"last_notification_time,omitempty"`
-
-			// LastNotificationUserId The ID of the user who triggered the sending of the latest notifications about this activity to the participants or the attendees of this activity
-			LastNotificationUserId *int `json:"last_notification_user_id,omitempty"`
-
-			// LeadId The ID of the lead in the UUID format this activity is associated with
-			LeadId *openapi_types.UUID `json:"lead_id"`
-
-			// Location The address of the activity.
-			Location *string `json:"location,omitempty"`
-
-			// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-			LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-			// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-			LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-			// LocationCountry A subfield of the location field. Indicates country.
-			LocationCountry *string `json:"location_country,omitempty"`
-
-			// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-			LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-			// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-			LocationLocality *string `json:"location_locality,omitempty"`
-
-			// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-			LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-			// LocationRoute A subfield of the location field. Indicates street name.
-			LocationRoute *string `json:"location_route,omitempty"`
-
-			// LocationStreetNumber A subfield of the location field. Indicates house number.
-			LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-			// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-			LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-			// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-			LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-			// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// Note The note of the activity (HTML format)
-			Note *string `json:"note,omitempty"`
-
-			// NotificationLanguageId The ID of the language the notifications are sent in
-			NotificationLanguageId *int `json:"notification_language_id,omitempty"`
-
-			// OrgId The ID of the organization this activity is associated with
-			OrgId *int `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization this activity is associated with
-			OrgName *string `json:"org_name,omitempty"`
-
-			// OwnerName The name of the user this activity is owned by
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// Participants List of multiple persons (participants) this activity is associated with
-			Participants *[]map[string]interface{} `json:"participants"`
-
-			// PersonDropboxBcc The BCC email address of the person
-			PersonDropboxBcc *string `json:"person_dropbox_bcc,omitempty"`
-
-			// PersonId The ID of the person this activity is associated with
-			PersonId *int `json:"person_id,omitempty"`
-
-			// PersonName The name of the person this activity is associated with
-			PersonName *string `json:"person_name,omitempty"`
-
-			// ProjectId The ID of the project this activity is associated with
-			ProjectId *int `json:"project_id"`
-
-			// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-			PublicDescription *string `json:"public_description,omitempty"`
-
-			// RecMasterActivityId The ID of parent activity for a recurrent activity if the current activity is an exception to recurrence rules
-			RecMasterActivityId *int `json:"rec_master_activity_id,omitempty"`
-
-			// RecRule The rule for the recurrence of the activity. Is important for activities synced into Pipedrive from an external calendar. Example: "RRULE:FREQ=WEEKLY;BYDAY=WE"
-			RecRule *string `json:"rec_rule,omitempty"`
-
-			// RecRuleExtension Additional rules for the recurrence of the activity, extend the `rec_rule`. Is important for activities synced into Pipedrive from an external calendar.
-			RecRuleExtension *string `json:"rec_rule_extension,omitempty"`
-
-			// ReferenceId Together with the `reference_type`, gives the ID of the other object
-			ReferenceId *int `json:"reference_id,omitempty"`
-
-			// ReferenceType If the activity references some other object, it is indicated here. For example, value `Salesphone` refers to activities created with Caller.
-			ReferenceType *string `json:"reference_type,omitempty"`
-
-			// Series The list of recurring activity instances. It is in a structure as follows: `[{due_date: "2020-06-24", due_time: "10:00:00"}]`
-			Series *[]map[string]interface{} `json:"series,omitempty"`
-
-			// SourceTimezone The timezone the activity was created in an external calendar
-			SourceTimezone *string `json:"source_timezone,omitempty"`
-
-			// Subject The subject of the activity
-			Subject *string `json:"subject,omitempty"`
-
-			// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-			Type *string `json:"type,omitempty"`
-
-			// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-
-			// UpdateUserId The ID of the user who was the last to update this activity
-			UpdateUserId *int `json:"update_user_id,omitempty"`
-
-			// UserId The ID of the user whom the activity is assigned to
-			UserId *int `json:"user_id,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetPersonActivitiesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetPersonActivitiesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type GetPersonChangelogResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -31166,511 +26864,6 @@ func (r GetPersonChangelogResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r GetPersonChangelogResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetPersonDealsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// Limit Items shown per page
-			Limit *int `json:"limit,omitempty"`
-
-			// MoreItemsInCollection If there are more list items in the collection than displayed or not
-			MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-			// Start Pagination start
-			Start *int `json:"start,omitempty"`
-		} `json:"additional_data,omitempty"`
-
-		// Data The array of deals
-		Data *[]struct {
-			// Active Whether the deal is active or not
-			Active *bool `json:"active,omitempty"`
-
-			// ActivitiesCount The number of activities associated with the deal
-			ActivitiesCount *int `json:"activities_count,omitempty"`
-
-			// Acv Only available in Growth and above plans
-			//
-			// The Annual Contract Value of the deal
-			//
-			// Null if there are no products attached to the deal
-			Acv *float32 `json:"acv"`
-
-			// AcvCurrency Only available in Growth and above plans
-			//
-			// The Currency for Annual Contract Value of the deal
-			//
-			// If the `acv` is null, this will also be null
-			AcvCurrency *string `json:"acv_currency"`
-
-			// AddTime The creation date and time of the deal
-			AddTime *string `json:"add_time,omitempty"`
-
-			// Arr Only available in Growth and above plans
-			//
-			// The Annual Recurring Revenue of the deal
-			//
-			// Null if there are no products attached to the deal
-			Arr *float32 `json:"arr"`
-
-			// ArrCurrency Only available in Growth and above plans
-			//
-			// The Currency for Annual Recurring Revenue of the deal
-			//
-			// If the `arr` is null, this will also be null
-			ArrCurrency *string `json:"arr_currency"`
-
-			// CcEmail The BCC email of the deal
-			CcEmail *string `json:"cc_email,omitempty"`
-
-			// Channel The ID of your Marketing channel this Deal was created from. Recognized Marketing channels can be configured in your <a href="https://app.pipedrive.com/settings/fields" target="_blank" rel="noopener noreferrer">Company settings</a>.
-			Channel *int `json:"channel"`
-
-			// ChannelId The optional ID to further distinguish the Marketing channel.
-			ChannelId *string `json:"channel_id"`
-
-			// CloseTime The date and time of closing the deal
-			CloseTime *string `json:"close_time"`
-
-			// CreatorUserId The creator of the deal
-			CreatorUserId *struct {
-				// ActiveFlag Whether the creator is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the deal creator
-				Email *string `json:"email,omitempty"`
-
-				// HasPic If the creator has a picture or not
-				HasPic *bool `json:"has_pic,omitempty"`
-
-				// Id The ID of the deal creator
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the deal creator
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The creator picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the deal creator
-				Value *int `json:"value,omitempty"`
-			} `json:"creator_user_id,omitempty"`
-
-			// Currency The currency associated with the deal
-			Currency *string `json:"currency,omitempty"`
-
-			// Deleted Whether the deal is deleted or not
-			Deleted *bool `json:"deleted,omitempty"`
-
-			// DoneActivitiesCount The number of completed activities associated with the deal
-			DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-			// EmailMessagesCount The number of emails associated with the deal
-			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
-
-			// FilesCount The number of files associated with the deal
-			FilesCount *int `json:"files_count,omitempty"`
-
-			// FirstWonTime The date and time of the first time changing the deal status as won
-			FirstWonTime *string `json:"first_won_time,omitempty"`
-
-			// FollowersCount The number of followers associated with the deal
-			FollowersCount *int `json:"followers_count,omitempty"`
-
-			// FormattedValue The deal value formatted with selected currency. E.g. US$500
-			FormattedValue *string `json:"formatted_value,omitempty"`
-
-			// FormattedWeightedValue The weighted_value formatted with selected currency. E.g. US$500
-			FormattedWeightedValue *string `json:"formatted_weighted_value,omitempty"`
-
-			// Id The ID of the deal
-			Id *int `json:"id,omitempty"`
-
-			// IsArchived Whether the deal is archived or not
-			IsArchived *bool `json:"is_archived,omitempty"`
-
-			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
-
-			// LastActivityDate The date of the last activity associated with the deal
-			LastActivityDate *string `json:"last_activity_date"`
-
-			// LastActivityId The ID of the last activity associated with the deal
-			LastActivityId *int `json:"last_activity_id"`
-
-			// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-			// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-			// LostReason The reason for losing the deal
-			LostReason *string `json:"lost_reason"`
-
-			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
-
-			// Mrr Only available in Growth and above plans
-			//
-			// The Monthly Recurring Revenue of the deal
-			//
-			// Null if there are no products attached to the deal
-			Mrr *float32 `json:"mrr"`
-
-			// MrrCurrency Only available in Growth and above plans
-			//
-			// The Currency for Monthly Recurring Revenue of the deal
-			//
-			// If the `mrr` is null, this will also be null
-			MrrCurrency *string `json:"mrr_currency"`
-
-			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date,omitempty"`
-
-			// NextActivityDuration The duration of the next activity associated with the deal
-			NextActivityDuration *string `json:"next_activity_duration,omitempty"`
-
-			// NextActivityId The ID of the next activity associated with the deal
-			NextActivityId *int `json:"next_activity_id"`
-
-			// NextActivityNote The note of the next activity associated with the deal
-			NextActivityNote *string `json:"next_activity_note,omitempty"`
-
-			// NextActivitySubject The subject of the next activity associated with the deal
-			NextActivitySubject *string `json:"next_activity_subject,omitempty"`
-
-			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time,omitempty"`
-
-			// NextActivityType The type of the next activity associated with the deal
-			NextActivityType *string `json:"next_activity_type,omitempty"`
-
-			// NotesCount The number of notes associated with the deal
-			NotesCount *int `json:"notes_count,omitempty"`
-
-			// OrgHidden If the organization that is associated with the deal is hidden or not
-			OrgHidden *bool `json:"org_hidden,omitempty"`
-			OrgId     *struct {
-				// ActiveFlag Whether the associated organization is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Address The address of the organization that is associated with the deal
-				Address *string `json:"address,omitempty"`
-
-				// CcEmail The BCC email of the organization associated with the deal
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Name The name of the organization associated with the deal
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the organization that is associated with the deal
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// PeopleCount The number of people connected with the organization that is associated with the deal
-				PeopleCount *int `json:"people_count,omitempty"`
-
-				// Value The ID of the organization associated with the deal
-				Value *int `json:"value,omitempty"`
-			} `json:"org_id,omitempty"`
-
-			// OrgName The name of the organization associated with the deal
-			OrgName *string `json:"org_name,omitempty"`
-
-			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
-			Origin *string `json:"origin,omitempty"`
-
-			// OriginId The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this Deal.
-			OriginId *string `json:"origin_id"`
-
-			// OwnerName The name of the deal owner
-			OwnerName *string `json:"owner_name,omitempty"`
-
-			// ParticipantsCount The number of participants associated with the deal
-			ParticipantsCount *int `json:"participants_count,omitempty"`
-
-			// PersonHidden If the person that is associated with the deal is hidden or not
-			PersonHidden *bool `json:"person_hidden,omitempty"`
-			PersonId     *struct {
-				// ActiveFlag Whether the associated person is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The emails of the person associated with the deal
-				Email *[]struct {
-					// Label The type of the email
-					Label *string `json:"label,omitempty"`
-
-					// Primary If this is the primary email or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The email of the associated person
-					Value *string `json:"value,omitempty"`
-				} `json:"email,omitempty"`
-
-				// Name The name of the person associated with the deal
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner of the person that is associated with the deal
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// Phone The phone numbers of the person associated with the deal
-				Phone *[]struct {
-					// Label The type of the phone number
-					Label *string `json:"label,omitempty"`
-
-					// Primary If this is the primary phone number or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The phone number of the person associated with the deal
-					Value *string `json:"value,omitempty"`
-				} `json:"phone,omitempty"`
-
-				// Value The ID of the person associated with the deal
-				Value *int `json:"value,omitempty"`
-			} `json:"person_id,omitempty"`
-
-			// PersonName The name of the person associated with the deal
-			PersonName *string `json:"person_name,omitempty"`
-
-			// PipelineId The ID of the pipeline associated with the deal
-			PipelineId *int `json:"pipeline_id,omitempty"`
-
-			// Probability The success probability percentage of the deal
-			Probability *float32 `json:"probability"`
-
-			// ProductsCount The number of products associated with the deal
-			ProductsCount *int `json:"products_count,omitempty"`
-
-			// RottenTime The date and time of changing the deal status as rotten
-			RottenTime *string `json:"rotten_time"`
-
-			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
-
-			// StageId The ID of the deal stage
-			StageId *int `json:"stage_id,omitempty"`
-
-			// StageOrderNr The order number of the deal stage associated with the deal
-			StageOrderNr *int `json:"stage_order_nr,omitempty"`
-
-			// Status The status of the deal
-			Status *string `json:"status,omitempty"`
-
-			// Title The title of the deal
-			Title *string `json:"title,omitempty"`
-
-			// UndoneActivitiesCount The number of incomplete activities associated with the deal
-			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
-			UserId     *struct {
-				// ActiveFlag Whether the user is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// Email The email of the user
-				Email *string `json:"email,omitempty"`
-
-				// HasPic If the user has a picture or not
-				HasPic *bool `json:"has_pic,omitempty"`
-
-				// Id The ID of the user
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the user
-				Name *string `json:"name,omitempty"`
-
-				// PicHash The user picture hash
-				PicHash *string `json:"pic_hash"`
-
-				// Value The ID of the user
-				Value *int `json:"value,omitempty"`
-			} `json:"user_id,omitempty"`
-
-			// Value The value of the deal
-			Value *float32 `json:"value,omitempty"`
-
-			// VisibleTo The visibility of the deal
-			VisibleTo *string `json:"visible_to,omitempty"`
-
-			// WeightedValue Probability times deal value. Probability can either be deal probability or if not set, then stage probability.
-			WeightedValue *float32 `json:"weighted_value,omitempty"`
-
-			// WeightedValueCurrency The currency associated with the deal
-			WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
-
-			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
-		} `json:"data,omitempty"`
-		RelatedObjects *struct {
-			Organization *struct {
-				// ORGANIZATIONID The ID of the organization associated with the item
-				ORGANIZATIONID *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Id The ID of the organization associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-				} `json:"ORGANIZATION_ID,omitempty"`
-			} `json:"organization,omitempty"`
-			Person *struct {
-				// PERSONID The ID of the person associated with the item
-				PERSONID *struct {
-					// ActiveFlag Whether the associated person is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The emails of the person associated with the item
-					Email *[]struct {
-						// Label The type of the email
-						Label *string `json:"label,omitempty"`
-
-						// Primary Whether this is the primary email or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The email of the associated person
-						Value *string `json:"value,omitempty"`
-					} `json:"email,omitempty"`
-
-					// Id The ID of the person associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the person associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the person that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// Phone The phone numbers of the person associated with the item
-					Phone *[]struct {
-						// Label The type of the phone number
-						Label *string `json:"label,omitempty"`
-
-						// Primary Whether this is the primary phone number or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The phone number of the person associated with the item
-						Value *string `json:"value,omitempty"`
-					} `json:"phone,omitempty"`
-				} `json:"PERSON_ID,omitempty"`
-			} `json:"person,omitempty"`
-			Pipeline *struct {
-				// Active Whether this pipeline will be made inactive (hidden) or active
-				Active *bool `json:"active,omitempty"`
-
-				// AddTime The pipeline creation time. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// DealProbability Whether deal probability is disabled or enabled for this pipeline
-				DealProbability *bool `json:"deal_probability,omitempty"`
-
-				// Id The ID of the pipeline
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the pipeline
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr Defines the order of pipelines. First order (`order_nr=0`) is the default pipeline.
-				OrderNr *int `json:"order_nr,omitempty"`
-
-				// UpdateTime The pipeline update time. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// UrlTitle The pipeline title displayed in the URL
-				UrlTitle *string `json:"url_title,omitempty"`
-			} `json:"pipeline,omitempty"`
-			Stage *struct {
-				// ActiveFlag Whether the stage is active or deleted
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The stage creation time. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// DealProbability The success probability percentage of the deal. Used/shown when the deal weighted values are used.
-				DealProbability *int `json:"deal_probability,omitempty"`
-
-				// Id The ID of the stage
-				Id *int `json:"id,omitempty"`
-
-				// Name The name of the stage
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr Defines the order of the stage
-				OrderNr *int `json:"order_nr,omitempty"`
-
-				// PipelineId The ID of the pipeline to add the stage to
-				PipelineId *int `json:"pipeline_id,omitempty"`
-
-				// RottenDays The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
-				RottenDays *int `json:"rotten_days,omitempty"`
-
-				// RottenFlag Whether deals in this stage can become rotten
-				RottenFlag *bool `json:"rotten_flag,omitempty"`
-
-				// UpdateTime The stage update time. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"stage,omitempty"`
-			User *struct {
-				USERID *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-				} `json:"USER_ID,omitempty"`
-			} `json:"user,omitempty"`
-		} `json:"related_objects,omitempty"`
-
-		// Success If the response is successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetPersonDealsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetPersonDealsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -31856,10 +27049,10 @@ type GetPersonUpdatesResponse struct {
 				// ORGANIZATIONID The ID of the organization associated with the item
 				ORGANIZATIONID *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -32217,7 +27410,7 @@ type MergePersonsResponse struct {
 			AddTime *string `json:"add_time,omitempty"`
 
 			// CcEmail The BCC email associated with the person
-			CcEmail *string `json:"cc_email,omitempty"`
+			CcEmail *string `json:"cc_email"`
 
 			// ClosedDealsCount The count of closed deals related with the item
 			ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
@@ -32259,7 +27452,7 @@ type MergePersonsResponse struct {
 			Id *int `json:"id,omitempty"`
 
 			// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-			Label *int `json:"label,omitempty"`
+			Label *int `json:"label"`
 
 			// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
 			LabelIds *[]int `json:"label_ids,omitempty"`
@@ -32271,13 +27464,13 @@ type MergePersonsResponse struct {
 			LastActivityId *int `json:"last_activity_id"`
 
 			// LastIncomingMailTime The date and time of the last incoming email associated with the person
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+			LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 			// LastName The last name of the person
-			LastName *string `json:"last_name,omitempty"`
+			LastName *string `json:"last_name"`
 
 			// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+			LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 			// LostDealsCount The count of lost deals related with the item
 			LostDealsCount *int `json:"lost_deals_count,omitempty"`
@@ -32307,7 +27500,7 @@ type MergePersonsResponse struct {
 			OrgId *int `json:"org_id,omitempty"`
 
 			// OrgName The name of the organization associated with the person
-			OrgName *string `json:"org_name,omitempty"`
+			OrgName *string `json:"org_name"`
 
 			// OwnerId The ID of the owner related to the person
 			OwnerId *int `json:"owner_id,omitempty"`
@@ -32360,7 +27553,7 @@ type MergePersonsResponse struct {
 
 				// UpdateTime The update time of the picture
 				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"picture_id,omitempty"`
+			} `json:"picture_id"`
 
 			// RelatedClosedDealsCount The count of related closed deals related with the item
 			RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
@@ -33580,10 +28773,10 @@ type GetProductDealsResponse struct {
 					ActiveFlag *bool `json:"active_flag,omitempty"`
 
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Id The ID of the organization associated with the item
 					Id *int `json:"id,omitempty"`
@@ -35615,7 +30808,7 @@ type GetRecents200Data6 struct {
 		AddTime *string `json:"add_time,omitempty"`
 
 		// CcEmail The BCC email associated with the person
-		CcEmail *string `json:"cc_email,omitempty"`
+		CcEmail *string `json:"cc_email"`
 
 		// ClosedDealsCount The count of closed deals related with the item
 		ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
@@ -35657,7 +30850,7 @@ type GetRecents200Data6 struct {
 		Id *int `json:"id,omitempty"`
 
 		// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-		Label *int `json:"label,omitempty"`
+		Label *int `json:"label"`
 
 		// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
 		LabelIds *[]int `json:"label_ids,omitempty"`
@@ -35669,13 +30862,13 @@ type GetRecents200Data6 struct {
 		LastActivityId *int `json:"last_activity_id"`
 
 		// LastIncomingMailTime The date and time of the last incoming email associated with the person
-		LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+		LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 		// LastName The last name of the person
-		LastName *string `json:"last_name,omitempty"`
+		LastName *string `json:"last_name"`
 
 		// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-		LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+		LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 		// LostDealsCount The count of lost deals related with the item
 		LostDealsCount *int `json:"lost_deals_count,omitempty"`
@@ -35705,7 +30898,7 @@ type GetRecents200Data6 struct {
 		OrgId *int `json:"org_id,omitempty"`
 
 		// OrgName The name of the organization associated with the person
-		OrgName *string `json:"org_name,omitempty"`
+		OrgName *string `json:"org_name"`
 
 		// OwnerId The ID of the owner related to the person
 		OwnerId *int `json:"owner_id,omitempty"`
@@ -35758,7 +30951,7 @@ type GetRecents200Data6 struct {
 
 			// UpdateTime The update time of the picture
 			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"picture_id,omitempty"`
+		} `json:"picture_id"`
 
 		// RelatedClosedDealsCount The count of related closed deals related with the item
 		RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
@@ -36704,36 +31897,6 @@ func (r AddOrUpdateRoleSettingResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r AddOrUpdateRoleSettingResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteStagesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *struct {
-			// Id The list of deleted stage IDs
-			Id *[]int `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-
-		// Success If the request was successful or not
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteStagesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteStagesResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -38508,33 +33671,6 @@ func (r DeleteWebhookResponse) StatusCode() int {
 	return 0
 }
 
-// DeleteActivitiesWithResponse request returning *DeleteActivitiesResponse
-func (c *ClientWithResponses) DeleteActivitiesWithResponse(ctx context.Context, params *DeleteActivitiesParams, reqEditors ...RequestEditorFn) (*DeleteActivitiesResponse, error) {
-	rsp, err := c.DeleteActivities(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteActivitiesResponse(rsp)
-}
-
-// GetActivitiesCollectionWithResponse request returning *GetActivitiesCollectionResponse
-func (c *ClientWithResponses) GetActivitiesCollectionWithResponse(ctx context.Context, params *GetActivitiesCollectionParams, reqEditors ...RequestEditorFn) (*GetActivitiesCollectionResponse, error) {
-	rsp, err := c.GetActivitiesCollection(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetActivitiesCollectionResponse(rsp)
-}
-
-// DeleteActivityTypesWithResponse request returning *DeleteActivityTypesResponse
-func (c *ClientWithResponses) DeleteActivityTypesWithResponse(ctx context.Context, params *DeleteActivityTypesParams, reqEditors ...RequestEditorFn) (*DeleteActivityTypesResponse, error) {
-	rsp, err := c.DeleteActivityTypes(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteActivityTypesResponse(rsp)
-}
-
 // GetActivityTypesWithResponse request returning *GetActivityTypesResponse
 func (c *ClientWithResponses) GetActivityTypesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetActivityTypesResponse, error) {
 	rsp, err := c.GetActivityTypes(ctx, reqEditors...)
@@ -38719,24 +33855,6 @@ func (c *ClientWithResponses) DeleteDealFieldsWithResponse(ctx context.Context, 
 	return ParseDeleteDealFieldsResponse(rsp)
 }
 
-// DeleteDealsWithResponse request returning *DeleteDealsResponse
-func (c *ClientWithResponses) DeleteDealsWithResponse(ctx context.Context, params *DeleteDealsParams, reqEditors ...RequestEditorFn) (*DeleteDealsResponse, error) {
-	rsp, err := c.DeleteDeals(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteDealsResponse(rsp)
-}
-
-// GetDealsCollectionWithResponse request returning *GetDealsCollectionResponse
-func (c *ClientWithResponses) GetDealsCollectionWithResponse(ctx context.Context, params *GetDealsCollectionParams, reqEditors ...RequestEditorFn) (*GetDealsCollectionResponse, error) {
-	rsp, err := c.GetDealsCollection(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetDealsCollectionResponse(rsp)
-}
-
 // GetDealsSummaryWithResponse request returning *GetDealsSummaryResponse
 func (c *ClientWithResponses) GetDealsSummaryWithResponse(ctx context.Context, params *GetDealsSummaryParams, reqEditors ...RequestEditorFn) (*GetDealsSummaryResponse, error) {
 	rsp, err := c.GetDealsSummary(ctx, params, reqEditors...)
@@ -38771,15 +33889,6 @@ func (c *ClientWithResponses) GetArchivedDealsTimelineWithResponse(ctx context.C
 		return nil, err
 	}
 	return ParseGetArchivedDealsTimelineResponse(rsp)
-}
-
-// GetDealActivitiesWithResponse request returning *GetDealActivitiesResponse
-func (c *ClientWithResponses) GetDealActivitiesWithResponse(ctx context.Context, id int, params *GetDealActivitiesParams, reqEditors ...RequestEditorFn) (*GetDealActivitiesResponse, error) {
-	rsp, err := c.GetDealActivities(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetDealActivitiesResponse(rsp)
 }
 
 // GetDealChangelogWithResponse request returning *GetDealChangelogResponse
@@ -38895,15 +34004,6 @@ func (c *ClientWithResponses) GetDealUsersWithResponse(ctx context.Context, id i
 		return nil, err
 	}
 	return ParseGetDealUsersResponse(rsp)
-}
-
-// GetDealPersonsWithResponse request returning *GetDealPersonsResponse
-func (c *ClientWithResponses) GetDealPersonsWithResponse(ctx context.Context, id int, params *GetDealPersonsParams, reqEditors ...RequestEditorFn) (*GetDealPersonsResponse, error) {
-	rsp, err := c.GetDealPersons(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetDealPersonsResponse(rsp)
 }
 
 // GetFilesWithResponse request returning *GetFilesResponse
@@ -39727,33 +34827,6 @@ func (c *ClientWithResponses) UpdateOrganizationRelationshipWithResponse(ctx con
 	return ParseUpdateOrganizationRelationshipResponse(rsp)
 }
 
-// DeleteOrganizationsWithResponse request returning *DeleteOrganizationsResponse
-func (c *ClientWithResponses) DeleteOrganizationsWithResponse(ctx context.Context, params *DeleteOrganizationsParams, reqEditors ...RequestEditorFn) (*DeleteOrganizationsResponse, error) {
-	rsp, err := c.DeleteOrganizations(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteOrganizationsResponse(rsp)
-}
-
-// GetOrganizationsCollectionWithResponse request returning *GetOrganizationsCollectionResponse
-func (c *ClientWithResponses) GetOrganizationsCollectionWithResponse(ctx context.Context, params *GetOrganizationsCollectionParams, reqEditors ...RequestEditorFn) (*GetOrganizationsCollectionResponse, error) {
-	rsp, err := c.GetOrganizationsCollection(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetOrganizationsCollectionResponse(rsp)
-}
-
-// GetOrganizationActivitiesWithResponse request returning *GetOrganizationActivitiesResponse
-func (c *ClientWithResponses) GetOrganizationActivitiesWithResponse(ctx context.Context, id int, params *GetOrganizationActivitiesParams, reqEditors ...RequestEditorFn) (*GetOrganizationActivitiesResponse, error) {
-	rsp, err := c.GetOrganizationActivities(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetOrganizationActivitiesResponse(rsp)
-}
-
 // GetOrganizationChangelogWithResponse request returning *GetOrganizationChangelogResponse
 func (c *ClientWithResponses) GetOrganizationChangelogWithResponse(ctx context.Context, id int, params *GetOrganizationChangelogParams, reqEditors ...RequestEditorFn) (*GetOrganizationChangelogResponse, error) {
 	rsp, err := c.GetOrganizationChangelog(ctx, id, params, reqEditors...)
@@ -39761,15 +34834,6 @@ func (c *ClientWithResponses) GetOrganizationChangelogWithResponse(ctx context.C
 		return nil, err
 	}
 	return ParseGetOrganizationChangelogResponse(rsp)
-}
-
-// GetOrganizationDealsWithResponse request returning *GetOrganizationDealsResponse
-func (c *ClientWithResponses) GetOrganizationDealsWithResponse(ctx context.Context, id int, params *GetOrganizationDealsParams, reqEditors ...RequestEditorFn) (*GetOrganizationDealsResponse, error) {
-	rsp, err := c.GetOrganizationDeals(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetOrganizationDealsResponse(rsp)
 }
 
 // GetOrganizationFilesWithResponse request returning *GetOrganizationFilesResponse
@@ -39825,15 +34889,6 @@ func (c *ClientWithResponses) GetOrganizationUsersWithResponse(ctx context.Conte
 	return ParseGetOrganizationUsersResponse(rsp)
 }
 
-// GetOrganizationPersonsWithResponse request returning *GetOrganizationPersonsResponse
-func (c *ClientWithResponses) GetOrganizationPersonsWithResponse(ctx context.Context, id int, params *GetOrganizationPersonsParams, reqEditors ...RequestEditorFn) (*GetOrganizationPersonsResponse, error) {
-	rsp, err := c.GetOrganizationPersons(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetOrganizationPersonsResponse(rsp)
-}
-
 // GetPermissionSetsWithResponse request returning *GetPermissionSetsResponse
 func (c *ClientWithResponses) GetPermissionSetsWithResponse(ctx context.Context, params *GetPermissionSetsParams, reqEditors ...RequestEditorFn) (*GetPermissionSetsResponse, error) {
 	rsp, err := c.GetPermissionSets(ctx, params, reqEditors...)
@@ -39870,33 +34925,6 @@ func (c *ClientWithResponses) DeletePersonFieldsWithResponse(ctx context.Context
 	return ParseDeletePersonFieldsResponse(rsp)
 }
 
-// DeletePersonsWithResponse request returning *DeletePersonsResponse
-func (c *ClientWithResponses) DeletePersonsWithResponse(ctx context.Context, params *DeletePersonsParams, reqEditors ...RequestEditorFn) (*DeletePersonsResponse, error) {
-	rsp, err := c.DeletePersons(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeletePersonsResponse(rsp)
-}
-
-// GetPersonsCollectionWithResponse request returning *GetPersonsCollectionResponse
-func (c *ClientWithResponses) GetPersonsCollectionWithResponse(ctx context.Context, params *GetPersonsCollectionParams, reqEditors ...RequestEditorFn) (*GetPersonsCollectionResponse, error) {
-	rsp, err := c.GetPersonsCollection(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetPersonsCollectionResponse(rsp)
-}
-
-// GetPersonActivitiesWithResponse request returning *GetPersonActivitiesResponse
-func (c *ClientWithResponses) GetPersonActivitiesWithResponse(ctx context.Context, id int, params *GetPersonActivitiesParams, reqEditors ...RequestEditorFn) (*GetPersonActivitiesResponse, error) {
-	rsp, err := c.GetPersonActivities(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetPersonActivitiesResponse(rsp)
-}
-
 // GetPersonChangelogWithResponse request returning *GetPersonChangelogResponse
 func (c *ClientWithResponses) GetPersonChangelogWithResponse(ctx context.Context, id int, params *GetPersonChangelogParams, reqEditors ...RequestEditorFn) (*GetPersonChangelogResponse, error) {
 	rsp, err := c.GetPersonChangelog(ctx, id, params, reqEditors...)
@@ -39904,15 +34932,6 @@ func (c *ClientWithResponses) GetPersonChangelogWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseGetPersonChangelogResponse(rsp)
-}
-
-// GetPersonDealsWithResponse request returning *GetPersonDealsResponse
-func (c *ClientWithResponses) GetPersonDealsWithResponse(ctx context.Context, id int, params *GetPersonDealsParams, reqEditors ...RequestEditorFn) (*GetPersonDealsResponse, error) {
-	rsp, err := c.GetPersonDeals(ctx, id, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetPersonDealsResponse(rsp)
 }
 
 // GetPersonFilesWithResponse request returning *GetPersonFilesResponse
@@ -40417,15 +35436,6 @@ func (c *ClientWithResponses) AddOrUpdateRoleSettingWithResponse(ctx context.Con
 	return ParseAddOrUpdateRoleSettingResponse(rsp)
 }
 
-// DeleteStagesWithResponse request returning *DeleteStagesResponse
-func (c *ClientWithResponses) DeleteStagesWithResponse(ctx context.Context, params *DeleteStagesParams, reqEditors ...RequestEditorFn) (*DeleteStagesResponse, error) {
-	rsp, err := c.DeleteStages(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteStagesResponse(rsp)
-}
-
 // GetStageDealsWithResponse request returning *GetStageDealsResponse
 func (c *ClientWithResponses) GetStageDealsWithResponse(ctx context.Context, id int, params *GetStageDealsParams, reqEditors ...RequestEditorFn) (*GetStageDealsResponse, error) {
 	rsp, err := c.GetStageDeals(ctx, id, params, reqEditors...)
@@ -40644,227 +35654,6 @@ func (c *ClientWithResponses) DeleteWebhookWithResponse(ctx context.Context, id 
 		return nil, err
 	}
 	return ParseDeleteWebhookResponse(rsp)
-}
-
-// ParseDeleteActivitiesResponse parses an HTTP response from a DeleteActivitiesWithResponse call
-func ParseDeleteActivitiesResponse(rsp *http.Response) (*DeleteActivitiesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteActivitiesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *struct {
-				// Id An array of the IDs of activities that were deleted
-				Id *[]int `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetActivitiesCollectionResponse parses an HTTP response from a GetActivitiesCollectionWithResponse call
-func ParseGetActivitiesCollectionResponse(rsp *http.Response) (*GetActivitiesCollectionResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetActivitiesCollectionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
-			} `json:"additional_data,omitempty"`
-			Data *[]struct {
-				// ActiveFlag Whether the activity is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-				BusyFlag *bool `json:"busy_flag,omitempty"`
-
-				// CompanyId The user's company ID
-				CompanyId *int `json:"company_id,omitempty"`
-
-				// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-				ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-				// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-				ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-				// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-				ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-				// DealId The ID of the deal this activity is associated with
-				DealId *int `json:"deal_id,omitempty"`
-
-				// Done Whether the activity is done or not
-				Done *bool `json:"done,omitempty"`
-
-				// DueDate The due date of the activity. Format: YYYY-MM-DD
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// DueTime The due time of the activity in UTC. Format: HH:MM
-				DueTime *string `json:"due_time,omitempty"`
-
-				// Duration The duration of the activity. Format: HH:MM
-				Duration *string `json:"duration,omitempty"`
-
-				// Id The ID of the activity, generated when the activity was created
-				Id *int `json:"id,omitempty"`
-
-				// LeadId The ID of the lead in the UUID format this activity is associated with
-				LeadId *openapi_types.UUID `json:"lead_id"`
-
-				// Location The address of the activity.
-				Location *string `json:"location,omitempty"`
-
-				// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-				LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-				// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-				LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-				// LocationCountry A subfield of the location field. Indicates country.
-				LocationCountry *string `json:"location_country,omitempty"`
-
-				// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-				LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-				// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-				LocationLocality *string `json:"location_locality,omitempty"`
-
-				// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-				LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-				// LocationRoute A subfield of the location field. Indicates street name.
-				LocationRoute *string `json:"location_route,omitempty"`
-
-				// LocationStreetNumber A subfield of the location field. Indicates house number.
-				LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-				// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-				LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-				// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-				LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-				// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// OrgId The ID of the organization this activity is associated with
-				OrgId *int `json:"org_id,omitempty"`
-
-				// PersonId The ID of the person this activity is associated with
-				PersonId *int `json:"person_id,omitempty"`
-
-				// ProjectId The ID of the project this activity is associated with
-				ProjectId *int `json:"project_id"`
-
-				// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-				PublicDescription *string `json:"public_description,omitempty"`
-
-				// SourceTimezone The timezone the activity was created in an external calendar
-				SourceTimezone *string `json:"source_timezone,omitempty"`
-
-				// Subject The subject of the activity
-				Subject *string `json:"subject,omitempty"`
-
-				// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-				Type *string `json:"type,omitempty"`
-
-				// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// UpdateUserId The ID of the user who was the last to update this activity
-				UpdateUserId *int `json:"update_user_id,omitempty"`
-
-				// UserId The ID of the user whom the activity is assigned to
-				UserId *int `json:"user_id,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			// Error The error message
-			Error *string `json:"error,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteActivityTypesResponse parses an HTTP response from a DeleteActivityTypesWithResponse call
-func ParseDeleteActivityTypesResponse(rsp *http.Response) (*DeleteActivityTypesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteActivityTypesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *struct {
-				// Id The IDs of the deleted activity types
-				Id *[]int `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
 }
 
 // ParseGetActivityTypesResponse parses an HTTP response from a GetActivityTypesWithResponse call
@@ -42051,152 +36840,6 @@ func ParseDeleteDealFieldsResponse(rsp *http.Response) (*DeleteDealFieldsRespons
 	return response, nil
 }
 
-// ParseDeleteDealsResponse parses an HTTP response from a DeleteDealsWithResponse call
-func ParseDeleteDealsResponse(rsp *http.Response) (*DeleteDealsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteDealsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *struct {
-				// Id The list of deleted deals IDs
-				Id *[]int `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetDealsCollectionResponse parses an HTTP response from a GetDealsCollectionWithResponse call
-func ParseGetDealsCollectionResponse(rsp *http.Response) (*GetDealsCollectionResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetDealsCollectionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
-			} `json:"additional_data,omitempty"`
-			Data *[]struct {
-				// AddTime The creation date and time of the deal in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// CloseTime The date and time of closing the deal in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				CloseTime *string `json:"close_time"`
-
-				// CreatorUserId The ID of the deal creator
-				CreatorUserId *int `json:"creator_user_id,omitempty"`
-
-				// Currency The currency associated with the deal
-				Currency *string `json:"currency,omitempty"`
-
-				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
-
-				// Id The ID of the deal
-				Id *int `json:"id,omitempty"`
-
-				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
-
-				// LostReason The reason for losing the deal
-				LostReason *string `json:"lost_reason"`
-
-				// LostTime The date and time of changing the deal status to lost in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				LostTime *string `json:"lost_time,omitempty"`
-
-				// OrgId The ID of the organization associated with the deal
-				OrgId *int `json:"org_id,omitempty"`
-
-				// PersonId The ID of the person associated with the deal
-				PersonId *int `json:"person_id,omitempty"`
-
-				// PipelineId The ID of the pipeline associated with the deal
-				PipelineId *int `json:"pipeline_id,omitempty"`
-
-				// Probability The success probability percentage of the deal
-				Probability *float32 `json:"probability"`
-
-				// StageId The ID of the deal stage
-				StageId *int `json:"stage_id,omitempty"`
-
-				// Status The status of the deal
-				Status *string `json:"status,omitempty"`
-
-				// Title The title of the deal
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The last update date and time of the deal in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// UserId The ID of the user
-				UserId *int `json:"user_id,omitempty"`
-
-				// Value The value of the deal
-				Value *float32 `json:"value,omitempty"`
-
-				// VisibleTo The visibility of the deal
-				VisibleTo *string `json:"visible_to,omitempty"`
-
-				// WonTime The date and time of changing the deal status to won in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				WonTime *string `json:"won_time,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			// Error The error message
-			Error *string `json:"error,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetDealsSummaryResponse parses an HTTP response from a GetDealsSummaryWithResponse call
 func ParseGetDealsSummaryResponse(rsp *http.Response) (*GetDealsSummaryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -42941,366 +37584,6 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 	return response, nil
 }
 
-// ParseGetDealActivitiesResponse parses an HTTP response from a GetDealActivitiesWithResponse call
-func ParseGetDealActivitiesResponse(rsp *http.Response) (*GetDealActivitiesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetDealActivitiesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *struct {
-				// ActivityDistribution The distribution of activities related to the organization grouped by the user ID
-				ActivityDistribution *struct {
-					// ASSIGNEDTOUSERID The ID of the user
-					ASSIGNEDTOUSERID *struct {
-						// Activities The count of activities related to the user grouped by activity type
-						Activities *struct {
-							// ACTIVITYTYPENAME The count of activities related to a specific type
-							ACTIVITYTYPENAME *int `json:"ACTIVITY_TYPE_NAME,omitempty"`
-						} `json:"activities,omitempty"`
-
-						// ActivityCount The overall count of activities for the user
-						ActivityCount *int `json:"activity_count,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// Share The percentage of activities belongs to the user
-						Share *int `json:"share,omitempty"`
-					} `json:"ASSIGNED_TO_USER_ID,omitempty"`
-				} `json:"activity_distribution,omitempty"`
-
-				// Limit Items shown per page
-				Limit *int `json:"limit,omitempty"`
-
-				// MoreItemsInCollection If there are more list items in the collection than displayed or not
-				MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-				// Start Pagination start
-				Start *int `json:"start,omitempty"`
-			} `json:"additional_data,omitempty"`
-
-			// Data The array of activities
-			Data *[]struct {
-				// ActiveFlag Whether the activity is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AssignedToUserId The ID of the user to whom the activity is assigned to. Equal to `user_id`.
-				AssignedToUserId *int `json:"assigned_to_user_id,omitempty"`
-
-				// Attendees The attendees of the activity. This can be either your existing Pipedrive contacts or an external email address.
-				Attendees *[]map[string]interface{} `json:"attendees"`
-
-				// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-				BusyFlag *bool `json:"busy_flag,omitempty"`
-
-				// CalendarSyncIncludeContext For activities that sync to an external calendar, this setting indicates if the activity syncs with context (what are the deals, persons, organizations this activity is related to)
-				CalendarSyncIncludeContext *string `json:"calendar_sync_include_context,omitempty"`
-
-				// CompanyId The user's company ID
-				CompanyId *int `json:"company_id,omitempty"`
-
-				// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-				ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-				// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-				ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-				// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-				ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-				// CreatedByUserId The ID of the user who created the activity
-				CreatedByUserId *int `json:"created_by_user_id,omitempty"`
-
-				// DealDropboxBcc The BCC email address of the deal
-				DealDropboxBcc *string `json:"deal_dropbox_bcc,omitempty"`
-
-				// DealId The ID of the deal this activity is associated with
-				DealId *int `json:"deal_id,omitempty"`
-
-				// DealTitle The name of the deal this activity is associated with
-				DealTitle *string `json:"deal_title,omitempty"`
-
-				// Done Whether the activity is done or not
-				Done *bool `json:"done,omitempty"`
-
-				// DueDate The due date of the activity. Format: YYYY-MM-DD
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// DueTime The due time of the activity in UTC. Format: HH:MM
-				DueTime *string `json:"due_time,omitempty"`
-
-				// Duration The duration of the activity. Format: HH:MM
-				Duration *string `json:"duration,omitempty"`
-
-				// File The file that is attached to this activity. For example, this can be a reference to an audio note file generated with Pipedrive mobile app.
-				File *map[string]interface{} `json:"file,omitempty"`
-
-				// GcalEventId For the activity which syncs to Google calendar, this is the Google event ID. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GcalEventId *string `json:"gcal_event_id,omitempty"`
-
-				// GoogleCalendarEtag The Google calendar API etag (version) that is used for syncing this activity. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GoogleCalendarEtag *string `json:"google_calendar_etag,omitempty"`
-
-				// GoogleCalendarId The Google calendar ID that this activity syncs to. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GoogleCalendarId *string `json:"google_calendar_id,omitempty"`
-
-				// Id The ID of the activity, generated when the activity was created
-				Id *int `json:"id,omitempty"`
-
-				// LastNotificationTime The date and time of latest notifications sent about this activity to the participants or the attendees of this activity
-				LastNotificationTime *string `json:"last_notification_time,omitempty"`
-
-				// LastNotificationUserId The ID of the user who triggered the sending of the latest notifications about this activity to the participants or the attendees of this activity
-				LastNotificationUserId *int `json:"last_notification_user_id,omitempty"`
-
-				// LeadId The ID of the lead in the UUID format this activity is associated with
-				LeadId *openapi_types.UUID `json:"lead_id"`
-
-				// Location The address of the activity.
-				Location *string `json:"location,omitempty"`
-
-				// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-				LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-				// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-				LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-				// LocationCountry A subfield of the location field. Indicates country.
-				LocationCountry *string `json:"location_country,omitempty"`
-
-				// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-				LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-				// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-				LocationLocality *string `json:"location_locality,omitempty"`
-
-				// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-				LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-				// LocationRoute A subfield of the location field. Indicates street name.
-				LocationRoute *string `json:"location_route,omitempty"`
-
-				// LocationStreetNumber A subfield of the location field. Indicates house number.
-				LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-				// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-				LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-				// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-				LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-				// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// Note The note of the activity (HTML format)
-				Note *string `json:"note,omitempty"`
-
-				// NotificationLanguageId The ID of the language the notifications are sent in
-				NotificationLanguageId *int `json:"notification_language_id,omitempty"`
-
-				// OrgId The ID of the organization this activity is associated with
-				OrgId *int `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization this activity is associated with
-				OrgName *string `json:"org_name,omitempty"`
-
-				// OwnerName The name of the user this activity is owned by
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// Participants List of multiple persons (participants) this activity is associated with
-				Participants *[]map[string]interface{} `json:"participants"`
-
-				// PersonDropboxBcc The BCC email address of the person
-				PersonDropboxBcc *string `json:"person_dropbox_bcc,omitempty"`
-
-				// PersonId The ID of the person this activity is associated with
-				PersonId *int `json:"person_id,omitempty"`
-
-				// PersonName The name of the person this activity is associated with
-				PersonName *string `json:"person_name,omitempty"`
-
-				// ProjectId The ID of the project this activity is associated with
-				ProjectId *int `json:"project_id"`
-
-				// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-				PublicDescription *string `json:"public_description,omitempty"`
-
-				// RecMasterActivityId The ID of parent activity for a recurrent activity if the current activity is an exception to recurrence rules
-				RecMasterActivityId *int `json:"rec_master_activity_id,omitempty"`
-
-				// RecRule The rule for the recurrence of the activity. Is important for activities synced into Pipedrive from an external calendar. Example: "RRULE:FREQ=WEEKLY;BYDAY=WE"
-				RecRule *string `json:"rec_rule,omitempty"`
-
-				// RecRuleExtension Additional rules for the recurrence of the activity, extend the `rec_rule`. Is important for activities synced into Pipedrive from an external calendar.
-				RecRuleExtension *string `json:"rec_rule_extension,omitempty"`
-
-				// ReferenceId Together with the `reference_type`, gives the ID of the other object
-				ReferenceId *int `json:"reference_id,omitempty"`
-
-				// ReferenceType If the activity references some other object, it is indicated here. For example, value `Salesphone` refers to activities created with Caller.
-				ReferenceType *string `json:"reference_type,omitempty"`
-
-				// Series The list of recurring activity instances. It is in a structure as follows: `[{due_date: "2020-06-24", due_time: "10:00:00"}]`
-				Series *[]map[string]interface{} `json:"series,omitempty"`
-
-				// SourceTimezone The timezone the activity was created in an external calendar
-				SourceTimezone *string `json:"source_timezone,omitempty"`
-
-				// Subject The subject of the activity
-				Subject *string `json:"subject,omitempty"`
-
-				// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-				Type *string `json:"type,omitempty"`
-
-				// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// UpdateUserId The ID of the user who was the last to update this activity
-				UpdateUserId *int `json:"update_user_id,omitempty"`
-
-				// UserId The ID of the user whom the activity is assigned to
-				UserId *int `json:"user_id,omitempty"`
-			} `json:"data,omitempty"`
-			RelatedObjects *struct {
-				Deal *struct {
-					// DEALID The ID of the deal which is associated with the item
-					DEALID *struct {
-						// Currency The currency of the deal value
-						Currency *string `json:"currency,omitempty"`
-
-						// Id The ID of the deal associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// PipelineId The ID of the pipeline the deal is in
-						PipelineId *int `json:"pipeline_id,omitempty"`
-
-						// StageId The ID of the stage the deal is currently at
-						StageId *int `json:"stage_id,omitempty"`
-
-						// Status The status of the deal associated with the item
-						Status *string `json:"status,omitempty"`
-
-						// Title The title of the deal associated with the item
-						Title *string `json:"title,omitempty"`
-
-						// Value The value of the deal that is associated with the item
-						Value *float32 `json:"value,omitempty"`
-					} `json:"DEAL_ID,omitempty"`
-				} `json:"deal,omitempty"`
-				Organization *struct {
-					// ORGANIZATIONID The ID of the organization associated with the item
-					ORGANIZATIONID *struct {
-						// ActiveFlag Whether the associated organization is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
-
-						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
-
-						// Id The ID of the organization associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the organization associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the organization that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// PeopleCount The number of people connected with the organization that is associated with the item
-						PeopleCount *int `json:"people_count,omitempty"`
-					} `json:"ORGANIZATION_ID,omitempty"`
-				} `json:"organization,omitempty"`
-				Person *struct {
-					// PERSONID The ID of the person associated with the item
-					PERSONID *struct {
-						// ActiveFlag Whether the associated person is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The emails of the person associated with the item
-						Email *[]struct {
-							// Label The type of the email
-							Label *string `json:"label,omitempty"`
-
-							// Primary Whether this is the primary email or not
-							Primary *bool `json:"primary,omitempty"`
-
-							// Value The email of the associated person
-							Value *string `json:"value,omitempty"`
-						} `json:"email,omitempty"`
-
-						// Id The ID of the person associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the person associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the person that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// Phone The phone numbers of the person associated with the item
-						Phone *[]struct {
-							// Label The type of the phone number
-							Label *string `json:"label,omitempty"`
-
-							// Primary Whether this is the primary phone number or not
-							Primary *bool `json:"primary,omitempty"`
-
-							// Value The phone number of the person associated with the item
-							Value *string `json:"value,omitempty"`
-						} `json:"phone,omitempty"`
-					} `json:"PERSON_ID,omitempty"`
-				} `json:"person,omitempty"`
-				User *struct {
-					USERID *struct {
-						// ActiveFlag Whether the user is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The email of the user
-						Email *string `json:"email,omitempty"`
-
-						// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-						HasPic *int `json:"has_pic,omitempty"`
-
-						// Id The ID of the user
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// PicHash The user picture hash
-						PicHash *string `json:"pic_hash"`
-					} `json:"USER_ID,omitempty"`
-				} `json:"user,omitempty"`
-			} `json:"related_objects,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetDealChangelogResponse parses an HTTP response from a GetDealChangelogWithResponse call
 func ParseGetDealChangelogResponse(rsp *http.Response) (*GetDealChangelogResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -43815,10 +38098,10 @@ func ParseGetDealUpdatesResponse(rsp *http.Response) (*GetDealUpdatesResponse, e
 					// ORGANIZATIONID The ID of the organization associated with the item
 					ORGANIZATIONID *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -44436,213 +38719,352 @@ func ParseGetDealParticipantsResponse(rsp *http.Response) (*GetDealParticipantsR
 
 			// Data The array of participants
 			Data *[]struct {
-				// ActiveFlag Whether the person is active or not
+				// ActiveFlag Whether the participant is active or not
 				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// ActivitiesCount The count of activities related to the person
-				ActivitiesCount *int `json:"activities_count,omitempty"`
+				// AddTime The date and time when the participant was added. Format: YYYY-MM-DD HH:MM:SS
+				AddTime       *string `json:"add_time,omitempty"`
+				AddedByUserId *struct {
+					Data *struct {
+						Access *[]struct {
+							Admin           *bool                                                 `json:"admin,omitempty"`
+							App             *GetDealParticipants200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+							PermissionSetId *string                                               `json:"permission_set_id,omitempty"`
+						} `json:"access,omitempty"`
 
-				// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-				AddTime *string `json:"add_time,omitempty"`
+						// Activated Boolean that indicates whether the user is activated
+						Activated *bool `json:"activated,omitempty"`
 
-				// CcEmail The BCC email associated with the person
-				CcEmail *string `json:"cc_email,omitempty"`
+						// ActiveFlag Boolean that indicates whether the user is activated
+						ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// ClosedDealsCount The count of closed deals related with the item
-				ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+						// Created The creation date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+						Created *string `json:"created,omitempty"`
 
-				// CompanyId The ID of the company related to the person
-				CompanyId *int `json:"company_id,omitempty"`
+						// DefaultCurrency The user default currency
+						DefaultCurrency *string `json:"default_currency,omitempty"`
 
-				// DoneActivitiesCount The count of done activities related to the person
-				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+						// Email The user email
+						Email *string `json:"email,omitempty"`
 
-				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-				Email *[]struct {
-					// Label The label that indicates the type of the email. (Possible values - work, home or other)
-					Label *string `json:"label,omitempty"`
+						// HasCreatedCompany Boolean that indicates whether the user has created a company
+						HasCreatedCompany *bool `json:"has_created_company,omitempty"`
 
-					// Primary Boolean that indicates if email is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
+						// IconUrl The user icon URL
+						IconUrl *string `json:"icon_url"`
 
-					// Value Email
-					Value *string `json:"value,omitempty"`
-				} `json:"email,omitempty"`
+						// Id The user ID
+						Id *int `json:"id,omitempty"`
 
-				// EmailMessagesCount The count of email messages related to the person
-				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+						// IsDeleted Boolean that indicates whether the user is deleted from the company
+						IsDeleted *bool `json:"is_deleted,omitempty"`
 
-				// FilesCount The count of files related to the person
-				FilesCount *int `json:"files_count,omitempty"`
+						// IsYou Boolean that indicates if the requested user is the same which is logged in (in this case, always true)
+						IsYou *bool `json:"is_you,omitempty"`
 
-				// FirstChar The first letter of the name of the person
-				FirstChar *string `json:"first_char,omitempty"`
+						// Lang The user language ID
+						Lang *int `json:"lang,omitempty"`
 
-				// FirstName The first name of the person
-				FirstName *string `json:"first_name,omitempty"`
+						// LastLogin The last login date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+						LastLogin *string `json:"last_login,omitempty"`
 
-				// FollowersCount The count of followers related to the person
-				FollowersCount *int `json:"followers_count,omitempty"`
+						// Locale The user locale
+						Locale *string `json:"locale,omitempty"`
 
-				// Id The ID of the person
-				Id *int `json:"id,omitempty"`
+						// Modified The last modification date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+						Modified *string `json:"modified"`
 
-				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-				Label *int `json:"label,omitempty"`
+						// Name The user name
+						Name *string `json:"name,omitempty"`
 
-				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-				LabelIds *[]int `json:"label_ids,omitempty"`
+						// Phone The user phone
+						Phone *string `json:"phone"`
 
-				// LastActivityDate The date of the last activity associated with the deal
-				LastActivityDate *string `json:"last_activity_date"`
+						// RoleId The ID of the user role
+						RoleId *int `json:"role_id,omitempty"`
 
-				// LastActivityId The ID of the last activity associated with the deal
-				LastActivityId *int `json:"last_activity_id"`
+						// TimezoneName The user timezone name
+						TimezoneName *string `json:"timezone_name,omitempty"`
 
-				// LastIncomingMailTime The date and time of the last incoming email associated with the person
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+						// TimezoneOffset The user timezone offset
+						TimezoneOffset *string `json:"timezone_offset,omitempty"`
+					} `json:"data,omitempty"`
 
-				// LastName The last name of the person
-				LastName *string `json:"last_name,omitempty"`
+					// Success If the response is successful or not
+					Success *bool `json:"success,omitempty"`
+				} `json:"added_by_user_id,omitempty"`
 
-				// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-				// LostDealsCount The count of lost deals related with the item
-				LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-				// Name The name of the person
-				Name *string `json:"name,omitempty"`
-
-				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date"`
-
-				// NextActivityId The ID of the next activity associated with the deal
-				NextActivityId *int `json:"next_activity_id"`
-
-				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time"`
-
-				// NotesCount The count of notes related to the person
-				NotesCount *int `json:"notes_count,omitempty"`
-
-				// OpenDealsCount The count of open deals related with the item
-				OpenDealsCount *int `json:"open_deals_count,omitempty"`
-				OrgId          *struct {
-					// ActiveFlag Whether the associated organization is active or not
+				// Id The ID of the participant
+				Id     *int `json:"id,omitempty"`
+				Person *struct {
+					// ActiveFlag Whether the person is active or not
 					ActiveFlag *bool `json:"active_flag,omitempty"`
 
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					// ActivitiesCount The count of activities related to the person
+					ActivitiesCount *int `json:"activities_count,omitempty"`
 
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-
-					// Value The ID of the organization
-					Value *int `json:"value,omitempty"`
-				} `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization associated with the person
-				OrgName *string `json:"org_name,omitempty"`
-				OwnerId *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the owner
-					Value *int `json:"value,omitempty"`
-				} `json:"owner_id,omitempty"`
-
-				// OwnerName The name of the owner associated with the person
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-				Phone *[]struct {
-					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if phone number is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The phone number
-					Value *string `json:"value,omitempty"`
-				} `json:"phone,omitempty"`
-				PictureId *struct {
-					// ActiveFlag Whether the associated picture is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// AddTime The add time of the picture
+					// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
 					AddTime *string `json:"add_time,omitempty"`
 
-					// AddedByUserId The ID of the user who added the picture
-					AddedByUserId *int `json:"added_by_user_id,omitempty"`
+					// CcEmail The BCC email associated with the person
+					CcEmail *string `json:"cc_email"`
 
-					// Id The ID of the picture associated with the item
+					// ClosedDealsCount The count of closed deals related with the item
+					ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+
+					// CompanyId The ID of the company related to the person
+					CompanyId *int `json:"company_id,omitempty"`
+
+					// DoneActivitiesCount The count of done activities related to the person
+					DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+
+					// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
+					Email *[]struct {
+						// Label The label that indicates the type of the email. (Possible values - work, home or other)
+						Label *string `json:"label,omitempty"`
+
+						// Primary Boolean that indicates if email is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
+
+						// Value Email
+						Value *string `json:"value,omitempty"`
+					} `json:"email,omitempty"`
+
+					// EmailMessagesCount The count of email messages related to the person
+					EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+
+					// FilesCount The count of files related to the person
+					FilesCount *int `json:"files_count,omitempty"`
+
+					// FirstChar The first letter of the name of the person
+					FirstChar *string `json:"first_char,omitempty"`
+
+					// FirstName The first name of the person
+					FirstName *string `json:"first_name,omitempty"`
+
+					// FollowersCount The count of followers related to the person
+					FollowersCount *int `json:"followers_count,omitempty"`
+
+					// Id The ID of the person
 					Id *int `json:"id,omitempty"`
 
-					// ItemId The ID of related item
-					ItemId *int `json:"item_id,omitempty"`
+					// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
+					Label *int `json:"label"`
 
-					// ItemType The type of item the picture is related to
-					ItemType *string `json:"item_type,omitempty"`
-					Pictures *struct {
-						// N128 The URL of the 128*128 picture
-						N128 *string `json:"128,omitempty"`
+					// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
+					LabelIds *[]int `json:"label_ids,omitempty"`
 
-						// N512 The URL of the 512*512 picture
-						N512 *string `json:"512,omitempty"`
-					} `json:"pictures,omitempty"`
+					// LastActivityDate The date of the last activity associated with the deal
+					LastActivityDate *string `json:"last_activity_date"`
 
-					// UpdateTime The update time of the picture
+					// LastActivityId The ID of the last activity associated with the deal
+					LastActivityId *int `json:"last_activity_id"`
+
+					// LastIncomingMailTime The date and time of the last incoming email associated with the person
+					LastIncomingMailTime *string `json:"last_incoming_mail_time"`
+
+					// LastName The last name of the person
+					LastName *string `json:"last_name"`
+
+					// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
+					LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
+
+					// LostDealsCount The count of lost deals related with the item
+					LostDealsCount *int `json:"lost_deals_count,omitempty"`
+
+					// Name The name of the person
+					Name *string `json:"name,omitempty"`
+
+					// NextActivityDate The date of the next activity associated with the deal
+					NextActivityDate *string `json:"next_activity_date"`
+
+					// NextActivityId The ID of the next activity associated with the deal
+					NextActivityId *int `json:"next_activity_id"`
+
+					// NextActivityTime The time of the next activity associated with the deal
+					NextActivityTime *string `json:"next_activity_time"`
+
+					// NotesCount The count of notes related to the person
+					NotesCount *int `json:"notes_count,omitempty"`
+
+					// OpenDealsCount The count of open deals related with the item
+					OpenDealsCount *int `json:"open_deals_count,omitempty"`
+					OrgId          *struct {
+						// ActiveFlag Whether the associated organization is active or not
+						ActiveFlag *bool `json:"active_flag,omitempty"`
+
+						// Address The address of the organization
+						Address *string `json:"address"`
+
+						// CcEmail The BCC email of the organization associated with the item
+						CcEmail *string `json:"cc_email"`
+
+						// LabelIds The IDs of labels assigned to the organization
+						LabelIds *[]int `json:"label_ids,omitempty"`
+
+						// Name The name of the organization associated with the item
+						Name *string `json:"name,omitempty"`
+
+						// OwnerId The ID of the owner of the organization that is associated with the item
+						OwnerId *int `json:"owner_id,omitempty"`
+
+						// PeopleCount The number of people connected with the organization that is associated with the item
+						PeopleCount *int `json:"people_count,omitempty"`
+
+						// Value The ID of the organization
+						Value *int `json:"value,omitempty"`
+					} `json:"org_id"`
+
+					// OrgName The name of the organization associated with the person
+					OrgName *string `json:"org_name"`
+					OwnerId *struct {
+						// ActiveFlag Whether the user is active or not
+						ActiveFlag *bool `json:"active_flag,omitempty"`
+
+						// Email The email of the user
+						Email *string `json:"email,omitempty"`
+
+						// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
+						HasPic *int `json:"has_pic,omitempty"`
+
+						// Id The ID of the user
+						Id *int `json:"id,omitempty"`
+
+						// Name The name of the user
+						Name *string `json:"name,omitempty"`
+
+						// PicHash The user picture hash
+						PicHash *string `json:"pic_hash"`
+
+						// Value The ID of the owner
+						Value *int `json:"value,omitempty"`
+					} `json:"owner_id,omitempty"`
+
+					// OwnerName The name of the owner associated with the person
+					OwnerName *string `json:"owner_name,omitempty"`
+
+					// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+					Phone *[]struct {
+						// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+						Label *string `json:"label,omitempty"`
+
+						// Primary Boolean that indicates if phone number is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
+
+						// Value The phone number
+						Value *string `json:"value,omitempty"`
+					} `json:"phone,omitempty"`
+					PictureId *struct {
+						// ActiveFlag Whether the associated picture is active or not
+						ActiveFlag *bool `json:"active_flag,omitempty"`
+
+						// AddTime The add time of the picture
+						AddTime *string `json:"add_time,omitempty"`
+
+						// AddedByUserId The ID of the user who added the picture
+						AddedByUserId *int `json:"added_by_user_id,omitempty"`
+
+						// Id The ID of the picture associated with the item
+						Id *int `json:"id,omitempty"`
+
+						// ItemId The ID of related item
+						ItemId *int `json:"item_id,omitempty"`
+
+						// ItemType The type of item the picture is related to
+						ItemType *string `json:"item_type,omitempty"`
+						Pictures *struct {
+							// N128 The URL of the 128*128 picture
+							N128 *string `json:"128,omitempty"`
+
+							// N512 The URL of the 512*512 picture
+							N512 *string `json:"512,omitempty"`
+						} `json:"pictures,omitempty"`
+
+						// UpdateTime The update time of the picture
+						UpdateTime *string `json:"update_time,omitempty"`
+					} `json:"picture_id"`
+
+					// RelatedClosedDealsCount The count of related closed deals related with the item
+					RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+
+					// RelatedLostDealsCount The count of related lost deals related with the item
+					RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+
+					// RelatedOpenDealsCount The count of related open deals related with the item
+					RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+
+					// RelatedWonDealsCount The count of related won deals related with the item
+					RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+
+					// UndoneActivitiesCount The count of undone activities related to the person
+					UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+
+					// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
 					UpdateTime *string `json:"update_time,omitempty"`
-				} `json:"picture_id,omitempty"`
 
-				// RelatedClosedDealsCount The count of related closed deals related with the item
-				RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+					// VisibleTo The visibility group ID of who can see the person
+					VisibleTo *string `json:"visible_to,omitempty"`
 
-				// RelatedLostDealsCount The count of related lost deals related with the item
-				RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+					// WonDealsCount The count of won deals related with the item
+					WonDealsCount *int `json:"won_deals_count,omitempty"`
+				} `json:"person,omitempty"`
 
-				// RelatedOpenDealsCount The count of related open deals related with the item
-				RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+				// PersonId The person data associated with the participant
+				PersonId *struct {
+					// ActiveFlag Whether the person is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// RelatedWonDealsCount The count of related won deals related with the item
-				RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+					// CompanyId The ID of the company related to the person
+					CompanyId *int `json:"company_id,omitempty"`
 
-				// UndoneActivitiesCount The count of undone activities related to the person
-				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+					// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" }]`. Please note that only `value` is required.
+					Email *[]struct {
+						// Label The label that indicates the type of the email. (Possible values - work, home or other)
+						Label *string `json:"label,omitempty"`
 
-				// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-				UpdateTime *string `json:"update_time,omitempty"`
+						// Primary Boolean that indicates if email is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
 
-				// VisibleTo The visibility group ID of who can see the person
-				VisibleTo *string `json:"visible_to,omitempty"`
+						// Value The email address
+						Value *string `json:"value,omitempty"`
+					} `json:"email,omitempty"`
 
-				// WonDealsCount The count of won deals related with the item
-				WonDealsCount *int `json:"won_deals_count,omitempty"`
+					// Name The name of the person
+					Name *string `json:"name,omitempty"`
+
+					// OwnerId The ID of the owner of the person
+					OwnerId *int `json:"owner_id,omitempty"`
+
+					// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+					Phone *[]struct {
+						// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+						Label *string `json:"label,omitempty"`
+
+						// Primary Boolean that indicates if phone number is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
+
+						// Value The phone number
+						Value *string `json:"value,omitempty"`
+					} `json:"phone,omitempty"`
+
+					// Value The ID of the person
+					Value *int `json:"value,omitempty"`
+				} `json:"person_id,omitempty"`
+
+				// RelatedItemData Information about the related deal
+				RelatedItemData *struct {
+					// DealId The ID of the deal
+					DealId *int `json:"deal_id,omitempty"`
+
+					// Title The title of the deal
+					Title *string `json:"title,omitempty"`
+				} `json:"related_item_data,omitempty"`
+
+				// RelatedItemId The ID of the related item
+				RelatedItemId *int `json:"related_item_id,omitempty"`
+
+				// RelatedItemType The type of the related item
+				RelatedItemType *string `json:"related_item_type,omitempty"`
 			} `json:"data,omitempty"`
 			RelatedObjects *struct {
 				Organization *struct {
@@ -44652,10 +39074,10 @@ func ParseGetDealParticipantsResponse(rsp *http.Response) (*GetDealParticipantsR
 						ActiveFlag *bool `json:"active_flag,omitempty"`
 
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -44762,215 +39184,353 @@ func ParseAddDealParticipantResponse(rsp *http.Response) (*AddDealParticipantRes
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The object of participant
 			Data *struct {
-				// ActiveFlag Whether the person is active or not
+				// ActiveFlag Whether the participant is active or not
 				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// ActivitiesCount The count of activities related to the person
-				ActivitiesCount *int `json:"activities_count,omitempty"`
+				// AddTime The date and time when the participant was added. Format: YYYY-MM-DD HH:MM:SS
+				AddTime       *string `json:"add_time,omitempty"`
+				AddedByUserId *struct {
+					Data *struct {
+						Access *[]struct {
+							Admin           *bool                                                `json:"admin,omitempty"`
+							App             *AddDealParticipant200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+							PermissionSetId *string                                              `json:"permission_set_id,omitempty"`
+						} `json:"access,omitempty"`
 
-				// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-				AddTime *string `json:"add_time,omitempty"`
+						// Activated Boolean that indicates whether the user is activated
+						Activated *bool `json:"activated,omitempty"`
 
-				// CcEmail The BCC email associated with the person
-				CcEmail *string `json:"cc_email,omitempty"`
+						// ActiveFlag Boolean that indicates whether the user is activated
+						ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// ClosedDealsCount The count of closed deals related with the item
-				ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+						// Created The creation date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+						Created *string `json:"created,omitempty"`
 
-				// CompanyId The ID of the company related to the person
-				CompanyId *int `json:"company_id,omitempty"`
+						// DefaultCurrency The user default currency
+						DefaultCurrency *string `json:"default_currency,omitempty"`
 
-				// DoneActivitiesCount The count of done activities related to the person
-				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+						// Email The user email
+						Email *string `json:"email,omitempty"`
 
-				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-				Email *[]struct {
-					// Label The label that indicates the type of the email. (Possible values - work, home or other)
-					Label *string `json:"label,omitempty"`
+						// HasCreatedCompany Boolean that indicates whether the user has created a company
+						HasCreatedCompany *bool `json:"has_created_company,omitempty"`
 
-					// Primary Boolean that indicates if email is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
+						// IconUrl The user icon URL
+						IconUrl *string `json:"icon_url"`
 
-					// Value Email
-					Value *string `json:"value,omitempty"`
-				} `json:"email,omitempty"`
+						// Id The user ID
+						Id *int `json:"id,omitempty"`
 
-				// EmailMessagesCount The count of email messages related to the person
-				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+						// IsDeleted Boolean that indicates whether the user is deleted from the company
+						IsDeleted *bool `json:"is_deleted,omitempty"`
 
-				// FilesCount The count of files related to the person
-				FilesCount *int `json:"files_count,omitempty"`
+						// IsYou Boolean that indicates if the requested user is the same which is logged in (in this case, always true)
+						IsYou *bool `json:"is_you,omitempty"`
 
-				// FirstChar The first letter of the name of the person
-				FirstChar *string `json:"first_char,omitempty"`
+						// Lang The user language ID
+						Lang *int `json:"lang,omitempty"`
 
-				// FirstName The first name of the person
-				FirstName *string `json:"first_name,omitempty"`
+						// LastLogin The last login date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+						LastLogin *string `json:"last_login,omitempty"`
 
-				// FollowersCount The count of followers related to the person
-				FollowersCount *int `json:"followers_count,omitempty"`
+						// Locale The user locale
+						Locale *string `json:"locale,omitempty"`
 
-				// Id The ID of the person
-				Id *int `json:"id,omitempty"`
+						// Modified The last modification date and time of the user. Format: YYYY-MM-DD HH:MM:SS
+						Modified *string `json:"modified"`
 
-				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-				Label *int `json:"label,omitempty"`
+						// Name The user name
+						Name *string `json:"name,omitempty"`
 
-				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-				LabelIds *[]int `json:"label_ids,omitempty"`
+						// Phone The user phone
+						Phone *string `json:"phone"`
 
-				// LastActivityDate The date of the last activity associated with the deal
-				LastActivityDate *string `json:"last_activity_date"`
+						// RoleId The ID of the user role
+						RoleId *int `json:"role_id,omitempty"`
 
-				// LastActivityId The ID of the last activity associated with the deal
-				LastActivityId *int `json:"last_activity_id"`
+						// TimezoneName The user timezone name
+						TimezoneName *string `json:"timezone_name,omitempty"`
 
-				// LastIncomingMailTime The date and time of the last incoming email associated with the person
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+						// TimezoneOffset The user timezone offset
+						TimezoneOffset *string `json:"timezone_offset,omitempty"`
+					} `json:"data,omitempty"`
 
-				// LastName The last name of the person
-				LastName *string `json:"last_name,omitempty"`
+					// Success If the response is successful or not
+					Success *bool `json:"success,omitempty"`
+				} `json:"added_by_user_id,omitempty"`
 
-				// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-				// LostDealsCount The count of lost deals related with the item
-				LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-				// Name The name of the person
-				Name *string `json:"name,omitempty"`
-
-				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date"`
-
-				// NextActivityId The ID of the next activity associated with the deal
-				NextActivityId *int `json:"next_activity_id"`
-
-				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time"`
-
-				// NotesCount The count of notes related to the person
-				NotesCount *int `json:"notes_count,omitempty"`
-
-				// OpenDealsCount The count of open deals related with the item
-				OpenDealsCount *int `json:"open_deals_count,omitempty"`
-				OrgId          *struct {
-					// ActiveFlag Whether the associated organization is active or not
+				// Id The ID of the participant
+				Id     *int `json:"id,omitempty"`
+				Person *struct {
+					// ActiveFlag Whether the person is active or not
 					ActiveFlag *bool `json:"active_flag,omitempty"`
 
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					// ActivitiesCount The count of activities related to the person
+					ActivitiesCount *int `json:"activities_count,omitempty"`
 
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-
-					// Value The ID of the organization
-					Value *int `json:"value,omitempty"`
-				} `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization associated with the person
-				OrgName *string `json:"org_name,omitempty"`
-				OwnerId *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the owner
-					Value *int `json:"value,omitempty"`
-				} `json:"owner_id,omitempty"`
-
-				// OwnerName The name of the owner associated with the person
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-				Phone *[]struct {
-					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if phone number is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The phone number
-					Value *string `json:"value,omitempty"`
-				} `json:"phone,omitempty"`
-				PictureId *struct {
-					// ActiveFlag Whether the associated picture is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// AddTime The add time of the picture
+					// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
 					AddTime *string `json:"add_time,omitempty"`
 
-					// AddedByUserId The ID of the user who added the picture
-					AddedByUserId *int `json:"added_by_user_id,omitempty"`
+					// CcEmail The BCC email associated with the person
+					CcEmail *string `json:"cc_email"`
 
-					// Id The ID of the picture associated with the item
+					// ClosedDealsCount The count of closed deals related with the item
+					ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
+
+					// CompanyId The ID of the company related to the person
+					CompanyId *int `json:"company_id,omitempty"`
+
+					// DoneActivitiesCount The count of done activities related to the person
+					DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
+
+					// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
+					Email *[]struct {
+						// Label The label that indicates the type of the email. (Possible values - work, home or other)
+						Label *string `json:"label,omitempty"`
+
+						// Primary Boolean that indicates if email is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
+
+						// Value Email
+						Value *string `json:"value,omitempty"`
+					} `json:"email,omitempty"`
+
+					// EmailMessagesCount The count of email messages related to the person
+					EmailMessagesCount *int `json:"email_messages_count,omitempty"`
+
+					// FilesCount The count of files related to the person
+					FilesCount *int `json:"files_count,omitempty"`
+
+					// FirstChar The first letter of the name of the person
+					FirstChar *string `json:"first_char,omitempty"`
+
+					// FirstName The first name of the person
+					FirstName *string `json:"first_name,omitempty"`
+
+					// FollowersCount The count of followers related to the person
+					FollowersCount *int `json:"followers_count,omitempty"`
+
+					// Id The ID of the person
 					Id *int `json:"id,omitempty"`
 
-					// ItemId The ID of related item
-					ItemId *int `json:"item_id,omitempty"`
+					// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
+					Label *int `json:"label"`
 
-					// ItemType The type of item the picture is related to
-					ItemType *string `json:"item_type,omitempty"`
-					Pictures *struct {
-						// N128 The URL of the 128*128 picture
-						N128 *string `json:"128,omitempty"`
+					// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
+					LabelIds *[]int `json:"label_ids,omitempty"`
 
-						// N512 The URL of the 512*512 picture
-						N512 *string `json:"512,omitempty"`
-					} `json:"pictures,omitempty"`
+					// LastActivityDate The date of the last activity associated with the deal
+					LastActivityDate *string `json:"last_activity_date"`
 
-					// UpdateTime The update time of the picture
+					// LastActivityId The ID of the last activity associated with the deal
+					LastActivityId *int `json:"last_activity_id"`
+
+					// LastIncomingMailTime The date and time of the last incoming email associated with the person
+					LastIncomingMailTime *string `json:"last_incoming_mail_time"`
+
+					// LastName The last name of the person
+					LastName *string `json:"last_name"`
+
+					// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
+					LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
+
+					// LostDealsCount The count of lost deals related with the item
+					LostDealsCount *int `json:"lost_deals_count,omitempty"`
+
+					// Name The name of the person
+					Name *string `json:"name,omitempty"`
+
+					// NextActivityDate The date of the next activity associated with the deal
+					NextActivityDate *string `json:"next_activity_date"`
+
+					// NextActivityId The ID of the next activity associated with the deal
+					NextActivityId *int `json:"next_activity_id"`
+
+					// NextActivityTime The time of the next activity associated with the deal
+					NextActivityTime *string `json:"next_activity_time"`
+
+					// NotesCount The count of notes related to the person
+					NotesCount *int `json:"notes_count,omitempty"`
+
+					// OpenDealsCount The count of open deals related with the item
+					OpenDealsCount *int `json:"open_deals_count,omitempty"`
+					OrgId          *struct {
+						// ActiveFlag Whether the associated organization is active or not
+						ActiveFlag *bool `json:"active_flag,omitempty"`
+
+						// Address The address of the organization
+						Address *string `json:"address"`
+
+						// CcEmail The BCC email of the organization associated with the item
+						CcEmail *string `json:"cc_email"`
+
+						// LabelIds The IDs of labels assigned to the organization
+						LabelIds *[]int `json:"label_ids,omitempty"`
+
+						// Name The name of the organization associated with the item
+						Name *string `json:"name,omitempty"`
+
+						// OwnerId The ID of the owner of the organization that is associated with the item
+						OwnerId *int `json:"owner_id,omitempty"`
+
+						// PeopleCount The number of people connected with the organization that is associated with the item
+						PeopleCount *int `json:"people_count,omitempty"`
+
+						// Value The ID of the organization
+						Value *int `json:"value,omitempty"`
+					} `json:"org_id"`
+
+					// OrgName The name of the organization associated with the person
+					OrgName *string `json:"org_name"`
+					OwnerId *struct {
+						// ActiveFlag Whether the user is active or not
+						ActiveFlag *bool `json:"active_flag,omitempty"`
+
+						// Email The email of the user
+						Email *string `json:"email,omitempty"`
+
+						// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
+						HasPic *int `json:"has_pic,omitempty"`
+
+						// Id The ID of the user
+						Id *int `json:"id,omitempty"`
+
+						// Name The name of the user
+						Name *string `json:"name,omitempty"`
+
+						// PicHash The user picture hash
+						PicHash *string `json:"pic_hash"`
+
+						// Value The ID of the owner
+						Value *int `json:"value,omitempty"`
+					} `json:"owner_id,omitempty"`
+
+					// OwnerName The name of the owner associated with the person
+					OwnerName *string `json:"owner_name,omitempty"`
+
+					// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+					Phone *[]struct {
+						// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+						Label *string `json:"label,omitempty"`
+
+						// Primary Boolean that indicates if phone number is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
+
+						// Value The phone number
+						Value *string `json:"value,omitempty"`
+					} `json:"phone,omitempty"`
+					PictureId *struct {
+						// ActiveFlag Whether the associated picture is active or not
+						ActiveFlag *bool `json:"active_flag,omitempty"`
+
+						// AddTime The add time of the picture
+						AddTime *string `json:"add_time,omitempty"`
+
+						// AddedByUserId The ID of the user who added the picture
+						AddedByUserId *int `json:"added_by_user_id,omitempty"`
+
+						// Id The ID of the picture associated with the item
+						Id *int `json:"id,omitempty"`
+
+						// ItemId The ID of related item
+						ItemId *int `json:"item_id,omitempty"`
+
+						// ItemType The type of item the picture is related to
+						ItemType *string `json:"item_type,omitempty"`
+						Pictures *struct {
+							// N128 The URL of the 128*128 picture
+							N128 *string `json:"128,omitempty"`
+
+							// N512 The URL of the 512*512 picture
+							N512 *string `json:"512,omitempty"`
+						} `json:"pictures,omitempty"`
+
+						// UpdateTime The update time of the picture
+						UpdateTime *string `json:"update_time,omitempty"`
+					} `json:"picture_id"`
+
+					// RelatedClosedDealsCount The count of related closed deals related with the item
+					RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+
+					// RelatedLostDealsCount The count of related lost deals related with the item
+					RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+
+					// RelatedOpenDealsCount The count of related open deals related with the item
+					RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+
+					// RelatedWonDealsCount The count of related won deals related with the item
+					RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+
+					// UndoneActivitiesCount The count of undone activities related to the person
+					UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+
+					// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
 					UpdateTime *string `json:"update_time,omitempty"`
-				} `json:"picture_id,omitempty"`
 
-				// RelatedClosedDealsCount The count of related closed deals related with the item
-				RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
+					// VisibleTo The visibility group ID of who can see the person
+					VisibleTo *string `json:"visible_to,omitempty"`
 
-				// RelatedLostDealsCount The count of related lost deals related with the item
-				RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
+					// WonDealsCount The count of won deals related with the item
+					WonDealsCount *int `json:"won_deals_count,omitempty"`
+				} `json:"person,omitempty"`
 
-				// RelatedOpenDealsCount The count of related open deals related with the item
-				RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
+				// PersonId The person data associated with the participant
+				PersonId *struct {
+					// ActiveFlag Whether the person is active or not
+					ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// RelatedWonDealsCount The count of related won deals related with the item
-				RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
+					// CompanyId The ID of the company related to the person
+					CompanyId *int `json:"company_id,omitempty"`
 
-				// UndoneActivitiesCount The count of undone activities related to the person
-				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
+					// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" }]`. Please note that only `value` is required.
+					Email *[]struct {
+						// Label The label that indicates the type of the email. (Possible values - work, home or other)
+						Label *string `json:"label,omitempty"`
 
-				// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-				UpdateTime *string `json:"update_time,omitempty"`
+						// Primary Boolean that indicates if email is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
 
-				// VisibleTo The visibility group ID of who can see the person
-				VisibleTo *string `json:"visible_to,omitempty"`
+						// Value The email address
+						Value *string `json:"value,omitempty"`
+					} `json:"email,omitempty"`
 
-				// WonDealsCount The count of won deals related with the item
-				WonDealsCount *int `json:"won_deals_count,omitempty"`
+					// Name The name of the person
+					Name *string `json:"name,omitempty"`
+
+					// OwnerId The ID of the owner of the person
+					OwnerId *int `json:"owner_id,omitempty"`
+
+					// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
+					Phone *[]struct {
+						// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
+						Label *string `json:"label,omitempty"`
+
+						// Primary Boolean that indicates if phone number is primary for the person or not
+						Primary *bool `json:"primary,omitempty"`
+
+						// Value The phone number
+						Value *string `json:"value,omitempty"`
+					} `json:"phone,omitempty"`
+
+					// Value The ID of the person
+					Value *int `json:"value,omitempty"`
+				} `json:"person_id,omitempty"`
+
+				// RelatedItemData Information about the related deal
+				RelatedItemData *struct {
+					// DealId The ID of the deal
+					DealId *int `json:"deal_id,omitempty"`
+
+					// Title The title of the deal
+					Title *string `json:"title,omitempty"`
+				} `json:"related_item_data,omitempty"`
+
+				// RelatedItemId The ID of the related item
+				RelatedItemId *int `json:"related_item_id,omitempty"`
+
+				// RelatedItemType The type of the related item
+				RelatedItemType *string `json:"related_item_type,omitempty"`
 			} `json:"data,omitempty"`
 			RelatedObjects *struct {
 				Person *struct {
@@ -45155,306 +39715,6 @@ func ParseGetDealUsersResponse(rsp *http.Response) (*GetDealUsersResponse, error
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetDealPersonsResponse parses an HTTP response from a GetDealPersonsWithResponse call
-func ParseGetDealPersonsResponse(rsp *http.Response) (*GetDealPersonsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetDealPersonsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// Limit Items shown per page
-				Limit *int `json:"limit,omitempty"`
-
-				// MoreItemsInCollection If there are more list items in the collection than displayed or not
-				MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-				// Start Pagination start
-				Start *int `json:"start,omitempty"`
-			} `json:"additional_data,omitempty"`
-
-			// Data The array of persons
-			Data *[]struct {
-				// ActiveFlag Whether the person is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// ActivitiesCount The count of activities related to the person
-				ActivitiesCount *int `json:"activities_count,omitempty"`
-
-				// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-				AddTime *string `json:"add_time,omitempty"`
-
-				// CcEmail The BCC email associated with the person
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// ClosedDealsCount The count of closed deals related with the item
-				ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
-
-				// CompanyId The ID of the company related to the person
-				CompanyId *int `json:"company_id,omitempty"`
-
-				// DoneActivitiesCount The count of done activities related to the person
-				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-				Email *[]struct {
-					// Label The label that indicates the type of the email. (Possible values - work, home or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if email is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value Email
-					Value *string `json:"value,omitempty"`
-				} `json:"email,omitempty"`
-
-				// EmailMessagesCount The count of email messages related to the person
-				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-				// FilesCount The count of files related to the person
-				FilesCount *int `json:"files_count,omitempty"`
-
-				// FirstChar The first letter of the name of the person
-				FirstChar *string `json:"first_char,omitempty"`
-
-				// FirstName The first name of the person
-				FirstName *string `json:"first_name,omitempty"`
-
-				// FollowersCount The count of followers related to the person
-				FollowersCount *int `json:"followers_count,omitempty"`
-
-				// Id The ID of the person
-				Id *int `json:"id,omitempty"`
-
-				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-				Label *int `json:"label,omitempty"`
-
-				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-				LabelIds *[]int `json:"label_ids,omitempty"`
-
-				// LastActivityDate The date of the last activity associated with the deal
-				LastActivityDate *string `json:"last_activity_date"`
-
-				// LastActivityId The ID of the last activity associated with the deal
-				LastActivityId *int `json:"last_activity_id"`
-
-				// LastIncomingMailTime The date and time of the last incoming email associated with the person
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-				// LastName The last name of the person
-				LastName *string `json:"last_name,omitempty"`
-
-				// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-				// LostDealsCount The count of lost deals related with the item
-				LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-				// Name The name of the person
-				Name *string `json:"name,omitempty"`
-
-				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date"`
-
-				// NextActivityId The ID of the next activity associated with the deal
-				NextActivityId *int `json:"next_activity_id"`
-
-				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time"`
-
-				// NotesCount The count of notes related to the person
-				NotesCount *int `json:"notes_count,omitempty"`
-
-				// OpenDealsCount The count of open deals related with the item
-				OpenDealsCount *int `json:"open_deals_count,omitempty"`
-				OrgId          *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-
-					// Value The ID of the organization
-					Value *int `json:"value,omitempty"`
-				} `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization associated with the person
-				OrgName *string `json:"org_name,omitempty"`
-				OwnerId *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the owner
-					Value *int `json:"value,omitempty"`
-				} `json:"owner_id,omitempty"`
-
-				// OwnerName The name of the owner associated with the person
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-				Phone *[]struct {
-					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if phone number is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The phone number
-					Value *string `json:"value,omitempty"`
-				} `json:"phone,omitempty"`
-				PictureId *struct {
-					// ActiveFlag Whether the associated picture is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// AddTime The add time of the picture
-					AddTime *string `json:"add_time,omitempty"`
-
-					// AddedByUserId The ID of the user who added the picture
-					AddedByUserId *int `json:"added_by_user_id,omitempty"`
-
-					// Id The ID of the picture associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// ItemId The ID of related item
-					ItemId *int `json:"item_id,omitempty"`
-
-					// ItemType The type of item the picture is related to
-					ItemType *string `json:"item_type,omitempty"`
-					Pictures *struct {
-						// N128 The URL of the 128*128 picture
-						N128 *string `json:"128,omitempty"`
-
-						// N512 The URL of the 512*512 picture
-						N512 *string `json:"512,omitempty"`
-					} `json:"pictures,omitempty"`
-
-					// UpdateTime The update time of the picture
-					UpdateTime *string `json:"update_time,omitempty"`
-				} `json:"picture_id,omitempty"`
-
-				// RelatedClosedDealsCount The count of related closed deals related with the item
-				RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
-
-				// RelatedLostDealsCount The count of related lost deals related with the item
-				RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
-
-				// RelatedOpenDealsCount The count of related open deals related with the item
-				RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
-
-				// RelatedWonDealsCount The count of related won deals related with the item
-				RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
-
-				// UndoneActivitiesCount The count of undone activities related to the person
-				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-				// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// VisibleTo The visibility group ID of who can see the person
-				VisibleTo *string `json:"visible_to,omitempty"`
-
-				// WonDealsCount The count of won deals related with the item
-				WonDealsCount *int `json:"won_deals_count,omitempty"`
-			} `json:"data,omitempty"`
-			RelatedObjects *struct {
-				Organization *struct {
-					// ORGANIZATIONID The ID of the organization associated with the item
-					ORGANIZATIONID *struct {
-						// ActiveFlag Whether the associated organization is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
-
-						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
-
-						// Id The ID of the organization associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the organization associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the organization that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// PeopleCount The number of people connected with the organization that is associated with the item
-						PeopleCount *int `json:"people_count,omitempty"`
-					} `json:"ORGANIZATION_ID,omitempty"`
-				} `json:"organization,omitempty"`
-				User *struct {
-					USERID *struct {
-						// ActiveFlag Whether the user is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The email of the user
-						Email *string `json:"email,omitempty"`
-
-						// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-						HasPic *int `json:"has_pic,omitempty"`
-
-						// Id The ID of the user
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// PicHash The user picture hash
-						PicHash *string `json:"pic_hash"`
-					} `json:"USER_ID,omitempty"`
-				} `json:"user,omitempty"`
-			} `json:"related_objects,omitempty"`
-
 			// Success If the response is successful or not
 			Success *bool `json:"success,omitempty"`
 		}
@@ -47387,6 +41647,9 @@ func ParseGetLeadsResponse(rsp *http.Response) (*GetLeadsResponse, error) {
 				// PersonId The ID of a person which this lead is linked to
 				PersonId *int `json:"person_id"`
 
+				// SourceDealId The ID of the deal if the lead was converted from a deal.
+				SourceDealId *int `json:"source_deal_id"`
+
 				// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 				SourceName *string `json:"source_name,omitempty"`
 
@@ -47481,6 +41744,9 @@ func ParseAddLeadResponse(rsp *http.Response) (*AddLeadResponse, error) {
 
 				// PersonId The ID of a person which this lead is linked to
 				PersonId *int `json:"person_id"`
+
+				// SourceDealId The ID of the deal if the lead was converted from a deal.
+				SourceDealId *int `json:"source_deal_id"`
 
 				// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 				SourceName *string `json:"source_name,omitempty"`
@@ -47587,6 +41853,9 @@ func ParseGetArchivedLeadsResponse(rsp *http.Response) (*GetArchivedLeadsRespons
 
 				// PersonId The ID of a person which this lead is linked to
 				PersonId *int `json:"person_id"`
+
+				// SourceDealId The ID of the deal if the lead was converted from a deal.
+				SourceDealId *int `json:"source_deal_id"`
 
 				// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 				SourceName *string `json:"source_name,omitempty"`
@@ -47731,6 +42000,9 @@ func ParseGetLeadResponse(rsp *http.Response) (*GetLeadResponse, error) {
 				// PersonId The ID of a person which this lead is linked to
 				PersonId *int `json:"person_id"`
 
+				// SourceDealId The ID of the deal if the lead was converted from a deal.
+				SourceDealId *int `json:"source_deal_id"`
+
 				// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 				SourceName *string `json:"source_name,omitempty"`
 
@@ -47842,6 +42114,9 @@ func ParseUpdateLeadResponse(rsp *http.Response) (*UpdateLeadResponse, error) {
 
 				// PersonId The ID of a person which this lead is linked to
 				PersonId *int `json:"person_id"`
+
+				// SourceDealId The ID of the deal if the lead was converted from a deal.
+				SourceDealId *int `json:"source_deal_id"`
 
 				// SourceName Defines where the lead comes from. Will be `API` if the lead was created through the Public API and will be `Manually created` if the lead was created manually through the UI.
 				SourceName *string `json:"source_name,omitempty"`
@@ -50667,10 +44942,10 @@ func ParseGetOrganizationRelationshipsResponse(rsp *http.Response) (*GetOrganiza
 				Id             *int `json:"id,omitempty"`
 				RelLinkedOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -50686,10 +44961,10 @@ func ParseGetOrganizationRelationshipsResponse(rsp *http.Response) (*GetOrganiza
 				} `json:"rel_linked_org_id,omitempty"`
 				RelOwnerOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -50718,10 +44993,10 @@ func ParseGetOrganizationRelationshipsResponse(rsp *http.Response) (*GetOrganiza
 					// ORGANIZATIONID The ID of the organization associated with the item
 					ORGANIZATIONID *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -50778,10 +45053,10 @@ func ParseAddOrganizationRelationshipResponse(rsp *http.Response) (*AddOrganizat
 				Id             *int `json:"id,omitempty"`
 				RelLinkedOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -50797,10 +45072,10 @@ func ParseAddOrganizationRelationshipResponse(rsp *http.Response) (*AddOrganizat
 				} `json:"rel_linked_org_id,omitempty"`
 				RelOwnerOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -50826,10 +45101,10 @@ func ParseAddOrganizationRelationshipResponse(rsp *http.Response) (*AddOrganizat
 					// ORGANIZATIONID The ID of the organization associated with the item
 					ORGANIZATIONID *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -50926,10 +45201,10 @@ func ParseGetOrganizationRelationshipResponse(rsp *http.Response) (*GetOrganizat
 				Id             *int `json:"id,omitempty"`
 				RelLinkedOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -50945,10 +45220,10 @@ func ParseGetOrganizationRelationshipResponse(rsp *http.Response) (*GetOrganizat
 				} `json:"rel_linked_org_id,omitempty"`
 				RelOwnerOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -50974,10 +45249,10 @@ func ParseGetOrganizationRelationshipResponse(rsp *http.Response) (*GetOrganizat
 					// ORGANIZATIONID The ID of the organization associated with the item
 					ORGANIZATIONID *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -51034,10 +45309,10 @@ func ParseUpdateOrganizationRelationshipResponse(rsp *http.Response) (*UpdateOrg
 				Id             *int `json:"id,omitempty"`
 				RelLinkedOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -51053,10 +45328,10 @@ func ParseUpdateOrganizationRelationshipResponse(rsp *http.Response) (*UpdateOrg
 				} `json:"rel_linked_org_id,omitempty"`
 				RelOwnerOrgId *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
+					CcEmail *string `json:"cc_email"`
 
 					// Name The name of the organization associated with the item
 					Name *string `json:"name,omitempty"`
@@ -51082,10 +45357,10 @@ func ParseUpdateOrganizationRelationshipResponse(rsp *http.Response) (*UpdateOrg
 					// ORGANIZATIONID The ID of the organization associated with the item
 					ORGANIZATIONID *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -51101,400 +45376,6 @@ func ParseUpdateOrganizationRelationshipResponse(rsp *http.Response) (*UpdateOrg
 					} `json:"ORGANIZATION_ID,omitempty"`
 				} `json:"organization,omitempty"`
 			} `json:"related_objects,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteOrganizationsResponse parses an HTTP response from a DeleteOrganizationsWithResponse call
-func ParseDeleteOrganizationsResponse(rsp *http.Response) (*DeleteOrganizationsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteOrganizationsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *struct {
-				// Id The IDs of the organizations that were deleted
-				Id *[]float32 `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the request was successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetOrganizationsCollectionResponse parses an HTTP response from a GetOrganizationsCollectionWithResponse call
-func ParseGetOrganizationsCollectionResponse(rsp *http.Response) (*GetOrganizationsCollectionResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetOrganizationsCollectionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
-			} `json:"additional_data,omitempty"`
-			Data *[]struct {
-				// ActiveFlag Whether the organization is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The date and time when the organization was added/created. Format: YYYY-MM-DD HH:MM:SS
-				AddTime *string `json:"add_time,omitempty"`
-
-				// Address The full address of the organization
-				Address *string `json:"address,omitempty"`
-
-				// AddressAdminAreaLevel1 The level 1 admin area of the organization location
-				AddressAdminAreaLevel1 *string `json:"address_admin_area_level_1,omitempty"`
-
-				// AddressAdminAreaLevel2 The level 2 admin area of the organization location
-				AddressAdminAreaLevel2 *string `json:"address_admin_area_level_2,omitempty"`
-
-				// AddressCountry The country of the organization location
-				AddressCountry *string `json:"address_country,omitempty"`
-
-				// AddressFormattedAddress The formatted organization location
-				AddressFormattedAddress *string `json:"address_formatted_address,omitempty"`
-
-				// AddressLocality The locality of the organization location
-				AddressLocality *string `json:"address_locality,omitempty"`
-
-				// AddressPostalCode The postal code of the organization location
-				AddressPostalCode *string `json:"address_postal_code,omitempty"`
-
-				// AddressRoute The route of the organization location
-				AddressRoute *string `json:"address_route,omitempty"`
-
-				// AddressStreetNumber The street number of the organization location
-				AddressStreetNumber *string `json:"address_street_number,omitempty"`
-
-				// AddressSublocality The sub-locality of the organization location
-				AddressSublocality *string `json:"address_sublocality,omitempty"`
-
-				// AddressSubpremise The sub-premise of the organization location
-				AddressSubpremise *string `json:"address_subpremise,omitempty"`
-
-				// CcEmail The BCC email associated with the organization
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// DeleteTime The date and time this organization was deleted. Format: YYYY-MM-DD HH:MM:SS
-				DeleteTime *string `json:"delete_time"`
-
-				// Id The ID of the organization
-				Id *int `json:"id,omitempty"`
-
-				// Label The label assigned to the organization. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-				Label *int `json:"label"`
-
-				// LabelIds The IDs of labels assigned to the organization. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-				LabelIds *[]int `json:"label_ids,omitempty"`
-
-				// Name The name of the organization
-				Name *string `json:"name,omitempty"`
-
-				// OwnerId The ID of the owner
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// UpdateTime The last updated date and time of the organization. Format: YYYY-MM-DD HH:MM:SS
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// VisibleTo The visibility group ID of who can see the organization
-				VisibleTo *string `json:"visible_to,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			// Error The error message
-			Error *string `json:"error,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetOrganizationActivitiesResponse parses an HTTP response from a GetOrganizationActivitiesWithResponse call
-func ParseGetOrganizationActivitiesResponse(rsp *http.Response) (*GetOrganizationActivitiesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetOrganizationActivitiesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *struct {
-				// ActivityDistribution The distribution of activities related to the organization grouped by the user ID
-				ActivityDistribution *struct {
-					// ASSIGNEDTOUSERID The ID of the user
-					ASSIGNEDTOUSERID *struct {
-						// Activities The count of activities related to the user grouped by activity type
-						Activities *struct {
-							// ACTIVITYTYPENAME The count of activities related to a specific type
-							ACTIVITYTYPENAME *int `json:"ACTIVITY_TYPE_NAME,omitempty"`
-						} `json:"activities,omitempty"`
-
-						// ActivityCount The overall count of activities for the user
-						ActivityCount *int `json:"activity_count,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// Share The percentage of activities belongs to the user
-						Share *int `json:"share,omitempty"`
-					} `json:"ASSIGNED_TO_USER_ID,omitempty"`
-				} `json:"activity_distribution,omitempty"`
-
-				// Limit Items shown per page
-				Limit *int `json:"limit,omitempty"`
-
-				// MoreItemsInCollection If there are more list items in the collection than displayed or not
-				MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-				// Start Pagination start
-				Start *int `json:"start,omitempty"`
-			} `json:"additional_data,omitempty"`
-
-			// Data The array of activities
-			Data *[]struct {
-				// ActiveFlag Whether the activity is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AssignedToUserId The ID of the user to whom the activity is assigned to. Equal to `user_id`.
-				AssignedToUserId *int `json:"assigned_to_user_id,omitempty"`
-
-				// Attendees The attendees of the activity. This can be either your existing Pipedrive contacts or an external email address.
-				Attendees *[]map[string]interface{} `json:"attendees"`
-
-				// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-				BusyFlag *bool `json:"busy_flag,omitempty"`
-
-				// CalendarSyncIncludeContext For activities that sync to an external calendar, this setting indicates if the activity syncs with context (what are the deals, persons, organizations this activity is related to)
-				CalendarSyncIncludeContext *string `json:"calendar_sync_include_context,omitempty"`
-
-				// CompanyId The user's company ID
-				CompanyId *int `json:"company_id,omitempty"`
-
-				// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-				ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-				// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-				ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-				// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-				ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-				// CreatedByUserId The ID of the user who created the activity
-				CreatedByUserId *int `json:"created_by_user_id,omitempty"`
-
-				// DealDropboxBcc The BCC email address of the deal
-				DealDropboxBcc *string `json:"deal_dropbox_bcc,omitempty"`
-
-				// DealId The ID of the deal this activity is associated with
-				DealId *int `json:"deal_id,omitempty"`
-
-				// DealTitle The name of the deal this activity is associated with
-				DealTitle *string `json:"deal_title,omitempty"`
-
-				// Done Whether the activity is done or not
-				Done *bool `json:"done,omitempty"`
-
-				// DueDate The due date of the activity. Format: YYYY-MM-DD
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// DueTime The due time of the activity in UTC. Format: HH:MM
-				DueTime *string `json:"due_time,omitempty"`
-
-				// Duration The duration of the activity. Format: HH:MM
-				Duration *string `json:"duration,omitempty"`
-
-				// File The file that is attached to this activity. For example, this can be a reference to an audio note file generated with Pipedrive mobile app.
-				File *map[string]interface{} `json:"file,omitempty"`
-
-				// GcalEventId For the activity which syncs to Google calendar, this is the Google event ID. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GcalEventId *string `json:"gcal_event_id,omitempty"`
-
-				// GoogleCalendarEtag The Google calendar API etag (version) that is used for syncing this activity. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GoogleCalendarEtag *string `json:"google_calendar_etag,omitempty"`
-
-				// GoogleCalendarId The Google calendar ID that this activity syncs to. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GoogleCalendarId *string `json:"google_calendar_id,omitempty"`
-
-				// Id The ID of the activity, generated when the activity was created
-				Id *int `json:"id,omitempty"`
-
-				// LastNotificationTime The date and time of latest notifications sent about this activity to the participants or the attendees of this activity
-				LastNotificationTime *string `json:"last_notification_time,omitempty"`
-
-				// LastNotificationUserId The ID of the user who triggered the sending of the latest notifications about this activity to the participants or the attendees of this activity
-				LastNotificationUserId *int `json:"last_notification_user_id,omitempty"`
-
-				// LeadId The ID of the lead in the UUID format this activity is associated with
-				LeadId *openapi_types.UUID `json:"lead_id"`
-
-				// Location The address of the activity.
-				Location *string `json:"location,omitempty"`
-
-				// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-				LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-				// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-				LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-				// LocationCountry A subfield of the location field. Indicates country.
-				LocationCountry *string `json:"location_country,omitempty"`
-
-				// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-				LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-				// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-				LocationLocality *string `json:"location_locality,omitempty"`
-
-				// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-				LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-				// LocationRoute A subfield of the location field. Indicates street name.
-				LocationRoute *string `json:"location_route,omitempty"`
-
-				// LocationStreetNumber A subfield of the location field. Indicates house number.
-				LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-				// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-				LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-				// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-				LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-				// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// Note The note of the activity (HTML format)
-				Note *string `json:"note,omitempty"`
-
-				// NotificationLanguageId The ID of the language the notifications are sent in
-				NotificationLanguageId *int `json:"notification_language_id,omitempty"`
-
-				// OrgId The ID of the organization this activity is associated with
-				OrgId *int `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization this activity is associated with
-				OrgName *string `json:"org_name,omitempty"`
-
-				// OwnerName The name of the user this activity is owned by
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// Participants List of multiple persons (participants) this activity is associated with
-				Participants *[]map[string]interface{} `json:"participants"`
-
-				// PersonDropboxBcc The BCC email address of the person
-				PersonDropboxBcc *string `json:"person_dropbox_bcc,omitempty"`
-
-				// PersonId The ID of the person this activity is associated with
-				PersonId *int `json:"person_id,omitempty"`
-
-				// PersonName The name of the person this activity is associated with
-				PersonName *string `json:"person_name,omitempty"`
-
-				// ProjectId The ID of the project this activity is associated with
-				ProjectId *int `json:"project_id"`
-
-				// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-				PublicDescription *string `json:"public_description,omitempty"`
-
-				// RecMasterActivityId The ID of parent activity for a recurrent activity if the current activity is an exception to recurrence rules
-				RecMasterActivityId *int `json:"rec_master_activity_id,omitempty"`
-
-				// RecRule The rule for the recurrence of the activity. Is important for activities synced into Pipedrive from an external calendar. Example: "RRULE:FREQ=WEEKLY;BYDAY=WE"
-				RecRule *string `json:"rec_rule,omitempty"`
-
-				// RecRuleExtension Additional rules for the recurrence of the activity, extend the `rec_rule`. Is important for activities synced into Pipedrive from an external calendar.
-				RecRuleExtension *string `json:"rec_rule_extension,omitempty"`
-
-				// ReferenceId Together with the `reference_type`, gives the ID of the other object
-				ReferenceId *int `json:"reference_id,omitempty"`
-
-				// ReferenceType If the activity references some other object, it is indicated here. For example, value `Salesphone` refers to activities created with Caller.
-				ReferenceType *string `json:"reference_type,omitempty"`
-
-				// Series The list of recurring activity instances. It is in a structure as follows: `[{due_date: "2020-06-24", due_time: "10:00:00"}]`
-				Series *[]map[string]interface{} `json:"series,omitempty"`
-
-				// SourceTimezone The timezone the activity was created in an external calendar
-				SourceTimezone *string `json:"source_timezone,omitempty"`
-
-				// Subject The subject of the activity
-				Subject *string `json:"subject,omitempty"`
-
-				// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-				Type *string `json:"type,omitempty"`
-
-				// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// UpdateUserId The ID of the user who was the last to update this activity
-				UpdateUserId *int `json:"update_user_id,omitempty"`
-
-				// UserId The ID of the user whom the activity is assigned to
-				UserId *int `json:"user_id,omitempty"`
-			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
 			Success *bool `json:"success,omitempty"`
@@ -51555,515 +45436,6 @@ func ParseGetOrganizationChangelogResponse(rsp *http.Response) (*GetOrganization
 				// Time The date and time of the change
 				Time *string `json:"time,omitempty"`
 			} `json:"data,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetOrganizationDealsResponse parses an HTTP response from a GetOrganizationDealsWithResponse call
-func ParseGetOrganizationDealsResponse(rsp *http.Response) (*GetOrganizationDealsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetOrganizationDealsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// Limit Items shown per page
-				Limit *int `json:"limit,omitempty"`
-
-				// MoreItemsInCollection If there are more list items in the collection than displayed or not
-				MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-				// Start Pagination start
-				Start *int `json:"start,omitempty"`
-			} `json:"additional_data,omitempty"`
-
-			// Data The array of deals
-			Data *[]struct {
-				// Active Whether the deal is active or not
-				Active *bool `json:"active,omitempty"`
-
-				// ActivitiesCount The number of activities associated with the deal
-				ActivitiesCount *int `json:"activities_count,omitempty"`
-
-				// Acv Only available in Growth and above plans
-				//
-				// The Annual Contract Value of the deal
-				//
-				// Null if there are no products attached to the deal
-				Acv *float32 `json:"acv"`
-
-				// AcvCurrency Only available in Growth and above plans
-				//
-				// The Currency for Annual Contract Value of the deal
-				//
-				// If the `acv` is null, this will also be null
-				AcvCurrency *string `json:"acv_currency"`
-
-				// AddTime The creation date and time of the deal
-				AddTime *string `json:"add_time,omitempty"`
-
-				// Arr Only available in Growth and above plans
-				//
-				// The Annual Recurring Revenue of the deal
-				//
-				// Null if there are no products attached to the deal
-				Arr *float32 `json:"arr"`
-
-				// ArrCurrency Only available in Growth and above plans
-				//
-				// The Currency for Annual Recurring Revenue of the deal
-				//
-				// If the `arr` is null, this will also be null
-				ArrCurrency *string `json:"arr_currency"`
-
-				// CcEmail The BCC email of the deal
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Channel The ID of your Marketing channel this Deal was created from. Recognized Marketing channels can be configured in your <a href="https://app.pipedrive.com/settings/fields" target="_blank" rel="noopener noreferrer">Company settings</a>.
-				Channel *int `json:"channel"`
-
-				// ChannelId The optional ID to further distinguish the Marketing channel.
-				ChannelId *string `json:"channel_id"`
-
-				// CloseTime The date and time of closing the deal
-				CloseTime *string `json:"close_time"`
-
-				// CreatorUserId The creator of the deal
-				CreatorUserId *struct {
-					// ActiveFlag Whether the creator is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the deal creator
-					Email *string `json:"email,omitempty"`
-
-					// HasPic If the creator has a picture or not
-					HasPic *bool `json:"has_pic,omitempty"`
-
-					// Id The ID of the deal creator
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the deal creator
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The creator picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the deal creator
-					Value *int `json:"value,omitempty"`
-				} `json:"creator_user_id,omitempty"`
-
-				// Currency The currency associated with the deal
-				Currency *string `json:"currency,omitempty"`
-
-				// Deleted Whether the deal is deleted or not
-				Deleted *bool `json:"deleted,omitempty"`
-
-				// DoneActivitiesCount The number of completed activities associated with the deal
-				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-				// EmailMessagesCount The number of emails associated with the deal
-				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
-
-				// FilesCount The number of files associated with the deal
-				FilesCount *int `json:"files_count,omitempty"`
-
-				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
-
-				// FollowersCount The number of followers associated with the deal
-				FollowersCount *int `json:"followers_count,omitempty"`
-
-				// FormattedValue The deal value formatted with selected currency. E.g. US$500
-				FormattedValue *string `json:"formatted_value,omitempty"`
-
-				// FormattedWeightedValue The weighted_value formatted with selected currency. E.g. US$500
-				FormattedWeightedValue *string `json:"formatted_weighted_value,omitempty"`
-
-				// Id The ID of the deal
-				Id *int `json:"id,omitempty"`
-
-				// IsArchived Whether the deal is archived or not
-				IsArchived *bool `json:"is_archived,omitempty"`
-
-				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
-
-				// LastActivityDate The date of the last activity associated with the deal
-				LastActivityDate *string `json:"last_activity_date"`
-
-				// LastActivityId The ID of the last activity associated with the deal
-				LastActivityId *int `json:"last_activity_id"`
-
-				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-				// LostReason The reason for losing the deal
-				LostReason *string `json:"lost_reason"`
-
-				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
-
-				// Mrr Only available in Growth and above plans
-				//
-				// The Monthly Recurring Revenue of the deal
-				//
-				// Null if there are no products attached to the deal
-				Mrr *float32 `json:"mrr"`
-
-				// MrrCurrency Only available in Growth and above plans
-				//
-				// The Currency for Monthly Recurring Revenue of the deal
-				//
-				// If the `mrr` is null, this will also be null
-				MrrCurrency *string `json:"mrr_currency"`
-
-				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
-
-				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
-
-				// NextActivityId The ID of the next activity associated with the deal
-				NextActivityId *int `json:"next_activity_id"`
-
-				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
-
-				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
-
-				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
-
-				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
-
-				// NotesCount The number of notes associated with the deal
-				NotesCount *int `json:"notes_count,omitempty"`
-
-				// OrgHidden If the organization that is associated with the deal is hidden or not
-				OrgHidden *bool `json:"org_hidden,omitempty"`
-				OrgId     *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization that is associated with the deal
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the deal
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Name The name of the organization associated with the deal
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the deal
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the deal
-					PeopleCount *int `json:"people_count,omitempty"`
-
-					// Value The ID of the organization associated with the deal
-					Value *int `json:"value,omitempty"`
-				} `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
-
-				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
-				Origin *string `json:"origin,omitempty"`
-
-				// OriginId The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this Deal.
-				OriginId *string `json:"origin_id"`
-
-				// OwnerName The name of the deal owner
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// ParticipantsCount The number of participants associated with the deal
-				ParticipantsCount *int `json:"participants_count,omitempty"`
-
-				// PersonHidden If the person that is associated with the deal is hidden or not
-				PersonHidden *bool `json:"person_hidden,omitempty"`
-				PersonId     *struct {
-					// ActiveFlag Whether the associated person is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The emails of the person associated with the deal
-					Email *[]struct {
-						// Label The type of the email
-						Label *string `json:"label,omitempty"`
-
-						// Primary If this is the primary email or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The email of the associated person
-						Value *string `json:"value,omitempty"`
-					} `json:"email,omitempty"`
-
-					// Name The name of the person associated with the deal
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the person that is associated with the deal
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// Phone The phone numbers of the person associated with the deal
-					Phone *[]struct {
-						// Label The type of the phone number
-						Label *string `json:"label,omitempty"`
-
-						// Primary If this is the primary phone number or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The phone number of the person associated with the deal
-						Value *string `json:"value,omitempty"`
-					} `json:"phone,omitempty"`
-
-					// Value The ID of the person associated with the deal
-					Value *int `json:"value,omitempty"`
-				} `json:"person_id,omitempty"`
-
-				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
-
-				// PipelineId The ID of the pipeline associated with the deal
-				PipelineId *int `json:"pipeline_id,omitempty"`
-
-				// Probability The success probability percentage of the deal
-				Probability *float32 `json:"probability"`
-
-				// ProductsCount The number of products associated with the deal
-				ProductsCount *int `json:"products_count,omitempty"`
-
-				// RottenTime The date and time of changing the deal status as rotten
-				RottenTime *string `json:"rotten_time"`
-
-				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
-
-				// StageId The ID of the deal stage
-				StageId *int `json:"stage_id,omitempty"`
-
-				// StageOrderNr The order number of the deal stage associated with the deal
-				StageOrderNr *int `json:"stage_order_nr,omitempty"`
-
-				// Status The status of the deal
-				Status *string `json:"status,omitempty"`
-
-				// Title The title of the deal
-				Title *string `json:"title,omitempty"`
-
-				// UndoneActivitiesCount The number of incomplete activities associated with the deal
-				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
-				UserId     *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic If the user has a picture or not
-					HasPic *bool `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the user
-					Value *int `json:"value,omitempty"`
-				} `json:"user_id,omitempty"`
-
-				// Value The value of the deal
-				Value *float32 `json:"value,omitempty"`
-
-				// VisibleTo The visibility of the deal
-				VisibleTo *string `json:"visible_to,omitempty"`
-
-				// WeightedValue Probability times deal value. Probability can either be deal probability or if not set, then stage probability.
-				WeightedValue *float32 `json:"weighted_value,omitempty"`
-
-				// WeightedValueCurrency The currency associated with the deal
-				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
-
-				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
-			} `json:"data,omitempty"`
-			RelatedObjects *struct {
-				Organization *struct {
-					// ORGANIZATIONID The ID of the organization associated with the item
-					ORGANIZATIONID *struct {
-						// ActiveFlag Whether the associated organization is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
-
-						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
-
-						// Id The ID of the organization associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the organization associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the organization that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// PeopleCount The number of people connected with the organization that is associated with the item
-						PeopleCount *int `json:"people_count,omitempty"`
-					} `json:"ORGANIZATION_ID,omitempty"`
-				} `json:"organization,omitempty"`
-				Person *struct {
-					// PERSONID The ID of the person associated with the item
-					PERSONID *struct {
-						// ActiveFlag Whether the associated person is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The emails of the person associated with the item
-						Email *[]struct {
-							// Label The type of the email
-							Label *string `json:"label,omitempty"`
-
-							// Primary Whether this is the primary email or not
-							Primary *bool `json:"primary,omitempty"`
-
-							// Value The email of the associated person
-							Value *string `json:"value,omitempty"`
-						} `json:"email,omitempty"`
-
-						// Id The ID of the person associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the person associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the person that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// Phone The phone numbers of the person associated with the item
-						Phone *[]struct {
-							// Label The type of the phone number
-							Label *string `json:"label,omitempty"`
-
-							// Primary Whether this is the primary phone number or not
-							Primary *bool `json:"primary,omitempty"`
-
-							// Value The phone number of the person associated with the item
-							Value *string `json:"value,omitempty"`
-						} `json:"phone,omitempty"`
-					} `json:"PERSON_ID,omitempty"`
-				} `json:"person,omitempty"`
-				Pipeline *struct {
-					// Active Whether this pipeline will be made inactive (hidden) or active
-					Active *bool `json:"active,omitempty"`
-
-					// AddTime The pipeline creation time. Format: YYYY-MM-DD HH:MM:SS.
-					AddTime *string `json:"add_time,omitempty"`
-
-					// DealProbability Whether deal probability is disabled or enabled for this pipeline
-					DealProbability *bool `json:"deal_probability,omitempty"`
-
-					// Id The ID of the pipeline
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the pipeline
-					Name *string `json:"name,omitempty"`
-
-					// OrderNr Defines the order of pipelines. First order (`order_nr=0`) is the default pipeline.
-					OrderNr *int `json:"order_nr,omitempty"`
-
-					// UpdateTime The pipeline update time. Format: YYYY-MM-DD HH:MM:SS.
-					UpdateTime *string `json:"update_time,omitempty"`
-
-					// UrlTitle The pipeline title displayed in the URL
-					UrlTitle *string `json:"url_title,omitempty"`
-				} `json:"pipeline,omitempty"`
-				Stage *struct {
-					// ActiveFlag Whether the stage is active or deleted
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// AddTime The stage creation time. Format: YYYY-MM-DD HH:MM:SS.
-					AddTime *string `json:"add_time,omitempty"`
-
-					// DealProbability The success probability percentage of the deal. Used/shown when the deal weighted values are used.
-					DealProbability *int `json:"deal_probability,omitempty"`
-
-					// Id The ID of the stage
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the stage
-					Name *string `json:"name,omitempty"`
-
-					// OrderNr Defines the order of the stage
-					OrderNr *int `json:"order_nr,omitempty"`
-
-					// PipelineId The ID of the pipeline to add the stage to
-					PipelineId *int `json:"pipeline_id,omitempty"`
-
-					// RottenDays The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
-					RottenDays *int `json:"rotten_days,omitempty"`
-
-					// RottenFlag Whether deals in this stage can become rotten
-					RottenFlag *bool `json:"rotten_flag,omitempty"`
-
-					// UpdateTime The stage update time. Format: YYYY-MM-DD HH:MM:SS.
-					UpdateTime *string `json:"update_time,omitempty"`
-				} `json:"stage,omitempty"`
-				User *struct {
-					USERID *struct {
-						// ActiveFlag Whether the user is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The email of the user
-						Email *string `json:"email,omitempty"`
-
-						// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-						HasPic *int `json:"has_pic,omitempty"`
-
-						// Id The ID of the user
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// PicHash The user picture hash
-						PicHash *string `json:"pic_hash"`
-					} `json:"USER_ID,omitempty"`
-				} `json:"user,omitempty"`
-			} `json:"related_objects,omitempty"`
 
 			// Success If the response is successful or not
 			Success *bool `json:"success,omitempty"`
@@ -52248,10 +45620,10 @@ func ParseGetOrganizationUpdatesResponse(rsp *http.Response) (*GetOrganizationUp
 					// ORGANIZATIONID The ID of the organization associated with the item
 					ORGANIZATIONID *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -52603,306 +45975,6 @@ func ParseGetOrganizationUsersResponse(rsp *http.Response) (*GetOrganizationUser
 	return response, nil
 }
 
-// ParseGetOrganizationPersonsResponse parses an HTTP response from a GetOrganizationPersonsWithResponse call
-func ParseGetOrganizationPersonsResponse(rsp *http.Response) (*GetOrganizationPersonsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetOrganizationPersonsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// Limit Items shown per page
-				Limit *int `json:"limit,omitempty"`
-
-				// MoreItemsInCollection If there are more list items in the collection than displayed or not
-				MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-				// Start Pagination start
-				Start *int `json:"start,omitempty"`
-			} `json:"additional_data,omitempty"`
-
-			// Data The array of persons
-			Data *[]struct {
-				// ActiveFlag Whether the person is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// ActivitiesCount The count of activities related to the person
-				ActivitiesCount *int `json:"activities_count,omitempty"`
-
-				// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-				AddTime *string `json:"add_time,omitempty"`
-
-				// CcEmail The BCC email associated with the person
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// ClosedDealsCount The count of closed deals related with the item
-				ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
-
-				// CompanyId The ID of the company related to the person
-				CompanyId *int `json:"company_id,omitempty"`
-
-				// DoneActivitiesCount The count of done activities related to the person
-				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" } ]`. Please note that only `value` is required.
-				Email *[]struct {
-					// Label The label that indicates the type of the email. (Possible values - work, home or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if email is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value Email
-					Value *string `json:"value,omitempty"`
-				} `json:"email,omitempty"`
-
-				// EmailMessagesCount The count of email messages related to the person
-				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-				// FilesCount The count of files related to the person
-				FilesCount *int `json:"files_count,omitempty"`
-
-				// FirstChar The first letter of the name of the person
-				FirstChar *string `json:"first_char,omitempty"`
-
-				// FirstName The first name of the person
-				FirstName *string `json:"first_name,omitempty"`
-
-				// FollowersCount The count of followers related to the person
-				FollowersCount *int `json:"followers_count,omitempty"`
-
-				// Id The ID of the person
-				Id *int `json:"id,omitempty"`
-
-				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-				Label *int `json:"label,omitempty"`
-
-				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-				LabelIds *[]int `json:"label_ids,omitempty"`
-
-				// LastActivityDate The date of the last activity associated with the deal
-				LastActivityDate *string `json:"last_activity_date"`
-
-				// LastActivityId The ID of the last activity associated with the deal
-				LastActivityId *int `json:"last_activity_id"`
-
-				// LastIncomingMailTime The date and time of the last incoming email associated with the person
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-				// LastName The last name of the person
-				LastName *string `json:"last_name,omitempty"`
-
-				// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-				// LostDealsCount The count of lost deals related with the item
-				LostDealsCount *int `json:"lost_deals_count,omitempty"`
-
-				// Name The name of the person
-				Name *string `json:"name,omitempty"`
-
-				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date"`
-
-				// NextActivityId The ID of the next activity associated with the deal
-				NextActivityId *int `json:"next_activity_id"`
-
-				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time"`
-
-				// NotesCount The count of notes related to the person
-				NotesCount *int `json:"notes_count,omitempty"`
-
-				// OpenDealsCount The count of open deals related with the item
-				OpenDealsCount *int `json:"open_deals_count,omitempty"`
-				OrgId          *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the item
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Name The name of the organization associated with the item
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the item
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the item
-					PeopleCount *int `json:"people_count,omitempty"`
-
-					// Value The ID of the organization
-					Value *int `json:"value,omitempty"`
-				} `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization associated with the person
-				OrgName *string `json:"org_name,omitempty"`
-				OwnerId *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-					HasPic *int `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the owner
-					Value *int `json:"value,omitempty"`
-				} `json:"owner_id,omitempty"`
-
-				// OwnerName The name of the owner associated with the person
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-				Phone *[]struct {
-					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if phone number is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The phone number
-					Value *string `json:"value,omitempty"`
-				} `json:"phone,omitempty"`
-				PictureId *struct {
-					// ActiveFlag Whether the associated picture is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// AddTime The add time of the picture
-					AddTime *string `json:"add_time,omitempty"`
-
-					// AddedByUserId The ID of the user who added the picture
-					AddedByUserId *int `json:"added_by_user_id,omitempty"`
-
-					// Id The ID of the picture associated with the item
-					Id *int `json:"id,omitempty"`
-
-					// ItemId The ID of related item
-					ItemId *int `json:"item_id,omitempty"`
-
-					// ItemType The type of item the picture is related to
-					ItemType *string `json:"item_type,omitempty"`
-					Pictures *struct {
-						// N128 The URL of the 128*128 picture
-						N128 *string `json:"128,omitempty"`
-
-						// N512 The URL of the 512*512 picture
-						N512 *string `json:"512,omitempty"`
-					} `json:"pictures,omitempty"`
-
-					// UpdateTime The update time of the picture
-					UpdateTime *string `json:"update_time,omitempty"`
-				} `json:"picture_id,omitempty"`
-
-				// RelatedClosedDealsCount The count of related closed deals related with the item
-				RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
-
-				// RelatedLostDealsCount The count of related lost deals related with the item
-				RelatedLostDealsCount *int `json:"related_lost_deals_count,omitempty"`
-
-				// RelatedOpenDealsCount The count of related open deals related with the item
-				RelatedOpenDealsCount *int `json:"related_open_deals_count,omitempty"`
-
-				// RelatedWonDealsCount The count of related won deals related with the item
-				RelatedWonDealsCount *int `json:"related_won_deals_count,omitempty"`
-
-				// UndoneActivitiesCount The count of undone activities related to the person
-				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-				// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// VisibleTo The visibility group ID of who can see the person
-				VisibleTo *string `json:"visible_to,omitempty"`
-
-				// WonDealsCount The count of won deals related with the item
-				WonDealsCount *int `json:"won_deals_count,omitempty"`
-			} `json:"data,omitempty"`
-			RelatedObjects *struct {
-				Organization *struct {
-					// ORGANIZATIONID The ID of the organization associated with the item
-					ORGANIZATIONID *struct {
-						// ActiveFlag Whether the associated organization is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
-
-						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
-
-						// Id The ID of the organization associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the organization associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the organization that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// PeopleCount The number of people connected with the organization that is associated with the item
-						PeopleCount *int `json:"people_count,omitempty"`
-					} `json:"ORGANIZATION_ID,omitempty"`
-				} `json:"organization,omitempty"`
-				User *struct {
-					USERID *struct {
-						// ActiveFlag Whether the user is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The email of the user
-						Email *string `json:"email,omitempty"`
-
-						// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-						HasPic *int `json:"has_pic,omitempty"`
-
-						// Id The ID of the user
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// PicHash The user picture hash
-						PicHash *string `json:"pic_hash"`
-					} `json:"USER_ID,omitempty"`
-				} `json:"user,omitempty"`
-			} `json:"related_objects,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetPermissionSetsResponse parses an HTTP response from a GetPermissionSetsWithResponse call
 func ParseGetPermissionSetsResponse(rsp *http.Response) (*GetPermissionSetsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -53089,397 +46161,6 @@ func ParseDeletePersonFieldsResponse(rsp *http.Response) (*DeletePersonFieldsRes
 	return response, nil
 }
 
-// ParseDeletePersonsResponse parses an HTTP response from a DeletePersonsWithResponse call
-func ParseDeletePersonsResponse(rsp *http.Response) (*DeletePersonsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeletePersonsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *struct {
-				// Id The list of deleted persons IDs
-				Id *[]int `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetPersonsCollectionResponse parses an HTTP response from a GetPersonsCollectionWithResponse call
-func ParseGetPersonsCollectionResponse(rsp *http.Response) (*GetPersonsCollectionResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetPersonsCollectionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
-			} `json:"additional_data,omitempty"`
-			Data *[]struct {
-				// ActiveFlag Whether the person is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The date and time when the person was added/created. Format: YYYY-MM-DD HH:MM:SS
-				AddTime *string `json:"add_time,omitempty"`
-
-				// CcEmail The BCC email associated with the person
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// DeleteTime The date and time this person was deleted. Format: YYYY-MM-DD HH:MM:SS
-				DeleteTime *string `json:"delete_time"`
-
-				// Email An email address as a string or an array of email objects related to the person. The structure of the array is as follows: `[{ "value": "mail@example.com", "primary": "true", "label": "main" }]`. Please note that only `value` is required.
-				Email *[]struct {
-					// Label The label that indicates the type of the email. (Possible values - work, home or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if email is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The email
-					Value *string `json:"value,omitempty"`
-				} `json:"email,omitempty"`
-
-				// Id The ID of the person
-				Id *int `json:"id,omitempty"`
-
-				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-				Label *int `json:"label"`
-
-				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
-				LabelIds *[]int `json:"label_ids,omitempty"`
-
-				// Name The name of the person
-				Name *string `json:"name,omitempty"`
-
-				// OrgId The ID of the organization related to the person
-				OrgId *int `json:"org_id,omitempty"`
-
-				// OwnerId The ID of the owner related to the person
-				OwnerId *int `json:"owner_id,omitempty"`
-
-				// Phone A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ "value": "12345", "primary": "true", "label": "mobile" }]`. Please note that only `value` is required.
-				Phone *[]struct {
-					// Label The label that indicates the type of the phone number. (Possible values - work, home, mobile or other)
-					Label *string `json:"label,omitempty"`
-
-					// Primary Boolean that indicates if phone number is primary for the person or not
-					Primary *bool `json:"primary,omitempty"`
-
-					// Value The phone number
-					Value *string `json:"value,omitempty"`
-				} `json:"phone,omitempty"`
-
-				// PictureId The ID of the picture associated with the item
-				PictureId *int `json:"picture_id"`
-
-				// UpdateTime The last updated date and time of the person. Format: YYYY-MM-DD HH:MM:SS
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// VisibleTo The visibility group ID of who can see the person
-				VisibleTo *string `json:"visible_to,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			// Error The error message
-			Error *string `json:"error,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetPersonActivitiesResponse parses an HTTP response from a GetPersonActivitiesWithResponse call
-func ParseGetPersonActivitiesResponse(rsp *http.Response) (*GetPersonActivitiesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetPersonActivitiesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *struct {
-				// ActivityDistribution The distribution of activities related to the organization grouped by the user ID
-				ActivityDistribution *struct {
-					// ASSIGNEDTOUSERID The ID of the user
-					ASSIGNEDTOUSERID *struct {
-						// Activities The count of activities related to the user grouped by activity type
-						Activities *struct {
-							// ACTIVITYTYPENAME The count of activities related to a specific type
-							ACTIVITYTYPENAME *int `json:"ACTIVITY_TYPE_NAME,omitempty"`
-						} `json:"activities,omitempty"`
-
-						// ActivityCount The overall count of activities for the user
-						ActivityCount *int `json:"activity_count,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// Share The percentage of activities belongs to the user
-						Share *int `json:"share,omitempty"`
-					} `json:"ASSIGNED_TO_USER_ID,omitempty"`
-				} `json:"activity_distribution,omitempty"`
-
-				// Limit Items shown per page
-				Limit *int `json:"limit,omitempty"`
-
-				// MoreItemsInCollection If there are more list items in the collection than displayed or not
-				MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-				// Start Pagination start
-				Start *int `json:"start,omitempty"`
-			} `json:"additional_data,omitempty"`
-
-			// Data The array of activities
-			Data *[]struct {
-				// ActiveFlag Whether the activity is active or not
-				ActiveFlag *bool `json:"active_flag,omitempty"`
-
-				// AddTime The creation date and time of the activity in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AssignedToUserId The ID of the user to whom the activity is assigned to. Equal to `user_id`.
-				AssignedToUserId *int `json:"assigned_to_user_id,omitempty"`
-
-				// Attendees The attendees of the activity. This can be either your existing Pipedrive contacts or an external email address.
-				Attendees *[]map[string]interface{} `json:"attendees"`
-
-				// BusyFlag Marks if the activity is set as 'Busy' or 'Free'. If the flag is set to `true`, your customers will not be able to book that time slot through any Scheduler links. The flag can also be unset. When the value of the flag is unset (`null`), the flag defaults to 'Busy' if it has a time set, and 'Free' if it is an all-day event without specified time.
-				BusyFlag *bool `json:"busy_flag,omitempty"`
-
-				// CalendarSyncIncludeContext For activities that sync to an external calendar, this setting indicates if the activity syncs with context (what are the deals, persons, organizations this activity is related to)
-				CalendarSyncIncludeContext *string `json:"calendar_sync_include_context,omitempty"`
-
-				// CompanyId The user's company ID
-				CompanyId *int `json:"company_id,omitempty"`
-
-				// ConferenceMeetingClient The ID of the Marketplace app, which is connected to this activity
-				ConferenceMeetingClient *string `json:"conference_meeting_client,omitempty"`
-
-				// ConferenceMeetingId The meeting ID of the meeting provider (Zoom, MS Teams etc.) that is associated with this activity
-				ConferenceMeetingId *string `json:"conference_meeting_id,omitempty"`
-
-				// ConferenceMeetingUrl The link to join the meeting which is associated with this activity
-				ConferenceMeetingUrl *string `json:"conference_meeting_url,omitempty"`
-
-				// CreatedByUserId The ID of the user who created the activity
-				CreatedByUserId *int `json:"created_by_user_id,omitempty"`
-
-				// DealDropboxBcc The BCC email address of the deal
-				DealDropboxBcc *string `json:"deal_dropbox_bcc,omitempty"`
-
-				// DealId The ID of the deal this activity is associated with
-				DealId *int `json:"deal_id,omitempty"`
-
-				// DealTitle The name of the deal this activity is associated with
-				DealTitle *string `json:"deal_title,omitempty"`
-
-				// Done Whether the activity is done or not
-				Done *bool `json:"done,omitempty"`
-
-				// DueDate The due date of the activity. Format: YYYY-MM-DD
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// DueTime The due time of the activity in UTC. Format: HH:MM
-				DueTime *string `json:"due_time,omitempty"`
-
-				// Duration The duration of the activity. Format: HH:MM
-				Duration *string `json:"duration,omitempty"`
-
-				// File The file that is attached to this activity. For example, this can be a reference to an audio note file generated with Pipedrive mobile app.
-				File *map[string]interface{} `json:"file,omitempty"`
-
-				// GcalEventId For the activity which syncs to Google calendar, this is the Google event ID. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GcalEventId *string `json:"gcal_event_id,omitempty"`
-
-				// GoogleCalendarEtag The Google calendar API etag (version) that is used for syncing this activity. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GoogleCalendarEtag *string `json:"google_calendar_etag,omitempty"`
-
-				// GoogleCalendarId The Google calendar ID that this activity syncs to. NB! This field is related to old Google calendar sync and will be deprecated soon.
-				GoogleCalendarId *string `json:"google_calendar_id,omitempty"`
-
-				// Id The ID of the activity, generated when the activity was created
-				Id *int `json:"id,omitempty"`
-
-				// LastNotificationTime The date and time of latest notifications sent about this activity to the participants or the attendees of this activity
-				LastNotificationTime *string `json:"last_notification_time,omitempty"`
-
-				// LastNotificationUserId The ID of the user who triggered the sending of the latest notifications about this activity to the participants or the attendees of this activity
-				LastNotificationUserId *int `json:"last_notification_user_id,omitempty"`
-
-				// LeadId The ID of the lead in the UUID format this activity is associated with
-				LeadId *openapi_types.UUID `json:"lead_id"`
-
-				// Location The address of the activity.
-				Location *string `json:"location,omitempty"`
-
-				// LocationAdminAreaLevel1 A subfield of the location field. Indicates state/county.
-				LocationAdminAreaLevel1 *string `json:"location_admin_area_level_1,omitempty"`
-
-				// LocationAdminAreaLevel2 A subfield of the location field. Indicates region.
-				LocationAdminAreaLevel2 *string `json:"location_admin_area_level_2,omitempty"`
-
-				// LocationCountry A subfield of the location field. Indicates country.
-				LocationCountry *string `json:"location_country,omitempty"`
-
-				// LocationFormattedAddress A subfield of the location field. Indicates full/combined address.
-				LocationFormattedAddress *string `json:"location_formatted_address,omitempty"`
-
-				// LocationLocality A subfield of the location field. Indicates city/town/village/locality.
-				LocationLocality *string `json:"location_locality,omitempty"`
-
-				// LocationPostalCode A subfield of the location field. Indicates ZIP/postal code.
-				LocationPostalCode *string `json:"location_postal_code,omitempty"`
-
-				// LocationRoute A subfield of the location field. Indicates street name.
-				LocationRoute *string `json:"location_route,omitempty"`
-
-				// LocationStreetNumber A subfield of the location field. Indicates house number.
-				LocationStreetNumber *string `json:"location_street_number,omitempty"`
-
-				// LocationSublocality A subfield of the location field. Indicates district/sublocality.
-				LocationSublocality *string `json:"location_sublocality,omitempty"`
-
-				// LocationSubpremise A subfield of the location field. Indicates apartment/suite number.
-				LocationSubpremise *string `json:"location_subpremise,omitempty"`
-
-				// MarkedAsDoneTime The date and time this activity was marked as done. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// Note The note of the activity (HTML format)
-				Note *string `json:"note,omitempty"`
-
-				// NotificationLanguageId The ID of the language the notifications are sent in
-				NotificationLanguageId *int `json:"notification_language_id,omitempty"`
-
-				// OrgId The ID of the organization this activity is associated with
-				OrgId *int `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization this activity is associated with
-				OrgName *string `json:"org_name,omitempty"`
-
-				// OwnerName The name of the user this activity is owned by
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// Participants List of multiple persons (participants) this activity is associated with
-				Participants *[]map[string]interface{} `json:"participants"`
-
-				// PersonDropboxBcc The BCC email address of the person
-				PersonDropboxBcc *string `json:"person_dropbox_bcc,omitempty"`
-
-				// PersonId The ID of the person this activity is associated with
-				PersonId *int `json:"person_id,omitempty"`
-
-				// PersonName The name of the person this activity is associated with
-				PersonName *string `json:"person_name,omitempty"`
-
-				// ProjectId The ID of the project this activity is associated with
-				ProjectId *int `json:"project_id"`
-
-				// PublicDescription Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
-				PublicDescription *string `json:"public_description,omitempty"`
-
-				// RecMasterActivityId The ID of parent activity for a recurrent activity if the current activity is an exception to recurrence rules
-				RecMasterActivityId *int `json:"rec_master_activity_id,omitempty"`
-
-				// RecRule The rule for the recurrence of the activity. Is important for activities synced into Pipedrive from an external calendar. Example: "RRULE:FREQ=WEEKLY;BYDAY=WE"
-				RecRule *string `json:"rec_rule,omitempty"`
-
-				// RecRuleExtension Additional rules for the recurrence of the activity, extend the `rec_rule`. Is important for activities synced into Pipedrive from an external calendar.
-				RecRuleExtension *string `json:"rec_rule_extension,omitempty"`
-
-				// ReferenceId Together with the `reference_type`, gives the ID of the other object
-				ReferenceId *int `json:"reference_id,omitempty"`
-
-				// ReferenceType If the activity references some other object, it is indicated here. For example, value `Salesphone` refers to activities created with Caller.
-				ReferenceType *string `json:"reference_type,omitempty"`
-
-				// Series The list of recurring activity instances. It is in a structure as follows: `[{due_date: "2020-06-24", due_time: "10:00:00"}]`
-				Series *[]map[string]interface{} `json:"series,omitempty"`
-
-				// SourceTimezone The timezone the activity was created in an external calendar
-				SourceTimezone *string `json:"source_timezone,omitempty"`
-
-				// Subject The subject of the activity
-				Subject *string `json:"subject,omitempty"`
-
-				// Type The type of the activity. This is in correlation with the `key_string` parameter of ActivityTypes.
-				Type *string `json:"type,omitempty"`
-
-				// UpdateTime The last update date and time of the activity. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-
-				// UpdateUserId The ID of the user who was the last to update this activity
-				UpdateUserId *int `json:"update_user_id,omitempty"`
-
-				// UserId The ID of the user whom the activity is assigned to
-				UserId *int `json:"user_id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetPersonChangelogResponse parses an HTTP response from a GetPersonChangelogWithResponse call
 func ParseGetPersonChangelogResponse(rsp *http.Response) (*GetPersonChangelogResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -53526,515 +46207,6 @@ func ParseGetPersonChangelogResponse(rsp *http.Response) (*GetPersonChangelogRes
 				// Time The date and time of the change
 				Time *string `json:"time,omitempty"`
 			} `json:"data,omitempty"`
-
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetPersonDealsResponse parses an HTTP response from a GetPersonDealsWithResponse call
-func ParseGetPersonDealsResponse(rsp *http.Response) (*GetPersonDealsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetPersonDealsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// Limit Items shown per page
-				Limit *int `json:"limit,omitempty"`
-
-				// MoreItemsInCollection If there are more list items in the collection than displayed or not
-				MoreItemsInCollection *bool `json:"more_items_in_collection,omitempty"`
-
-				// Start Pagination start
-				Start *int `json:"start,omitempty"`
-			} `json:"additional_data,omitempty"`
-
-			// Data The array of deals
-			Data *[]struct {
-				// Active Whether the deal is active or not
-				Active *bool `json:"active,omitempty"`
-
-				// ActivitiesCount The number of activities associated with the deal
-				ActivitiesCount *int `json:"activities_count,omitempty"`
-
-				// Acv Only available in Growth and above plans
-				//
-				// The Annual Contract Value of the deal
-				//
-				// Null if there are no products attached to the deal
-				Acv *float32 `json:"acv"`
-
-				// AcvCurrency Only available in Growth and above plans
-				//
-				// The Currency for Annual Contract Value of the deal
-				//
-				// If the `acv` is null, this will also be null
-				AcvCurrency *string `json:"acv_currency"`
-
-				// AddTime The creation date and time of the deal
-				AddTime *string `json:"add_time,omitempty"`
-
-				// Arr Only available in Growth and above plans
-				//
-				// The Annual Recurring Revenue of the deal
-				//
-				// Null if there are no products attached to the deal
-				Arr *float32 `json:"arr"`
-
-				// ArrCurrency Only available in Growth and above plans
-				//
-				// The Currency for Annual Recurring Revenue of the deal
-				//
-				// If the `arr` is null, this will also be null
-				ArrCurrency *string `json:"arr_currency"`
-
-				// CcEmail The BCC email of the deal
-				CcEmail *string `json:"cc_email,omitempty"`
-
-				// Channel The ID of your Marketing channel this Deal was created from. Recognized Marketing channels can be configured in your <a href="https://app.pipedrive.com/settings/fields" target="_blank" rel="noopener noreferrer">Company settings</a>.
-				Channel *int `json:"channel"`
-
-				// ChannelId The optional ID to further distinguish the Marketing channel.
-				ChannelId *string `json:"channel_id"`
-
-				// CloseTime The date and time of closing the deal
-				CloseTime *string `json:"close_time"`
-
-				// CreatorUserId The creator of the deal
-				CreatorUserId *struct {
-					// ActiveFlag Whether the creator is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the deal creator
-					Email *string `json:"email,omitempty"`
-
-					// HasPic If the creator has a picture or not
-					HasPic *bool `json:"has_pic,omitempty"`
-
-					// Id The ID of the deal creator
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the deal creator
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The creator picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the deal creator
-					Value *int `json:"value,omitempty"`
-				} `json:"creator_user_id,omitempty"`
-
-				// Currency The currency associated with the deal
-				Currency *string `json:"currency,omitempty"`
-
-				// Deleted Whether the deal is deleted or not
-				Deleted *bool `json:"deleted,omitempty"`
-
-				// DoneActivitiesCount The number of completed activities associated with the deal
-				DoneActivitiesCount *int `json:"done_activities_count,omitempty"`
-
-				// EmailMessagesCount The number of emails associated with the deal
-				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
-
-				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
-
-				// FilesCount The number of files associated with the deal
-				FilesCount *int `json:"files_count,omitempty"`
-
-				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
-
-				// FollowersCount The number of followers associated with the deal
-				FollowersCount *int `json:"followers_count,omitempty"`
-
-				// FormattedValue The deal value formatted with selected currency. E.g. US$500
-				FormattedValue *string `json:"formatted_value,omitempty"`
-
-				// FormattedWeightedValue The weighted_value formatted with selected currency. E.g. US$500
-				FormattedWeightedValue *string `json:"formatted_weighted_value,omitempty"`
-
-				// Id The ID of the deal
-				Id *int `json:"id,omitempty"`
-
-				// IsArchived Whether the deal is archived or not
-				IsArchived *bool `json:"is_archived,omitempty"`
-
-				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
-
-				// LastActivityDate The date of the last activity associated with the deal
-				LastActivityDate *string `json:"last_activity_date"`
-
-				// LastActivityId The ID of the last activity associated with the deal
-				LastActivityId *int `json:"last_activity_id"`
-
-				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
-
-				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
-
-				// LostReason The reason for losing the deal
-				LostReason *string `json:"lost_reason"`
-
-				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
-
-				// Mrr Only available in Growth and above plans
-				//
-				// The Monthly Recurring Revenue of the deal
-				//
-				// Null if there are no products attached to the deal
-				Mrr *float32 `json:"mrr"`
-
-				// MrrCurrency Only available in Growth and above plans
-				//
-				// The Currency for Monthly Recurring Revenue of the deal
-				//
-				// If the `mrr` is null, this will also be null
-				MrrCurrency *string `json:"mrr_currency"`
-
-				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
-
-				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
-
-				// NextActivityId The ID of the next activity associated with the deal
-				NextActivityId *int `json:"next_activity_id"`
-
-				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
-
-				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
-
-				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
-
-				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
-
-				// NotesCount The number of notes associated with the deal
-				NotesCount *int `json:"notes_count,omitempty"`
-
-				// OrgHidden If the organization that is associated with the deal is hidden or not
-				OrgHidden *bool `json:"org_hidden,omitempty"`
-				OrgId     *struct {
-					// ActiveFlag Whether the associated organization is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Address The address of the organization that is associated with the deal
-					Address *string `json:"address,omitempty"`
-
-					// CcEmail The BCC email of the organization associated with the deal
-					CcEmail *string `json:"cc_email,omitempty"`
-
-					// Name The name of the organization associated with the deal
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the organization that is associated with the deal
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// PeopleCount The number of people connected with the organization that is associated with the deal
-					PeopleCount *int `json:"people_count,omitempty"`
-
-					// Value The ID of the organization associated with the deal
-					Value *int `json:"value,omitempty"`
-				} `json:"org_id,omitempty"`
-
-				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
-
-				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
-				Origin *string `json:"origin,omitempty"`
-
-				// OriginId The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this Deal.
-				OriginId *string `json:"origin_id"`
-
-				// OwnerName The name of the deal owner
-				OwnerName *string `json:"owner_name,omitempty"`
-
-				// ParticipantsCount The number of participants associated with the deal
-				ParticipantsCount *int `json:"participants_count,omitempty"`
-
-				// PersonHidden If the person that is associated with the deal is hidden or not
-				PersonHidden *bool `json:"person_hidden,omitempty"`
-				PersonId     *struct {
-					// ActiveFlag Whether the associated person is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The emails of the person associated with the deal
-					Email *[]struct {
-						// Label The type of the email
-						Label *string `json:"label,omitempty"`
-
-						// Primary If this is the primary email or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The email of the associated person
-						Value *string `json:"value,omitempty"`
-					} `json:"email,omitempty"`
-
-					// Name The name of the person associated with the deal
-					Name *string `json:"name,omitempty"`
-
-					// OwnerId The ID of the owner of the person that is associated with the deal
-					OwnerId *int `json:"owner_id,omitempty"`
-
-					// Phone The phone numbers of the person associated with the deal
-					Phone *[]struct {
-						// Label The type of the phone number
-						Label *string `json:"label,omitempty"`
-
-						// Primary If this is the primary phone number or not
-						Primary *bool `json:"primary,omitempty"`
-
-						// Value The phone number of the person associated with the deal
-						Value *string `json:"value,omitempty"`
-					} `json:"phone,omitempty"`
-
-					// Value The ID of the person associated with the deal
-					Value *int `json:"value,omitempty"`
-				} `json:"person_id,omitempty"`
-
-				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
-
-				// PipelineId The ID of the pipeline associated with the deal
-				PipelineId *int `json:"pipeline_id,omitempty"`
-
-				// Probability The success probability percentage of the deal
-				Probability *float32 `json:"probability"`
-
-				// ProductsCount The number of products associated with the deal
-				ProductsCount *int `json:"products_count,omitempty"`
-
-				// RottenTime The date and time of changing the deal status as rotten
-				RottenTime *string `json:"rotten_time"`
-
-				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
-
-				// StageId The ID of the deal stage
-				StageId *int `json:"stage_id,omitempty"`
-
-				// StageOrderNr The order number of the deal stage associated with the deal
-				StageOrderNr *int `json:"stage_order_nr,omitempty"`
-
-				// Status The status of the deal
-				Status *string `json:"status,omitempty"`
-
-				// Title The title of the deal
-				Title *string `json:"title,omitempty"`
-
-				// UndoneActivitiesCount The number of incomplete activities associated with the deal
-				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
-
-				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
-				UserId     *struct {
-					// ActiveFlag Whether the user is active or not
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// Email The email of the user
-					Email *string `json:"email,omitempty"`
-
-					// HasPic If the user has a picture or not
-					HasPic *bool `json:"has_pic,omitempty"`
-
-					// Id The ID of the user
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the user
-					Name *string `json:"name,omitempty"`
-
-					// PicHash The user picture hash
-					PicHash *string `json:"pic_hash"`
-
-					// Value The ID of the user
-					Value *int `json:"value,omitempty"`
-				} `json:"user_id,omitempty"`
-
-				// Value The value of the deal
-				Value *float32 `json:"value,omitempty"`
-
-				// VisibleTo The visibility of the deal
-				VisibleTo *string `json:"visible_to,omitempty"`
-
-				// WeightedValue Probability times deal value. Probability can either be deal probability or if not set, then stage probability.
-				WeightedValue *float32 `json:"weighted_value,omitempty"`
-
-				// WeightedValueCurrency The currency associated with the deal
-				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
-
-				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
-			} `json:"data,omitempty"`
-			RelatedObjects *struct {
-				Organization *struct {
-					// ORGANIZATIONID The ID of the organization associated with the item
-					ORGANIZATIONID *struct {
-						// ActiveFlag Whether the associated organization is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
-
-						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
-
-						// Id The ID of the organization associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the organization associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the organization that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// PeopleCount The number of people connected with the organization that is associated with the item
-						PeopleCount *int `json:"people_count,omitempty"`
-					} `json:"ORGANIZATION_ID,omitempty"`
-				} `json:"organization,omitempty"`
-				Person *struct {
-					// PERSONID The ID of the person associated with the item
-					PERSONID *struct {
-						// ActiveFlag Whether the associated person is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The emails of the person associated with the item
-						Email *[]struct {
-							// Label The type of the email
-							Label *string `json:"label,omitempty"`
-
-							// Primary Whether this is the primary email or not
-							Primary *bool `json:"primary,omitempty"`
-
-							// Value The email of the associated person
-							Value *string `json:"value,omitempty"`
-						} `json:"email,omitempty"`
-
-						// Id The ID of the person associated with the item
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the person associated with the item
-						Name *string `json:"name,omitempty"`
-
-						// OwnerId The ID of the owner of the person that is associated with the item
-						OwnerId *int `json:"owner_id,omitempty"`
-
-						// Phone The phone numbers of the person associated with the item
-						Phone *[]struct {
-							// Label The type of the phone number
-							Label *string `json:"label,omitempty"`
-
-							// Primary Whether this is the primary phone number or not
-							Primary *bool `json:"primary,omitempty"`
-
-							// Value The phone number of the person associated with the item
-							Value *string `json:"value,omitempty"`
-						} `json:"phone,omitempty"`
-					} `json:"PERSON_ID,omitempty"`
-				} `json:"person,omitempty"`
-				Pipeline *struct {
-					// Active Whether this pipeline will be made inactive (hidden) or active
-					Active *bool `json:"active,omitempty"`
-
-					// AddTime The pipeline creation time. Format: YYYY-MM-DD HH:MM:SS.
-					AddTime *string `json:"add_time,omitempty"`
-
-					// DealProbability Whether deal probability is disabled or enabled for this pipeline
-					DealProbability *bool `json:"deal_probability,omitempty"`
-
-					// Id The ID of the pipeline
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the pipeline
-					Name *string `json:"name,omitempty"`
-
-					// OrderNr Defines the order of pipelines. First order (`order_nr=0`) is the default pipeline.
-					OrderNr *int `json:"order_nr,omitempty"`
-
-					// UpdateTime The pipeline update time. Format: YYYY-MM-DD HH:MM:SS.
-					UpdateTime *string `json:"update_time,omitempty"`
-
-					// UrlTitle The pipeline title displayed in the URL
-					UrlTitle *string `json:"url_title,omitempty"`
-				} `json:"pipeline,omitempty"`
-				Stage *struct {
-					// ActiveFlag Whether the stage is active or deleted
-					ActiveFlag *bool `json:"active_flag,omitempty"`
-
-					// AddTime The stage creation time. Format: YYYY-MM-DD HH:MM:SS.
-					AddTime *string `json:"add_time,omitempty"`
-
-					// DealProbability The success probability percentage of the deal. Used/shown when the deal weighted values are used.
-					DealProbability *int `json:"deal_probability,omitempty"`
-
-					// Id The ID of the stage
-					Id *int `json:"id,omitempty"`
-
-					// Name The name of the stage
-					Name *string `json:"name,omitempty"`
-
-					// OrderNr Defines the order of the stage
-					OrderNr *int `json:"order_nr,omitempty"`
-
-					// PipelineId The ID of the pipeline to add the stage to
-					PipelineId *int `json:"pipeline_id,omitempty"`
-
-					// RottenDays The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
-					RottenDays *int `json:"rotten_days,omitempty"`
-
-					// RottenFlag Whether deals in this stage can become rotten
-					RottenFlag *bool `json:"rotten_flag,omitempty"`
-
-					// UpdateTime The stage update time. Format: YYYY-MM-DD HH:MM:SS.
-					UpdateTime *string `json:"update_time,omitempty"`
-				} `json:"stage,omitempty"`
-				User *struct {
-					USERID *struct {
-						// ActiveFlag Whether the user is active or not
-						ActiveFlag *bool `json:"active_flag,omitempty"`
-
-						// Email The email of the user
-						Email *string `json:"email,omitempty"`
-
-						// HasPic Whether the user has picture or not. 0 = No picture, 1 = Has picture.
-						HasPic *int `json:"has_pic,omitempty"`
-
-						// Id The ID of the user
-						Id *int `json:"id,omitempty"`
-
-						// Name The name of the user
-						Name *string `json:"name,omitempty"`
-
-						// PicHash The user picture hash
-						PicHash *string `json:"pic_hash"`
-					} `json:"USER_ID,omitempty"`
-				} `json:"user,omitempty"`
-			} `json:"related_objects,omitempty"`
 
 			// Success If the response is successful or not
 			Success *bool `json:"success,omitempty"`
@@ -54244,10 +46416,10 @@ func ParseGetPersonUpdatesResponse(rsp *http.Response) (*GetPersonUpdatesRespons
 					// ORGANIZATIONID The ID of the organization associated with the item
 					ORGANIZATIONID *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -54600,7 +46772,7 @@ func ParseMergePersonsResponse(rsp *http.Response) (*MergePersonsResponse, error
 				AddTime *string `json:"add_time,omitempty"`
 
 				// CcEmail The BCC email associated with the person
-				CcEmail *string `json:"cc_email,omitempty"`
+				CcEmail *string `json:"cc_email"`
 
 				// ClosedDealsCount The count of closed deals related with the item
 				ClosedDealsCount *int `json:"closed_deals_count,omitempty"`
@@ -54642,7 +46814,7 @@ func ParseMergePersonsResponse(rsp *http.Response) (*MergePersonsResponse, error
 				Id *int `json:"id,omitempty"`
 
 				// Label The label assigned to the person. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-				Label *int `json:"label,omitempty"`
+				Label *int `json:"label"`
 
 				// LabelIds The IDs of labels assigned to the person. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
 				LabelIds *[]int `json:"label_ids,omitempty"`
@@ -54654,13 +46826,13 @@ func ParseMergePersonsResponse(rsp *http.Response) (*MergePersonsResponse, error
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the person
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastName The last name of the person
-				LastName *string `json:"last_name,omitempty"`
+				LastName *string `json:"last_name"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the person
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostDealsCount The count of lost deals related with the item
 				LostDealsCount *int `json:"lost_deals_count,omitempty"`
@@ -54690,7 +46862,7 @@ func ParseMergePersonsResponse(rsp *http.Response) (*MergePersonsResponse, error
 				OrgId *int `json:"org_id,omitempty"`
 
 				// OrgName The name of the organization associated with the person
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// OwnerId The ID of the owner related to the person
 				OwnerId *int `json:"owner_id,omitempty"`
@@ -54743,7 +46915,7 @@ func ParseMergePersonsResponse(rsp *http.Response) (*MergePersonsResponse, error
 
 					// UpdateTime The update time of the picture
 					UpdateTime *string `json:"update_time,omitempty"`
-				} `json:"picture_id,omitempty"`
+				} `json:"picture_id"`
 
 				// RelatedClosedDealsCount The count of related closed deals related with the item
 				RelatedClosedDealsCount *int `json:"related_closed_deals_count,omitempty"`
@@ -55998,10 +48170,10 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 						ActiveFlag *bool `json:"active_flag,omitempty"`
 
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CcEmail The BCC email of the organization associated with the item
-						CcEmail *string `json:"cc_email,omitempty"`
+						CcEmail *string `json:"cc_email"`
 
 						// Id The ID of the organization associated with the item
 						Id *int `json:"id,omitempty"`
@@ -57990,40 +50162,6 @@ func ParseAddOrUpdateRoleSettingResponse(rsp *http.Response) (*AddOrUpdateRoleSe
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteStagesResponse parses an HTTP response from a DeleteStagesWithResponse call
-func ParseDeleteStagesResponse(rsp *http.Response) (*DeleteStagesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteStagesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *struct {
-				// Id The list of deleted stage IDs
-				Id *[]int `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the request was successful or not
 			Success *bool `json:"success,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {

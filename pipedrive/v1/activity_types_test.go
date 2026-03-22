@@ -175,35 +175,3 @@ func TestActivityTypesService_Delete(t *testing.T) {
 		t.Fatalf("unexpected deleted type: %#v", deleted)
 	}
 }
-
-func TestActivityTypesService_DeleteBulk(t *testing.T) {
-	t.Parallel()
-
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodDelete {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/activityTypes" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("ids"); got != "7,8" {
-			t.Fatalf("unexpected ids: %q", got)
-		}
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"data":{"id":[7,8]}}`))
-	}))
-	t.Cleanup(srv.Close)
-
-	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
-	if err != nil {
-		t.Fatalf("NewClient error: %v", err)
-	}
-
-	result, err := client.ActivityTypes.DeleteBulk(context.Background(), []ActivityTypeID{7, 8})
-	if err != nil {
-		t.Fatalf("DeleteBulk error: %v", err)
-	}
-	if len(result.IDs) != 2 || result.IDs[0] != 7 || result.IDs[1] != 8 {
-		t.Fatalf("unexpected result: %#v", result)
-	}
-}
