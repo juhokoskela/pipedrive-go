@@ -11,6 +11,8 @@ type Config struct {
 
 	RetryPolicy *RetryPolicy
 
+	MaxResponseSize int64
+
 	UserAgent string
 	Auth      AuthProvider
 }
@@ -38,6 +40,7 @@ func NewHTTPClient(cfg Config) *http.Client {
 		middleware = append(middleware, authMiddleware(cfg.Auth))
 	}
 
+	transport = newResponseLimitTransport(transport, cfg.MaxResponseSize)
 	transport = chainMiddleware(transport, middleware)
 
 	policy := cfg.RetryPolicy

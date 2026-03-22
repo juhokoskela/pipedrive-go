@@ -123,3 +123,102 @@ func TestRawClient_Do_ReturnsRateLimitErrorOn429(t *testing.T) {
 		t.Fatalf("unexpected limit headers: limit=%d remaining=%d", rlErr.Limit, rlErr.Remaining)
 	}
 }
+
+func TestRawClient_Do_ReturnsResponseTooLargeError(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte(`{"ok":true}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	httpClient := NewHTTPClient(Config{
+		HTTPClient:      srv.Client(),
+		MaxResponseSize: 4,
+		RetryPolicy:     &RetryPolicy{MaxAttempts: 1},
+	})
+
+	raw, err := NewRawClient(srv.URL, httpClient)
+	if err != nil {
+		t.Fatalf("NewRawClient error: %v", err)
+	}
+
+	err = raw.Do(context.Background(), http.MethodGet, "/x", nil, nil, nil)
+	var tooLarge *ResponseTooLargeError
+	if !errors.As(err, &tooLarge) {
+		t.Fatalf("expected ResponseTooLargeError, got %T (%v)", err, err)
+	}
+	if tooLarge.Limit != 4 {
+		t.Fatalf("expected limit=4, got %d", tooLarge.Limit)
+	}
+}
+
+func TestRawClient_Do_ReturnsAPIErrorWhenLargeErrorBodyExceedsLimit(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("X-Request-Id", "req_big")
+		w.WriteHeader(http.StatusBadRequest)
+		_, _ = w.Write([]byte(`{"error":"payload too large for the response cap"}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	httpClient := NewHTTPClient(Config{
+		HTTPClient:      srv.Client(),
+		MaxResponseSize: 4,
+		RetryPolicy:     &RetryPolicy{MaxAttempts: 1},
+	})
+
+	raw, err := NewRawClient(srv.URL, httpClient)
+	if err != nil {
+		t.Fatalf("NewRawClient error: %v", err)
+	}
+
+	err = raw.Do(context.Background(), http.MethodGet, "/x", nil, nil, nil)
+	var apiErr *APIError
+	if !errors.As(err, &apiErr) {
+		t.Fatalf("expected APIError, got %T (%v)", err, err)
+	}
+	if apiErr.Status != http.StatusBadRequest {
+		t.Fatalf("expected status=400, got %d", apiErr.Status)
+	}
+	if apiErr.RequestID != "req_big" {
+		t.Fatalf("expected request id req_big, got %q", apiErr.RequestID)
+	}
+}
+
+func TestRawClient_Do_ReturnsRateLimitErrorWhenLarge429BodyExceedsLimit(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Retry-After", "1")
+		w.Header().Set("X-RateLimit-Limit", "10")
+		w.Header().Set("X-RateLimit-Remaining", "0")
+		w.WriteHeader(http.StatusTooManyRequests)
+		_, _ = w.Write([]byte(`{"message":"payload too large for the response cap"}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	httpClient := NewHTTPClient(Config{
+		HTTPClient:      srv.Client(),
+		MaxResponseSize: 4,
+		RetryPolicy:     &RetryPolicy{MaxAttempts: 1},
+	})
+
+	raw, err := NewRawClient(srv.URL, httpClient)
+	if err != nil {
+		t.Fatalf("NewRawClient error: %v", err)
+	}
+
+	err = raw.Do(context.Background(), http.MethodGet, "/x", nil, nil, nil)
+	var rlErr *RateLimitError
+	if !errors.As(err, &rlErr) {
+		t.Fatalf("expected RateLimitError, got %T (%v)", err, err)
+	}
+	if rlErr.RetryAfter != 1*time.Second {
+		t.Fatalf("expected retry-after 1s, got %s", rlErr.RetryAfter)
+	}
+	if rlErr.Limit != 10 || rlErr.Remaining != 0 {
+		t.Fatalf("unexpected rate limit headers: limit=%d remaining=%d", rlErr.Limit, rlErr.Remaining)
+	}
+}
