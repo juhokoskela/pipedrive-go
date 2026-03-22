@@ -1,6 +1,6 @@
 Spec: openapi/derived/v1-legacy.yaml
-Total operations: 194
-Wrapped operations: 194
+Total operations: 177
+Wrapped operations: 177
 Missing operations: 0
 
 Missing by tag:

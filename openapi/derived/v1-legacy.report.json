@@ -1,6 +1,6 @@
 {
-  "V1Operations": 275,
+  "V1Operations": 213,
   "V2Operations": 123,
-  "RemovedOperations": 81,
-  "LegacyOperations": 194
+  "RemovedOperations": 36,
+  "LegacyOperations": 177
 }
