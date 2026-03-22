@@ -81,6 +81,10 @@ type Middleware func(next http.RoundTripper) http.RoundTripper
 
 This enables logging, tracing (OpenTelemetry), metrics, or request mutation without SDK forks.
 
+Per-request request editors run before the transport chain. Auth providers only
+inject `Authorization` or `x-api-token` when those headers are absent, and
+custom middleware can still replace auth headers later in the chain.
+
 ## Authentication
 
 The SDK supports:
@@ -185,4 +189,3 @@ When an endpoint appears in v2, it disappears from v1-legacy on the next regener
 CI should fail if:
 - `make generate` changes `internal/gen/*` without being committed
 - wrappers stop compiling against regenerated internals
-

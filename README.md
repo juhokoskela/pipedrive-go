@@ -181,6 +181,11 @@ client, _ := v2.NewClient(pipedrive.Config{
 })
 ```
 
+Request options such as `WithHeader` and `WithRequestEditor` run before the
+transport chain. If you set `Authorization` or `x-api-token` yourself, the
+configured auth provider will not overwrite that header, and custom middleware
+can also replace auth headers later in the chain.
+
 ## Raw API escape hatch
 
 ```go
