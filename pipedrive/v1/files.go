@@ -236,3 +236,32 @@ func (s *FilesService) Download(ctx context.Context, id FileID, opts ...FilesOpt
 	}
 	return body, nil
 }
+
+func (s *FilesService) DownloadTo(ctx context.Context, id FileID, dst io.Writer, opts ...FilesOption) error {
+	if dst == nil {
+		return fmt.Errorf("download destination is required")
+	}
+
+	cfg := newFilesOptions(opts)
+	reqOpts := append([]pipedrive.RequestOption{}, cfg.requestOptions...)
+	reqOpts = append(reqOpts, pipedrive.WithNoResponseSizeLimit())
+	ctx, editors := pipedrive.ApplyRequestOptions(ctx, reqOpts...)
+
+	resp, err := s.client.gen.DownloadFile(ctx, int(id), toRequestEditors(editors)...)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		body, err := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
+		if err != nil {
+			return fmt.Errorf("read response: %w", err)
+		}
+		return errorFromResponse(resp, body)
+	}
+	if _, err := io.Copy(dst, resp.Body); err != nil {
+		return fmt.Errorf("write download: %w", err)
+	}
+	return nil
+}

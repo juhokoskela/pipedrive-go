@@ -170,6 +170,11 @@ deal, err := client.Deals.Get(
 )
 ```
 
+Response bodies are capped at 64 MiB by default. Override globally with
+`Config.MaxResponseSize`, per request with `WithResponseSizeLimit` or
+`WithNoResponseSizeLimit`, and use `client.Files.DownloadTo` to stream large
+v1 file downloads.
+
 ## Custom HTTP and middleware
 
 ```go

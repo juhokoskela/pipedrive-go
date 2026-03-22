@@ -53,6 +53,17 @@ func (e *RateLimitError) Error() string {
 	return e.APIError.Error()
 }
 
+type ResponseTooLargeError struct {
+	Limit int64
+}
+
+func (e *ResponseTooLargeError) Error() string {
+	if e == nil {
+		return "pipedrive: response too large"
+	}
+	return fmt.Sprintf("pipedrive: response exceeds %d bytes", e.Limit)
+}
+
 type pipedriveErrorPayload struct {
 	Code      string `json:"code"`
 	Message   string `json:"message"`

@@ -15,7 +15,8 @@ type requestOptions struct {
 
 	noRetry bool
 
-	retryPolicy *RetryPolicy
+	retryPolicy       *RetryPolicy
+	responseSizeLimit responseSizeLimitOption
 }
 
 func WithHeader(key, value string) RequestOption {
@@ -48,6 +49,24 @@ func WithRetryPolicy(policy RetryPolicy) RequestOption {
 	}
 }
 
+func WithResponseSizeLimit(limit int64) RequestOption {
+	return func(o *requestOptions) {
+		o.responseSizeLimit = responseSizeLimitOption{
+			set:   true,
+			limit: limit,
+		}
+	}
+}
+
+func WithNoResponseSizeLimit() RequestOption {
+	return func(o *requestOptions) {
+		o.responseSizeLimit = responseSizeLimitOption{
+			set:       true,
+			unlimited: true,
+		}
+	}
+}
+
 func ApplyRequestOptions(ctx context.Context, opts ...RequestOption) (context.Context, []RequestEditorFunc) {
 	if ctx == nil {
 		ctx = context.Background()
@@ -66,6 +85,9 @@ func ApplyRequestOptions(ctx context.Context, opts ...RequestOption) (context.Co
 	}
 	if o.retryPolicy != nil {
 		ctx = withRetryPolicy(ctx, *o.retryPolicy)
+	}
+	if o.responseSizeLimit.set {
+		ctx = withResponseSizeLimit(ctx, o.responseSizeLimit)
 	}
 
 	editors := make([]RequestEditorFunc, 0, len(o.editors)+1)

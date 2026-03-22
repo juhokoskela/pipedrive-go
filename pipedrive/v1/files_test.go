@@ -1,7 +1,9 @@
 package v1
 
 import (
+	"bytes"
 	"context"
+	"errors"
 	"net/http"
 	"net/url"
 	"strings"
@@ -249,5 +251,44 @@ func TestFilesService_Download(t *testing.T) {
 	}
 	if string(data) != "payload" {
 		t.Fatalf("unexpected data: %q", string(data))
+	}
+}
+
+func TestFilesService_Download_RespectsResponseLimit(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClientWithConfig(t, pipedrive.Config{MaxResponseSize: 4}, func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/files/8/download" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		_, _ = w.Write([]byte("payload"))
+	})
+
+	_, err := client.Files.Download(context.Background(), FileID(8))
+	var tooLarge *pipedrive.ResponseTooLargeError
+	if !errors.As(err, &tooLarge) {
+		t.Fatalf("expected ResponseTooLargeError, got %T (%v)", err, err)
+	}
+	if tooLarge.Limit != 4 {
+		t.Fatalf("expected limit=4, got %d", tooLarge.Limit)
+	}
+}
+
+func TestFilesService_DownloadTo_DisablesResponseLimit(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClientWithConfig(t, pipedrive.Config{MaxResponseSize: 4}, func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/files/8/download" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		_, _ = w.Write([]byte("payload"))
+	})
+
+	var dst bytes.Buffer
+	if err := client.Files.DownloadTo(context.Background(), FileID(8), &dst); err != nil {
+		t.Fatalf("DownloadTo error: %v", err)
+	}
+	if got := dst.String(); got != "payload" {
+		t.Fatalf("unexpected payload: %q", got)
 	}
 }
