@@ -3,8 +3,10 @@ package v1
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
@@ -133,5 +135,70 @@ func TestWebhooksService_Delete(t *testing.T) {
 	}
 	if !ok {
 		t.Fatalf("expected delete success")
+	}
+}
+
+func TestWebhookStringRedactsHTTPAuthPassword(t *testing.T) {
+	t.Parallel()
+
+	password := "super-secret"
+	webhook := Webhook{
+		ID:               1,
+		Name:             "Webhook",
+		HTTPAuthPassword: &password,
+	}
+
+	plain := fmt.Sprintf("%v", webhook)
+	if strings.Contains(plain, password) {
+		t.Fatalf("expected password to be redacted in %%v: %q", plain)
+	}
+	if !strings.Contains(plain, "[REDACTED]") {
+		t.Fatalf("expected redacted marker in %%v: %q", plain)
+	}
+
+	detailed := fmt.Sprintf("%+v", webhook)
+	if strings.Contains(detailed, password) {
+		t.Fatalf("expected password to be redacted in %%+v: %q", detailed)
+	}
+	if !strings.Contains(detailed, "[REDACTED]") {
+		t.Fatalf("expected redacted marker in %%+v: %q", detailed)
+	}
+
+	goSyntax := fmt.Sprintf("%#v", webhook)
+	if strings.Contains(goSyntax, password) {
+		t.Fatalf("expected password to be redacted in %%#v: %q", goSyntax)
+	}
+	if !strings.Contains(goSyntax, "[REDACTED]") {
+		t.Fatalf("expected redacted marker in %%#v: %q", goSyntax)
+	}
+
+	quoted := fmt.Sprintf("%q", webhook)
+	if strings.Contains(quoted, password) {
+		t.Fatalf("expected password to be redacted in %%q: %q", quoted)
+	}
+	if !strings.Contains(quoted, "[REDACTED]") {
+		t.Fatalf("expected redacted marker in %%q: %q", quoted)
+	}
+}
+
+func TestWebhookMarshalJSONRedactsHTTPAuthPassword(t *testing.T) {
+	t.Parallel()
+
+	password := "super-secret"
+	webhook := Webhook{
+		ID:               1,
+		Name:             "Webhook",
+		HTTPAuthPassword: &password,
+	}
+
+	data, err := json.Marshal(webhook)
+	if err != nil {
+		t.Fatalf("Marshal error: %v", err)
+	}
+	if strings.Contains(string(data), password) {
+		t.Fatalf("expected password to be redacted in JSON: %s", data)
+	}
+	if !strings.Contains(string(data), "[REDACTED]") {
+		t.Fatalf("expected redacted marker in JSON: %s", data)
 	}
 }
