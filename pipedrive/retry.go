@@ -161,6 +161,7 @@ func fullJitter(d time.Duration) time.Duration {
 	if d <= 0 {
 		return 0
 	}
+	// #nosec G404 -- Retry jitter only needs inexpensive non-cryptographic randomness.
 	return time.Duration(rand.Int64N(int64(d)))
 }
 
