@@ -80,16 +80,18 @@ func writeDoc(specPath, outPath, title string) error {
 	}
 	b.WriteString("\n")
 
-	if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(outPath), 0o750); err != nil {
 		return fmt.Errorf("create output dir: %w", err)
 	}
-	if err := os.WriteFile(outPath, []byte(b.String()), 0o644); err != nil {
+	// #nosec G306 -- Generated docs are intentionally written to the requested output path.
+	if err := os.WriteFile(outPath, []byte(b.String()), 0o600); err != nil {
 		return fmt.Errorf("write %s: %w", outPath, err)
 	}
 	return nil
 }
 
 func parseSpec(path string) ([]endpoint, error) {
+	// #nosec G304 -- This CLI intentionally reads the spec from the user-provided path.
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("read spec: %w", err)
