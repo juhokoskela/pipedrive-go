@@ -30,8 +30,8 @@ Total operations: 123
 | GET | `/deals/{id}` | Get details of a deal | `getDeal` |
 | PATCH | `/deals/{id}` | Update a deal | `updateDeal` |
 | DELETE | `/deals/{id}` | Delete a deal | `deleteDeal` |
-| POST | `/deals/{id}/convert/lead` | Convert a deal to a lead (BETA) | `convertDealToLead` |
-| GET | `/deals/{id}/convert/status/{conversion_id}` | Get Deal conversion status (BETA) | `getDealConversionStatus` |
+| POST | `/deals/{id}/convert/lead` | Convert a deal to a lead | `convertDealToLead` |
+| GET | `/deals/{id}/convert/status/{conversion_id}` | Get Deal conversion status | `getDealConversionStatus` |
 | GET | `/deals/{id}/discounts` | List discounts added to a deal | `getAdditionalDiscounts` |
 | POST | `/deals/{id}/discounts` | Add a discount to a deal | `postAdditionalDiscount` |
 | PATCH | `/deals/{id}/discounts/{discount_id}` | Update a discount added to a deal | `updateAdditionalDiscount` |
@@ -52,8 +52,8 @@ Total operations: 123
 | GET | `/itemSearch` | Perform a search from multiple item types | `searchItem` |
 | GET | `/itemSearch/field` | Perform a search using a specific field from an item type | `searchItemByField` |
 | GET | `/leads/search` | Search leads | `searchLeads` |
-| POST | `/leads/{id}/convert/deal` | Convert a lead to a deal (BETA) | `convertLeadToDeal` |
-| GET | `/leads/{id}/convert/status/{conversion_id}` | Get Lead conversion status (BETA) | `getLeadConversionStatus` |
+| POST | `/leads/{id}/convert/deal` | Convert a lead to a deal | `convertLeadToDeal` |
+| GET | `/leads/{id}/convert/status/{conversion_id}` | Get Lead conversion status | `getLeadConversionStatus` |
 | GET | `/organizationFields` | Get all organization fields | `getOrganizationFields` |
 | POST | `/organizationFields` | Create one organization field | `addOrganizationField` |
 | GET | `/organizationFields/{field_code}` | Get one organization field | `getOrganizationField` |
