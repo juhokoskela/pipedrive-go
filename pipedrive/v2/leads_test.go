@@ -32,6 +32,15 @@ func TestLeadsService_Search(t *testing.T) {
 		if got := q.Get("exact_match"); got != "true" {
 			t.Fatalf("unexpected exact_match: %q", got)
 		}
+		if got := q.Get("person_id"); got != "7" {
+			t.Fatalf("unexpected person_id: %q", got)
+		}
+		if got := q.Get("organization_id"); got != "8" {
+			t.Fatalf("unexpected organization_id: %q", got)
+		}
+		if got := q.Get("include_fields"); got != "lead.was_seen" {
+			t.Fatalf("unexpected include_fields: %q", got)
+		}
 		if got := q.Get("limit"); got != "2" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
@@ -56,6 +65,9 @@ func TestLeadsService_Search(t *testing.T) {
 		"alpha",
 		WithLeadSearchFields(LeadSearchFieldTitle, LeadSearchFieldNotes),
 		WithLeadSearchExactMatch(true),
+		WithLeadSearchPersonID(PersonID(7)),
+		WithLeadSearchOrganizationID(OrganizationID(8)),
+		WithLeadSearchIncludeFields(LeadSearchIncludeFieldLeadWasSeen),
 		WithLeadSearchPageSize(2),
 		WithLeadSearchCursor("c1"),
 		WithLeadRequestOptions(pipedrive.WithHeader("X-Test", "1")),
