@@ -7,6 +7,27 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-03-22
+
+### Added
+- Cap successful response bodies at 64 MiB by default, with `Config.MaxResponseSize`, `WithResponseSizeLimit`, and `WithNoResponseSizeLimit` overrides.
+- Add `v1.Files.DownloadTo` for streaming large file downloads without the default response cap.
+- Add internal replayable multipart body support so upload requests can be retried safely.
+- Add `make security` plus `govulncheck` and `gosec` targets.
+
+### Changed
+- Update CI to test against Go 1.25.0 and 1.26.1, run lint on the preferred toolchain, and run a dedicated security job.
+- Pin GitHub Actions in CI, CodeQL, and release workflows.
+- Harden generator CLI output permissions and document auth header precedence and response size controls.
+- Bump `github.com/oapi-codegen/runtime` to v1.3.0 and `golang.org/x/oauth2` to v0.36.0.
+
+### Fixed
+- Make the retry transport honor per-request retry policy overrides and return a clear error for nil requests.
+- Avoid dropping a byte when a response body crosses the configured response size limit.
+- Redact webhook HTTP auth passwords in formatted output and JSON serialization.
+- Make v1 call log recording uploads and v2 product image uploads replayable for retries.
+- Remove stale v1 legacy endpoints and services that should no longer be exposed alongside v2 coverage.
+
 ## [1.0.2] - 2026-02-07
 
 ### Added
