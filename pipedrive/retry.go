@@ -2,9 +2,11 @@ package pipedrive
 
 import (
 	"context"
+	"crypto/rand"
+	"errors"
 	"io"
 	"math"
-	"math/rand"
+	"math/big"
 	"net/http"
 	"time"
 )
@@ -60,7 +62,7 @@ func newRetryTransport(next http.RoundTripper, policy RetryPolicy, opts retryTra
 
 func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if req == nil {
-		return nil, nil
+		return nil, errors.New("pipedrive: nil request")
 	}
 
 	policy := t.policy
@@ -75,7 +77,7 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	origGetBody := req.GetBody
 	canReplayBody := req.Body == nil || req.Body == http.NoBody || origGetBody != nil
 
-	for attempt := 1; attempt <= t.policy.MaxAttempts; attempt++ {
+	for attempt := 1; attempt <= policy.MaxAttempts; attempt++ {
 		attemptReq := req
 		if attempt > 1 {
 			attemptReq = req.Clone(req.Context())
@@ -106,7 +108,7 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 		}
 	}
 
-	return t.next.RoundTrip(req)
+	return nil, errors.New("pipedrive: retry transport exhausted attempts")
 }
 
 func (t *retryTransport) shouldRetry(attempt int, req *http.Request, canReplayBody bool, resp *http.Response, err error, policy RetryPolicy) bool {
@@ -162,7 +164,11 @@ func fullJitter(d time.Duration) time.Duration {
 	if d <= 0 {
 		return 0
 	}
-	return time.Duration(rand.Float64() * float64(d))
+	n, err := rand.Int(rand.Reader, big.NewInt(int64(d)))
+	if err != nil {
+		return d
+	}
+	return time.Duration(n.Int64())
 }
 
 func sleepWithContext(ctx context.Context, d time.Duration) error {

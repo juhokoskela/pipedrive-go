@@ -225,3 +225,54 @@ func TestRetryTransport_UsesPerRequestRetryPolicyOverride(t *testing.T) {
 		t.Fatalf("expected status 200, got %d", resp.StatusCode)
 	}
 }
+
+func TestRetryTransport_StopsAfterExactMaxAttempts(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	next := roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		calls++
+		return &http.Response{
+			StatusCode: 502,
+			Header:     make(http.Header),
+			Body:       io.NopCloser(strings.NewReader("")),
+			Request:    req,
+		}, nil
+	})
+
+	rt := newRetryTransport(next, RetryPolicy{MaxAttempts: 2}, retryTransportOptions{
+		sleep: func(context.Context, time.Duration) error { return nil },
+		now:   time.Now,
+	})
+
+	req, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, "https://example.test", nil)
+	resp, err := rt.RoundTrip(req)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	if calls != 2 {
+		t.Fatalf("expected 2 calls, got %d", calls)
+	}
+	if resp.StatusCode != 502 {
+		t.Fatalf("expected status 502, got %d", resp.StatusCode)
+	}
+}
+
+func TestRetryTransport_NilRequestReturnsError(t *testing.T) {
+	t.Parallel()
+
+	rt := newRetryTransport(roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		t.Fatalf("unexpected call to next transport")
+		return nil, nil
+	}), DefaultRetryPolicy(), retryTransportOptions{})
+
+	_, err := rt.RoundTrip(nil)
+	if err == nil {
+		t.Fatalf("expected error")
+	}
+	if err.Error() != "pipedrive: nil request" {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
