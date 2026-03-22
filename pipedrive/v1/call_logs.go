@@ -6,10 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"mime/multipart"
 	"time"
 
 	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
+	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
@@ -422,20 +422,12 @@ func (s *CallLogsService) AddRecording(ctx context.Context, id CallLogID, fileNa
 	cfg := newAddCallLogRecordingOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	var buf bytes.Buffer
-	writer := multipart.NewWriter(&buf)
-	part, err := writer.CreateFormFile("file", fileName)
+	contentType, body, err := multipartbody.NewFile("file", fileName, content)
 	if err != nil {
-		return false, fmt.Errorf("create form file: %w", err)
-	}
-	if _, err := io.Copy(part, content); err != nil {
-		return false, fmt.Errorf("write form file: %w", err)
-	}
-	if err := writer.Close(); err != nil {
-		return false, fmt.Errorf("close multipart writer: %w", err)
+		return false, err
 	}
 
-	resp, err := s.client.gen.AddCallLogAudioFileWithBody(ctx, string(id), writer.FormDataContentType(), &buf, toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddCallLogAudioFileWithBody(ctx, string(id), contentType, body, toRequestEditors(editors)...)
 	if err != nil {
 		return false, err
 	}

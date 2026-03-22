@@ -6,10 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"mime/multipart"
 	"time"
 
 	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
+	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
@@ -1652,22 +1652,10 @@ func (p productVariationPayload) toMap() map[string]interface{} {
 	return body
 }
 
-func (p productImagePayload) toMultipart() (string, *bytes.Buffer, error) {
+func (p productImagePayload) toMultipart() (string, *bytes.Reader, error) {
 	if p.reader == nil || p.fileName == "" {
 		return "", nil, fmt.Errorf("product image file is required")
 	}
 
-	var buf bytes.Buffer
-	writer := multipart.NewWriter(&buf)
-	part, err := writer.CreateFormFile("data", p.fileName)
-	if err != nil {
-		return "", nil, fmt.Errorf("create multipart file: %w", err)
-	}
-	if _, err := io.Copy(part, p.reader); err != nil {
-		return "", nil, fmt.Errorf("write multipart file: %w", err)
-	}
-	if err := writer.Close(); err != nil {
-		return "", nil, fmt.Errorf("close multipart writer: %w", err)
-	}
-	return writer.FormDataContentType(), &buf, nil
+	return multipartbody.NewFile("data", p.fileName, p.reader)
 }

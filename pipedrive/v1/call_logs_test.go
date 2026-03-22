@@ -3,6 +3,7 @@ package v1
 import (
 	"bytes"
 	"context"
+	"errors"
 	"io"
 	"mime"
 	"mime/multipart"
@@ -241,4 +242,44 @@ func TestCallLogsService_AddRecording(t *testing.T) {
 	if !ok {
 		t.Fatalf("expected recording success")
 	}
+}
+
+func TestCallLogsService_AddRecording_SourceReadError(t *testing.T) {
+	t.Parallel()
+
+	client, err := NewClient(pipedrive.Config{
+		BaseURL: "https://example.test",
+		HTTPClient: &http.Client{Transport: roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+			defer req.Body.Close()
+			_, err := io.ReadAll(req.Body)
+			return nil, err
+		})},
+	})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	_, err = client.CallLogs.AddRecording(
+		context.Background(),
+		CallLogID("log-1"),
+		"recording.mp3",
+		&errReader{err: errors.New("boom")},
+	)
+	if err == nil || !strings.Contains(err.Error(), "boom") {
+		t.Fatalf("expected source read error, got %v", err)
+	}
+}
+
+type roundTripperFunc func(*http.Request) (*http.Response, error)
+
+func (f roundTripperFunc) RoundTrip(req *http.Request) (*http.Response, error) {
+	return f(req)
+}
+
+type errReader struct {
+	err error
+}
+
+func (r *errReader) Read(p []byte) (int, error) {
+	return 0, r.err
 }
