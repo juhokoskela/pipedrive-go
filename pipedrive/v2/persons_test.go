@@ -237,6 +237,12 @@ func TestPersonsService_Search(t *testing.T) {
 		if got := q.Get("exact_match"); got != "true" {
 			t.Fatalf("unexpected exact_match: %q", got)
 		}
+		if got := q.Get("organization_id"); got != "15" {
+			t.Fatalf("unexpected organization_id: %q", got)
+		}
+		if got := q.Get("include_fields"); got != "person.picture" {
+			t.Fatalf("unexpected include_fields: %q", got)
+		}
 		if got := q.Get("limit"); got != "2" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
@@ -258,6 +264,8 @@ func TestPersonsService_Search(t *testing.T) {
 		"ada",
 		WithPersonSearchFields(PersonSearchFieldName, PersonSearchFieldEmail),
 		WithPersonSearchExactMatch(true),
+		WithPersonSearchOrganizationID(OrganizationID(15)),
+		WithPersonSearchIncludeFields(PersonSearchIncludeFieldPicture),
 		WithPersonSearchPageSize(2),
 		WithPersonSearchCursor("c2"),
 	)

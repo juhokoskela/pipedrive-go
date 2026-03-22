@@ -20,6 +20,12 @@ const (
 	LeadSearchFieldTitle        LeadSearchField = "title"
 )
 
+type LeadSearchIncludeField string
+
+const (
+	LeadSearchIncludeFieldLeadWasSeen LeadSearchIncludeField = "lead.was_seen"
+)
+
 type LeadSearchItem struct {
 	ResultScore float64                `json:"result_score,omitempty"`
 	Item        map[string]interface{} `json:"item,omitempty"`
@@ -127,6 +133,31 @@ func WithLeadSearchFields(fields ...LeadSearchField) SearchLeadsOption {
 func WithLeadSearchExactMatch(enabled bool) SearchLeadsOption {
 	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
 		cfg.params.ExactMatch = &enabled
+	})
+}
+
+func WithLeadSearchPersonID(id PersonID) SearchLeadsOption {
+	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
+		value := int(id)
+		cfg.params.PersonId = &value
+	})
+}
+
+func WithLeadSearchOrganizationID(id OrganizationID) SearchLeadsOption {
+	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
+		value := int(id)
+		cfg.params.OrganizationId = &value
+	})
+}
+
+func WithLeadSearchIncludeFields(fields ...LeadSearchIncludeField) SearchLeadsOption {
+	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
+		csv := joinCSV(fields)
+		if csv == "" {
+			return
+		}
+		value := genv2.SearchLeadsParamsIncludeFields(csv)
+		cfg.params.IncludeFields = &value
 	})
 }
 

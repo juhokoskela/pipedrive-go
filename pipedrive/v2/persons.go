@@ -66,6 +66,12 @@ const (
 	PersonSearchFieldPhone        PersonSearchField = "phone"
 )
 
+type PersonSearchIncludeField string
+
+const (
+	PersonSearchIncludeFieldPicture PersonSearchIncludeField = "person.picture"
+)
+
 type LabeledValue struct {
 	Value   string `json:"value,omitempty"`
 	Primary bool   `json:"primary,omitempty"`
@@ -525,6 +531,24 @@ func WithPersonSearchFields(fields ...PersonSearchField) SearchPersonsOption {
 func WithPersonSearchExactMatch(enabled bool) SearchPersonsOption {
 	return searchPersonsOptionFunc(func(cfg *searchPersonsOptions) {
 		cfg.params.ExactMatch = &enabled
+	})
+}
+
+func WithPersonSearchOrganizationID(id OrganizationID) SearchPersonsOption {
+	return searchPersonsOptionFunc(func(cfg *searchPersonsOptions) {
+		value := int(id)
+		cfg.params.OrganizationId = &value
+	})
+}
+
+func WithPersonSearchIncludeFields(fields ...PersonSearchIncludeField) SearchPersonsOption {
+	return searchPersonsOptionFunc(func(cfg *searchPersonsOptions) {
+		csv := joinCSV(fields)
+		if csv == "" {
+			return
+		}
+		value := genv2.SearchPersonsParamsIncludeFields(csv)
+		cfg.params.IncludeFields = &value
 	})
 }
 
