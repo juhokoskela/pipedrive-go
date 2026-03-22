@@ -53,25 +53,34 @@ const (
 )
 
 type Webhook struct {
-	ID               WebhookID   `json:"id,omitempty"`
-	CompanyID        int         `json:"company_id,omitempty"`
-	OwnerID          *UserID     `json:"owner_id,omitempty"`
-	UserID           *UserID     `json:"user_id,omitempty"`
-	EventAction      string      `json:"event_action,omitempty"`
-	EventObject      string      `json:"event_object,omitempty"`
-	SubscriptionURL  string      `json:"subscription_url,omitempty"`
-	Version          string      `json:"version,omitempty"`
-	IsActive         NumberBool  `json:"is_active,omitempty"`
-	AddTime          *DateTime   `json:"add_time,omitempty"`
-	RemoveTime       *DateTime   `json:"remove_time,omitempty"`
-	Type             WebhookType `json:"type,omitempty"`
-	HTTPAuthUser     *string     `json:"http_auth_user,omitempty"`
-	HTTPAuthPassword *string     `json:"http_auth_password,omitempty"`
-	RemoveReason     *string     `json:"remove_reason,omitempty"`
-	LastDeliveryTime *DateTime   `json:"last_delivery_time,omitempty"`
-	LastHTTPStatus   *int        `json:"last_http_status,omitempty"`
-	AdminID          *UserID     `json:"admin_id,omitempty"`
-	Name             string      `json:"name,omitempty"`
+	ID              WebhookID   `json:"id,omitempty"`
+	CompanyID       int         `json:"company_id,omitempty"`
+	OwnerID         *UserID     `json:"owner_id,omitempty"`
+	UserID          *UserID     `json:"user_id,omitempty"`
+	EventAction     string      `json:"event_action,omitempty"`
+	EventObject     string      `json:"event_object,omitempty"`
+	SubscriptionURL string      `json:"subscription_url,omitempty"`
+	Version         string      `json:"version,omitempty"`
+	IsActive        NumberBool  `json:"is_active,omitempty"`
+	AddTime         *DateTime   `json:"add_time,omitempty"`
+	RemoveTime      *DateTime   `json:"remove_time,omitempty"`
+	Type            WebhookType `json:"type,omitempty"`
+	HTTPAuthUser    *string     `json:"http_auth_user,omitempty"`
+	// HTTPAuthPassword is sensitive and may be returned by the API.
+	HTTPAuthPassword *string   `json:"http_auth_password,omitempty"`
+	RemoveReason     *string   `json:"remove_reason,omitempty"`
+	LastDeliveryTime *DateTime `json:"last_delivery_time,omitempty"`
+	LastHTTPStatus   *int      `json:"last_http_status,omitempty"`
+	AdminID          *UserID   `json:"admin_id,omitempty"`
+	Name             string    `json:"name,omitempty"`
+}
+
+func (w Webhook) String() string {
+	return w.displayString()
+}
+
+func (w Webhook) GoString() string {
+	return w.displayString()
 }
 
 type WebhooksService struct {
@@ -208,6 +217,27 @@ func WithWebhookVersion(version WebhookVersion) CreateWebhookOption {
 	return webhookFieldOption(func(cfg *webhookPayload) {
 		cfg.version = &version
 	})
+}
+
+func (w Webhook) displayString() string {
+	httpAuthUser := "<nil>"
+	if w.HTTPAuthUser != nil {
+		httpAuthUser = fmt.Sprintf("%q", *w.HTTPAuthUser)
+	}
+
+	httpAuthPassword := "<nil>"
+	if w.HTTPAuthPassword != nil {
+		httpAuthPassword = "[REDACTED]"
+	}
+
+	return fmt.Sprintf(
+		"Webhook{ID:%d Name:%q Type:%q HTTPAuthUser:%s HTTPAuthPassword:%s}",
+		w.ID,
+		w.Name,
+		w.Type,
+		httpAuthUser,
+		httpAuthPassword,
+	)
 }
 
 func newListWebhooksOptions(opts []ListWebhooksOption) listWebhooksOptions {
