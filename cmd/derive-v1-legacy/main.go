@@ -27,15 +27,17 @@ func main() {
 	derived, report, err := specdiff.DeriveV1Legacy(v1, v2, nil)
 	fatalIf(err, "derive v1-legacy spec")
 
-	fatalIf(os.MkdirAll(filepath.Dir(*outPath), 0o755), "create output directory")
-	fatalIf(os.WriteFile(*outPath, derived, 0o644), "write derived spec")
+	fatalIf(os.MkdirAll(filepath.Dir(*outPath), 0o750), "create output directory")
+	// #nosec G306,G703 -- This CLI intentionally writes to the explicit user-provided output path.
+	fatalIf(os.WriteFile(*outPath, derived, 0o600), "write derived spec")
 
 	reportJSON, err := json.MarshalIndent(report, "", "  ")
 	fatalIf(err, "encode report")
 	reportJSON = append(reportJSON, '\n')
 
-	fatalIf(os.MkdirAll(filepath.Dir(*reportPath), 0o755), "create report directory")
-	fatalIf(os.WriteFile(*reportPath, reportJSON, 0o644), "write report")
+	fatalIf(os.MkdirAll(filepath.Dir(*reportPath), 0o750), "create report directory")
+	// #nosec G306,G703 -- This CLI intentionally writes to the explicit user-provided report path.
+	fatalIf(os.WriteFile(*reportPath, reportJSON, 0o600), "write report")
 
 	fmt.Fprintf(os.Stderr, "derived %s (v1 ops=%d, v2 ops=%d, removed=%d, legacy=%d)\n",
 		*outPath, report.V1Operations, report.V2Operations, report.RemovedOperations, report.LegacyOperations)
