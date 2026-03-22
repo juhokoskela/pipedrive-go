@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -791,6 +792,31 @@ func TestProductsService_UpdateImage(t *testing.T) {
 	}
 }
 
+func TestProductsService_UploadImage_SourceReadError(t *testing.T) {
+	t.Parallel()
+
+	client, err := NewClient(pipedrive.Config{
+		BaseURL: "https://example.test",
+		HTTPClient: &http.Client{Transport: roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+			defer req.Body.Close()
+			_, err := io.ReadAll(req.Body)
+			return nil, err
+		})},
+	})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	_, err = client.Products.UploadImage(
+		context.Background(),
+		ProductID(5),
+		WithProductImageFile("image.png", &errReader{err: errors.New("boom")}),
+	)
+	if err == nil || !strings.Contains(err.Error(), "boom") {
+		t.Fatalf("expected source read error, got %v", err)
+	}
+}
+
 func TestProductsService_DeleteImage(t *testing.T) {
 	t.Parallel()
 
@@ -819,4 +845,18 @@ func TestProductsService_DeleteImage(t *testing.T) {
 	if result.ID != 11 {
 		t.Fatalf("unexpected result: %#v", result)
 	}
+}
+
+type roundTripperFunc func(*http.Request) (*http.Response, error)
+
+func (f roundTripperFunc) RoundTrip(req *http.Request) (*http.Response, error) {
+	return f(req)
+}
+
+type errReader struct {
+	err error
+}
+
+func (r *errReader) Read(p []byte) (int, error) {
+	return 0, r.err
 }
