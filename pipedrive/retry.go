@@ -2,9 +2,10 @@ package pipedrive
 
 import (
 	"context"
+	"errors"
 	"io"
 	"math"
-	"math/rand"
+	rand "math/rand/v2"
 	"net/http"
 	"time"
 )
@@ -60,7 +61,7 @@ func newRetryTransport(next http.RoundTripper, policy RetryPolicy, opts retryTra
 
 func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if req == nil {
-		return nil, nil
+		return nil, errors.New("pipedrive: nil request")
 	}
 
 	policy := t.policy
@@ -75,7 +76,7 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	origGetBody := req.GetBody
 	canReplayBody := req.Body == nil || req.Body == http.NoBody || origGetBody != nil
 
-	for attempt := 1; attempt <= t.policy.MaxAttempts; attempt++ {
+	for attempt := 1; ; attempt++ {
 		attemptReq := req
 		if attempt > 1 {
 			attemptReq = req.Clone(req.Context())
@@ -105,8 +106,6 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 			}
 		}
 	}
-
-	return t.next.RoundTrip(req)
 }
 
 func (t *retryTransport) shouldRetry(attempt int, req *http.Request, canReplayBody bool, resp *http.Response, err error, policy RetryPolicy) bool {
@@ -162,7 +161,8 @@ func fullJitter(d time.Duration) time.Duration {
 	if d <= 0 {
 		return 0
 	}
-	return time.Duration(rand.Float64() * float64(d))
+	// #nosec G404 -- Retry jitter only needs inexpensive non-cryptographic randomness.
+	return time.Duration(rand.Int64N(int64(d)))
 }
 
 func sleepWithContext(ctx context.Context, d time.Duration) error {
