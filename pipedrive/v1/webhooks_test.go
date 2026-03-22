@@ -180,3 +180,25 @@ func TestWebhookStringRedactsHTTPAuthPassword(t *testing.T) {
 		t.Fatalf("expected redacted marker in %%q: %q", quoted)
 	}
 }
+
+func TestWebhookMarshalJSONRedactsHTTPAuthPassword(t *testing.T) {
+	t.Parallel()
+
+	password := "super-secret"
+	webhook := Webhook{
+		ID:               1,
+		Name:             "Webhook",
+		HTTPAuthPassword: &password,
+	}
+
+	data, err := json.Marshal(webhook)
+	if err != nil {
+		t.Fatalf("Marshal error: %v", err)
+	}
+	if strings.Contains(string(data), password) {
+		t.Fatalf("expected password to be redacted in JSON: %s", data)
+	}
+	if !strings.Contains(string(data), "[REDACTED]") {
+		t.Fatalf("expected redacted marker in JSON: %s", data)
+	}
+}

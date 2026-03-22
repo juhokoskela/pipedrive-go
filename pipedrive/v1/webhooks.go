@@ -75,6 +75,20 @@ type Webhook struct {
 	Name             string    `json:"name,omitempty"`
 }
 
+func (w Webhook) MarshalJSON() ([]byte, error) {
+	type webhookAlias Webhook
+
+	payload := struct {
+		webhookAlias
+		HTTPAuthPassword *string `json:"http_auth_password,omitempty"`
+	}{
+		webhookAlias:      webhookAlias(w),
+		HTTPAuthPassword: redactWebhookPassword(w.HTTPAuthPassword),
+	}
+
+	return json.Marshal(payload)
+}
+
 func (w Webhook) String() string {
 	return w.displayString()
 }
@@ -226,8 +240,8 @@ func (w Webhook) displayString() string {
 	}
 
 	httpAuthPassword := "<nil>"
-	if w.HTTPAuthPassword != nil {
-		httpAuthPassword = "[REDACTED]"
+	if redacted := redactWebhookPassword(w.HTTPAuthPassword); redacted != nil {
+		httpAuthPassword = *redacted
 	}
 
 	return fmt.Sprintf(
@@ -238,6 +252,14 @@ func (w Webhook) displayString() string {
 		httpAuthUser,
 		httpAuthPassword,
 	)
+}
+
+func redactWebhookPassword(password *string) *string {
+	if password == nil {
+		return nil
+	}
+	redacted := "[REDACTED]"
+	return &redacted
 }
 
 func newListWebhooksOptions(opts []ListWebhooksOption) listWebhooksOptions {
