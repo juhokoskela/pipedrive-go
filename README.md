@@ -1,5 +1,7 @@
 # pipedrive-go
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/juhokoskela/pipedrive-go)](https://goreportcard.com/report/github.com/juhokoskela/pipedrive-go)
+
 Go SDK for the Pipedrive API with a handwritten, stable public surface.
 
 - API v2: full support
