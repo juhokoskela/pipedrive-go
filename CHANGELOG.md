@@ -7,6 +7,16 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-04-14
+
+### Added
+- Add a Go Report Card badge to the README.
+
+### Changed
+- Bump the Go toolchain and preferred CI version from 1.26.1 to 1.26.2.
+- Bump `github.com/oapi-codegen/runtime` to v1.4.0.
+- Update GitHub Actions: `actions/setup-go` to v6.4.0 and `github/codeql-action` to v4.35.1.
+
 ## [1.0.4] - 2026-03-22
 
 ### Added
