@@ -7,6 +7,13 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.0.7] - 2026-06-05
+
+### Changed
+
+- Bump the Go toolchain and preferred CI version from 1.26.3 to 1.26.4
+- Bump CodeQL & Checkout action versions
+
 ## [1.0.6] - 2026-06-01
 
 ### Changed
