@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go: ["1.25.0", "1.26.3"]
+        go: ["1.25.0", "1.26.4"]
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
@@ -40,7 +40,7 @@ jobs:
         run: test -z "$(gofmt -l .)"
 
       - name: Lint
-        if: matrix.go == '1.26.3'
+        if: matrix.go == '1.26.4'
         run: make lint
 
       - name: Test
@@ -54,7 +54,7 @@ jobs:
 
       - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6
         with:
-          go-version: "1.26.3"
+          go-version: "1.26.4"
           cache: true
 
       - name: Security
