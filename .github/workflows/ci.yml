@@ -57,6 +57,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: /tmp/pipedrive-go.cover
           format: golang
+          coverage-reporter-version: v0.6.17
 
   security:
     runs-on: ubuntu-latest
