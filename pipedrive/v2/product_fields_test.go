@@ -164,3 +164,101 @@ func TestProductFieldsService_AddOptions(t *testing.T) {
 		t.Fatalf("unexpected options: %#v", options)
 	}
 }
+
+func TestProductFieldsService_Get(t *testing.T) {
+	t.Parallel()
+
+	runFieldGetTest(t, "/productFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.ProductFields.Get(
+			ctx,
+			"cf_1",
+			WithProductFieldIncludeFields(FieldIncludeField("ui_visibility"), FieldIncludeField("important_fields")),
+			WithProductFieldRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+		)
+	})
+}
+
+func TestProductFieldsService_ListPager(t *testing.T) {
+	t.Parallel()
+
+	runFieldListPagerTest(t, "/productFields", func(client *Client) *pipedrive.CursorPager[Field] {
+		return client.ProductFields.ListPager(WithProductFieldsPageSize(2), WithProductFieldsCursor("start"))
+	})
+}
+
+func TestProductFieldsService_ForEach(t *testing.T) {
+	t.Parallel()
+
+	runFieldForEachTest(t, "/productFields", func(ctx context.Context, client *Client, fn func(Field) error) error {
+		return client.ProductFields.ForEach(ctx, fn)
+	})
+}
+
+func TestProductFieldsService_Update(t *testing.T) {
+	t.Parallel()
+
+	runFieldUpdateTest(t, "/productFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.ProductFields.Update(
+			ctx,
+			"cf_1",
+			WithProductFieldName("Priority updated"),
+			WithProductFieldType(FieldTypeVarchar),
+			WithProductFieldDescription("Updated description"),
+			WithProductFieldUIVisibility(map[string]interface{}{"add": true}),
+			WithProductFieldImportantFields(map[string]interface{}{"pipeline_id": 1}),
+			WithProductFieldRequiredFields(map[string]interface{}{"stage_id": 2}),
+			WithProductFieldRequestOptions(pipedrive.WithHeader("X-Test", "update")),
+		)
+	})
+}
+
+func TestProductFieldsService_Delete(t *testing.T) {
+	t.Parallel()
+
+	runFieldDeleteTest(t, "/productFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.ProductFields.Delete(
+			ctx,
+			"cf_1",
+			WithProductFieldRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+		)
+	})
+}
+
+func TestProductFieldsService_AddOptionsWithRequestOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldAddOptionsRequestOptionsTest(t, "/productFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.ProductFields.AddOptions(
+			ctx,
+			"cf_1",
+			[]string{"Critical"},
+			WithProductFieldRequestOptions(pipedrive.WithHeader("X-Test", "add-options")),
+		)
+	})
+}
+
+func TestProductFieldsService_UpdateOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldUpdateOptionsTest(t, "/productFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.ProductFields.UpdateOptions(
+			ctx,
+			"cf_1",
+			[]FieldOptionUpdate{{ID: 1, Label: "Critical"}},
+			WithProductFieldRequestOptions(pipedrive.WithHeader("X-Test", "update-options")),
+		)
+	})
+}
+
+func TestProductFieldsService_DeleteOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldDeleteOptionsTest(t, "/productFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.ProductFields.DeleteOptions(
+			ctx,
+			"cf_1",
+			[]int{1, 2},
+			WithProductFieldRequestOptions(pipedrive.WithHeader("X-Test", "delete-options")),
+		)
+	})
+}

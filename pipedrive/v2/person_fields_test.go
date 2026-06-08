@@ -164,3 +164,101 @@ func TestPersonFieldsService_AddOptions(t *testing.T) {
 		t.Fatalf("unexpected options: %#v", options)
 	}
 }
+
+func TestPersonFieldsService_Get(t *testing.T) {
+	t.Parallel()
+
+	runFieldGetTest(t, "/personFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.PersonFields.Get(
+			ctx,
+			"cf_1",
+			WithPersonFieldIncludeFields(FieldIncludeField("ui_visibility"), FieldIncludeField("important_fields")),
+			WithPersonFieldRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+		)
+	})
+}
+
+func TestPersonFieldsService_ListPager(t *testing.T) {
+	t.Parallel()
+
+	runFieldListPagerTest(t, "/personFields", func(client *Client) *pipedrive.CursorPager[Field] {
+		return client.PersonFields.ListPager(WithPersonFieldsPageSize(2), WithPersonFieldsCursor("start"))
+	})
+}
+
+func TestPersonFieldsService_ForEach(t *testing.T) {
+	t.Parallel()
+
+	runFieldForEachTest(t, "/personFields", func(ctx context.Context, client *Client, fn func(Field) error) error {
+		return client.PersonFields.ForEach(ctx, fn)
+	})
+}
+
+func TestPersonFieldsService_Update(t *testing.T) {
+	t.Parallel()
+
+	runFieldUpdateTest(t, "/personFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.PersonFields.Update(
+			ctx,
+			"cf_1",
+			WithPersonFieldName("Priority updated"),
+			WithPersonFieldType(FieldTypeVarchar),
+			WithPersonFieldDescription("Updated description"),
+			WithPersonFieldUIVisibility(map[string]interface{}{"add": true}),
+			WithPersonFieldImportantFields(map[string]interface{}{"pipeline_id": 1}),
+			WithPersonFieldRequiredFields(map[string]interface{}{"stage_id": 2}),
+			WithPersonFieldRequestOptions(pipedrive.WithHeader("X-Test", "update")),
+		)
+	})
+}
+
+func TestPersonFieldsService_Delete(t *testing.T) {
+	t.Parallel()
+
+	runFieldDeleteTest(t, "/personFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.PersonFields.Delete(
+			ctx,
+			"cf_1",
+			WithPersonFieldRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+		)
+	})
+}
+
+func TestPersonFieldsService_AddOptionsWithRequestOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldAddOptionsRequestOptionsTest(t, "/personFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.PersonFields.AddOptions(
+			ctx,
+			"cf_1",
+			[]string{"Critical"},
+			WithPersonFieldRequestOptions(pipedrive.WithHeader("X-Test", "add-options")),
+		)
+	})
+}
+
+func TestPersonFieldsService_UpdateOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldUpdateOptionsTest(t, "/personFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.PersonFields.UpdateOptions(
+			ctx,
+			"cf_1",
+			[]FieldOptionUpdate{{ID: 1, Label: "Critical"}},
+			WithPersonFieldRequestOptions(pipedrive.WithHeader("X-Test", "update-options")),
+		)
+	})
+}
+
+func TestPersonFieldsService_DeleteOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldDeleteOptionsTest(t, "/personFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.PersonFields.DeleteOptions(
+			ctx,
+			"cf_1",
+			[]int{1, 2},
+			WithPersonFieldRequestOptions(pipedrive.WithHeader("X-Test", "delete-options")),
+		)
+	})
+}
