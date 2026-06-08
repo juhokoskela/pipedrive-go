@@ -60,6 +60,9 @@ func TestWebhooksService_Create(t *testing.T) {
 		if r.URL.Path != "/webhooks" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 			t.Fatalf("decode request: %v", err)
@@ -82,6 +85,12 @@ func TestWebhooksService_Create(t *testing.T) {
 		if payload["user_id"] != float64(7) {
 			t.Fatalf("unexpected user_id: %#v", payload["user_id"])
 		}
+		if payload["http_auth_user"] != "api-user" {
+			t.Fatalf("unexpected http_auth_user: %#v", payload["http_auth_user"])
+		}
+		if payload["http_auth_password"] != "api-pass" {
+			t.Fatalf("unexpected http_auth_password: %#v", payload["http_auth_password"])
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":9,"name":"Webhook","event_action":"create","event_object":"deal","subscription_url":"http://example.org","is_active":1}}`))
 	}))
@@ -99,7 +108,10 @@ func TestWebhooksService_Create(t *testing.T) {
 		WithWebhookEventObject(WebhookEventObjectDeal),
 		WithWebhookName("Webhook"),
 		WithWebhookUserID(7),
+		WithWebhookHTTPAuthUser("api-user"),
+		WithWebhookHTTPAuthPassword("api-pass"),
 		WithWebhookVersion(WebhookVersion2),
+		WithWebhooksRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
@@ -119,6 +131,9 @@ func TestWebhooksService_Delete(t *testing.T) {
 		if r.URL.Path != "/webhooks/9" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"status":"ok"}`))
 	}))
@@ -129,7 +144,11 @@ func TestWebhooksService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.Webhooks.Delete(context.Background(), 9)
+	ok, err := client.Webhooks.Delete(
+		context.Background(),
+		9,
+		WithWebhooksRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}

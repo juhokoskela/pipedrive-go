@@ -58,6 +58,9 @@ func TestLeadLabelsService_Create(t *testing.T) {
 		if r.URL.Path != "/leadLabels" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -84,6 +87,7 @@ func TestLeadLabelsService_Create(t *testing.T) {
 		context.Background(),
 		WithLeadLabelName("Hot"),
 		WithLeadLabelColor(LeadLabelColorRed),
+		WithLeadLabelsRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
@@ -102,6 +106,9 @@ func TestLeadLabelsService_Update(t *testing.T) {
 		}
 		if r.URL.Path != "/leadLabels/f08b42a0-4e75-11ea-9643-03698ef1cfd6" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 
 		var payload map[string]interface{}
@@ -126,6 +133,7 @@ func TestLeadLabelsService_Update(t *testing.T) {
 		context.Background(),
 		LeadLabelID("f08b42a0-4e75-11ea-9643-03698ef1cfd6"),
 		WithLeadLabelColor(LeadLabelColorBlue),
+		WithLeadLabelsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -145,6 +153,9 @@ func TestLeadLabelsService_Delete(t *testing.T) {
 		if r.URL.Path != "/leadLabels/f08b42a0-4e75-11ea-9643-03698ef1cfd6" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":"f08b42a0-4e75-11ea-9643-03698ef1cfd6"}}`))
@@ -156,7 +167,11 @@ func TestLeadLabelsService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	result, err := client.LeadLabels.Delete(context.Background(), LeadLabelID("f08b42a0-4e75-11ea-9643-03698ef1cfd6"))
+	result, err := client.LeadLabels.Delete(
+		context.Background(),
+		LeadLabelID("f08b42a0-4e75-11ea-9643-03698ef1cfd6"),
+		WithLeadLabelsRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}

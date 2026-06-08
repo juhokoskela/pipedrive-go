@@ -95,6 +95,9 @@ func TestUsersService_Get(t *testing.T) {
 		if r.URL.Path != "/users/9" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":9,"name":"Sam","email":"sam@example.com","active_flag":true}}`))
@@ -106,7 +109,11 @@ func TestUsersService_Get(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	user, err := client.Users.Get(context.Background(), UserID(9))
+	user, err := client.Users.Get(
+		context.Background(),
+		UserID(9),
+		WithUsersRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+	)
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
 	}
@@ -125,6 +132,9 @@ func TestUsersService_GetCurrent(t *testing.T) {
 		if r.URL.Path != "/users/me" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "current" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":1,"name":"Me","email":"me@example.com","company_id":42,"company_name":"Acme","language":{"language_code":"en","country_code":"US"}}}`))
@@ -136,7 +146,10 @@ func TestUsersService_GetCurrent(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	user, err := client.Users.GetCurrent(context.Background())
+	user, err := client.Users.GetCurrent(
+		context.Background(),
+		WithUsersRequestOptions(pipedrive.WithHeader("X-Test", "current")),
+	)
 	if err != nil {
 		t.Fatalf("GetCurrent error: %v", err)
 	}

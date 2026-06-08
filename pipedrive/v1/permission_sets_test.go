@@ -102,6 +102,9 @@ func TestPermissionSetsService_ListAssignments(t *testing.T) {
 		if got := r.URL.Query().Get("limit"); got != "1" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "assignments" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[{"user_id":10,"permission_set_id":"` + id + `","name":"Sales admin"}]}`))
 	}))
@@ -117,6 +120,7 @@ func TestPermissionSetsService_ListAssignments(t *testing.T) {
 		PermissionSetID(id),
 		WithPermissionSetAssignmentsStart(2),
 		WithPermissionSetAssignmentsLimit(1),
+		WithPermissionSetsRequestOptions(pipedrive.WithHeader("X-Test", "assignments")),
 	)
 	if err != nil {
 		t.Fatalf("ListAssignments error: %v", err)
