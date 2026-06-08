@@ -253,6 +253,77 @@ func TestOrganizationsService_ListFollowers(t *testing.T) {
 	}
 }
 
+func TestOrganizationsService_ListFollowersPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5/followers" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"user_id":1}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"user_id":2}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Organizations.ListFollowersPager(OrganizationID(5), WithOrganizationFollowersCursor("start"))
+	var ids []UserID
+	for pager.Next(context.Background()) {
+		for _, follower := range pager.Items() {
+			ids = append(ids, follower.UserID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestOrganizationsService_ForEachFollowers(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5/followers" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"user_id":1},{"user_id":2}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []UserID
+	err := client.Organizations.ForEachFollowers(context.Background(), OrganizationID(5), func(follower Follower) error {
+		ids = append(ids, follower.UserID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEachFollowers error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
 func TestOrganizationsService_AddFollower(t *testing.T) {
 	t.Parallel()
 
@@ -288,6 +359,29 @@ func TestOrganizationsService_AddFollower(t *testing.T) {
 	}
 	if follower.UserID != 7 {
 		t.Fatalf("unexpected follower: %#v", follower)
+	}
+}
+
+func TestOrganizationsService_DeleteFollower(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodDelete {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5/followers/7" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"user_id":7}}`))
+	})
+
+	result, err := client.Organizations.DeleteFollower(context.Background(), OrganizationID(5), UserID(7))
+	if err != nil {
+		t.Fatalf("DeleteFollower error: %v", err)
+	}
+	if result.UserID != 7 {
+		t.Fatalf("unexpected result: %#v", result)
 	}
 }
 
@@ -332,5 +426,267 @@ func TestOrganizationsService_FollowersChangelog(t *testing.T) {
 	}
 	if len(changelog) != 1 || changelog[0].FollowerUserID != 2 {
 		t.Fatalf("unexpected changelog: %#v", changelog)
+	}
+}
+
+func TestOrganizationsService_FollowersChangelogPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5/followers/changelog" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"follower_user_id":1}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"follower_user_id":2}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Organizations.FollowersChangelogPager(OrganizationID(5), WithOrganizationFollowersChangelogCursor("start"))
+	var ids []UserID
+	for pager.Next(context.Background()) {
+		for _, entry := range pager.Items() {
+			ids = append(ids, entry.FollowerUserID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestOrganizationsService_ForEachFollowersChangelog(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5/followers/changelog" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"follower_user_id":1},{"follower_user_id":2}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []UserID
+	err := client.Organizations.ForEachFollowersChangelog(context.Background(), OrganizationID(5), func(entry FollowerChangelog) error {
+		ids = append(ids, entry.FollowerUserID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEachFollowersChangelog error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestOrganizationsService_Get(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("include_fields"); got != "people_count,notes_count" {
+			t.Fatalf("unexpected include_fields: %q", got)
+		}
+		if got := r.URL.Query().Get("custom_fields"); got != "cf_1,cf_2" {
+			t.Fatalf("unexpected custom_fields: %q", got)
+		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":5,"name":"Acme"}}`))
+	})
+
+	org, err := client.Organizations.Get(
+		context.Background(),
+		OrganizationID(5),
+		WithOrganizationIncludeFields(OrganizationIncludeFieldPeopleCount, OrganizationIncludeFieldNotesCount),
+		WithOrganizationCustomFields("cf_1", "cf_2"),
+		WithOrganizationRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+	)
+	if err != nil {
+		t.Fatalf("Get error: %v", err)
+	}
+	if org.ID != 5 || org.Name != "Acme" {
+		t.Fatalf("unexpected org: %#v", org)
+	}
+}
+
+func TestOrganizationsService_ListPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":1}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":2}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Organizations.ListPager(WithOrganizationsPageSize(2), WithOrganizationsCursor("start"))
+	var ids []OrganizationID
+	for pager.Next(context.Background()) {
+		for _, org := range pager.Items() {
+			ids = append(ids, org.ID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestOrganizationsService_ForEach(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"id":1},{"id":2}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []OrganizationID
+	err := client.Organizations.ForEach(context.Background(), func(org Organization) error {
+		ids = append(ids, org.ID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEach error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestOrganizationsService_Update(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPatch {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+
+		var payload map[string]interface{}
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			t.Fatalf("decode body: %v", err)
+		}
+		if payload["name"] != "Updated" {
+			t.Fatalf("unexpected name: %#v", payload["name"])
+		}
+		if payload["visible_to"] != float64(3) {
+			t.Fatalf("unexpected visible_to: %#v", payload["visible_to"])
+		}
+		labels, ok := payload["label_ids"].([]interface{})
+		if !ok || len(labels) != 2 || labels[0] != float64(10) || labels[1] != float64(11) {
+			t.Fatalf("unexpected label_ids: %#v", payload["label_ids"])
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":5,"name":"Updated"}}`))
+	})
+
+	org, err := client.Organizations.Update(
+		context.Background(),
+		OrganizationID(5),
+		WithOrganizationName("Updated"),
+		WithOrganizationLabelIDs(10, 11),
+		WithOrganizationVisibleTo(3),
+		WithOrganizationRequestOptions(pipedrive.WithHeader("X-Test", "update")),
+	)
+	if err != nil {
+		t.Fatalf("Update error: %v", err)
+	}
+	if org.ID != 5 || org.Name != "Updated" {
+		t.Fatalf("unexpected org: %#v", org)
+	}
+}
+
+func TestOrganizationsService_Delete(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodDelete {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/organizations/5" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":5}}`))
+	})
+
+	result, err := client.Organizations.Delete(
+		context.Background(),
+		OrganizationID(5),
+		WithOrganizationRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
+	if err != nil {
+		t.Fatalf("Delete error: %v", err)
+	}
+	if result.ID != 5 {
+		t.Fatalf("unexpected result: %#v", result)
 	}
 }
