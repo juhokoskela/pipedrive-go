@@ -46,6 +46,18 @@ jobs:
       - name: Test
         run: go test ./...
 
+      - name: SDK coverage
+        if: matrix.go == '1.26.4'
+        run: go test -coverprofile=/tmp/pipedrive-go.cover -covermode=count ./pipedrive ./pipedrive/v1 ./pipedrive/v2
+
+      - name: Coveralls
+        if: matrix.go == '1.26.4'
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # v2.3.6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: /tmp/pipedrive-go.cover
+          format: golang
+
   security:
     runs-on: ubuntu-latest
     needs: test
