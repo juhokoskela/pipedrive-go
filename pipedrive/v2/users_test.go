@@ -56,3 +56,85 @@ func TestUsersService_ListFollowers(t *testing.T) {
 		t.Fatalf("unexpected followers: %#v", followers)
 	}
 }
+
+func TestUsersService_ListFollowersPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/users/7/followers" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		if got := r.Header.Get("X-Test"); got != "pager" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"user_id":3}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"user_id":4}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Users.ListFollowersPager(
+		UserID(7),
+		WithUserFollowersPageSize(2),
+		WithUserFollowersCursor("start"),
+		WithUserFollowersRequestOptions(pipedrive.WithHeader("X-Test", "pager")),
+	)
+	var ids []UserID
+	for pager.Next(context.Background()) {
+		for _, follower := range pager.Items() {
+			ids = append(ids, follower.UserID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 3 || ids[1] != 4 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestUsersService_ForEachFollowers(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/users/7/followers" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"user_id":3},{"user_id":4}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []UserID
+	err := client.Users.ForEachFollowers(context.Background(), UserID(7), func(follower Follower) error {
+		ids = append(ids, follower.UserID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEachFollowers error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 3 || ids[1] != 4 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
