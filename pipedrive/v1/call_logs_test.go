@@ -83,10 +83,28 @@ func TestCallLogsService_Create(t *testing.T) {
 		if r.URL.Path != "/callLogs" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatalf("read body: %v", err)
+		}
+		if !strings.Contains(string(body), "\"user_id\":7") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"activity_id\":8") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"subject\":\"Discovery call\"") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"duration\":\"00:01:00\"") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"from_phone_number\":\"+321\"") {
+			t.Fatalf("unexpected body: %s", body)
 		}
 		if !strings.Contains(string(body), "\"to_phone_number\":\"+123\"") {
 			t.Fatalf("unexpected body: %s", body)
@@ -95,6 +113,21 @@ func TestCallLogsService_Create(t *testing.T) {
 			t.Fatalf("unexpected body: %s", body)
 		}
 		if !strings.Contains(string(body), "\"start_time\":\"2022-12-12 01:01:01\"") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"person_id\":9") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"org_id\":10") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"deal_id\":11") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"lead_id\":\"adf21080-0e10-11eb-879b-05d71fb426ec\"") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"note\":\"Call notes\"") {
 			t.Fatalf("unexpected body: %s", body)
 		}
 
@@ -110,10 +143,21 @@ func TestCallLogsService_Create(t *testing.T) {
 
 	log, err := client.CallLogs.Create(
 		context.Background(),
+		WithCallLogUserID(UserID(7)),
+		WithCallLogActivityID(ActivityID(8)),
+		WithCallLogSubject("Discovery call"),
+		WithCallLogDuration("00:01:00"),
+		WithCallLogFromPhoneNumber("+321"),
 		WithCallLogToPhoneNumber("+123"),
 		WithCallLogOutcome(CallLogOutcomeConnected),
 		WithCallLogStartTime(start),
 		WithCallLogEndTime(end),
+		WithCallLogPersonID(PersonID(9)),
+		WithCallLogOrganizationID(OrganizationID(10)),
+		WithCallLogDealID(DealID(11)),
+		WithCallLogLeadID(LeadID("adf21080-0e10-11eb-879b-05d71fb426ec")),
+		WithCallLogNote("Call notes"),
+		WithCallLogsRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
@@ -136,6 +180,9 @@ func TestCallLogsService_Get(t *testing.T) {
 		if r.URL.Path != "/callLogs/log-1" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":"log-1","outcome":"busy","to_phone_number":"+123","start_time":"2022-12-12 01:01:01","end_time":"2022-12-12 01:02:01"}}`))
 	}))
@@ -146,7 +193,11 @@ func TestCallLogsService_Get(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	log, err := client.CallLogs.Get(context.Background(), CallLogID("log-1"))
+	log, err := client.CallLogs.Get(
+		context.Background(),
+		CallLogID("log-1"),
+		WithCallLogsRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+	)
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
 	}
@@ -165,6 +216,9 @@ func TestCallLogsService_Delete(t *testing.T) {
 		if r.URL.Path != "/callLogs/log-1" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true}`))
 	}))
@@ -175,7 +229,11 @@ func TestCallLogsService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.CallLogs.Delete(context.Background(), CallLogID("log-1"))
+	ok, err := client.CallLogs.Delete(
+		context.Background(),
+		CallLogID("log-1"),
+		WithCallLogsRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
@@ -195,6 +253,9 @@ func TestCallLogsService_AddRecording(t *testing.T) {
 		}
 		if r.URL.Path != "/callLogs/log-1/recordings" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "recording" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 
 		contentType := r.Header.Get("Content-Type")
@@ -235,7 +296,13 @@ func TestCallLogsService_AddRecording(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.CallLogs.AddRecording(context.Background(), CallLogID("log-1"), "recording.mp3", bytes.NewReader(audio))
+	ok, err := client.CallLogs.AddRecording(
+		context.Background(),
+		CallLogID("log-1"),
+		"recording.mp3",
+		bytes.NewReader(audio),
+		WithCallLogsRequestOptions(pipedrive.WithHeader("X-Test", "recording")),
+	)
 	if err != nil {
 		t.Fatalf("AddRecording error: %v", err)
 	}

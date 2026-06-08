@@ -96,6 +96,27 @@ func TestLeadsService_ListArchived(t *testing.T) {
 		if got := r.URL.Query().Get("limit"); got != "1" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
+		if got := r.URL.Query().Get("start"); got != "2" {
+			t.Fatalf("unexpected start: %q", got)
+		}
+		if got := r.URL.Query().Get("owner_id"); got != "7" {
+			t.Fatalf("unexpected owner_id: %q", got)
+		}
+		if got := r.URL.Query().Get("person_id"); got != "9" {
+			t.Fatalf("unexpected person_id: %q", got)
+		}
+		if got := r.URL.Query().Get("organization_id"); got != "11" {
+			t.Fatalf("unexpected organization_id: %q", got)
+		}
+		if got := r.URL.Query().Get("filter_id"); got != "3" {
+			t.Fatalf("unexpected filter_id: %q", got)
+		}
+		if got := r.URL.Query().Get("sort"); got != "update_time ASC" {
+			t.Fatalf("unexpected sort: %q", got)
+		}
+		if got := r.Header.Get("X-Test"); got != "archived" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":"adf21080-0e10-11eb-879b-05d71fb426ec","title":"Archived","is_archived":true,"add_time":"2020-10-14T11:30:36.551Z"}],"additional_data":{"start":0,"limit":1,"more_items_in_collection":false}}`))
 	}))
@@ -106,7 +127,17 @@ func TestLeadsService_ListArchived(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	leads, page, err := client.Leads.ListArchived(context.Background(), WithArchivedLeadsLimit(1))
+	leads, page, err := client.Leads.ListArchived(
+		context.Background(),
+		WithArchivedLeadsLimit(1),
+		WithArchivedLeadsStart(2),
+		WithArchivedLeadsOwnerID(UserID(7)),
+		WithArchivedLeadsPersonID(PersonID(9)),
+		WithArchivedLeadsOrganizationID(OrganizationID(11)),
+		WithArchivedLeadsFilterID(3),
+		WithArchivedLeadsSort("update_time ASC"),
+		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "archived")),
+	)
 	if err != nil {
 		t.Fatalf("ListArchived error: %v", err)
 	}
@@ -129,6 +160,9 @@ func TestLeadsService_Get(t *testing.T) {
 		if r.URL.Path != "/leads/"+id {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":"` + id + `","title":"Lead","add_time":"2020-10-14T11:30:36.551Z"}}`))
 	}))
@@ -139,7 +173,11 @@ func TestLeadsService_Get(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	lead, err := client.Leads.Get(context.Background(), LeadID(id))
+	lead, err := client.Leads.Get(
+		context.Background(),
+		LeadID(id),
+		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+	)
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
 	}
@@ -160,6 +198,9 @@ func TestLeadsService_Create(t *testing.T) {
 		if r.URL.Path != "/leads" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -171,11 +212,33 @@ func TestLeadsService_Create(t *testing.T) {
 		if payload["person_id"] != float64(9) {
 			t.Fatalf("unexpected person_id: %#v", payload["person_id"])
 		}
+		if payload["owner_id"] != float64(7) {
+			t.Fatalf("unexpected owner_id: %#v", payload["owner_id"])
+		}
+		if payload["organization_id"] != float64(11) {
+			t.Fatalf("unexpected organization_id: %#v", payload["organization_id"])
+		}
+		value, ok := payload["value"].(map[string]interface{})
+		if !ok || value["amount"] != float64(1000) || value["currency"] != "EUR" {
+			t.Fatalf("unexpected value: %#v", payload["value"])
+		}
 		if payload["expected_close_date"] != "2024-01-10" {
 			t.Fatalf("unexpected expected_close_date: %#v", payload["expected_close_date"])
 		}
+		if payload["visible_to"] != "3" {
+			t.Fatalf("unexpected visible_to: %#v", payload["visible_to"])
+		}
+		if payload["was_seen"] != true {
+			t.Fatalf("unexpected was_seen: %#v", payload["was_seen"])
+		}
 		if payload["origin_id"] != "origin-1" {
 			t.Fatalf("unexpected origin_id: %#v", payload["origin_id"])
+		}
+		if payload["channel"] != float64(2) {
+			t.Fatalf("unexpected channel: %#v", payload["channel"])
+		}
+		if payload["channel_id"] != "channel-1" {
+			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
 		}
 		labels := payload["label_ids"].([]interface{})
 		if len(labels) != 1 || labels[0] != labelID {
@@ -195,10 +258,18 @@ func TestLeadsService_Create(t *testing.T) {
 	lead, err := client.Leads.Create(
 		context.Background(),
 		WithLeadTitle("New Lead"),
+		WithLeadOwnerID(UserID(7)),
 		WithLeadPersonID(PersonID(9)),
+		WithLeadOrganizationID(OrganizationID(11)),
 		WithLeadLabelIDs(LeadLabelID(labelID)),
+		WithLeadValue(1000, "EUR"),
 		WithLeadExpectedCloseDate("2024-01-10"),
+		WithLeadVisibleTo("3"),
+		WithLeadWasSeen(true),
 		WithLeadOriginID("origin-1"),
+		WithLeadChannel(2),
+		WithLeadChannelID("channel-1"),
+		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
@@ -219,6 +290,9 @@ func TestLeadsService_Update(t *testing.T) {
 		if r.URL.Path != "/leads/"+id {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -229,6 +303,18 @@ func TestLeadsService_Update(t *testing.T) {
 		}
 		if payload["is_archived"] != true {
 			t.Fatalf("unexpected is_archived: %#v", payload["is_archived"])
+		}
+		if payload["owner_id"] != float64(7) {
+			t.Fatalf("unexpected owner_id: %#v", payload["owner_id"])
+		}
+		if payload["organization_id"] != float64(11) {
+			t.Fatalf("unexpected organization_id: %#v", payload["organization_id"])
+		}
+		if payload["channel"] != float64(2) {
+			t.Fatalf("unexpected channel: %#v", payload["channel"])
+		}
+		if payload["channel_id"] != "channel-1" {
+			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -245,7 +331,12 @@ func TestLeadsService_Update(t *testing.T) {
 		context.Background(),
 		LeadID(id),
 		WithLeadTitle("Updated"),
+		WithLeadOwnerID(UserID(7)),
+		WithLeadOrganizationID(OrganizationID(11)),
+		WithLeadChannel(2),
+		WithLeadChannelID("channel-1"),
 		WithLeadArchived(true),
+		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -266,6 +357,9 @@ func TestLeadsService_Delete(t *testing.T) {
 		if r.URL.Path != "/leads/"+id {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":"` + id + `"}}`))
 	}))
@@ -276,7 +370,11 @@ func TestLeadsService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	result, err := client.Leads.Delete(context.Background(), LeadID(id))
+	result, err := client.Leads.Delete(
+		context.Background(),
+		LeadID(id),
+		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
@@ -296,6 +394,9 @@ func TestLeadsService_ListPermittedUsers(t *testing.T) {
 		if r.URL.Path != "/leads/"+id+"/permittedUsers" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "permitted-users" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[101,202]}`))
 	}))
@@ -306,7 +407,11 @@ func TestLeadsService_ListPermittedUsers(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	users, err := client.Leads.ListPermittedUsers(context.Background(), LeadID(id))
+	users, err := client.Leads.ListPermittedUsers(
+		context.Background(),
+		LeadID(id),
+		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "permitted-users")),
+	)
 	if err != nil {
 		t.Fatalf("ListPermittedUsers error: %v", err)
 	}

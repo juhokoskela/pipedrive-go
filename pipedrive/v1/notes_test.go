@@ -60,6 +60,18 @@ func TestNotesService_List(t *testing.T) {
 		if got := q.Get("pinned_to_deal_flag"); got != "1" {
 			t.Fatalf("unexpected pinned_to_deal_flag: %q", got)
 		}
+		if got := q.Get("pinned_to_lead_flag"); got != "1" {
+			t.Fatalf("unexpected pinned_to_lead_flag: %q", got)
+		}
+		if got := q.Get("pinned_to_organization_flag"); got != "1" {
+			t.Fatalf("unexpected pinned_to_organization_flag: %q", got)
+		}
+		if got := q.Get("pinned_to_person_flag"); got != "1" {
+			t.Fatalf("unexpected pinned_to_person_flag: %q", got)
+		}
+		if got := q.Get("pinned_to_project_flag"); got != "1" {
+			t.Fatalf("unexpected pinned_to_project_flag: %q", got)
+		}
 		if got := r.Header.Get("X-Test"); got != "1" {
 			t.Fatalf("unexpected header X-Test: %q", got)
 		}
@@ -91,6 +103,10 @@ func TestNotesService_List(t *testing.T) {
 		WithNotesStartDate(start),
 		WithNotesEndDate(end),
 		WithNotesPinnedToDeal(true),
+		WithNotesPinnedToLead(true),
+		WithNotesPinnedToOrganization(true),
+		WithNotesPinnedToPerson(true),
+		WithNotesPinnedToProject(true),
 		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "1")),
 	)
 	if err != nil {
@@ -123,6 +139,9 @@ func TestNotesService_Create(t *testing.T) {
 		if got := r.Header.Get("Content-Type"); got != "application/json" {
 			t.Fatalf("unexpected content type: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 			t.Fatalf("decode request: %v", err)
@@ -133,6 +152,18 @@ func TestNotesService_Create(t *testing.T) {
 		if payload["deal_id"] != float64(2) {
 			t.Fatalf("unexpected deal_id: %#v", payload["deal_id"])
 		}
+		if payload["lead_id"] != "adf21080-0e10-11eb-879b-05d71fb426ec" {
+			t.Fatalf("unexpected lead_id: %#v", payload["lead_id"])
+		}
+		if payload["person_id"] != float64(3) {
+			t.Fatalf("unexpected person_id: %#v", payload["person_id"])
+		}
+		if payload["org_id"] != float64(4) {
+			t.Fatalf("unexpected org_id: %#v", payload["org_id"])
+		}
+		if payload["project_id"] != float64(5) {
+			t.Fatalf("unexpected project_id: %#v", payload["project_id"])
+		}
 		if payload["user_id"] != float64(7) {
 			t.Fatalf("unexpected user_id: %#v", payload["user_id"])
 		}
@@ -141,6 +172,18 @@ func TestNotesService_Create(t *testing.T) {
 		}
 		if payload["pinned_to_deal_flag"] != float64(1) {
 			t.Fatalf("unexpected pinned_to_deal_flag: %#v", payload["pinned_to_deal_flag"])
+		}
+		if payload["pinned_to_lead_flag"] != float64(1) {
+			t.Fatalf("unexpected pinned_to_lead_flag: %#v", payload["pinned_to_lead_flag"])
+		}
+		if payload["pinned_to_organization_flag"] != float64(1) {
+			t.Fatalf("unexpected pinned_to_organization_flag: %#v", payload["pinned_to_organization_flag"])
+		}
+		if payload["pinned_to_person_flag"] != float64(1) {
+			t.Fatalf("unexpected pinned_to_person_flag: %#v", payload["pinned_to_person_flag"])
+		}
+		if payload["pinned_to_project_flag"] != float64(1) {
+			t.Fatalf("unexpected pinned_to_project_flag: %#v", payload["pinned_to_project_flag"])
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -156,10 +199,19 @@ func TestNotesService_Create(t *testing.T) {
 	note, err := client.Notes.Create(
 		context.Background(),
 		WithNoteContent("Hello"),
+		WithNoteLeadID(LeadID("adf21080-0e10-11eb-879b-05d71fb426ec")),
 		WithNoteDealID(DealID(2)),
+		WithNotePersonID(PersonID(3)),
+		WithNoteOrganizationID(OrganizationID(4)),
+		WithNoteProjectID(ProjectID(5)),
 		WithNoteUserID(UserID(7)),
 		WithNoteAddTime(time.Date(2024, 1, 1, 10, 0, 0, 0, time.UTC)),
+		WithNotePinnedToLead(true),
 		WithNotePinnedToDeal(true),
+		WithNotePinnedToOrganization(true),
+		WithNotePinnedToPerson(true),
+		WithNotePinnedToProject(true),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
@@ -207,6 +259,9 @@ func TestNotesService_Get(t *testing.T) {
 		if r.URL.Path != "/notes/5" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":5,"content":"Hello","deal_id":2}}`))
@@ -218,7 +273,11 @@ func TestNotesService_Get(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	note, err := client.Notes.Get(context.Background(), NoteID(5))
+	note, err := client.Notes.Get(
+		context.Background(),
+		NoteID(5),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+	)
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
 	}
@@ -237,6 +296,9 @@ func TestNotesService_Update(t *testing.T) {
 		if r.URL.Path != "/notes/5" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 			t.Fatalf("decode request: %v", err)
@@ -249,6 +311,30 @@ func TestNotesService_Update(t *testing.T) {
 		}
 		if payload["deal_id"] != float64(2) {
 			t.Fatalf("unexpected deal_id: %#v", payload["deal_id"])
+		}
+		if payload["lead_id"] != "adf21080-0e10-11eb-879b-05d71fb426ec" {
+			t.Fatalf("unexpected lead_id: %#v", payload["lead_id"])
+		}
+		if payload["person_id"] != float64(3) {
+			t.Fatalf("unexpected person_id: %#v", payload["person_id"])
+		}
+		if payload["org_id"] != float64(4) {
+			t.Fatalf("unexpected org_id: %#v", payload["org_id"])
+		}
+		if payload["project_id"] != float64(5) {
+			t.Fatalf("unexpected project_id: %#v", payload["project_id"])
+		}
+		if payload["pinned_to_lead_flag"] != float64(0) {
+			t.Fatalf("unexpected pinned_to_lead_flag: %#v", payload["pinned_to_lead_flag"])
+		}
+		if payload["pinned_to_organization_flag"] != float64(0) {
+			t.Fatalf("unexpected pinned_to_organization_flag: %#v", payload["pinned_to_organization_flag"])
+		}
+		if payload["pinned_to_person_flag"] != float64(0) {
+			t.Fatalf("unexpected pinned_to_person_flag: %#v", payload["pinned_to_person_flag"])
+		}
+		if payload["pinned_to_project_flag"] != float64(0) {
+			t.Fatalf("unexpected pinned_to_project_flag: %#v", payload["pinned_to_project_flag"])
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -265,8 +351,17 @@ func TestNotesService_Update(t *testing.T) {
 		context.Background(),
 		NoteID(5),
 		WithNoteContent("Updated"),
+		WithNoteLeadID(LeadID("adf21080-0e10-11eb-879b-05d71fb426ec")),
+		WithNotePinnedToLead(false),
 		WithNotePinnedToDeal(false),
 		WithNoteDealID(DealID(2)),
+		WithNotePersonID(PersonID(3)),
+		WithNotePinnedToPerson(false),
+		WithNoteOrganizationID(OrganizationID(4)),
+		WithNotePinnedToOrganization(false),
+		WithNoteProjectID(ProjectID(5)),
+		WithNotePinnedToProject(false),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -300,6 +395,9 @@ func TestNotesService_Delete(t *testing.T) {
 		if r.URL.Path != "/notes/5" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":true}`))
@@ -311,7 +409,11 @@ func TestNotesService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.Notes.Delete(context.Background(), NoteID(5))
+	ok, err := client.Notes.Delete(
+		context.Background(),
+		NoteID(5),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
@@ -337,6 +439,9 @@ func TestNotesService_ListComments(t *testing.T) {
 		if got := q.Get("limit"); got != "2" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "list-comments" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[{"uuid":"46c3b0e1-db35-59ca-1828-4817378dff71","content":"This is a comment","add_time":"2021-06-22T07:18:16.750Z"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false,"next_start":1}}}`))
@@ -353,6 +458,7 @@ func TestNotesService_ListComments(t *testing.T) {
 		NoteID(5),
 		WithNoteCommentsStart(1),
 		WithNoteCommentsLimit(2),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "list-comments")),
 	)
 	if err != nil {
 		t.Fatalf("ListComments error: %v", err)
@@ -378,6 +484,9 @@ func TestNotesService_CreateComment(t *testing.T) {
 		if r.URL.Path != "/notes/5/comments" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "create-comment" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 			t.Fatalf("decode request: %v", err)
@@ -400,6 +509,7 @@ func TestNotesService_CreateComment(t *testing.T) {
 		context.Background(),
 		NoteID(5),
 		WithNoteCommentContent("Comment"),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "create-comment")),
 	)
 	if err != nil {
 		t.Fatalf("CreateComment error: %v", err)
@@ -435,6 +545,9 @@ func TestNotesService_GetComment(t *testing.T) {
 		if r.URL.Path != "/notes/5/comments/"+commentID {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "get-comment" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"uuid":"` + commentID + `","content":"Comment"}}`))
@@ -446,7 +559,12 @@ func TestNotesService_GetComment(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	comment, err := client.Notes.GetComment(context.Background(), NoteID(5), CommentID(commentID))
+	comment, err := client.Notes.GetComment(
+		context.Background(),
+		NoteID(5),
+		CommentID(commentID),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "get-comment")),
+	)
 	if err != nil {
 		t.Fatalf("GetComment error: %v", err)
 	}
@@ -466,6 +584,9 @@ func TestNotesService_UpdateComment(t *testing.T) {
 		}
 		if r.URL.Path != "/notes/5/comments/"+commentID {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update-comment" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -490,6 +611,7 @@ func TestNotesService_UpdateComment(t *testing.T) {
 		NoteID(5),
 		CommentID(commentID),
 		WithNoteCommentContent("Updated"),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "update-comment")),
 	)
 	if err != nil {
 		t.Fatalf("UpdateComment error: %v", err)
@@ -525,6 +647,9 @@ func TestNotesService_DeleteComment(t *testing.T) {
 		if r.URL.Path != "/notes/5/comments/"+commentID {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete-comment" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":true}`))
@@ -536,7 +661,12 @@ func TestNotesService_DeleteComment(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.Notes.DeleteComment(context.Background(), NoteID(5), CommentID(commentID))
+	ok, err := client.Notes.DeleteComment(
+		context.Background(),
+		NoteID(5),
+		CommentID(commentID),
+		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "delete-comment")),
+	)
 	if err != nil {
 		t.Fatalf("DeleteComment error: %v", err)
 	}

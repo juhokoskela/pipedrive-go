@@ -28,6 +28,9 @@ func TestGoalsService_List(t *testing.T) {
 		if got := q.Get("type.name"); got != "deals_won" {
 			t.Fatalf("unexpected type.name: %q", got)
 		}
+		if got := q.Get("title"); got != "Pipeline goals" {
+			t.Fatalf("unexpected title: %q", got)
+		}
 		if got := q.Get("assignee.id"); got != "12" {
 			t.Fatalf("unexpected assignee.id: %q", got)
 		}
@@ -40,6 +43,12 @@ func TestGoalsService_List(t *testing.T) {
 		if got := q.Get("expected_outcome.target"); got != "42" {
 			t.Fatalf("unexpected expected_outcome.target: %q", got)
 		}
+		if got := q.Get("expected_outcome.tracking_metric"); got != "quantity" {
+			t.Fatalf("unexpected expected_outcome.tracking_metric: %q", got)
+		}
+		if got := q.Get("expected_outcome.currency_id"); got != "978" {
+			t.Fatalf("unexpected expected_outcome.currency_id: %q", got)
+		}
 		if got := q.Get("period.start"); got != "2024-01-01" {
 			t.Fatalf("unexpected period.start: %q", got)
 		}
@@ -48,6 +57,12 @@ func TestGoalsService_List(t *testing.T) {
 		}
 		if got := q["type.params.pipeline_id"]; len(got) != 2 || got[0] != "3" || got[1] != "5" {
 			t.Fatalf("unexpected pipeline ids: %#v", got)
+		}
+		if got := q.Get("type.params.stage_id"); got != "6" {
+			t.Fatalf("unexpected stage_id: %q", got)
+		}
+		if got := q["type.params.activity_type_id"]; len(got) != 2 || got[0] != "7" || got[1] != "8" {
+			t.Fatalf("unexpected activity type ids: %#v", got)
 		}
 		if got := r.Header.Get("X-Test"); got != "1" {
 			t.Fatalf("unexpected header X-Test: %q", got)
@@ -66,11 +81,16 @@ func TestGoalsService_List(t *testing.T) {
 	goals, err := client.Goals.List(
 		context.Background(),
 		WithGoalsTypeName(GoalTypeNameDealsWon),
+		WithGoalsTitle("Pipeline goals"),
 		WithGoalsAssigneeID(12),
 		WithGoalsAssigneeType(GoalAssigneeTypeTeam),
 		WithGoalsActive(true),
 		WithGoalsExpectedOutcomeTarget(42),
+		WithGoalsExpectedOutcomeTrackingMetric(GoalTrackingMetricQuantity),
+		WithGoalsExpectedOutcomeCurrencyID(CurrencyID(978)),
 		WithGoalsTypePipelineIDs(PipelineID(3), PipelineID(5)),
+		WithGoalsTypeStageID(StageID(6)),
+		WithGoalsTypeActivityTypeIDs(ActivityTypeID(7), ActivityTypeID(8)),
 		WithGoalsPeriodStart(start),
 		WithGoalsPeriodEnd(end),
 		WithGoalsRequestOptions(pipedrive.WithHeader("X-Test", "1")),
@@ -131,6 +151,13 @@ func TestGoalsService_Create(t *testing.T) {
 		if !ok || len(pipelines) != 2 || pipelines[0] != float64(1) || pipelines[1] != float64(2) {
 			t.Fatalf("unexpected pipeline ids: %#v", params["pipeline_id"])
 		}
+		if params["stage_id"] != float64(6) {
+			t.Fatalf("unexpected stage_id: %#v", params["stage_id"])
+		}
+		activities, ok := params["activity_type_id"].([]interface{})
+		if !ok || len(activities) != 2 || activities[0] != float64(7) || activities[1] != float64(8) {
+			t.Fatalf("unexpected activity type ids: %#v", params["activity_type_id"])
+		}
 
 		expected, ok := payload["expected_outcome"].(map[string]interface{})
 		if !ok {
@@ -138,6 +165,9 @@ func TestGoalsService_Create(t *testing.T) {
 		}
 		if expected["target"] != float64(100) || expected["tracking_metric"] != "quantity" {
 			t.Fatalf("unexpected expected_outcome: %#v", expected)
+		}
+		if expected["currency_id"] != float64(978) {
+			t.Fatalf("unexpected currency_id: %#v", expected["currency_id"])
 		}
 
 		duration, ok := payload["duration"].(map[string]interface{})
@@ -168,8 +198,11 @@ func TestGoalsService_Create(t *testing.T) {
 		WithGoalAssigneeType(GoalAssigneeTypePerson),
 		WithGoalTypeName(GoalTypeNameDealsStarted),
 		WithGoalTypePipelineIDs(PipelineID(1), PipelineID(2)),
+		WithGoalTypeStageID(StageID(6)),
+		WithGoalTypeActivityTypeIDs(ActivityTypeID(7), ActivityTypeID(8)),
 		WithGoalExpectedOutcomeTarget(100),
 		WithGoalExpectedOutcomeTrackingMetric(GoalTrackingMetricQuantity),
+		WithGoalExpectedOutcomeCurrencyID(CurrencyID(978)),
 		WithGoalDurationStart("2024-01-01"),
 		WithGoalDurationEnd("2024-12-31"),
 		WithGoalInterval(GoalIntervalMonthly),
@@ -192,6 +225,9 @@ func TestGoalsService_Update(t *testing.T) {
 		}
 		if r.URL.Path != "/goals/goal-3" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 
 		var payload map[string]interface{}
@@ -223,6 +259,7 @@ func TestGoalsService_Update(t *testing.T) {
 		GoalID("goal-3"),
 		WithGoalTitle("Updated Goal"),
 		WithGoalInterval(GoalIntervalQuarterly),
+		WithGoalsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -242,6 +279,9 @@ func TestGoalsService_Delete(t *testing.T) {
 		if r.URL.Path != "/goals/goal-4" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true}`))
@@ -253,7 +293,11 @@ func TestGoalsService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.Goals.Delete(context.Background(), GoalID("goal-4"))
+	ok, err := client.Goals.Delete(
+		context.Background(),
+		GoalID("goal-4"),
+		WithGoalsRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
@@ -282,6 +326,9 @@ func TestGoalsService_GetResult(t *testing.T) {
 		if got := q.Get("period.end"); got != "2024-02-28" {
 			t.Fatalf("unexpected period.end: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "result" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"progress":3,"goal":{"id":"goal-5","title":"Result goal"}}}`))
@@ -298,6 +345,7 @@ func TestGoalsService_GetResult(t *testing.T) {
 		GoalID("goal-5"),
 		WithGoalResultStartDate(start),
 		WithGoalResultEndDate(end),
+		WithGoalsRequestOptions(pipedrive.WithHeader("X-Test", "result")),
 	)
 	if err != nil {
 		t.Fatalf("GetResult error: %v", err)

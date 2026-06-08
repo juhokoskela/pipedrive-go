@@ -98,6 +98,9 @@ func TestFiltersService_Create(t *testing.T) {
 		if got := r.Header.Get("Content-Type"); got != "application/json" {
 			t.Fatalf("unexpected content type: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 			t.Fatalf("decode request: %v", err)
@@ -130,6 +133,7 @@ func TestFiltersService_Create(t *testing.T) {
 		WithFilterName("New Filter"),
 		WithFilterType(FilterTypeDeals),
 		WithFilterConditions(conditions),
+		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
@@ -148,6 +152,9 @@ func TestFiltersService_Update(t *testing.T) {
 		}
 		if r.URL.Path != "/filters/10" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -174,6 +181,7 @@ func TestFiltersService_Update(t *testing.T) {
 		FilterID(10),
 		WithFilterName("Updated Filter"),
 		WithFilterConditions(FilterConditions{"glue": "and"}),
+		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -193,6 +201,9 @@ func TestFiltersService_Delete(t *testing.T) {
 		if r.URL.Path != "/filters/10" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":10}}`))
 	}))
@@ -203,7 +214,11 @@ func TestFiltersService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	result, err := client.Filters.Delete(context.Background(), FilterID(10))
+	result, err := client.Filters.Delete(
+		context.Background(),
+		FilterID(10),
+		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
@@ -225,6 +240,9 @@ func TestFiltersService_DeleteBulk(t *testing.T) {
 		if got := r.URL.Query().Get("ids"); got != "1,2,3" {
 			t.Fatalf("unexpected ids: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete-bulk" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":[1,2,3]}}`))
 	}))
@@ -235,7 +253,11 @@ func TestFiltersService_DeleteBulk(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	result, err := client.Filters.DeleteBulk(context.Background(), []FilterID{1, 2, 3})
+	result, err := client.Filters.DeleteBulk(
+		context.Background(),
+		[]FilterID{1, 2, 3},
+		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "delete-bulk")),
+	)
 	if err != nil {
 		t.Fatalf("DeleteBulk error: %v", err)
 	}
@@ -254,6 +276,9 @@ func TestFiltersService_ListHelpers(t *testing.T) {
 		if r.URL.Path != "/filters/helpers" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "helpers" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"example":1}}`))
 	}))
@@ -264,11 +289,91 @@ func TestFiltersService_ListHelpers(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	helpers, err := client.Filters.ListHelpers(context.Background())
+	helpers, err := client.Filters.ListHelpers(
+		context.Background(),
+		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "helpers")),
+	)
 	if err != nil {
 		t.Fatalf("ListHelpers error: %v", err)
 	}
 	if helpers["success"] != true {
 		t.Fatalf("unexpected helpers: %#v", helpers)
+	}
+}
+
+func TestFiltersService_ErrorResponses(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		_, _ = w.Write([]byte(`{"success":false,"error":"server error"}`))
+	})
+
+	conditions := FilterConditions{"glue": "and"}
+	if _, err := client.Filters.List(context.Background()); err == nil {
+		t.Fatalf("expected List error")
+	}
+	if _, err := client.Filters.Get(context.Background(), FilterID(1)); err == nil {
+		t.Fatalf("expected Get error")
+	}
+	if _, err := client.Filters.Create(
+		context.Background(),
+		WithFilterName("Filter"),
+		WithFilterType(FilterTypeDeals),
+		WithFilterConditions(conditions),
+	); err == nil {
+		t.Fatalf("expected Create error")
+	}
+	if _, err := client.Filters.Update(
+		context.Background(),
+		FilterID(1),
+		WithFilterName("Updated"),
+	); err == nil {
+		t.Fatalf("expected Update error")
+	}
+	if _, err := client.Filters.Delete(context.Background(), FilterID(1)); err == nil {
+		t.Fatalf("expected Delete error")
+	}
+	if _, err := client.Filters.DeleteBulk(context.Background(), []FilterID{1, 2}); err == nil {
+		t.Fatalf("expected DeleteBulk error")
+	}
+	if _, err := client.Filters.ListHelpers(context.Background()); err == nil {
+		t.Fatalf("expected ListHelpers error")
+	}
+}
+
+func TestFiltersService_MissingDataErrors(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"success":true}`))
+	})
+
+	conditions := FilterConditions{"glue": "and"}
+	if _, err := client.Filters.Get(context.Background(), FilterID(1)); err == nil {
+		t.Fatalf("expected Get missing data error")
+	}
+	if _, err := client.Filters.Create(
+		context.Background(),
+		WithFilterName("Filter"),
+		WithFilterType(FilterTypeDeals),
+		WithFilterConditions(conditions),
+	); err == nil {
+		t.Fatalf("expected Create missing data error")
+	}
+	if _, err := client.Filters.Update(
+		context.Background(),
+		FilterID(1),
+		WithFilterName("Updated"),
+	); err == nil {
+		t.Fatalf("expected Update missing data error")
+	}
+	if _, err := client.Filters.Delete(context.Background(), FilterID(1)); err == nil {
+		t.Fatalf("expected Delete missing data error")
+	}
+	if _, err := client.Filters.DeleteBulk(context.Background(), []FilterID{1, 2}); err == nil {
+		t.Fatalf("expected DeleteBulk missing data error")
 	}
 }
