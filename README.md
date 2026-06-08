@@ -29,7 +29,7 @@ go get github.com/juhokoskela/pipedrive-go@latest
 
 Go 1.25+ is required.
 
-The repository prefers Go 1.26.1 locally via the `toolchain` directive in
+The repository prefers Go 1.26.4 locally via the `toolchain` directive in
 `go.mod`.
 
 To pin a specific version:
