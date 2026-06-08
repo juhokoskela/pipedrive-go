@@ -83,6 +83,9 @@ func TestOrganizationRelationshipsService_Create(t *testing.T) {
 		if got := r.Header.Get("Content-Type"); got != "application/json" {
 			t.Fatalf("unexpected content type: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 			t.Fatalf("decode request: %v", err)
@@ -116,6 +119,7 @@ func TestOrganizationRelationshipsService_Create(t *testing.T) {
 		WithOrganizationRelationshipOwnerID(OrganizationID(1)),
 		WithOrganizationRelationshipLinkedID(OrganizationID(2)),
 		WithOrganizationRelationshipOrgID(OrganizationID(10)),
+		WithOrganizationRelationshipsRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
@@ -152,6 +156,9 @@ func TestOrganizationRelationshipsService_Get(t *testing.T) {
 		if got := r.URL.Query().Get("org_id"); got != "10" {
 			t.Fatalf("unexpected org_id: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":5,"type":"parent","rel_owner_org_id":{"value":1},"rel_linked_org_id":{"value":2}}}`))
@@ -167,6 +174,7 @@ func TestOrganizationRelationshipsService_Get(t *testing.T) {
 		context.Background(),
 		OrganizationRelationshipID(5),
 		WithOrganizationRelationshipOrgID(OrganizationID(10)),
+		WithOrganizationRelationshipsRequestOptions(pipedrive.WithHeader("X-Test", "get")),
 	)
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
@@ -185,6 +193,9 @@ func TestOrganizationRelationshipsService_Update(t *testing.T) {
 		}
 		if r.URL.Path != "/organizationRelationships/5" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -208,6 +219,7 @@ func TestOrganizationRelationshipsService_Update(t *testing.T) {
 		context.Background(),
 		OrganizationRelationshipID(5),
 		WithOrganizationRelationshipType(OrganizationRelationshipTypeRelated),
+		WithOrganizationRelationshipsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -241,6 +253,9 @@ func TestOrganizationRelationshipsService_Delete(t *testing.T) {
 		if r.URL.Path != "/organizationRelationships/5" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":5}}`))
@@ -252,11 +267,81 @@ func TestOrganizationRelationshipsService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	result, err := client.OrganizationRelationships.Delete(context.Background(), OrganizationRelationshipID(5))
+	result, err := client.OrganizationRelationships.Delete(
+		context.Background(),
+		OrganizationRelationshipID(5),
+		WithOrganizationRelationshipsRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
 	if result.ID != 5 {
 		t.Fatalf("unexpected delete result: %#v", result)
+	}
+}
+
+func TestOrganizationRelationshipsService_ErrorResponses(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		_, _ = w.Write([]byte(`{"success":false,"error":"server error"}`))
+	})
+
+	if _, _, err := client.OrganizationRelationships.List(context.Background(), WithOrganizationRelationshipsOrgID(OrganizationID(10))); err == nil {
+		t.Fatalf("expected List error")
+	}
+	if _, err := client.OrganizationRelationships.Get(context.Background(), OrganizationRelationshipID(5)); err == nil {
+		t.Fatalf("expected Get error")
+	}
+	if _, err := client.OrganizationRelationships.Create(
+		context.Background(),
+		WithOrganizationRelationshipType(OrganizationRelationshipTypeParent),
+		WithOrganizationRelationshipOwnerID(OrganizationID(1)),
+		WithOrganizationRelationshipLinkedID(OrganizationID(2)),
+	); err == nil {
+		t.Fatalf("expected Create error")
+	}
+	if _, err := client.OrganizationRelationships.Update(
+		context.Background(),
+		OrganizationRelationshipID(5),
+		WithOrganizationRelationshipType(OrganizationRelationshipTypeRelated),
+	); err == nil {
+		t.Fatalf("expected Update error")
+	}
+	if _, err := client.OrganizationRelationships.Delete(context.Background(), OrganizationRelationshipID(5)); err == nil {
+		t.Fatalf("expected Delete error")
+	}
+}
+
+func TestOrganizationRelationshipsService_MissingDataErrors(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"success":true}`))
+	})
+
+	if _, err := client.OrganizationRelationships.Get(context.Background(), OrganizationRelationshipID(5)); err == nil {
+		t.Fatalf("expected Get missing data error")
+	}
+	if _, err := client.OrganizationRelationships.Create(
+		context.Background(),
+		WithOrganizationRelationshipType(OrganizationRelationshipTypeParent),
+		WithOrganizationRelationshipOwnerID(OrganizationID(1)),
+		WithOrganizationRelationshipLinkedID(OrganizationID(2)),
+	); err == nil {
+		t.Fatalf("expected Create missing data error")
+	}
+	if _, err := client.OrganizationRelationships.Update(
+		context.Background(),
+		OrganizationRelationshipID(5),
+		WithOrganizationRelationshipType(OrganizationRelationshipTypeRelated),
+	); err == nil {
+		t.Fatalf("expected Update missing data error")
+	}
+	if _, err := client.OrganizationRelationships.Delete(context.Background(), OrganizationRelationshipID(5)); err == nil {
+		t.Fatalf("expected Delete missing data error")
 	}
 }
