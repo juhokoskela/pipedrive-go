@@ -2,9 +2,11 @@ package pipedrive
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 	"time"
 )
@@ -220,5 +222,75 @@ func TestRawClient_Do_ReturnsRateLimitErrorWhenLarge429BodyExceedsLimit(t *testi
 	}
 	if rlErr.Limit != 10 || rlErr.Remaining != 0 {
 		t.Fatalf("unexpected rate limit headers: limit=%d remaining=%d", rlErr.Limit, rlErr.Remaining)
+	}
+}
+
+func TestNewRawClient_RejectsInvalidBaseURL(t *testing.T) {
+	t.Parallel()
+
+	if _, err := NewRawClient("://bad", nil); err == nil {
+		t.Fatalf("expected parse error")
+	}
+	if _, err := NewRawClient("/relative", nil); err == nil {
+		t.Fatalf("expected missing scheme/host error")
+	}
+}
+
+func TestRawClient_Do_NilClient(t *testing.T) {
+	t.Parallel()
+
+	var raw *RawClient
+	if err := raw.Do(context.Background(), http.MethodGet, "/x", nil, nil, nil); err == nil {
+		t.Fatalf("expected nil client error")
+	}
+}
+
+func TestRawClient_Do_SendsQueryAndJSONBody(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/base/items" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query()["tag"]; len(got) != 2 || got[0] != "one" || got[1] != "two" {
+			t.Fatalf("unexpected query: %s", r.URL.RawQuery)
+		}
+		if got := r.Header.Get("Accept"); got != "application/json" {
+			t.Fatalf("unexpected accept: %q", got)
+		}
+		if got := r.Header.Get("Content-Type"); got != "application/json" {
+			t.Fatalf("unexpected content type: %q", got)
+		}
+
+		var payload map[string]string
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			t.Fatalf("decode request: %v", err)
+		}
+		if payload["name"] != "item" {
+			t.Fatalf("unexpected payload: %#v", payload)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"ok":true}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	raw, err := NewRawClient(srv.URL+"/base/", srv.Client())
+	if err != nil {
+		t.Fatalf("NewRawClient error: %v", err)
+	}
+
+	var out struct {
+		Ok bool `json:"ok"`
+	}
+	query := url.Values{"tag": {"one", "two"}}
+	if err := raw.Do(context.Background(), http.MethodPost, "/items", query, map[string]string{"name": "item"}, &out); err != nil {
+		t.Fatalf("Do error: %v", err)
+	}
+	if !out.Ok {
+		t.Fatalf("expected ok")
 	}
 }

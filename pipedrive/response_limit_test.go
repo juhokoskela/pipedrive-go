@@ -96,6 +96,24 @@ func TestResponseLimitReadCloser_ReportsOverflowOnProbeRead(t *testing.T) {
 	}
 }
 
+func TestResponseLimitReadCloser_AllowsBodyExactlyAtLimit(t *testing.T) {
+	t.Parallel()
+
+	rc := &responseLimitReadCloser{
+		body:      io.NopCloser(strings.NewReader("ab")),
+		limit:     2,
+		remaining: 2,
+	}
+
+	body, err := io.ReadAll(rc)
+	if err != nil {
+		t.Fatalf("ReadAll error: %v", err)
+	}
+	if got := string(body); got != "ab" {
+		t.Fatalf("unexpected body: %q", got)
+	}
+}
+
 func TestRawClient_Do_ResponseLimitCanBeOverriddenPerRequest(t *testing.T) {
 	t.Parallel()
 
