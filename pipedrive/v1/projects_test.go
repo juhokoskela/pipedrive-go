@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
+
+	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
 func TestProjectsService_List(t *testing.T) {
@@ -21,6 +23,9 @@ func TestProjectsService_List(t *testing.T) {
 		if got := r.URL.Query().Get("limit"); got != "1" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "list" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":1,"title":"Project"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
@@ -28,7 +33,11 @@ func TestProjectsService_List(t *testing.T) {
 
 	query := url.Values{}
 	query.Set("limit", "1")
-	projects, page, err := client.Projects.List(context.Background(), WithProjectsQuery(query))
+	projects, page, err := client.Projects.List(
+		context.Background(),
+		WithProjectsQuery(query),
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "list")),
+	)
 	if err != nil {
 		t.Fatalf("List error: %v", err)
 	}
@@ -50,6 +59,9 @@ func TestProjectsService_Create(t *testing.T) {
 		if r.URL.Path != "/projects" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "create" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var body map[string]any
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -63,7 +75,11 @@ func TestProjectsService_Create(t *testing.T) {
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":2,"title":"New"}}`))
 	})
 
-	project, err := client.Projects.Create(context.Background(), map[string]any{"title": "New"})
+	project, err := client.Projects.Create(
+		context.Background(),
+		map[string]any{"title": "New"},
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "create")),
+	)
 	if err != nil {
 		t.Fatalf("Create error: %v", err)
 	}
@@ -82,12 +98,19 @@ func TestProjectsService_Get(t *testing.T) {
 		if r.URL.Path != "/projects/3" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":3,"title":"Project"}}`))
 	})
 
-	project, err := client.Projects.Get(context.Background(), ProjectID(3))
+	project, err := client.Projects.Get(
+		context.Background(),
+		ProjectID(3),
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+	)
 	if err != nil {
 		t.Fatalf("Get error: %v", err)
 	}
@@ -106,6 +129,9 @@ func TestProjectsService_Update(t *testing.T) {
 		if r.URL.Path != "/projects/4" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var body map[string]any
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -119,7 +145,12 @@ func TestProjectsService_Update(t *testing.T) {
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":4,"title":"Updated"}}`))
 	})
 
-	project, err := client.Projects.Update(context.Background(), ProjectID(4), map[string]any{"title": "Updated"})
+	project, err := client.Projects.Update(
+		context.Background(),
+		ProjectID(4),
+		map[string]any{"title": "Updated"},
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
+	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
 	}
@@ -138,12 +169,19 @@ func TestProjectsService_Delete(t *testing.T) {
 		if r.URL.Path != "/projects/5" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":5}}`))
 	})
 
-	id, err := client.Projects.Delete(context.Background(), ProjectID(5))
+	id, err := client.Projects.Delete(
+		context.Background(),
+		ProjectID(5),
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
@@ -162,12 +200,19 @@ func TestProjectsService_Archive(t *testing.T) {
 		if r.URL.Path != "/projects/6/archive" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "archive" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":{"id":6,"status":"archived"}}`))
 	})
 
-	project, err := client.Projects.Archive(context.Background(), ProjectID(6))
+	project, err := client.Projects.Archive(
+		context.Background(),
+		ProjectID(6),
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "archive")),
+	)
 	if err != nil {
 		t.Fatalf("Archive error: %v", err)
 	}
@@ -282,12 +327,19 @@ func TestProjectsService_ListActivities(t *testing.T) {
 		if r.URL.Path != "/projects/10/activities" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "activities" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":1,"subject":"Call"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
 	})
 
-	activities, page, err := client.Projects.ListActivities(context.Background(), ProjectID(10))
+	activities, page, err := client.Projects.ListActivities(
+		context.Background(),
+		ProjectID(10),
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "activities")),
+	)
 	if err != nil {
 		t.Fatalf("ListActivities error: %v", err)
 	}
@@ -357,6 +409,9 @@ func TestProjectsService_UpdatePlanActivity(t *testing.T) {
 		if r.URL.Path != "/projects/12/plan/activities/3" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "plan-activity" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var body map[string]any
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -370,7 +425,13 @@ func TestProjectsService_UpdatePlanActivity(t *testing.T) {
 		_, _ = w.Write([]byte(`{"success":true,"data":{"status":"done"}}`))
 	})
 
-	plan, err := client.Projects.UpdatePlanActivity(context.Background(), ProjectID(12), ProjectPlanActivityID(3), map[string]any{"status": "done"})
+	plan, err := client.Projects.UpdatePlanActivity(
+		context.Background(),
+		ProjectID(12),
+		ProjectPlanActivityID(3),
+		map[string]any{"status": "done"},
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "plan-activity")),
+	)
 	if err != nil {
 		t.Fatalf("UpdatePlanActivity error: %v", err)
 	}
@@ -389,6 +450,9 @@ func TestProjectsService_UpdatePlanTask(t *testing.T) {
 		if r.URL.Path != "/projects/12/plan/tasks/4" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "plan-task" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var body map[string]any
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -402,7 +466,13 @@ func TestProjectsService_UpdatePlanTask(t *testing.T) {
 		_, _ = w.Write([]byte(`{"success":true,"data":{"title":"Updated"}}`))
 	})
 
-	plan, err := client.Projects.UpdatePlanTask(context.Background(), ProjectID(12), ProjectPlanTaskID(4), map[string]any{"title": "Updated"})
+	plan, err := client.Projects.UpdatePlanTask(
+		context.Background(),
+		ProjectID(12),
+		ProjectPlanTaskID(4),
+		map[string]any{"title": "Updated"},
+		WithProjectsRequestOptions(pipedrive.WithHeader("X-Test", "plan-task")),
+	)
 	if err != nil {
 		t.Fatalf("UpdatePlanTask error: %v", err)
 	}

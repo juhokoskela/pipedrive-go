@@ -111,6 +111,9 @@ func TestActivityTypesService_Update(t *testing.T) {
 		if r.URL.Path != "/activityTypes/12" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -138,6 +141,7 @@ func TestActivityTypesService_Update(t *testing.T) {
 		ActivityTypeID(12),
 		WithActivityTypeName("Updated"),
 		WithActivityTypeOrder(2),
+		WithActivityTypesRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -157,6 +161,9 @@ func TestActivityTypesService_Delete(t *testing.T) {
 		if r.URL.Path != "/activityTypes/12" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":12,"name":"Video call","icon_key":"camera"}}`))
 	}))
@@ -167,7 +174,11 @@ func TestActivityTypesService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	deleted, err := client.ActivityTypes.Delete(context.Background(), ActivityTypeID(12))
+	deleted, err := client.ActivityTypes.Delete(
+		context.Background(),
+		ActivityTypeID(12),
+		WithActivityTypesRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}

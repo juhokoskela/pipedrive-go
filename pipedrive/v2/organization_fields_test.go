@@ -164,3 +164,101 @@ func TestOrganizationFieldsService_AddOptions(t *testing.T) {
 		t.Fatalf("unexpected options: %#v", options)
 	}
 }
+
+func TestOrganizationFieldsService_Get(t *testing.T) {
+	t.Parallel()
+
+	runFieldGetTest(t, "/organizationFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.OrganizationFields.Get(
+			ctx,
+			"cf_1",
+			WithOrganizationFieldIncludeFields(FieldIncludeField("ui_visibility"), FieldIncludeField("important_fields")),
+			WithOrganizationFieldRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+		)
+	})
+}
+
+func TestOrganizationFieldsService_ListPager(t *testing.T) {
+	t.Parallel()
+
+	runFieldListPagerTest(t, "/organizationFields", func(client *Client) *pipedrive.CursorPager[Field] {
+		return client.OrganizationFields.ListPager(WithOrganizationFieldsPageSize(2), WithOrganizationFieldsCursor("start"))
+	})
+}
+
+func TestOrganizationFieldsService_ForEach(t *testing.T) {
+	t.Parallel()
+
+	runFieldForEachTest(t, "/organizationFields", func(ctx context.Context, client *Client, fn func(Field) error) error {
+		return client.OrganizationFields.ForEach(ctx, fn)
+	})
+}
+
+func TestOrganizationFieldsService_Update(t *testing.T) {
+	t.Parallel()
+
+	runFieldUpdateTest(t, "/organizationFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.OrganizationFields.Update(
+			ctx,
+			"cf_1",
+			WithOrganizationFieldName("Priority updated"),
+			WithOrganizationFieldType(FieldTypeVarchar),
+			WithOrganizationFieldDescription("Updated description"),
+			WithOrganizationFieldUIVisibility(map[string]interface{}{"add": true}),
+			WithOrganizationFieldImportantFields(map[string]interface{}{"pipeline_id": 1}),
+			WithOrganizationFieldRequiredFields(map[string]interface{}{"stage_id": 2}),
+			WithOrganizationFieldRequestOptions(pipedrive.WithHeader("X-Test", "update")),
+		)
+	})
+}
+
+func TestOrganizationFieldsService_Delete(t *testing.T) {
+	t.Parallel()
+
+	runFieldDeleteTest(t, "/organizationFields/cf_1", func(ctx context.Context, client *Client) (*Field, error) {
+		return client.OrganizationFields.Delete(
+			ctx,
+			"cf_1",
+			WithOrganizationFieldRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+		)
+	})
+}
+
+func TestOrganizationFieldsService_AddOptionsWithRequestOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldAddOptionsRequestOptionsTest(t, "/organizationFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.OrganizationFields.AddOptions(
+			ctx,
+			"cf_1",
+			[]string{"Critical"},
+			WithOrganizationFieldRequestOptions(pipedrive.WithHeader("X-Test", "add-options")),
+		)
+	})
+}
+
+func TestOrganizationFieldsService_UpdateOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldUpdateOptionsTest(t, "/organizationFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.OrganizationFields.UpdateOptions(
+			ctx,
+			"cf_1",
+			[]FieldOptionUpdate{{ID: 1, Label: "Critical"}},
+			WithOrganizationFieldRequestOptions(pipedrive.WithHeader("X-Test", "update-options")),
+		)
+	})
+}
+
+func TestOrganizationFieldsService_DeleteOptions(t *testing.T) {
+	t.Parallel()
+
+	runFieldDeleteOptionsTest(t, "/organizationFields/cf_1/options", func(ctx context.Context, client *Client) ([]FieldOption, error) {
+		return client.OrganizationFields.DeleteOptions(
+			ctx,
+			"cf_1",
+			[]int{1, 2},
+			WithOrganizationFieldRequestOptions(pipedrive.WithHeader("X-Test", "delete-options")),
+		)
+	})
+}

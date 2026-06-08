@@ -120,6 +120,9 @@ func TestActivitiesService_Create(t *testing.T) {
 	t.Parallel()
 
 	personID := PersonID(7)
+	dealID := DealID(9)
+	orgID := OrganizationID(8)
+	projectID := ProjectID(6)
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
@@ -145,8 +148,35 @@ func TestActivitiesService_Create(t *testing.T) {
 		if payload["owner_id"] != float64(5) {
 			t.Fatalf("unexpected owner_id: %v", payload["owner_id"])
 		}
+		if payload["deal_id"] != float64(9) {
+			t.Fatalf("unexpected deal_id: %v", payload["deal_id"])
+		}
 		if payload["lead_id"] != "lead-123" {
 			t.Fatalf("unexpected lead_id: %v", payload["lead_id"])
+		}
+		if payload["person_id"] != float64(7) {
+			t.Fatalf("unexpected person_id: %v", payload["person_id"])
+		}
+		if payload["org_id"] != float64(8) {
+			t.Fatalf("unexpected org_id: %v", payload["org_id"])
+		}
+		if payload["project_id"] != float64(6) {
+			t.Fatalf("unexpected project_id: %v", payload["project_id"])
+		}
+		if payload["due_date"] != "2024-05-10" {
+			t.Fatalf("unexpected due_date: %v", payload["due_date"])
+		}
+		if payload["due_time"] != "09:30" {
+			t.Fatalf("unexpected due_time: %v", payload["due_time"])
+		}
+		if payload["duration"] != "00:30:00" {
+			t.Fatalf("unexpected duration: %v", payload["duration"])
+		}
+		if payload["busy"] != true {
+			t.Fatalf("unexpected busy: %v", payload["busy"])
+		}
+		if payload["done"] != false {
+			t.Fatalf("unexpected done: %v", payload["done"])
 		}
 		location, ok := payload["location"].(map[string]interface{})
 		if !ok || location["value"] != "HQ" {
@@ -159,6 +189,23 @@ func TestActivitiesService_Create(t *testing.T) {
 		participant, ok := participants[0].(map[string]interface{})
 		if !ok || participant["person_id"] != float64(7) {
 			t.Fatalf("unexpected participant: %#v", participants[0])
+		}
+		attendees, ok := payload["attendees"].([]interface{})
+		if !ok || len(attendees) != 1 {
+			t.Fatalf("unexpected attendees: %#v", payload["attendees"])
+		}
+		attendee, ok := attendees[0].(map[string]interface{})
+		if !ok || attendee["email"] != "ada@example.com" {
+			t.Fatalf("unexpected attendee: %#v", attendees[0])
+		}
+		if payload["public_description"] != "Public details" {
+			t.Fatalf("unexpected public_description: %v", payload["public_description"])
+		}
+		if payload["priority"] != float64(1) {
+			t.Fatalf("unexpected priority: %v", payload["priority"])
+		}
+		if payload["note"] != "Private note" {
+			t.Fatalf("unexpected note: %v", payload["note"])
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -176,9 +223,22 @@ func TestActivitiesService_Create(t *testing.T) {
 		WithActivitySubject("Call"),
 		WithActivityType("call"),
 		WithActivityOwnerID(UserID(5)),
+		WithActivityDealID(dealID),
 		WithActivityLeadID(LeadID("lead-123")),
+		WithActivityPersonID(personID),
+		WithActivityOrgID(orgID),
+		WithActivityProjectID(projectID),
+		WithActivityDueDate("2024-05-10"),
+		WithActivityDueTime("09:30"),
+		WithActivityDuration("00:30:00"),
+		WithActivityBusy(true),
+		WithActivityDone(false),
 		WithActivityLocation(ActivityLocation{Value: "HQ"}),
 		WithActivityParticipants(ActivityParticipant{PersonID: &personID, Primary: true}),
+		WithActivityAttendees(ActivityAttendee{Email: "ada@example.com", Name: "Ada"}),
+		WithActivityPublicDescription("Public details"),
+		WithActivityPriority(1),
+		WithActivityNote("Private note"),
 		WithActivityRequestOptions(pipedrive.WithHeader("X-Test", "2")),
 	)
 	if err != nil {
@@ -198,6 +258,9 @@ func TestActivitiesService_Update(t *testing.T) {
 		}
 		if r.URL.Path != "/activities/5" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 
 		var payload map[string]interface{}
@@ -226,6 +289,7 @@ func TestActivitiesService_Update(t *testing.T) {
 		ActivityID(5),
 		WithActivityDone(true),
 		WithActivityDuration("01:00:00"),
+		WithActivityRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
 		t.Fatalf("Update error: %v", err)
@@ -245,6 +309,9 @@ func TestActivitiesService_Delete(t *testing.T) {
 		if r.URL.Path != "/activities/4" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":4}}`))
@@ -256,11 +323,123 @@ func TestActivitiesService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	result, err := client.Activities.Delete(context.Background(), ActivityID(4))
+	result, err := client.Activities.Delete(
+		context.Background(),
+		ActivityID(4),
+		WithActivityRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
 	if result.ID != 4 {
 		t.Fatalf("unexpected delete result: %#v", result)
+	}
+}
+
+func TestActivitiesService_Get(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/activities/4" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("include_fields"); got != "attendees" {
+			t.Fatalf("unexpected include_fields: %q", got)
+		}
+		if got := r.Header.Get("X-Test"); got != "get" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":4,"subject":"Call"}}`))
+	})
+
+	activity, err := client.Activities.Get(
+		context.Background(),
+		ActivityID(4),
+		WithActivityIncludeFields(ActivityIncludeFieldAttendees),
+		WithActivityRequestOptions(pipedrive.WithHeader("X-Test", "get")),
+	)
+	if err != nil {
+		t.Fatalf("Get error: %v", err)
+	}
+	if activity.ID != 4 || activity.Subject != "Call" {
+		t.Fatalf("unexpected activity: %#v", activity)
+	}
+}
+
+func TestActivitiesService_ListPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/activities" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":1}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":2}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Activities.ListPager(WithActivitiesPageSize(2), WithActivitiesCursor("start"))
+	var ids []ActivityID
+	for pager.Next(context.Background()) {
+		for _, activity := range pager.Items() {
+			ids = append(ids, activity.ID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestActivitiesService_ForEach(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/activities" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"id":1},{"id":2}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []ActivityID
+	err := client.Activities.ForEach(context.Background(), func(activity Activity) error {
+		ids = append(ids, activity.ID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEach error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
 	}
 }

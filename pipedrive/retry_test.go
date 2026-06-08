@@ -2,6 +2,7 @@ package pipedrive
 
 import (
 	"context"
+	"errors"
 	"io"
 	"net/http"
 	"strings"
@@ -274,5 +275,94 @@ func TestRetryTransport_NilRequestReturnsError(t *testing.T) {
 	}
 	if err.Error() != "pipedrive: nil request" {
 		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestRetryHelpers(t *testing.T) {
+	t.Parallel()
+
+	for _, method := range []string{
+		http.MethodGet,
+		http.MethodHead,
+		http.MethodPut,
+		http.MethodDelete,
+		http.MethodOptions,
+		http.MethodTrace,
+	} {
+		if !isIdempotentMethod(method) {
+			t.Fatalf("expected %s to be idempotent", method)
+		}
+	}
+	for _, method := range []string{http.MethodPost, http.MethodPatch, "CUSTOM"} {
+		if isIdempotentMethod(method) {
+			t.Fatalf("expected %s to be non-idempotent", method)
+		}
+	}
+
+	if got := fullJitter(0); got != 0 {
+		t.Fatalf("fullJitter(0) = %s, want 0", got)
+	}
+	if got := fullJitter(-time.Second); got != 0 {
+		t.Fatalf("fullJitter(-1s) = %s, want 0", got)
+	}
+	for i := 0; i < 20; i++ {
+		if got := fullJitter(10 * time.Millisecond); got < 0 || got >= 10*time.Millisecond {
+			t.Fatalf("fullJitter out of range: %s", got)
+		}
+	}
+}
+
+func TestSleepWithContext_ReturnsOnCancel(t *testing.T) {
+	t.Parallel()
+
+	if err := sleepWithContext(context.Background(), 0); err != nil {
+		t.Fatalf("zero sleep error: %v", err)
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	err := sleepWithContext(ctx, time.Hour)
+	if !errors.Is(err, context.Canceled) {
+		t.Fatalf("expected context canceled, got %v", err)
+	}
+}
+
+func TestSanitizeRetryPolicy_ClampsInvalidValues(t *testing.T) {
+	t.Parallel()
+
+	policy := sanitizeRetryPolicy(RetryPolicy{
+		MaxAttempts: -3,
+		BaseDelay:   -time.Second,
+		MaxDelay:    0,
+		Jitter:      nil,
+	})
+
+	if policy.MaxAttempts != 1 {
+		t.Fatalf("expected max attempts 1, got %d", policy.MaxAttempts)
+	}
+	if policy.BaseDelay != 0 {
+		t.Fatalf("expected base delay 0, got %s", policy.BaseDelay)
+	}
+	if policy.MaxDelay != 0 {
+		t.Fatalf("expected max delay 0, got %s", policy.MaxDelay)
+	}
+	if policy.Jitter == nil {
+		t.Fatalf("expected default jitter")
+	}
+	if got := policy.Jitter(3 * time.Second); got != 3*time.Second {
+		t.Fatalf("unexpected default jitter result: %s", got)
+	}
+
+	policy = sanitizeRetryPolicy(RetryPolicy{
+		MaxAttempts: 2,
+		BaseDelay:   time.Second,
+		MaxDelay:    -time.Second,
+		Jitter:      func(d time.Duration) time.Duration { return d / 2 },
+	})
+	if policy.MaxDelay != time.Second {
+		t.Fatalf("expected max delay to default to base delay, got %s", policy.MaxDelay)
+	}
+	if got := policy.Jitter(4 * time.Second); got != 2*time.Second {
+		t.Fatalf("unexpected custom jitter result: %s", got)
 	}
 }

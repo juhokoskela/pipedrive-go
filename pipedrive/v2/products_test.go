@@ -51,6 +51,9 @@ func TestProductsService_List(t *testing.T) {
 		if got := q.Get("cursor"); got != "c1" {
 			t.Fatalf("unexpected cursor: %q", got)
 		}
+		if got := r.Header.Get("X-Test"); got != "list" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":[{"id":1,"name":"Product"}],"additional_data":{"next_cursor":null}}`))
@@ -72,6 +75,7 @@ func TestProductsService_List(t *testing.T) {
 		WithProductsCustomFields("cf_1"),
 		WithProductsPageSize(2),
 		WithProductsCursor("c1"),
+		WithProductRequestOptions(pipedrive.WithHeader("X-Test", "list")),
 	)
 	if err != nil {
 		t.Fatalf("List error: %v", err)
@@ -134,6 +138,199 @@ func TestProductsService_Create(t *testing.T) {
 	}
 	if product.ID != 9 || product.Name != "Widget" {
 		t.Fatalf("unexpected product: %#v", product)
+	}
+}
+
+func TestProductsService_ListPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":1}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":2}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Products.ListPager(WithProductsPageSize(2), WithProductsCursor("start"))
+	var ids []ProductID
+	for pager.Next(context.Background()) {
+		for _, product := range pager.Items() {
+			ids = append(ids, product.ID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestProductsService_ForEach(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"id":1},{"id":2}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []ProductID
+	err := client.Products.ForEach(context.Background(), func(product Product) error {
+		ids = append(ids, product.ID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEach error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestProductsService_Update(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPatch {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/9" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "update" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+
+		var payload map[string]interface{}
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			t.Fatalf("decode body: %v", err)
+		}
+		if payload["name"] != "Widget updated" {
+			t.Fatalf("unexpected name: %#v", payload["name"])
+		}
+		if payload["code"] != "W-2" {
+			t.Fatalf("unexpected code: %#v", payload["code"])
+		}
+		if payload["description"] != "Updated description" {
+			t.Fatalf("unexpected description: %#v", payload["description"])
+		}
+		if payload["unit"] != "box" {
+			t.Fatalf("unexpected unit: %#v", payload["unit"])
+		}
+		if payload["tax"] != float64(24) {
+			t.Fatalf("unexpected tax: %#v", payload["tax"])
+		}
+		if payload["category"] != float64(12) {
+			t.Fatalf("unexpected category: %#v", payload["category"])
+		}
+		if payload["owner_id"] != float64(5) {
+			t.Fatalf("unexpected owner_id: %#v", payload["owner_id"])
+		}
+		if payload["is_linkable"] != true {
+			t.Fatalf("unexpected is_linkable: %#v", payload["is_linkable"])
+		}
+		if payload["visible_to"] != float64(3) {
+			t.Fatalf("unexpected visible_to: %#v", payload["visible_to"])
+		}
+		prices, ok := payload["prices"].([]interface{})
+		if !ok || len(prices) != 1 {
+			t.Fatalf("unexpected prices: %#v", payload["prices"])
+		}
+		price, ok := prices[0].(map[string]interface{})
+		if !ok || price["currency"] != "USD" || price["price"] != float64(12.5) {
+			t.Fatalf("unexpected price: %#v", prices[0])
+		}
+		if payload["billing_frequency"] != "monthly" {
+			t.Fatalf("unexpected billing_frequency: %#v", payload["billing_frequency"])
+		}
+		if payload["billing_frequency_cycles"] != float64(3) {
+			t.Fatalf("unexpected billing_frequency_cycles: %#v", payload["billing_frequency_cycles"])
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":9,"name":"Widget updated"}}`))
+	})
+
+	product, err := client.Products.Update(
+		context.Background(),
+		ProductID(9),
+		WithProductName("Widget updated"),
+		WithProductCode("W-2"),
+		WithProductDescription("Updated description"),
+		WithProductUnit("box"),
+		WithProductTax(24),
+		WithProductCategory(12),
+		WithProductOwnerID(UserID(5)),
+		WithProductLinkable(true),
+		WithProductVisibleTo(3),
+		WithProductPrices(ProductPrice{Currency: "USD", Price: 12.5}),
+		WithProductBillingFrequency(BillingFrequencyMonthly),
+		WithProductBillingFrequencyCycles(3),
+		WithProductRequestOptions(pipedrive.WithHeader("X-Test", "update")),
+	)
+	if err != nil {
+		t.Fatalf("Update error: %v", err)
+	}
+	if product.ID != 9 || product.Name != "Widget updated" {
+		t.Fatalf("unexpected product: %#v", product)
+	}
+}
+
+func TestProductsService_Delete(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodDelete {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/9" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":9}}`))
+	})
+
+	result, err := client.Products.Delete(
+		context.Background(),
+		ProductID(9),
+		WithProductRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
+	if err != nil {
+		t.Fatalf("Delete error: %v", err)
+	}
+	if result.ID != 9 {
+		t.Fatalf("unexpected result: %#v", result)
 	}
 }
 
@@ -338,6 +535,80 @@ func TestProductsService_ListVariations(t *testing.T) {
 	}
 }
 
+func TestProductsService_ListVariationsPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/5/variations" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":10}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"id":11}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Products.ListVariationsPager(ProductID(5), WithProductVariationsPageSize(2), WithProductVariationsCursor("start"))
+	var ids []ProductVariationID
+	for pager.Next(context.Background()) {
+		for _, variation := range pager.Items() {
+			ids = append(ids, variation.ID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 10 || ids[1] != 11 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestProductsService_ForEachVariations(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/5/variations" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"id":10},{"id":11}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []ProductVariationID
+	err := client.Products.ForEachVariations(context.Background(), ProductID(5), func(variation ProductVariation) error {
+		ids = append(ids, variation.ID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEachVariations error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 10 || ids[1] != 11 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
 func TestProductsService_CreateVariation(t *testing.T) {
 	t.Parallel()
 
@@ -510,6 +781,80 @@ func TestProductsService_ListFollowers(t *testing.T) {
 	}
 }
 
+func TestProductsService_ListFollowersPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/5/followers" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"user_id":7}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"user_id":8}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Products.ListFollowersPager(ProductID(5), WithProductFollowersPageSize(2), WithProductFollowersCursor("start"))
+	var ids []UserID
+	for pager.Next(context.Background()) {
+		for _, follower := range pager.Items() {
+			ids = append(ids, follower.UserID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 7 || ids[1] != 8 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestProductsService_ForEachFollowers(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/5/followers" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"user_id":7},{"user_id":8}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []UserID
+	err := client.Products.ForEachFollowers(context.Background(), ProductID(5), func(follower Follower) error {
+		ids = append(ids, follower.UserID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEachFollowers error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 7 || ids[1] != 8 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
 func TestProductsService_AddFollower(t *testing.T) {
 	t.Parallel()
 
@@ -620,6 +965,80 @@ func TestProductsService_FollowersChangelog(t *testing.T) {
 	}
 	if len(changelog) != 1 || changelog[0].FollowerUserID != 2 {
 		t.Fatalf("unexpected changelog: %#v", changelog)
+	}
+}
+
+func TestProductsService_FollowersChangelogPager(t *testing.T) {
+	t.Parallel()
+
+	var calls int
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/5/followers/changelog" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.URL.Query().Get("limit"); got != "2" {
+			t.Fatalf("unexpected limit: %q", got)
+		}
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch calls {
+		case 1:
+			if got := r.URL.Query().Get("cursor"); got != "start" {
+				t.Fatalf("unexpected first cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"action":"added","follower_user_id":7}],"additional_data":{"next_cursor":"next"}}`))
+		case 2:
+			if got := r.URL.Query().Get("cursor"); got != "next" {
+				t.Fatalf("unexpected second cursor: %q", got)
+			}
+			_, _ = w.Write([]byte(`{"data":[{"action":"removed","follower_user_id":8}],"additional_data":{"next_cursor":null}}`))
+		default:
+			t.Fatalf("unexpected call count: %d", calls)
+		}
+	})
+
+	pager := client.Products.FollowersChangelogPager(ProductID(5), WithProductFollowersChangelogPageSize(2), WithProductFollowersChangelogCursor("start"))
+	var ids []UserID
+	for pager.Next(context.Background()) {
+		for _, event := range pager.Items() {
+			ids = append(ids, event.FollowerUserID)
+		}
+	}
+	if err := pager.Err(); err != nil {
+		t.Fatalf("pager error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 7 || ids[1] != 8 {
+		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestProductsService_ForEachFollowersChangelog(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/products/5/followers/changelog" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"action":"added","follower_user_id":7},{"action":"removed","follower_user_id":8}],"additional_data":{"next_cursor":null}}`))
+	})
+
+	var ids []UserID
+	err := client.Products.ForEachFollowersChangelog(context.Background(), ProductID(5), func(event FollowerChangelog) error {
+		ids = append(ids, event.FollowerUserID)
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("ForEachFollowersChangelog error: %v", err)
+	}
+	if len(ids) != 2 || ids[0] != 7 || ids[1] != 8 {
+		t.Fatalf("unexpected ids: %v", ids)
 	}
 }
 

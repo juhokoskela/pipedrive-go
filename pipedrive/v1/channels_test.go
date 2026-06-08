@@ -37,6 +37,12 @@ func TestChannelsService_Create(t *testing.T) {
 		if payload["provider_channel_id"] != "provider-1" {
 			t.Fatalf("unexpected provider_channel_id: %#v", payload["provider_channel_id"])
 		}
+		if payload["avatar_url"] != "https://example.com/avatar.png" {
+			t.Fatalf("unexpected avatar_url: %#v", payload["avatar_url"])
+		}
+		if payload["template_support"] != true {
+			t.Fatalf("unexpected template_support: %#v", payload["template_support"])
+		}
 		if payload["provider_type"] != "other" {
 			t.Fatalf("unexpected provider_type: %#v", payload["provider_type"])
 		}
@@ -55,6 +61,8 @@ func TestChannelsService_Create(t *testing.T) {
 		context.Background(),
 		WithChannelName("My Channel"),
 		WithChannelProviderID("provider-1"),
+		WithChannelAvatarURL("https://example.com/avatar.png"),
+		WithChannelTemplateSupport(true),
 		WithChannelProviderType(ChannelProviderTypeOther),
 		WithChannelsRequestOptions(pipedrive.WithHeader("X-Test", "1")),
 	)
@@ -79,6 +87,9 @@ func TestChannelsService_Delete(t *testing.T) {
 		if r.URL.Path != "/channels/chan-1" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true}`))
 	}))
@@ -89,7 +100,11 @@ func TestChannelsService_Delete(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.Channels.Delete(context.Background(), ChannelID("chan-1"))
+	ok, err := client.Channels.Delete(
+		context.Background(),
+		ChannelID("chan-1"),
+		WithChannelsRequestOptions(pipedrive.WithHeader("X-Test", "delete")),
+	)
 	if err != nil {
 		t.Fatalf("Delete error: %v", err)
 	}
@@ -102,6 +117,8 @@ func TestChannelsService_ReceiveMessage(t *testing.T) {
 	t.Parallel()
 
 	created := time.Date(2022, 3, 1, 7, 58, 0, 0, time.UTC)
+	replyBy := time.Date(2022, 3, 1, 8, 58, 0, 0, time.UTC)
+	attachmentSize := float64(123)
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
@@ -109,6 +126,9 @@ func TestChannelsService_ReceiveMessage(t *testing.T) {
 		}
 		if r.URL.Path != "/channels/messages/receive" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "receive" {
+			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -118,6 +138,15 @@ func TestChannelsService_ReceiveMessage(t *testing.T) {
 			t.Fatalf("unexpected body: %s", body)
 		}
 		if !strings.Contains(string(body), "\"status\":\"sent\"") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"reply_by\":\"2022-03-01 08:58:00\"") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"conversation_link\":\"https://example.com/conversations/conv-1\"") {
+			t.Fatalf("unexpected body: %s", body)
+		}
+		if !strings.Contains(string(body), "\"attachments\"") {
 			t.Fatalf("unexpected body: %s", body)
 		}
 
@@ -140,6 +169,17 @@ func TestChannelsService_ReceiveMessage(t *testing.T) {
 		WithChannelMessageBody("Hello"),
 		WithChannelMessageStatus(ChannelMessageStatusSent),
 		WithChannelMessageCreatedAt(created),
+		WithChannelMessageReplyBy(replyBy),
+		WithChannelMessageConversationLink("https://example.com/conversations/conv-1"),
+		WithChannelMessageAttachments(ChannelMessageAttachment{
+			ID:         "att-1",
+			Type:       "image/png",
+			Name:       "Image",
+			Size:       &attachmentSize,
+			URL:        "http://example.com/a.png",
+			PreviewURL: "http://example.com/a.preview.png",
+		}),
+		WithChannelsRequestOptions(pipedrive.WithHeader("X-Test", "receive")),
 	)
 	if err != nil {
 		t.Fatalf("ReceiveMessage error: %v", err)
@@ -165,6 +205,9 @@ func TestChannelsService_DeleteConversation(t *testing.T) {
 		if r.URL.Path != "/channels/chan-1/conversations/conv-1" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.Header.Get("X-Test"); got != "delete-conversation" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true}`))
 	}))
@@ -175,7 +218,12 @@ func TestChannelsService_DeleteConversation(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	ok, err := client.Channels.DeleteConversation(context.Background(), ChannelID("chan-1"), ConversationID("conv-1"))
+	ok, err := client.Channels.DeleteConversation(
+		context.Background(),
+		ChannelID("chan-1"),
+		ConversationID("conv-1"),
+		WithChannelsRequestOptions(pipedrive.WithHeader("X-Test", "delete-conversation")),
+	)
 	if err != nil {
 		t.Fatalf("DeleteConversation error: %v", err)
 	}
