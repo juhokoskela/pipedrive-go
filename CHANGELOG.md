@@ -7,6 +7,13 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.0.8] - 2026-07-13
+
+### Changed
+- Bump the Go toolchain and preferred CI version from 1.26.4 to 1.26.5
+- Bump GitHub Actions: `actions/checkout`to v7, `actions/setup-go` to v6.5.0, `softprops/action-gh-release` to v3.0.1, and `actions/codeql/*`to v4.37.0
+- Bump `github.com/oapi-codegen/runtime` to v1.4.2
+
 ## [1.0.7] - 2026-06-05
 
 ### Changed
