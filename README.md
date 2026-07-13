@@ -30,13 +30,13 @@ go get github.com/juhokoskela/pipedrive-go@latest
 
 Go 1.25+ is required.
 
-The repository prefers Go 1.26.4 locally via the `toolchain` directive in
+The repository prefers Go 1.26.5 locally via the `toolchain` directive in
 `go.mod`.
 
 To pin a specific version:
 
 ```sh
-go get github.com/juhokoskela/pipedrive-go@v1.0.0
+go get github.com/juhokoskela/pipedrive-go@v1.0.8
 ```
 
 ## Quickstart (API token)
