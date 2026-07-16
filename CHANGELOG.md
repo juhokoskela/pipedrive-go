@@ -7,6 +7,13 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.0.9] - 2026-07-16
+
+### Changed
+
+- Bump GitHub Actions: `actions/setup-go` from v6.5.0 to v7.0.0 and `softprops/action-gh-release` from v3.0.1 to v3.0.2
+- Bump `github.com/oapi-codegen/runtime` from v1.4.2 to v1.5.0
+
 ## [1.0.8] - 2026-07-13
 
 ### Changed
