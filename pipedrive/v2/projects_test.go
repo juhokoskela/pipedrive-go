@@ -197,9 +197,10 @@ func TestProjectsService_PagersAndIterators(t *testing.T) {
 		cursor := r.URL.Query().Get("cursor")
 		id := 1
 		next := `null`
-		if cursor == "start" {
+		switch cursor {
+		case "start":
 			next = `"next"`
-		} else if cursor == "next" {
+		case "next":
 			id = 2
 		}
 		switch r.URL.Path {
