@@ -104,6 +104,12 @@ tags:
   - name: Projects
     description: |
       Projects represent ongoing, completed or canceled projects attached to an organization, person or to deals. Each project has an owner and must be placed in a phase. Each project consists of standard data fields but can also contain a number of custom fields. The custom fields can be recognized by long hashes as keys.
+  - name: ProjectBoards
+    description: |
+      Project boards are used to organize projects into different phases. Each board contains phases that define the workflow for projects.
+  - name: ProjectPhases
+    description: |
+      Project phases represent the stages within a project board. Each phase belongs to a board and defines a step in the project workflow.
   - name: ProjectTemplates
     description: |
       Project templates allow you to have reusable and dynamic structure to simplify creation of a project. Project template can contain information about activities, tasks and groups that will be used when creating a project.
@@ -5174,6 +5180,7 @@ paths:
                     product_id: 1
                     activity_id: 1
                     lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                    project_id: 1
                     log_id: null
                     add_time: '2020-09-16 11:19:36'
                     update_time: '2020-09-16 11:19:36'
@@ -5194,6 +5201,7 @@ paths:
                     org_name: Pipedrive Inc.
                     product_name: ''
                     lead_name: nice lead
+                    project_name: My project
                     url: 'https://app.pipedrive.com/api/v1/files/304/download'
                     name: 95781006_794143070992462_4330873630616453120_n.jpg
                     description: ''
@@ -5540,6 +5548,7 @@ paths:
                           product_id: 1
                           activity_id: 1
                           lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                          project_id: 1
                           log_id: null
                           add_time: '2020-09-16 11:19:36'
                           update_time: '2020-09-16 11:19:36'
@@ -5560,6 +5569,7 @@ paths:
                           org_name: Pipedrive Inc.
                           product_name: ''
                           lead_name: nice lead
+                          project_name: My project
                           url: 'https://app.pipedrive.com/api/v1/files/304/download'
                           name: 95781006_794143070992462_4330873630616453120_n.jpg
                           description: ''
@@ -5978,6 +5988,16 @@ paths:
           description: Items shown per page
           schema:
             type: integer
+        - in: query
+          name: include_body
+          schema:
+            title: numberBooleanDefault0
+            type: number
+            default: 0
+            enum:
+              - 0
+              - 1
+          description: 'Whether to include the mail message body content in the response. `0` = Don''t include, `1` = Include.'
       responses:
         '200':
           description: Success
@@ -6114,6 +6134,9 @@ paths:
                                     body_url:
                                       type: string
                                       description: The mail message body URL
+                                    body:
+                                      type: string
+                                      description: The mail message body content. Only present when `include_body=1` is passed.
                                     account_id:
                                       type: string
                                       description: The connection account ID
@@ -7222,10 +7245,13 @@ paths:
                                               - projects
                                               - account_settings
                                               - partnership
+                                            description: The granular app access level
                                           admin:
                                             type: boolean
+                                            description: Whether the user has admin access or not
                                           permission_set_id:
                                             type: string
+                                            description: The ID of the permission set
                                     active_flag:
                                       type: boolean
                                       description: Boolean that indicates whether the user is activated
@@ -7999,10 +8025,13 @@ paths:
                                             - projects
                                             - account_settings
                                             - partnership
+                                          description: The granular app access level
                                         admin:
                                           type: boolean
+                                          description: Whether the user has admin access or not
                                         permission_set_id:
                                           type: string
+                                          description: The ID of the permission set
                                   active_flag:
                                     type: boolean
                                     description: Boolean that indicates whether the user is activated
@@ -9468,6 +9497,9 @@ paths:
                           type: string
                           description: The ID of the lead to associate the file with
                           format: uuid
+                        project_id:
+                          type: integer
+                          description: The ID of the project to associate the file with
                         add_time:
                           type: string
                           description: 'The date and time when the file was added/created. Format: YYYY-MM-DD HH:MM:SS'
@@ -9519,6 +9551,9 @@ paths:
                         lead_name:
                           type: string
                           description: The name of the lead associated with the file
+                        project_name:
+                          type: string
+                          description: The name of the project associated with the file
                         url:
                           type: string
                           description: The URL of the download file
@@ -9565,6 +9600,7 @@ paths:
                     product_id: 1
                     activity_id: 1
                     lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                    project_id: 1
                     log_id: null
                     add_time: '2020-02-20 14:36:35'
                     update_time: '2020-02-20 14:57:33'
@@ -9582,6 +9618,7 @@ paths:
                     deal_name: ''
                     person_name: Person
                     lead_name: Test lead name
+                    project_name: My project
                     org_name: ''
                     product_name: ''
                     url: 'https://2a7f.pipedrive.com/v1/files/123/download'
@@ -9595,6 +9632,7 @@ paths:
                     product_id: 1
                     activity_id: 1
                     lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                    project_id: 1
                     log_id: null
                     add_time: '2020-02-20 14:36:35'
                     update_time: '2020-02-20 14:57:33'
@@ -9614,6 +9652,7 @@ paths:
                     org_name: ''
                     product_name: ''
                     lead_name: Test lead name
+                    project_name: My project
                     url: 'https://2a7f.pipedrive.com/v1/files/123321/download'
                     name: second test file name
                     description: second test file description
@@ -9668,6 +9707,9 @@ paths:
                   type: string
                   format: uuid
                   description: The ID of the lead to associate file(s) with
+                project_id:
+                  type: integer
+                  description: The ID of the project to associate file(s) with
       responses:
         '200':
           description: 'Add a file from computer or Google Drive and associate it with deal, person, organization, activity or product'
@@ -9709,6 +9751,9 @@ paths:
                         type: string
                         description: The ID of the lead to associate the file with
                         format: uuid
+                      project_id:
+                        type: integer
+                        description: The ID of the project to associate the file with
                       add_time:
                         type: string
                         description: 'The date and time when the file was added/created. Format: YYYY-MM-DD HH:MM:SS'
@@ -9760,6 +9805,9 @@ paths:
                       lead_name:
                         type: string
                         description: The name of the lead associated with the file
+                      project_name:
+                        type: string
+                        description: The name of the project associated with the file
                       url:
                         type: string
                         description: The URL of the download file
@@ -9780,6 +9828,7 @@ paths:
                   product_id: 1
                   activity_id: 1
                   lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                  project_id: 1
                   log_id: null
                   add_time: '2020-02-20 14:36:35'
                   update_time: '2020-02-20 14:36:31'
@@ -9799,6 +9848,7 @@ paths:
                   org_name: ''
                   product_name: ''
                   lead_name: Test lead name
+                  project_name: My project
                   url: 'https://2a7f.pipedrive.com/v1/files/123/download'
                   name: IMG_8189.jpg
                   description: ''
@@ -9897,6 +9947,9 @@ paths:
                         type: string
                         description: The ID of the lead to associate the file with
                         format: uuid
+                      project_id:
+                        type: integer
+                        description: The ID of the project to associate the file with
                       add_time:
                         type: string
                         description: 'The date and time when the file was added/created. Format: YYYY-MM-DD HH:MM:SS'
@@ -9948,6 +10001,9 @@ paths:
                       lead_name:
                         type: string
                         description: The name of the lead associated with the file
+                      project_name:
+                        type: string
+                        description: The name of the project associated with the file
                       url:
                         type: string
                         description: The URL of the download file
@@ -9968,6 +10024,7 @@ paths:
                   product_id: 1
                   activity_id: 1
                   lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                  project_id: 1
                   log_id: null
                   add_time: '2020-02-21 11:52:28'
                   update_time: '2020-02-21 11:52:24'
@@ -9987,6 +10044,7 @@ paths:
                   org_name: test org
                   product_name: ''
                   lead_name: Test lead name 1
+                  project_name: My project
                   url: 'https://app.pipedrive.com/api/v1/files/7195/download'
                   name: Test title for remote file
                   description: ''
@@ -10075,6 +10133,9 @@ paths:
                         type: string
                         description: The ID of the lead to associate the file with
                         format: uuid
+                      project_id:
+                        type: integer
+                        description: The ID of the project to associate the file with
                       add_time:
                         type: string
                         description: 'The date and time when the file was added/created. Format: YYYY-MM-DD HH:MM:SS'
@@ -10126,6 +10187,9 @@ paths:
                       lead_name:
                         type: string
                         description: The name of the lead associated with the file
+                      project_name:
+                        type: string
+                        description: The name of the project associated with the file
                       url:
                         type: string
                         description: The URL of the download file
@@ -10146,6 +10210,7 @@ paths:
                   product_id: 1
                   activity_id: 1
                   lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                  project_id: 1
                   log_id: null
                   add_time: '2020-02-21 12:02:37'
                   update_time: '2020-02-21 12:02:37'
@@ -10165,6 +10230,7 @@ paths:
                   org_name: ''
                   product_name: ''
                   lead_name: Test lead name
+                  project_name: My project
                   url: 'https://app.pipedrive.com/api/v1/files/7196/download'
                   name: Test title for remote file
                   description: ''
@@ -10275,6 +10341,9 @@ paths:
                         type: string
                         description: The ID of the lead to associate the file with
                         format: uuid
+                      project_id:
+                        type: integer
+                        description: The ID of the project to associate the file with
                       add_time:
                         type: string
                         description: 'The date and time when the file was added/created. Format: YYYY-MM-DD HH:MM:SS'
@@ -10326,6 +10395,9 @@ paths:
                       lead_name:
                         type: string
                         description: The name of the lead associated with the file
+                      project_name:
+                        type: string
+                        description: The name of the project associated with the file
                       url:
                         type: string
                         description: The URL of the download file
@@ -10346,6 +10418,7 @@ paths:
                   product_id: 1
                   activity_id: 1
                   lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                  project_id: 1
                   log_id: null
                   add_time: '2020-02-20 14:36:35'
                   update_time: '2020-02-20 14:57:33'
@@ -10365,6 +10438,7 @@ paths:
                   org_name: ''
                   product_name: ''
                   lead_name: Test lead name
+                  project_name: My project
                   url: 'https://2a7f.pipedrive.com/v1/files/123/download'
                   name: test file name
                   description: test file description
@@ -10442,6 +10516,9 @@ paths:
                         type: string
                         description: The ID of the lead to associate the file with
                         format: uuid
+                      project_id:
+                        type: integer
+                        description: The ID of the project to associate the file with
                       add_time:
                         type: string
                         description: 'The date and time when the file was added/created. Format: YYYY-MM-DD HH:MM:SS'
@@ -10493,6 +10570,9 @@ paths:
                       lead_name:
                         type: string
                         description: The name of the lead associated with the file
+                      project_name:
+                        type: string
+                        description: The name of the project associated with the file
                       url:
                         type: string
                         description: The URL of the download file
@@ -10513,6 +10593,7 @@ paths:
                   product_id: 1
                   activity_id: 1
                   lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                  project_id: 1
                   log_id: null
                   add_time: '2020-02-20 14:36:35'
                   update_time: '2020-02-20 14:57:33'
@@ -10532,6 +10613,7 @@ paths:
                   org_name: ''
                   product_name: ''
                   lead_name: Test lead name
+                  project_name: My project
                   url: 'https://2a7f.pipedrive.com/v1/files/123/download'
                   name: test file name
                   description: test file description
@@ -10679,12 +10761,30 @@ paths:
                             name:
                               type: string
                               description: The name of the filter
+                            filter_code:
+                              type: string
+                              nullable: true
+                              description: The system code of the filter
+                            is_editable:
+                              type: boolean
+                              description: Whether the filter can be edited by the requesting user
                             active_flag:
                               type: boolean
                               description: The active flag of the filter
                             type:
                               type: string
-                              description: The type of the item
+                              enum:
+                                - deals
+                                - leads
+                                - org
+                                - people
+                                - products
+                                - activity
+                                - projects
+                            temporary_flag:
+                              type: boolean
+                              nullable: true
+                              description: Whether the filter is temporary
                             user_id:
                               type: integer
                               description: The owner of the filter
@@ -10693,26 +10793,41 @@ paths:
                               description: The date and time when the filter was added
                             update_time:
                               type: string
+                              nullable: true
                               description: The date and time when the filter was updated
                             visible_to:
-                              type: integer
-                              description: The visibility group ID of who can see then filter
+                              allOf:
+                                - type: string
+                                  enum:
+                                    - '1'
+                                    - '3'
+                                    - '5'
+                                    - '7'
+                              description: The visibility group ID of who can see the filter
+                            last_used_time:
+                              type: string
+                              nullable: true
+                              description: The date and time when the filter was last used
                             custom_view_id:
                               type: integer
-                              description: Used by Pipedrive webapp
+                              nullable: true
+                              description: The custom view ID linked to the filter
               example:
                 success: true
                 data:
                   - id: 1
                     name: All open deals
+                    filter_code: null
+                    is_editable: true
                     active_flag: true
                     type: deals
                     temporary_flag: null
                     user_id: 927097
                     add_time: '2019-10-15 11:01:53'
                     update_time: '2019-10-15 11:01:53'
-                    visible_to: 7
-                    custom_view_id: 1
+                    visible_to: '7'
+                    last_used_time: null
+                    custom_view_id: null
     post:
       summary: Add a new filter
       description: 'Adds a new filter, returns the ID upon success. Note that in the conditions JSON object only one first-level condition group is supported, and it must be glued with ''AND'', and only two second level condition groups are supported of which one must be glued with ''AND'' and the second with ''OR''. Other combinations do not work (yet) but the syntax supports introducing them in future. For more information, see the tutorial for <a href="https://pipedrive.readme.io/docs/adding-a-filter" target="_blank" rel="noopener noreferrer">adding a filter</a>.'
@@ -10726,6 +10841,13 @@ paths:
             - 'deals:full'
             - 'activities:full'
             - 'contacts:full'
+      parameters:
+        - in: query
+          name: include_field_code
+          required: false
+          schema:
+            type: boolean
+          description: 'If set to `true`, each condition in the response includes a `field_code` field identifying the field by its code name'
       requestBody:
         content:
           application/json:
@@ -10778,13 +10900,20 @@ paths:
                         properties:
                           id:
                             type: integer
-                            description: The ID of the created filter
+                            description: The ID of the filter
                           name:
                             type: string
-                            description: The name of the created filter
+                            description: The name of the filter
+                          filter_code:
+                            type: string
+                            nullable: true
+                            description: The system code of the filter
+                          is_editable:
+                            type: boolean
+                            description: Whether the filter can be edited by the requesting user
                           active_flag:
                             type: boolean
-                            description: The activity flag of the created filter
+                            description: The activity flag of the filter
                           type:
                             type: string
                             enum:
@@ -10797,38 +10926,104 @@ paths:
                               - projects
                           temporary_flag:
                             type: boolean
-                            description: If the created filter is temporary or not
+                            nullable: true
+                            description: Whether the filter is temporary
                           user_id:
                             type: integer
-                            description: The user ID of the created filter
+                            description: The user ID of the filter owner
                           add_time:
                             type: string
-                            description: The add time of the created filter
+                            description: The date and time when the filter was added
                           update_time:
                             type: string
-                            description: The update time of the created filter
+                            nullable: true
+                            description: The date and time when the filter was last updated
                           visible_to:
-                            type: integer
-                            description: The visibility group ID of the created filter
+                            allOf:
+                              - type: string
+                                enum:
+                                  - '1'
+                                  - '3'
+                                  - '5'
+                                  - '7'
+                            description: The visibility group ID of the filter
+                          last_used_time:
+                            type: string
+                            nullable: true
+                            description: The date and time when the filter was last used
                           custom_view_id:
                             type: integer
-                            description: The custom view ID of the created filter
+                            nullable: true
+                            description: The custom view ID linked to the filter
                           conditions:
                             type: object
-                            description: The created filter conditions object
+                            description: The conditions object of a filter
+                            properties:
+                              glue:
+                                type: string
+                                enum:
+                                  - and
+                                description: The top-level glue is always "and"
+                              conditions:
+                                type: array
+                                description: The condition groups
+                                items:
+                                  type: object
+                                  description: A group of conditions joined by a logical operator
+                                  properties:
+                                    glue:
+                                      type: string
+                                      enum:
+                                        - and
+                                        - or
+                                      description: The logical operator joining conditions within this group
+                                    conditions:
+                                      type: array
+                                      description: The individual conditions in this group
+                                      items:
+                                        type: object
+                                        description: A single filter condition
+                                        properties:
+                                          object:
+                                            type: string
+                                            description: 'The type of entity the condition applies to (e.g. "deal", "person")'
+                                          field_id:
+                                            type: string
+                                            description: The ID of the field
+                                          operator:
+                                            type: string
+                                            description: 'The operator used in the condition (e.g. "=", "IS NOT NULL")'
+                                          value:
+                                            type: string
+                                            nullable: true
+                                            description: The value of the condition
+                                          extra_value:
+                                            type: string
+                                            nullable: true
+                                            description: An extra value for conditions that require two values
+                                          json_value_flag:
+                                            type: boolean
+                                            description: Whether the value is JSON-encoded
+                                          field_code:
+                                            type: string
+                                            nullable: true
+                                            description: The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
               example:
                 success: true
                 data:
                   id: 1
                   name: Deal title is 'my title'
+                  filter_code: null
+                  is_editable: true
                   active_flag: true
                   type: deals
                   temporary_flag: false
                   user_id: 1
                   add_time: '2018-01-27 08:49:26'
                   update_time: '2018-01-27 08:49:26'
-                  visible_to: 1
-                  custom_view_id: 1
+                  visible_to: '1'
+                  last_used_time: null
+                  custom_view_id: null
                   conditions:
                     glue: and
                     conditions:
@@ -10838,9 +11033,11 @@ paths:
                             field_id: '123141'
                             operator: '='
                             value: my title
+                            extra_value: null
+                            json_value_flag: false
+                            field_code: title
                       - glue: or
-                        conditions:
-                          - null
+                        conditions: []
   /filters/helpers:
     get:
       summary: Get all filter helpers
@@ -11146,6 +11343,12 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: include_field_code
+          required: false
+          schema:
+            type: boolean
+          description: 'If set to `true`, each condition in the response includes a `field_code` field identifying the field by its code name'
       responses:
         '200':
           description: Success
@@ -11163,7 +11366,7 @@ paths:
                   - type: object
                     properties:
                       data:
-                        description: The filter object
+                        description: The filter object including conditions
                         type: object
                         properties:
                           id:
@@ -11172,12 +11375,30 @@ paths:
                           name:
                             type: string
                             description: The name of the filter
+                          filter_code:
+                            type: string
+                            nullable: true
+                            description: The system code of the filter
+                          is_editable:
+                            type: boolean
+                            description: Whether the filter can be edited by the requesting user
                           active_flag:
                             type: boolean
                             description: The active flag of the filter
                           type:
                             type: string
-                            description: The type of the item
+                            enum:
+                              - deals
+                              - leads
+                              - org
+                              - people
+                              - products
+                              - activity
+                              - projects
+                          temporary_flag:
+                            type: boolean
+                            nullable: true
+                            description: Whether the filter is temporary
                           user_id:
                             type: integer
                             description: The owner of the filter
@@ -11186,26 +11407,108 @@ paths:
                             description: The date and time when the filter was added
                           update_time:
                             type: string
+                            nullable: true
                             description: The date and time when the filter was updated
                           visible_to:
-                            type: integer
-                            description: The visibility group ID of who can see then filter
+                            allOf:
+                              - type: string
+                                enum:
+                                  - '1'
+                                  - '3'
+                                  - '5'
+                                  - '7'
+                            description: The visibility group ID of who can see the filter
+                          last_used_time:
+                            type: string
+                            nullable: true
+                            description: The date and time when the filter was last used
                           custom_view_id:
                             type: integer
-                            description: Used by Pipedrive webapp
+                            nullable: true
+                            description: The custom view ID linked to the filter
+                          conditions:
+                            type: object
+                            description: The conditions object of a filter
+                            properties:
+                              glue:
+                                type: string
+                                enum:
+                                  - and
+                                description: The top-level glue is always "and"
+                              conditions:
+                                type: array
+                                description: The condition groups
+                                items:
+                                  type: object
+                                  description: A group of conditions joined by a logical operator
+                                  properties:
+                                    glue:
+                                      type: string
+                                      enum:
+                                        - and
+                                        - or
+                                      description: The logical operator joining conditions within this group
+                                    conditions:
+                                      type: array
+                                      description: The individual conditions in this group
+                                      items:
+                                        type: object
+                                        description: A single filter condition
+                                        properties:
+                                          object:
+                                            type: string
+                                            description: 'The type of entity the condition applies to (e.g. "deal", "person")'
+                                          field_id:
+                                            type: string
+                                            description: The ID of the field
+                                          operator:
+                                            type: string
+                                            description: 'The operator used in the condition (e.g. "=", "IS NOT NULL")'
+                                          value:
+                                            type: string
+                                            nullable: true
+                                            description: The value of the condition
+                                          extra_value:
+                                            type: string
+                                            nullable: true
+                                            description: An extra value for conditions that require two values
+                                          json_value_flag:
+                                            type: boolean
+                                            description: Whether the value is JSON-encoded
+                                          field_code:
+                                            type: string
+                                            nullable: true
+                                            description: The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
               example:
                 success: true
                 data:
                   id: 1
                   name: All open deals
+                  filter_code: null
+                  is_editable: true
                   active_flag: true
                   type: deals
                   temporary_flag: null
                   user_id: 927097
                   add_time: '2019-10-15 11:01:53'
                   update_time: '2019-10-15 11:01:53'
-                  visible_to: 7
-                  custom_view_id: 1
+                  visible_to: '7'
+                  last_used_time: null
+                  custom_view_id: null
+                  conditions:
+                    glue: and
+                    conditions:
+                      - glue: and
+                        conditions:
+                          - object: deal
+                            field_id: '123'
+                            operator: IS NOT NULL
+                            extra_value: null
+                            value: null
+                            json_value_flag: false
+                            field_code: status
+                      - glue: or
+                        conditions: []
     put:
       summary: Update filter
       description: Updates an existing filter.
@@ -11226,6 +11529,12 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: include_field_code
+          required: false
+          schema:
+            type: boolean
+          description: 'If set to `true`, each condition in the response includes a `field_code` field identifying the field by its code name'
       requestBody:
         content:
           application/json:
@@ -11263,13 +11572,20 @@ paths:
                         properties:
                           id:
                             type: integer
-                            description: The ID of the created filter
+                            description: The ID of the filter
                           name:
                             type: string
-                            description: The name of the created filter
+                            description: The name of the filter
+                          filter_code:
+                            type: string
+                            nullable: true
+                            description: The system code of the filter
+                          is_editable:
+                            type: boolean
+                            description: Whether the filter can be edited by the requesting user
                           active_flag:
                             type: boolean
-                            description: The activity flag of the created filter
+                            description: The activity flag of the filter
                           type:
                             type: string
                             enum:
@@ -11282,38 +11598,104 @@ paths:
                               - projects
                           temporary_flag:
                             type: boolean
-                            description: If the created filter is temporary or not
+                            nullable: true
+                            description: Whether the filter is temporary
                           user_id:
                             type: integer
-                            description: The user ID of the created filter
+                            description: The user ID of the filter owner
                           add_time:
                             type: string
-                            description: The add time of the created filter
+                            description: The date and time when the filter was added
                           update_time:
                             type: string
-                            description: The update time of the created filter
+                            nullable: true
+                            description: The date and time when the filter was last updated
                           visible_to:
-                            type: integer
-                            description: The visibility group ID of the created filter
+                            allOf:
+                              - type: string
+                                enum:
+                                  - '1'
+                                  - '3'
+                                  - '5'
+                                  - '7'
+                            description: The visibility group ID of the filter
+                          last_used_time:
+                            type: string
+                            nullable: true
+                            description: The date and time when the filter was last used
                           custom_view_id:
                             type: integer
-                            description: The custom view ID of the created filter
+                            nullable: true
+                            description: The custom view ID linked to the filter
                           conditions:
                             type: object
-                            description: The created filter conditions object
+                            description: The conditions object of a filter
+                            properties:
+                              glue:
+                                type: string
+                                enum:
+                                  - and
+                                description: The top-level glue is always "and"
+                              conditions:
+                                type: array
+                                description: The condition groups
+                                items:
+                                  type: object
+                                  description: A group of conditions joined by a logical operator
+                                  properties:
+                                    glue:
+                                      type: string
+                                      enum:
+                                        - and
+                                        - or
+                                      description: The logical operator joining conditions within this group
+                                    conditions:
+                                      type: array
+                                      description: The individual conditions in this group
+                                      items:
+                                        type: object
+                                        description: A single filter condition
+                                        properties:
+                                          object:
+                                            type: string
+                                            description: 'The type of entity the condition applies to (e.g. "deal", "person")'
+                                          field_id:
+                                            type: string
+                                            description: The ID of the field
+                                          operator:
+                                            type: string
+                                            description: 'The operator used in the condition (e.g. "=", "IS NOT NULL")'
+                                          value:
+                                            type: string
+                                            nullable: true
+                                            description: The value of the condition
+                                          extra_value:
+                                            type: string
+                                            nullable: true
+                                            description: An extra value for conditions that require two values
+                                          json_value_flag:
+                                            type: boolean
+                                            description: Whether the value is JSON-encoded
+                                          field_code:
+                                            type: string
+                                            nullable: true
+                                            description: The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
               example:
                 success: true
                 data:
                   id: 1
                   name: Deal title is 'my title'
+                  filter_code: null
+                  is_editable: true
                   active_flag: true
                   type: deals
                   temporary_flag: false
                   user_id: 1
                   add_time: '2018-01-27 08:49:26'
                   update_time: '2018-01-27 08:49:26'
-                  visible_to: 1
-                  custom_view_id: 1
+                  visible_to: '1'
+                  last_used_time: null
+                  custom_view_id: null
                   conditions:
                     glue: and
                     conditions:
@@ -11323,9 +11705,11 @@ paths:
                             field_id: '123141'
                             operator: '='
                             value: my title
+                            extra_value: null
+                            json_value_flag: false
+                            field_code: title
                       - glue: or
-                        conditions:
-                          - null
+                        conditions: []
   /goals:
     post:
       summary: Add a new goal
@@ -15383,6 +15767,9 @@ paths:
                           body_url:
                             type: string
                             description: The mail message body URL
+                          body:
+                            type: string
+                            description: The mail message body content. Only present when `include_body=1` is passed.
                           account_id:
                             type: string
                             description: The connection account ID
@@ -17420,6 +17807,11 @@ paths:
             type: integer
           description: 'The ID of the project which notes to fetch. If omitted, notes about all projects will be returned.'
         - in: query
+          name: task_id
+          schema:
+            type: integer
+          description: 'The ID of the task which notes to fetch. If omitted, notes about all tasks will be returned.'
+        - in: query
           name: start
           description: Pagination start
           schema:
@@ -17499,6 +17891,15 @@ paths:
               - 0
               - 1
           description: 'If set, the results are filtered by note to project pinning state'
+        - in: query
+          name: pinned_to_task_flag
+          schema:
+            title: numberBoolean
+            type: number
+            enum:
+              - 0
+              - 1
+          description: 'If set, the results are filtered by note to task pinning state'
       responses:
         '200':
           description: Get all notes
@@ -17577,6 +17978,16 @@ paths:
                             title:
                               type: string
                               description: The title of the project the note is attached to
+                        task_id:
+                          type: integer
+                          description: The ID of the task the note is attached to
+                        task:
+                          type: object
+                          description: The task the note is attached to
+                          properties:
+                            title:
+                              type: string
+                              description: The title of the task the note is attached to
                         pinned_to_deal_flag:
                           type: boolean
                           description: 'If true, the results are filtered by note to deal pinning state'
@@ -17589,6 +18000,9 @@ paths:
                         pinned_to_project_flag:
                           type: boolean
                           description: 'If true, the results are filtered by note to project pinning state'
+                        pinned_to_task_flag:
+                          type: boolean
+                          description: 'If true, the results are filtered by note to task pinning state'
                         update_time:
                           type: string
                           description: The last updated date and time of the note
@@ -17698,19 +18112,22 @@ paths:
                     lead_id:
                       type: string
                       format: uuid
-                      description: The ID of the lead the note will be attached to. This property is required unless one of (`deal_id/person_id/org_id/project_id`) is specified.
+                      description: The ID of the lead the note will be attached to. This property is required unless one of (`deal_id/person_id/org_id/project_id/task_id`) is specified.
                     deal_id:
                       type: integer
-                      description: The ID of the deal the note will be attached to. This property is required unless one of (`lead_id/person_id/org_id/project_id`) is specified.
+                      description: The ID of the deal the note will be attached to. This property is required unless one of (`lead_id/person_id/org_id/project_id/task_id`) is specified.
                     person_id:
                       type: integer
-                      description: The ID of the person this note will be attached to. This property is required unless one of (`deal_id/lead_id/org_id/project_id`) is specified.
+                      description: The ID of the person this note will be attached to. This property is required unless one of (`deal_id/lead_id/org_id/project_id/task_id`) is specified.
                     org_id:
                       type: integer
-                      description: The ID of the organization this note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/project_id`) is specified.
+                      description: The ID of the organization this note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/project_id/task_id`) is specified.
                     project_id:
                       type: integer
-                      description: The ID of the project the note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/org_id`) is specified.
+                      description: The ID of the project the note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/org_id/task_id`) is specified.
+                    task_id:
+                      type: integer
+                      description: The ID of the task the note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/org_id/project_id`) is specified.
                 - type: object
                   properties:
                     user_id:
@@ -17759,6 +18176,14 @@ paths:
                             - 0
                             - 1
                       description: 'If set, the results are filtered by note to project pinning state (`project_id` is also required)'
+                    pinned_to_task_flag:
+                      allOf:
+                        - title: numberBoolean
+                          type: number
+                          enum:
+                            - 0
+                            - 1
+                      description: 'If set, the results are filtered by note to task pinning state (`task_id` is also required)'
       responses:
         '200':
           description: 'Add, update or get a note'
@@ -17834,6 +18259,16 @@ paths:
                           title:
                             type: string
                             description: The title of the project the note is attached to
+                      task_id:
+                        type: integer
+                        description: The ID of the task the note is attached to
+                      task:
+                        type: object
+                        description: The task the note is attached to
+                        properties:
+                          title:
+                            type: string
+                            description: The title of the task the note is attached to
                       pinned_to_deal_flag:
                         type: boolean
                         description: 'If true, the results are filtered by note to deal pinning state'
@@ -17846,6 +18281,9 @@ paths:
                       pinned_to_project_flag:
                         type: boolean
                         description: 'If true, the results are filtered by note to project pinning state'
+                      pinned_to_task_flag:
+                        type: boolean
+                        description: 'If true, the results are filtered by note to task pinning state'
                       update_time:
                         type: string
                         description: The last updated date and time of the note
@@ -18035,6 +18473,16 @@ paths:
                           title:
                             type: string
                             description: The title of the project the note is attached to
+                      task_id:
+                        type: integer
+                        description: The ID of the task the note is attached to
+                      task:
+                        type: object
+                        description: The task the note is attached to
+                        properties:
+                          title:
+                            type: string
+                            description: The title of the task the note is attached to
                       pinned_to_deal_flag:
                         type: boolean
                         description: 'If true, the results are filtered by note to deal pinning state'
@@ -18047,6 +18495,9 @@ paths:
                       pinned_to_project_flag:
                         type: boolean
                         description: 'If true, the results are filtered by note to project pinning state'
+                      pinned_to_task_flag:
+                        type: boolean
+                        description: 'If true, the results are filtered by note to task pinning state'
                       update_time:
                         type: string
                         description: The last updated date and time of the note
@@ -18151,6 +18602,9 @@ paths:
                     project_id:
                       type: integer
                       description: The ID of the project the note will be attached to
+                    task_id:
+                      type: integer
+                      description: The ID of the task the note will be attached to
                 - type: object
                   properties:
                     user_id:
@@ -18199,6 +18653,14 @@ paths:
                             - 0
                             - 1
                       description: 'If set, the results are filtered by note to project pinning state (`project_id` is also required)'
+                    pinned_to_task_flag:
+                      allOf:
+                        - title: numberBoolean
+                          type: number
+                          enum:
+                            - 0
+                            - 1
+                      description: 'If set, the results are filtered by note to task pinning state (`task_id` is also required)'
       responses:
         '200':
           description: 'Add, update or get a note'
@@ -18274,6 +18736,16 @@ paths:
                           title:
                             type: string
                             description: The title of the project the note is attached to
+                      task_id:
+                        type: integer
+                        description: The ID of the task the note is attached to
+                      task:
+                        type: object
+                        description: The task the note is attached to
+                        properties:
+                          title:
+                            type: string
+                            description: The title of the task the note is attached to
                       pinned_to_deal_flag:
                         type: boolean
                         description: 'If true, the results are filtered by note to deal pinning state'
@@ -18286,6 +18758,9 @@ paths:
                       pinned_to_project_flag:
                         type: boolean
                         description: 'If true, the results are filtered by note to project pinning state'
+                      pinned_to_task_flag:
+                        type: boolean
+                        description: 'If true, the results are filtered by note to task pinning state'
                       update_time:
                         type: string
                         description: The last updated date and time of the note
@@ -18992,7 +19467,7 @@ paths:
           content:
             text/html:
               example: |
-                As a result of the request, the customer will see a page with the confirmation dialog, which will present the details of your app (title, company name, icon) and explain the permission scopes that you have set for the app. Customers should confirm their wish to install the app by clicking "Allow and install" or deny authorization by clicking "Cancel".
+                As a result of the request, the customer will see a page with the confirmation dialog, which will present your app details (title, company name, icon) and explain the permission scopes that you have set for the app. Customers should confirm their wish to install the app by clicking "Allow and install" or deny authorization by clicking "Cancel".
   /oauth/token:
     post:
       summary: Getting the tokens
@@ -19411,6 +19886,7 @@ paths:
                     product_id: 1
                     activity_id: 1
                     lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                    project_id: 1
                     log_id: null
                     add_time: '2020-09-16 11:19:36'
                     update_time: '2020-09-16 11:19:36'
@@ -19431,6 +19907,7 @@ paths:
                     org_name: Pipedrive Inc.
                     product_name: ''
                     lead_name: nice lead
+                    project_name: My project
                     url: 'https://app.pipedrive.com/api/v1/files/304/download'
                     name: 95781006_794143070992462_4330873630616453120_n.jpg
                     description: ''
@@ -19694,6 +20171,7 @@ paths:
                       product_id: 1
                       activity_id: 1
                       lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                      project_id: 1
                       log_id: null
                       add_time: '2020-09-16 11:19:36'
                       update_time: '2020-09-16 11:19:36'
@@ -19714,6 +20192,7 @@ paths:
                       org_name: Pipedrive Inc.
                       product_name: ''
                       lead_name: nice lead
+                      project_name: My project
                       url: 'https://app.pipedrive.com/api/v1/files/304/download'
                       name: 95781006_794143070992462_4330873630616453120_n.jpg
                       description: ''
@@ -19973,6 +20452,16 @@ paths:
           description: Items shown per page
           schema:
             type: integer
+        - in: query
+          name: include_body
+          schema:
+            title: numberBooleanDefault0
+            type: number
+            default: 0
+            enum:
+              - 0
+              - 1
+          description: 'Whether to include the mail message body content in the response. `0` = Don''t include, `1` = Include.'
       responses:
         '200':
           description: Success
@@ -20109,6 +20598,9 @@ paths:
                                     body_url:
                                       type: string
                                       description: The mail message body URL
+                                    body:
+                                      type: string
+                                      description: The mail message body content. Only present when `include_body=1` is passed.
                                     account_id:
                                       type: string
                                       description: The connection account ID
@@ -22939,6 +23431,7 @@ paths:
                     product_id: 1
                     activity_id: 1
                     lead_id: adf21080-0e10-11eb-879b-05d71fb426ec
+                    project_id: 1
                     log_id: null
                     add_time: '2020-09-16 11:19:36'
                     update_time: '2020-09-16 11:19:36'
@@ -22959,6 +23452,7 @@ paths:
                     org_name: Pipedrive Inc.
                     product_name: ''
                     lead_name: nice lead
+                    project_name: My project
                     url: 'https://app.pipedrive.com/api/v1/files/304/download'
                     name: 95781006_794143070992462_4330873630616453120_n.jpg
                     description: ''
@@ -23561,6 +24055,16 @@ paths:
           description: Items shown per page
           schema:
             type: integer
+        - in: query
+          name: include_body
+          schema:
+            title: numberBooleanDefault0
+            type: number
+            default: 0
+            enum:
+              - 0
+              - 1
+          description: 'Whether to include the mail message body content in the response. `0` = Don''t include, `1` = Include.'
       responses:
         '200':
           description: Success
@@ -23697,6 +24201,9 @@ paths:
                                     body_url:
                                       type: string
                                       description: The mail message body URL
+                                    body:
+                                      type: string
+                                      description: The mail message body content. Only present when `include_body=1` is passed.
                                     account_id:
                                       type: string
                                       description: The connection account ID
@@ -28845,6 +29352,10 @@ paths:
                                   type: array
                                   items:
                                     type: integer
+                                health_status:
+                                  description: The health status of the project
+                                  type: integer
+                                  nullable: true
                             - type: object
                               properties:
                                 add_time:
@@ -28882,6 +29393,7 @@ paths:
                     labels:
                       - 13
                       - 14
+                    health_status: 10
                     archive_time: '2023-09-15 11:12:18.110'
                     deal_ids:
                       - 1
@@ -28958,6 +29470,10 @@ paths:
                       type: array
                       items:
                         type: integer
+                    health_status:
+                      description: The health status of the project
+                      type: integer
+                      nullable: true
                 - type: object
                   properties:
                     template_id:
@@ -29032,6 +29548,10 @@ paths:
                                 type: array
                                 items:
                                   type: integer
+                              health_status:
+                                description: The health status of the project
+                                type: integer
+                                nullable: true
                           - type: object
                             properties:
                               add_time:
@@ -29066,6 +29586,7 @@ paths:
                   labels:
                     - 13
                     - 14
+                  health_status: 10
                   archive_time: '2023-09-15 11:12:18.110'
                   deal_ids:
                     - 1
@@ -29164,6 +29685,10 @@ paths:
                                 type: array
                                 items:
                                   type: integer
+                              health_status:
+                                description: The health status of the project
+                                type: integer
+                                nullable: true
                           - type: object
                             properties:
                               add_time:
@@ -29198,6 +29723,7 @@ paths:
                   labels:
                     - 13
                     - 14
+                  health_status: 10
                   archive_time: '2023-09-15 11:12:18.110'
                   deal_ids:
                     - 1
@@ -29277,6 +29803,10 @@ paths:
                       type: array
                       items:
                         type: integer
+                    health_status:
+                      description: The health status of the project
+                      type: integer
+                      nullable: true
       responses:
         '200':
           description: Updated project.
@@ -29346,6 +29876,10 @@ paths:
                                 type: array
                                 items:
                                   type: integer
+                              health_status:
+                                description: The health status of the project
+                                type: integer
+                                nullable: true
                           - type: object
                             properties:
                               add_time:
@@ -29380,6 +29914,7 @@ paths:
                   labels:
                     - 13
                     - 14
+                  health_status: 10
                   archive_time: '2023-09-15 11:12:18.110'
                   deal_ids:
                     - 1
@@ -29528,6 +30063,10 @@ paths:
                                 type: array
                                 items:
                                   type: integer
+                              health_status:
+                                description: The health status of the project
+                                type: integer
+                                nullable: true
                           - type: object
                             properties:
                               add_time:
@@ -29562,6 +30101,7 @@ paths:
                   labels:
                     - 13
                     - 14
+                  health_status: 10
                   archive_time: '2023-09-15 11:12:18.110'
                   deal_ids:
                     - 1
@@ -29906,7 +30446,14 @@ paths:
                                   type: number
                                 assignee_id:
                                   type: number
-                                  description: The ID of the user who will be the assignee of the task
+                                  description: 'The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.'
+                                assignee_ids:
+                                  type: array
+                                  items:
+                                    type: number
+                                  maxItems: 10
+                                  uniqueItems: true
+                                  description: 'The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.'
                                 done:
                                   description: 'Whether the task is done or not. 0 = Not done, 1 = Done.'
                                   allOf:
@@ -29951,6 +30498,10 @@ paths:
                     due_date: '2023-10-11'
                     parent_task_id: 2
                     assignee_id: 2
+                    assignee_ids:
+                      - 2
+                      - 3
+                      - 4
                     add_time: '2023-09-14 08:14:40.288'
                     update_time: '2023-09-14 08:14:40.288'
                     marked_as_done_time: '2023-09-22 08:14:40.288'
@@ -30164,7 +30715,7 @@ paths:
       x-token-cost: 20
       operationId: getProjectsBoards
       tags:
-        - Projects
+        - ProjectBoards
       security:
         - api_key: []
         - oauth2:
@@ -30221,7 +30772,7 @@ paths:
       x-token-cost: 2
       operationId: getProjectsBoard
       tags:
-        - ProjectTemplates
+        - ProjectBoards
       security:
         - api_key: []
         - oauth2:
@@ -30283,7 +30834,7 @@ paths:
       x-token-cost: 20
       operationId: getProjectsPhases
       tags:
-        - Projects
+        - ProjectPhases
       security:
         - api_key: []
         - oauth2:
@@ -30352,7 +30903,7 @@ paths:
       x-token-cost: 2
       operationId: getProjectsPhase
       tags:
-        - ProjectTemplates
+        - ProjectPhases
       security:
         - api_key: []
         - oauth2:
@@ -31312,12 +31863,30 @@ paths:
                                 name:
                                   type: string
                                   description: The name of the filter
+                                filter_code:
+                                  type: string
+                                  nullable: true
+                                  description: The system code of the filter
+                                is_editable:
+                                  type: boolean
+                                  description: Whether the filter can be edited by the requesting user
                                 active_flag:
                                   type: boolean
                                   description: The active flag of the filter
                                 type:
                                   type: string
-                                  description: The type of the item
+                                  enum:
+                                    - deals
+                                    - leads
+                                    - org
+                                    - people
+                                    - products
+                                    - activity
+                                    - projects
+                                temporary_flag:
+                                  type: boolean
+                                  nullable: true
+                                  description: Whether the filter is temporary
                                 user_id:
                                   type: integer
                                   description: The owner of the filter
@@ -31326,13 +31895,25 @@ paths:
                                   description: The date and time when the filter was added
                                 update_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time when the filter was updated
                                 visible_to:
-                                  type: integer
-                                  description: The visibility group ID of who can see then filter
+                                  allOf:
+                                    - type: string
+                                      enum:
+                                        - '1'
+                                        - '3'
+                                        - '5'
+                                        - '7'
+                                  description: The visibility group ID of who can see the filter
+                                last_used_time:
+                                  type: string
+                                  nullable: true
+                                  description: The date and time when the filter was last used
                                 custom_view_id:
                                   type: integer
-                                  description: Used by Pipedrive webapp
+                                  nullable: true
+                                  description: The custom view ID linked to the filter
                         - type: object
                           properties:
                             item:
@@ -31404,6 +31985,16 @@ paths:
                                     title:
                                       type: string
                                       description: The title of the project the note is attached to
+                                task_id:
+                                  type: integer
+                                  description: The ID of the task the note is attached to
+                                task:
+                                  type: object
+                                  description: The task the note is attached to
+                                  properties:
+                                    title:
+                                      type: string
+                                      description: The title of the task the note is attached to
                                 pinned_to_deal_flag:
                                   type: boolean
                                   description: 'If true, the results are filtered by note to deal pinning state'
@@ -31416,6 +32007,9 @@ paths:
                                 pinned_to_project_flag:
                                   type: boolean
                                   description: 'If true, the results are filtered by note to project pinning state'
+                                pinned_to_task_flag:
+                                  type: boolean
+                                  description: 'If true, the results are filtered by note to task pinning state'
                                 update_time:
                                   type: string
                                   description: The last updated date and time of the note
@@ -32134,10 +32728,13 @@ paths:
                                           - projects
                                           - account_settings
                                           - partnership
+                                        description: The granular app access level
                                       admin:
                                         type: boolean
+                                        description: Whether the user has admin access or not
                                       permission_set_id:
                                         type: string
+                                        description: The ID of the permission set
                                 active_flag:
                                   type: boolean
                                   description: Boolean that indicates whether the user is activated
@@ -33754,7 +34351,14 @@ paths:
                                   type: number
                                 assignee_id:
                                   type: number
-                                  description: The ID of the user who will be the assignee of the task
+                                  description: 'The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.'
+                                assignee_ids:
+                                  type: array
+                                  items:
+                                    type: number
+                                  maxItems: 10
+                                  uniqueItems: true
+                                  description: 'The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.'
                                 done:
                                   description: 'Whether the task is done or not. 0 = Not done, 1 = Done.'
                                   allOf:
@@ -33799,6 +34403,10 @@ paths:
                     due_date: '2023-10-11'
                     parent_task_id: 2
                     assignee_id: 2
+                    assignee_ids:
+                      - 2
+                      - 3
+                      - 4
                     add_time: '2023-09-14 08:14:40.288'
                     update_time: '2023-09-14 08:14:40.288'
                     marked_as_done_time: '2023-09-22 08:14:40.288'
@@ -33844,7 +34452,14 @@ paths:
                       type: number
                     assignee_id:
                       type: number
-                      description: The ID of the user who will be the assignee of the task
+                      description: 'The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.'
+                    assignee_ids:
+                      type: array
+                      items:
+                        type: number
+                      maxItems: 10
+                      uniqueItems: true
+                      description: 'The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.'
                     done:
                       description: 'Whether the task is done or not. 0 = Not done, 1 = Done.'
                       allOf:
@@ -33898,7 +34513,14 @@ paths:
                                 type: number
                               assignee_id:
                                 type: number
-                                description: The ID of the user who will be the assignee of the task
+                                description: 'The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.'
+                              assignee_ids:
+                                type: array
+                                items:
+                                  type: number
+                                maxItems: 10
+                                uniqueItems: true
+                                description: 'The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.'
                               done:
                                 description: 'Whether the task is done or not. 0 = Not done, 1 = Done.'
                                 allOf:
@@ -33940,6 +34562,10 @@ paths:
                   due_date: '2023-10-11'
                   parent_task_id: 2
                   assignee_id: 2
+                  assignee_ids:
+                    - 2
+                    - 3
+                    - 4
                   add_time: '2023-09-14 08:14:40.288'
                   update_time: '2023-09-14 08:14:40.288'
                   marked_as_done_time: '2023-09-22 08:14:40.288'
@@ -34006,7 +34632,14 @@ paths:
                                 type: number
                               assignee_id:
                                 type: number
-                                description: The ID of the user who will be the assignee of the task
+                                description: 'The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.'
+                              assignee_ids:
+                                type: array
+                                items:
+                                  type: number
+                                maxItems: 10
+                                uniqueItems: true
+                                description: 'The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.'
                               done:
                                 description: 'Whether the task is done or not. 0 = Not done, 1 = Done.'
                                 allOf:
@@ -34048,6 +34681,10 @@ paths:
                   due_date: '2023-10-11'
                   parent_task_id: 2
                   assignee_id: 2
+                  assignee_ids:
+                    - 2
+                    - 3
+                    - 4
                   add_time: '2023-09-14 08:14:40.288'
                   update_time: '2023-09-14 08:14:40.288'
                   marked_as_done_time: '2023-09-22 08:14:40.288'
@@ -34096,7 +34733,14 @@ paths:
                       type: number
                     assignee_id:
                       type: number
-                      description: The ID of the user who will be the assignee of the task
+                      description: 'The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.'
+                    assignee_ids:
+                      type: array
+                      items:
+                        type: number
+                      maxItems: 10
+                      uniqueItems: true
+                      description: 'The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.'
                     done:
                       description: 'Whether the task is done or not. 0 = Not done, 1 = Done.'
                       allOf:
@@ -34150,7 +34794,14 @@ paths:
                                 type: number
                               assignee_id:
                                 type: number
-                                description: The ID of the user who will be the assignee of the task
+                                description: 'The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.'
+                              assignee_ids:
+                                type: array
+                                items:
+                                  type: number
+                                maxItems: 10
+                                uniqueItems: true
+                                description: 'The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.'
                               done:
                                 description: 'Whether the task is done or not. 0 = Not done, 1 = Done.'
                                 allOf:
@@ -34192,6 +34843,10 @@ paths:
                   due_date: '2023-10-11'
                   parent_task_id: 2
                   assignee_id: 2
+                  assignee_ids:
+                    - 2
+                    - 3
+                    - 4
                   add_time: '2023-09-14 08:14:40.288'
                   update_time: '2023-09-14 08:14:40.288'
                   marked_as_done_time: '2023-09-22 08:14:40.288'
@@ -34335,10 +34990,13 @@ paths:
                                       - projects
                                       - account_settings
                                       - partnership
+                                    description: The granular app access level
                                   admin:
                                     type: boolean
+                                    description: Whether the user has admin access or not
                                   permission_set_id:
                                     type: string
+                                    description: The ID of the permission set
                             active_flag:
                               type: boolean
                               description: Boolean that indicates whether the user is activated
@@ -34457,10 +35115,13 @@ paths:
                           - projects
                           - account_settings
                           - partnership
+                        description: The granular app access level
                       admin:
                         type: boolean
+                        description: Whether the user has admin access or not
                       permission_set_id:
                         type: string
+                        description: The ID of the permission set
                     required:
                       - app
                   description: |
@@ -34545,10 +35206,13 @@ paths:
                                     - projects
                                     - account_settings
                                     - partnership
+                                  description: The granular app access level
                                 admin:
                                   type: boolean
+                                  description: Whether the user has admin access or not
                                 permission_set_id:
                                   type: string
+                                  description: The ID of the permission set
                           active_flag:
                             type: boolean
                             description: Boolean that indicates whether the user is activated
@@ -34724,10 +35388,13 @@ paths:
                                       - projects
                                       - account_settings
                                       - partnership
+                                    description: The granular app access level
                                   admin:
                                     type: boolean
+                                    description: Whether the user has admin access or not
                                   permission_set_id:
                                     type: string
+                                    description: The ID of the permission set
                             active_flag:
                               type: boolean
                               description: Boolean that indicates whether the user is activated
@@ -34894,10 +35561,13 @@ paths:
                                         - projects
                                         - account_settings
                                         - partnership
+                                      description: The granular app access level
                                     admin:
                                       type: boolean
+                                      description: Whether the user has admin access or not
                                     permission_set_id:
                                       type: string
+                                      description: The ID of the permission set
                               active_flag:
                                 type: boolean
                                 description: Boolean that indicates whether the user is activated
@@ -35101,10 +35771,13 @@ paths:
                                     - projects
                                     - account_settings
                                     - partnership
+                                  description: The granular app access level
                                 admin:
                                   type: boolean
+                                  description: Whether the user has admin access or not
                                 permission_set_id:
                                   type: string
+                                  description: The ID of the permission set
                           active_flag:
                             type: boolean
                             description: Boolean that indicates whether the user is activated
@@ -35277,10 +35950,13 @@ paths:
                                     - projects
                                     - account_settings
                                     - partnership
+                                  description: The granular app access level
                                 admin:
                                   type: boolean
+                                  description: Whether the user has admin access or not
                                 permission_set_id:
                                   type: string
+                                  description: The ID of the permission set
                           active_flag:
                             type: boolean
                             description: Boolean that indicates whether the user is activated
