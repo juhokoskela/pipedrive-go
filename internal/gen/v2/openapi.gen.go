@@ -686,22 +686,22 @@ const (
 
 // Defines values for AddProductFieldJSONBodyFieldType.
 const (
-	Address     AddProductFieldJSONBodyFieldType = "address"
-	Date        AddProductFieldJSONBodyFieldType = "date"
-	Daterange   AddProductFieldJSONBodyFieldType = "daterange"
-	Double      AddProductFieldJSONBodyFieldType = "double"
-	Enum        AddProductFieldJSONBodyFieldType = "enum"
-	Monetary    AddProductFieldJSONBodyFieldType = "monetary"
-	Org         AddProductFieldJSONBodyFieldType = "org"
-	People      AddProductFieldJSONBodyFieldType = "people"
-	Phone       AddProductFieldJSONBodyFieldType = "phone"
-	Set         AddProductFieldJSONBodyFieldType = "set"
-	Text        AddProductFieldJSONBodyFieldType = "text"
-	Time        AddProductFieldJSONBodyFieldType = "time"
-	Timerange   AddProductFieldJSONBodyFieldType = "timerange"
-	User        AddProductFieldJSONBodyFieldType = "user"
-	Varchar     AddProductFieldJSONBodyFieldType = "varchar"
-	VarcharAuto AddProductFieldJSONBodyFieldType = "varchar_auto"
+	AddProductFieldJSONBodyFieldTypeAddress     AddProductFieldJSONBodyFieldType = "address"
+	AddProductFieldJSONBodyFieldTypeDate        AddProductFieldJSONBodyFieldType = "date"
+	AddProductFieldJSONBodyFieldTypeDaterange   AddProductFieldJSONBodyFieldType = "daterange"
+	AddProductFieldJSONBodyFieldTypeDouble      AddProductFieldJSONBodyFieldType = "double"
+	AddProductFieldJSONBodyFieldTypeEnum        AddProductFieldJSONBodyFieldType = "enum"
+	AddProductFieldJSONBodyFieldTypeMonetary    AddProductFieldJSONBodyFieldType = "monetary"
+	AddProductFieldJSONBodyFieldTypeOrg         AddProductFieldJSONBodyFieldType = "org"
+	AddProductFieldJSONBodyFieldTypePeople      AddProductFieldJSONBodyFieldType = "people"
+	AddProductFieldJSONBodyFieldTypePhone       AddProductFieldJSONBodyFieldType = "phone"
+	AddProductFieldJSONBodyFieldTypeSet         AddProductFieldJSONBodyFieldType = "set"
+	AddProductFieldJSONBodyFieldTypeText        AddProductFieldJSONBodyFieldType = "text"
+	AddProductFieldJSONBodyFieldTypeTime        AddProductFieldJSONBodyFieldType = "time"
+	AddProductFieldJSONBodyFieldTypeTimerange   AddProductFieldJSONBodyFieldType = "timerange"
+	AddProductFieldJSONBodyFieldTypeUser        AddProductFieldJSONBodyFieldType = "user"
+	AddProductFieldJSONBodyFieldTypeVarchar     AddProductFieldJSONBodyFieldType = "varchar"
+	AddProductFieldJSONBodyFieldTypeVarcharAuto AddProductFieldJSONBodyFieldType = "varchar_auto"
 )
 
 // Defines values for GetProductFieldParamsIncludeFields.
@@ -743,9 +743,9 @@ const (
 
 // Defines values for SearchProductsParamsFields.
 const (
-	Code         SearchProductsParamsFields = "code"
-	CustomFields SearchProductsParamsFields = "custom_fields"
-	Name         SearchProductsParamsFields = "name"
+	SearchProductsParamsFieldsCode         SearchProductsParamsFields = "code"
+	SearchProductsParamsFieldsCustomFields SearchProductsParamsFields = "custom_fields"
+	SearchProductsParamsFieldsName         SearchProductsParamsFields = "name"
 )
 
 // Defines values for SearchProductsParamsIncludeFields.
@@ -771,6 +771,34 @@ const (
 	UpdateProductJSONBodyVisibleToN7 UpdateProductJSONBodyVisibleTo = 7
 )
 
+// Defines values for AddProjectFieldJSONBodyFieldType.
+const (
+	AddProjectFieldJSONBodyFieldTypeAddress     AddProjectFieldJSONBodyFieldType = "address"
+	AddProjectFieldJSONBodyFieldTypeDate        AddProjectFieldJSONBodyFieldType = "date"
+	AddProjectFieldJSONBodyFieldTypeDaterange   AddProjectFieldJSONBodyFieldType = "daterange"
+	AddProjectFieldJSONBodyFieldTypeDouble      AddProjectFieldJSONBodyFieldType = "double"
+	AddProjectFieldJSONBodyFieldTypeEnum        AddProjectFieldJSONBodyFieldType = "enum"
+	AddProjectFieldJSONBodyFieldTypeMonetary    AddProjectFieldJSONBodyFieldType = "monetary"
+	AddProjectFieldJSONBodyFieldTypeOrg         AddProjectFieldJSONBodyFieldType = "org"
+	AddProjectFieldJSONBodyFieldTypePeople      AddProjectFieldJSONBodyFieldType = "people"
+	AddProjectFieldJSONBodyFieldTypePhone       AddProjectFieldJSONBodyFieldType = "phone"
+	AddProjectFieldJSONBodyFieldTypeSet         AddProjectFieldJSONBodyFieldType = "set"
+	AddProjectFieldJSONBodyFieldTypeText        AddProjectFieldJSONBodyFieldType = "text"
+	AddProjectFieldJSONBodyFieldTypeTime        AddProjectFieldJSONBodyFieldType = "time"
+	AddProjectFieldJSONBodyFieldTypeTimerange   AddProjectFieldJSONBodyFieldType = "timerange"
+	AddProjectFieldJSONBodyFieldTypeUser        AddProjectFieldJSONBodyFieldType = "user"
+	AddProjectFieldJSONBodyFieldTypeVarchar     AddProjectFieldJSONBodyFieldType = "varchar"
+	AddProjectFieldJSONBodyFieldTypeVarcharAuto AddProjectFieldJSONBodyFieldType = "varchar_auto"
+)
+
+// Defines values for SearchProjectsParamsFields.
+const (
+	SearchProjectsParamsFieldsCustomFields SearchProjectsParamsFields = "custom_fields"
+	SearchProjectsParamsFieldsDescription  SearchProjectsParamsFields = "description"
+	SearchProjectsParamsFieldsNotes        SearchProjectsParamsFields = "notes"
+	SearchProjectsParamsFieldsTitle        SearchProjectsParamsFields = "title"
+)
+
 // Defines values for GetStagesParamsSortBy.
 const (
 	AddTime    GetStagesParamsSortBy = "add_time"
@@ -783,6 +811,30 @@ const (
 const (
 	Asc  GetStagesParamsSortDirection = "asc"
 	Desc GetStagesParamsSortDirection = "desc"
+)
+
+// Defines values for AddTaskJSONBodyDone.
+const (
+	AddTaskJSONBodyDoneN0 AddTaskJSONBodyDone = 0
+	AddTaskJSONBodyDoneN1 AddTaskJSONBodyDone = 1
+)
+
+// Defines values for AddTaskJSONBodyMilestone.
+const (
+	AddTaskJSONBodyMilestoneN0 AddTaskJSONBodyMilestone = 0
+	AddTaskJSONBodyMilestoneN1 AddTaskJSONBodyMilestone = 1
+)
+
+// Defines values for UpdateTaskJSONBodyDone.
+const (
+	UpdateTaskJSONBodyDoneN0 UpdateTaskJSONBodyDone = 0
+	UpdateTaskJSONBodyDoneN1 UpdateTaskJSONBodyDone = 1
+)
+
+// Defines values for UpdateTaskJSONBodyMilestone.
+const (
+	UpdateTaskJSONBodyMilestoneN0 UpdateTaskJSONBodyMilestone = 0
+	UpdateTaskJSONBodyMilestoneN1 UpdateTaskJSONBodyMilestone = 1
 )
 
 // GetActivitiesParams defines parameters for GetActivities.
@@ -1103,6 +1155,24 @@ type GetActivityFieldParams struct {
 // GetActivityFieldParamsIncludeFields defines parameters for GetActivityField.
 type GetActivityFieldParamsIncludeFields string
 
+// AddProjectBoardJSONBody defines parameters for AddProjectBoard.
+type AddProjectBoardJSONBody struct {
+	// Name The name of the project board
+	Name string `json:"name"`
+
+	// OrderNr The order of the board. Must be between 1 and the total number of boards + 1.
+	OrderNr *int `json:"order_nr,omitempty"`
+}
+
+// UpdateProjectBoardJSONBody defines parameters for UpdateProjectBoard.
+type UpdateProjectBoardJSONBody struct {
+	// Name The name of the project board
+	Name *string `json:"name,omitempty"`
+
+	// OrderNr The order of the board. Must be between 1 and the total number of boards + 1.
+	OrderNr *int `json:"order_nr,omitempty"`
+}
+
 // GetDealFieldsParams defines parameters for GetDealFields.
 type GetDealFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
@@ -1169,7 +1239,7 @@ type AddDealFieldJSONBody_RequiredFields struct {
 	// StageIds Array of deal stage IDs where this field is required. Must reference valid, active deal stages. Empty array when enabled is false. The stages must be in pipelines where this field is visible (show_in_pipelines).
 	StageIds *[]int `json:"stage_ids,omitempty"`
 
-	// Statuses Pipeline-specific status requirements for when deals are won or lost. Keys are pipeline IDs (as strings), values are arrays of status strings ('won', 'lost'). Example - {"1":["won","lost"],"2":["won"]} means the field is required when marking deals as won or lost in pipeline 1, and only when won in pipeline 2. Must reference valid, active pipelines.
+	// Statuses Pipeline-specific status requirements for when deals are won or lost. Keys are pipeline IDs (as strings), values are arrays of status strings ('won', 'lost'). Example - `{"1":["won","lost"],"2":["won"]}` means the field is required when marking deals as won or lost in pipeline 1, and only when won in pipeline 2. Must reference valid, active pipelines.
 	Statuses             *map[string][]AddDealFieldJSONBodyRequiredFieldsStatuses `json:"statuses,omitempty"`
 	AdditionalProperties map[string]interface{}                                   `json:"-"`
 }
@@ -1244,7 +1314,7 @@ type UpdateDealFieldJSONBody_RequiredFields struct {
 	// StageIds Array of deal stage IDs where this field is required. Must reference valid, active deal stages. Empty array when enabled is false. The stages must be in pipelines where this field is visible (show_in_pipelines).
 	StageIds *[]int `json:"stage_ids,omitempty"`
 
-	// Statuses Pipeline-specific status requirements for when deals are won or lost. Keys are pipeline IDs (as strings), values are arrays of status strings ('won', 'lost'). Example - {"1":["won","lost"],"2":["won"]} means the field is required when marking deals as won or lost in pipeline 1, and only when won in pipeline 2. Must reference valid, active pipelines.
+	// Statuses Pipeline-specific status requirements for when deals are won or lost. Keys are pipeline IDs (as strings), values are arrays of status strings ('won', 'lost'). Example - `{"1":["won","lost"],"2":["won"]}` means the field is required when marking deals as won or lost in pipeline 1, and only when won in pipeline 2. Must reference valid, active pipelines.
 	Statuses             *map[string][]UpdateDealFieldJSONBodyRequiredFieldsStatuses `json:"statuses,omitempty"`
 	AdditionalProperties map[string]interface{}                                      `json:"-"`
 }
@@ -1336,6 +1406,12 @@ type GetDealsParams struct {
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
+	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
+	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
+
+	// IncludeLabels When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
+	IncludeLabels *bool `form:"include_labels,omitempty" json:"include_labels,omitempty"`
+
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
@@ -1366,7 +1442,7 @@ type AddDealJSONBody struct {
 	// Currency The currency associated with the deal
 	Currency *string `json:"currency,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// ExpectedCloseDate The expected close date of the deal
@@ -1578,6 +1654,12 @@ type GetDealParams struct {
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+
+	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
+	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
+
+	// IncludeLabels When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
+	IncludeLabels *bool `form:"include_labels,omitempty" json:"include_labels,omitempty"`
 }
 
 // GetDealParamsIncludeFields defines parameters for GetDeal.
@@ -1594,7 +1676,7 @@ type UpdateDealJSONBody struct {
 	// Currency The currency associated with the deal
 	Currency *string `json:"currency,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// ExpectedCloseDate The expected close date of the deal
@@ -1781,7 +1863,7 @@ type AddDealProductJSONBody struct {
 	// BillingStartDate Only available in Growth and above plans
 	//
 	// The billing start date. Must be between 10 years in the past and 10 years in the future
-	BillingStartDate *string `json:"billing_start_date"`
+	BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 	// Comments The comments of the product
 	Comments *string `json:"comments,omitempty"`
@@ -1829,7 +1911,7 @@ type AddDealProductJSONBodyTaxMethod string
 
 // AddManyDealProductsJSONBody defines parameters for AddManyDealProducts.
 type AddManyDealProductsJSONBody struct {
-	// Data Array of products to attach to the deal. See the single product endpoint (https://developers.pipedrive.com/docs/api/v1/Deals#addDealProduct) for the expected format of array items.
+	// Data Array of products to attach to the deal. Each product object may have the following properties.
 	Data []struct {
 		// BillingFrequency Only available in Growth and above plans
 		//
@@ -1856,7 +1938,7 @@ type AddManyDealProductsJSONBody struct {
 		// BillingStartDate Only available in Growth and above plans
 		//
 		// The billing start date. Must be between 10 years in the past and 10 years in the future
-		BillingStartDate *string `json:"billing_start_date"`
+		BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 		// Comments The comments of the product
 		Comments *string `json:"comments,omitempty"`
@@ -1930,7 +2012,7 @@ type UpdateDealProductJSONBody struct {
 	// BillingStartDate Only available in Growth and above plans
 	//
 	// The billing start date. Must be between 10 years in the past and 10 years in the future
-	BillingStartDate *string `json:"billing_start_date"`
+	BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 	// Comments The comments of the product
 	Comments *string `json:"comments,omitempty"`
@@ -2098,9 +2180,6 @@ type GetOrganizationFieldsParamsIncludeFields string
 
 // AddOrganizationFieldJSONBody defines parameters for AddOrganizationField.
 type AddOrganizationFieldJSONBody struct {
-	// Description Field description
-	Description *string `json:"description"`
-
 	// FieldName Field name
 	FieldName string `json:"field_name"`
 
@@ -2182,9 +2261,6 @@ type GetOrganizationFieldParamsIncludeFields string
 
 // UpdateOrganizationFieldJSONBody defines parameters for UpdateOrganizationField.
 type UpdateOrganizationFieldJSONBody struct {
-	// Description Field description
-	Description *string `json:"description"`
-
 	// FieldName Field name
 	FieldName *string `json:"field_name,omitempty"`
 
@@ -2293,6 +2369,12 @@ type GetOrganizationsParams struct {
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
+	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
+	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
+
+	// IncludeLabels When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
+	IncludeLabels *bool `form:"include_labels,omitempty" json:"include_labels,omitempty"`
+
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
@@ -2347,7 +2429,7 @@ type AddOrganizationJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"address,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// LabelIds The IDs of labels assigned to the organization
@@ -2394,6 +2476,12 @@ type GetOrganizationParams struct {
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+
+	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
+	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
+
+	// IncludeLabels When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
+	IncludeLabels *bool `form:"include_labels,omitempty" json:"include_labels,omitempty"`
 }
 
 // GetOrganizationParamsIncludeFields defines parameters for GetOrganization.
@@ -2437,7 +2525,7 @@ type UpdateOrganizationJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"address,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// LabelIds The IDs of labels assigned to the organization
@@ -2497,9 +2585,6 @@ type GetPersonFieldsParamsIncludeFields string
 
 // AddPersonFieldJSONBody defines parameters for AddPersonField.
 type AddPersonFieldJSONBody struct {
-	// Description Field description
-	Description *string `json:"description"`
-
 	// FieldName Field name
 	FieldName string `json:"field_name"`
 
@@ -2572,9 +2657,6 @@ type GetPersonFieldParamsIncludeFields string
 
 // UpdatePersonFieldJSONBody defines parameters for UpdatePersonField.
 type UpdatePersonFieldJSONBody struct {
-	// Description Field description
-	Description *string `json:"description"`
-
 	// FieldName Field name
 	FieldName *string `json:"field_name,omitempty"`
 
@@ -2680,6 +2762,12 @@ type GetPersonsParams struct {
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
+	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
+	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
+
+	// IncludeLabels When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
+	IncludeLabels *bool `form:"include_labels,omitempty" json:"include_labels,omitempty"`
+
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
@@ -2701,7 +2789,7 @@ type AddPersonJSONBody struct {
 	// AddTime The creation date and time of the person
 	AddTime *string `json:"add_time,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// Emails The emails of the person
@@ -2790,6 +2878,12 @@ type GetPersonParams struct {
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+
+	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
+	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
+
+	// IncludeLabels When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
+	IncludeLabels *bool `form:"include_labels,omitempty" json:"include_labels,omitempty"`
 }
 
 // GetPersonParamsIncludeFields defines parameters for GetPerson.
@@ -2800,7 +2894,7 @@ type UpdatePersonJSONBody struct {
 	// AddTime The creation date and time of the person
 	AddTime *string `json:"add_time,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// Emails The emails of the person
@@ -2876,6 +2970,36 @@ type GetPersonFollowersChangelogParams struct {
 	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
 }
 
+// GetProjectsPhasesParams defines parameters for GetProjectsPhases.
+type GetProjectsPhasesParams struct {
+	// BoardId The ID of the board for which phases are requested
+	BoardId int `form:"board_id" json:"board_id"`
+}
+
+// AddProjectPhaseJSONBody defines parameters for AddProjectPhase.
+type AddProjectPhaseJSONBody struct {
+	// BoardId The ID of the project board to add the phase to
+	BoardId int `json:"board_id"`
+
+	// Name The name of the project phase
+	Name string `json:"name"`
+
+	// OrderNr The order of the phase within its board. Must be between 1 and the total number of phases on the board + 1.
+	OrderNr *int `json:"order_nr,omitempty"`
+}
+
+// UpdateProjectPhaseJSONBody defines parameters for UpdateProjectPhase.
+type UpdateProjectPhaseJSONBody struct {
+	// BoardId The ID of the project board to add the phase to
+	BoardId *int `json:"board_id,omitempty"`
+
+	// Name The name of the project phase
+	Name *string `json:"name,omitempty"`
+
+	// OrderNr The order of the phase within its board. Must be between 1 and the total number of phases on the board + 1.
+	OrderNr *int `json:"order_nr,omitempty"`
+}
+
 // GetPipelinesParams defines parameters for GetPipelines.
 type GetPipelinesParams struct {
 	// SortBy The field to sort by. Supported fields: `id`, `update_time`, `add_time`.
@@ -2932,9 +3056,6 @@ type GetProductFieldsParamsIncludeFields string
 
 // AddProductFieldJSONBody defines parameters for AddProductField.
 type AddProductFieldJSONBody struct {
-	// Description Field description
-	Description *string `json:"description"`
-
 	// FieldName Field name
 	FieldName string `json:"field_name"`
 
@@ -2975,9 +3096,6 @@ type GetProductFieldParamsIncludeFields string
 
 // UpdateProductFieldJSONBody defines parameters for UpdateProductField.
 type UpdateProductFieldJSONBody struct {
-	// Description Field description
-	Description *string `json:"description"`
-
 	// FieldName Field name
 	FieldName *string `json:"field_name,omitempty"`
 
@@ -3039,6 +3157,9 @@ type GetProductsParams struct {
 	// SortDirection The sorting direction. Supported values: `asc`, `desc`.
 	SortDirection *GetProductsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
+	// UpdatedSince If set, only products with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.
+	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
+
 	// CustomFields Comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for a smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 }
@@ -3075,7 +3196,7 @@ type AddProductJSONBody struct {
 	// Code The product code
 	Code *string `json:"code,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// Description The product description
@@ -3162,7 +3283,7 @@ type UpdateProductJSONBody struct {
 	// Code The product code
 	Code *string `json:"code,omitempty"`
 
-	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 	// Description The product description
@@ -3259,6 +3380,318 @@ type UpdateProductVariationJSONBody struct {
 	Prices *[]map[string]interface{} `json:"prices,omitempty"`
 }
 
+// GetProjectFieldsParams defines parameters for GetProjectFields.
+type GetProjectFieldsParams struct {
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
+// AddProjectFieldJSONBody defines parameters for AddProjectField.
+type AddProjectFieldJSONBody struct {
+	// FieldName Field name
+	FieldName string `json:"field_name"`
+
+	// FieldType The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
+	FieldType AddProjectFieldJSONBodyFieldType `json:"field_type"`
+
+	// ImportantFields Configuration for highlighting the field at specific stages.
+	ImportantFields *AddProjectFieldJSONBody_ImportantFields `json:"important_fields,omitempty"`
+
+	// Options Field options (required for enum and set field types)
+	Options *[]struct {
+		// Label The option label
+		Label string `json:"label"`
+	} `json:"options,omitempty"`
+
+	// RequiredFields Required fields configuration for marking the field as mandatory when interacted with in the Pipedrive web UI.
+	RequiredFields *AddProjectFieldJSONBody_RequiredFields `json:"required_fields,omitempty"`
+
+	// UiVisibility UI visibility settings for the field. Controls where the field appears in the Pipedrive web UI.
+	UiVisibility *AddProjectFieldJSONBody_UiVisibility `json:"ui_visibility,omitempty"`
+}
+
+// AddProjectFieldJSONBodyFieldType defines parameters for AddProjectField.
+type AddProjectFieldJSONBodyFieldType string
+
+// AddProjectFieldJSONBody_ImportantFields defines parameters for AddProjectField.
+type AddProjectFieldJSONBody_ImportantFields struct {
+	// Enabled Whether the field is marked as important. When false, the field is not highlighted. When true with empty stage_ids, the field is important everywhere. When true with specific stage_ids, the field is important only at those deal stages. Default is false.
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// StageIds Array of deal stage IDs where this project field should be highlighted as important. Must reference valid, active deal stages. Empty array when enabled is false.
+	StageIds             *[]int                 `json:"stage_ids,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// AddProjectFieldJSONBody_RequiredFields defines parameters for AddProjectField.
+type AddProjectFieldJSONBody_RequiredFields struct {
+	// Enabled Whether the field is required. When false, the field is optional. When true, the field is required when creating or updating projects. Default is false.
+	Enabled              *bool                  `json:"enabled,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// AddProjectFieldJSONBody_UiVisibility defines parameters for AddProjectField.
+type AddProjectFieldJSONBody_UiVisibility struct {
+	// AddVisibleFlag Whether the field is shown in the add project modal. Default is false.
+	AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+	// DetailsVisibleFlag Whether the field is shown in the project details view. Default is true.
+	DetailsVisibleFlag   *bool                  `json:"details_visible_flag,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// UpdateProjectFieldJSONBody defines parameters for UpdateProjectField.
+type UpdateProjectFieldJSONBody struct {
+	// FieldName Field name
+	FieldName *string `json:"field_name,omitempty"`
+
+	// ImportantFields Configuration for highlighting the field at specific stages.
+	ImportantFields *UpdateProjectFieldJSONBody_ImportantFields `json:"important_fields,omitempty"`
+
+	// RequiredFields Required fields configuration for marking the field as mandatory when interacted with in the Pipedrive web UI.
+	RequiredFields *UpdateProjectFieldJSONBody_RequiredFields `json:"required_fields,omitempty"`
+
+	// UiVisibility UI visibility settings for the field. Controls where the field appears in the Pipedrive web UI.
+	UiVisibility *UpdateProjectFieldJSONBody_UiVisibility `json:"ui_visibility,omitempty"`
+}
+
+// UpdateProjectFieldJSONBody_ImportantFields defines parameters for UpdateProjectField.
+type UpdateProjectFieldJSONBody_ImportantFields struct {
+	// Enabled Whether the field is marked as important. When false, the field is not highlighted. When true with empty stage_ids, the field is important everywhere. When true with specific stage_ids, the field is important only at those deal stages. Default is false.
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// StageIds Array of deal stage IDs where this project field should be highlighted as important. Must reference valid, active deal stages. Empty array when enabled is false.
+	StageIds             *[]int                 `json:"stage_ids,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// UpdateProjectFieldJSONBody_RequiredFields defines parameters for UpdateProjectField.
+type UpdateProjectFieldJSONBody_RequiredFields struct {
+	// Enabled Whether the field is required. When false, the field is optional. When true, the field is required when creating or updating projects. Default is false.
+	Enabled              *bool                  `json:"enabled,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// UpdateProjectFieldJSONBody_UiVisibility defines parameters for UpdateProjectField.
+type UpdateProjectFieldJSONBody_UiVisibility struct {
+	// AddVisibleFlag Whether the field is shown in the add project modal. Default is false.
+	AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+	// DetailsVisibleFlag Whether the field is shown in the project details view. Default is true.
+	DetailsVisibleFlag   *bool                  `json:"details_visible_flag,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// DeleteProjectFieldOptionsJSONBody defines parameters for DeleteProjectFieldOptions.
+type DeleteProjectFieldOptionsJSONBody = []struct {
+	// Id The unique identifier of the option to delete
+	Id int `json:"id"`
+}
+
+// UpdateProjectFieldOptionsJSONBody defines parameters for UpdateProjectFieldOptions.
+type UpdateProjectFieldOptionsJSONBody = []struct {
+	// Id The unique identifier of the option to update
+	Id int `json:"id"`
+
+	// Label The new display label for the option
+	Label string `json:"label"`
+}
+
+// AddProjectFieldOptionsJSONBody defines parameters for AddProjectFieldOptions.
+type AddProjectFieldOptionsJSONBody = []struct {
+	// Label The display label for the new option
+	Label string `json:"label"`
+}
+
+// GetProjectTemplatesParams defines parameters for GetProjectTemplates.
+type GetProjectTemplatesParams struct {
+	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// GetProjectsParams defines parameters for GetProjects.
+type GetProjectsParams struct {
+	// FilterId If supplied, only projects matching the specified filter are returned
+	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
+
+	// Status If supplied, includes only projects with the specified statuses. Possible values are `open`, `completed`, `canceled` and `deleted`. By default `deleted` projects are not returned.
+	Status *string `form:"status,omitempty" json:"status,omitempty"`
+
+	// PhaseId If supplied, only projects in the specified phase are returned
+	PhaseId *int `form:"phase_id,omitempty" json:"phase_id,omitempty"`
+
+	// DealId If supplied, only projects associated with the specified deal are returned
+	DealId *int `form:"deal_id,omitempty" json:"deal_id,omitempty"`
+
+	// PersonId If supplied, only projects associated with the specified person are returned
+	PersonId *int `form:"person_id,omitempty" json:"person_id,omitempty"`
+
+	// OrgId If supplied, only projects associated with the specified organization are returned
+	OrgId *int `form:"org_id,omitempty" json:"org_id,omitempty"`
+
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
+// AddProjectJSONBody defines parameters for AddProject.
+type AddProjectJSONBody struct {
+	// BoardId The ID of the board this project is associated with
+	BoardId *int `json:"board_id,omitempty"`
+
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+	// DealIds An array of IDs of the deals this project is associated with
+	DealIds *[]int `json:"deal_ids,omitempty"`
+
+	// Description The description of the project
+	Description *string `json:"description,omitempty"`
+
+	// EndDate The end date of the project. Format: YYYY-MM-DD
+	EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+	// HealthStatus The health status of the project
+	HealthStatus *int `json:"health_status,omitempty"`
+
+	// LabelIds An array of IDs of the labels this project has
+	LabelIds *[]int `json:"label_ids,omitempty"`
+
+	// OrgIds An array of IDs of the organizations this project is associated with
+	OrgIds *[]int `json:"org_ids,omitempty"`
+
+	// OwnerId The ID of the user who owns the project
+	OwnerId *int `json:"owner_id,omitempty"`
+
+	// PersonIds An array of IDs of the persons this project is associated with
+	PersonIds *[]int `json:"person_ids,omitempty"`
+
+	// PhaseId The ID of the phase this project is associated with
+	PhaseId *int `json:"phase_id,omitempty"`
+
+	// StartDate The start date of the project. Format: YYYY-MM-DD
+	StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+	// Status The status of the project
+	Status *string `json:"status,omitempty"`
+
+	// TemplateId The ID of the template the project will be based on. Only used when creating a new project.
+	TemplateId *int `json:"template_id,omitempty"`
+
+	// Title The title of the project
+	Title string `json:"title"`
+}
+
+// GetArchivedProjectsParams defines parameters for GetArchivedProjects.
+type GetArchivedProjectsParams struct {
+	// FilterId If supplied, only projects matching the specified filter are returned
+	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
+
+	// Status If supplied, includes only projects with the specified statuses. Possible values are `open`, `completed`, `canceled` and `deleted`. By default `deleted` projects are not returned.
+	Status *string `form:"status,omitempty" json:"status,omitempty"`
+
+	// PhaseId If supplied, only projects in the specified phase are returned
+	PhaseId *int `form:"phase_id,omitempty" json:"phase_id,omitempty"`
+
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
+// SearchProjectsParams defines parameters for SearchProjects.
+type SearchProjectsParams struct {
+	// Term The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
+	Term string `form:"term" json:"term"`
+
+	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.
+	Fields *SearchProjectsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+
+	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
+	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
+
+	// PersonId Will filter projects by the provided person ID
+	PersonId *int `form:"person_id,omitempty" json:"person_id,omitempty"`
+
+	// OrganizationId Will filter projects by the provided organization ID
+	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
+
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
+// SearchProjectsParamsFields defines parameters for SearchProjects.
+type SearchProjectsParamsFields string
+
+// UpdateProjectJSONBody defines parameters for UpdateProject.
+type UpdateProjectJSONBody struct {
+	// BoardId The ID of the board this project is associated with
+	BoardId *int `json:"board_id,omitempty"`
+
+	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+	// DealIds An array of IDs of the deals this project is associated with
+	DealIds *[]int `json:"deal_ids,omitempty"`
+
+	// Description The description of the project
+	Description *string `json:"description,omitempty"`
+
+	// EndDate The end date of the project. Format: YYYY-MM-DD
+	EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+	// HealthStatus The health status of the project
+	HealthStatus *int `json:"health_status,omitempty"`
+
+	// LabelIds An array of IDs of the labels this project has
+	LabelIds *[]int `json:"label_ids,omitempty"`
+
+	// OrgIds An array of IDs of the organizations this project is associated with
+	OrgIds *[]int `json:"org_ids,omitempty"`
+
+	// OwnerId The ID of the user who owns the project
+	OwnerId *int `json:"owner_id,omitempty"`
+
+	// PersonIds An array of IDs of the persons this project is associated with
+	PersonIds *[]int `json:"person_ids,omitempty"`
+
+	// PhaseId The ID of the phase this project is associated with
+	PhaseId *int `json:"phase_id,omitempty"`
+
+	// StartDate The start date of the project. Format: YYYY-MM-DD
+	StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+	// Status The status of the project
+	Status *string `json:"status,omitempty"`
+
+	// TemplateId The ID of the template the project will be based on. Only used when creating a new project.
+	TemplateId *int `json:"template_id,omitempty"`
+
+	// Title The title of the project
+	Title *string `json:"title,omitempty"`
+}
+
+// GetProjectChangelogParams defines parameters for GetProjectChangelog.
+type GetProjectChangelogParams struct {
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
 // GetStagesParams defines parameters for GetStages.
 type GetStagesParams struct {
 	// PipelineId The ID of the pipeline to fetch stages for. If omitted, stages for all pipelines will be fetched.
@@ -3319,6 +3752,114 @@ type UpdateStageJSONBody struct {
 	PipelineId *int `json:"pipeline_id,omitempty"`
 }
 
+// GetTasksParams defines parameters for GetTasks.
+type GetTasksParams struct {
+	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// IsDone Whether the task is done or not. If omitted, both done and not done tasks are returned.
+	IsDone *bool `form:"is_done,omitempty" json:"is_done,omitempty"`
+
+	// IsMilestone Whether the task is a milestone or not. If omitted, both milestone and non-milestone tasks are returned.
+	IsMilestone *bool `form:"is_milestone,omitempty" json:"is_milestone,omitempty"`
+
+	// AssigneeId If supplied, only tasks assigned to this user are returned
+	AssigneeId *int `form:"assignee_id,omitempty" json:"assignee_id,omitempty"`
+
+	// ProjectId If supplied, only tasks belonging to this project are returned
+	ProjectId *int `form:"project_id,omitempty" json:"project_id,omitempty"`
+
+	// ParentTaskId If `null` is supplied, only root-level tasks (without a parent) are returned. If an integer is supplied, only subtasks of that specific task are returned. By default all tasks are returned.
+	ParentTaskId *string `form:"parent_task_id,omitempty" json:"parent_task_id,omitempty"`
+}
+
+// AddTaskJSONBody defines parameters for AddTask.
+type AddTaskJSONBody struct {
+	// AssigneeId The ID of the user assigned to the task. When set, the `assignee_ids` field will be overwritten with this value.
+	AssigneeId *int `json:"assignee_id"`
+
+	// AssigneeIds The IDs of users assigned to the task. When set, the `assignee_id` field will be set to the first value in this array, or `null` if empty.
+	AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+	// Description The description of the task
+	Description *string `json:"description"`
+
+	// Done Whether the task is done or not. `0` = Not done, `1` = Done.
+	Done *AddTaskJSONBodyDone `json:"done,omitempty"`
+
+	// DueDate The due date of the task. Format: YYYY-MM-DD.
+	DueDate *openapi_types.Date `json:"due_date"`
+
+	// Milestone Whether the task is a milestone or not. `0` = Not a milestone, `1` = Milestone.
+	Milestone *AddTaskJSONBodyMilestone `json:"milestone,omitempty"`
+
+	// ParentTaskId The ID of the parent task. Cannot be the ID of a task that is already a subtask.
+	ParentTaskId *int `json:"parent_task_id"`
+
+	// Priority The priority of the task
+	Priority *int `json:"priority"`
+
+	// ProjectId The ID of the project this task is associated with
+	ProjectId int `json:"project_id"`
+
+	// StartDate The start date of the task. Format: YYYY-MM-DD.
+	StartDate *openapi_types.Date `json:"start_date"`
+
+	// Title The title of the task
+	Title string `json:"title"`
+}
+
+// AddTaskJSONBodyDone defines parameters for AddTask.
+type AddTaskJSONBodyDone int
+
+// AddTaskJSONBodyMilestone defines parameters for AddTask.
+type AddTaskJSONBodyMilestone int
+
+// UpdateTaskJSONBody defines parameters for UpdateTask.
+type UpdateTaskJSONBody struct {
+	// AssigneeId The ID of the user assigned to the task. When set, the `assignee_ids` field will be overwritten with this value.
+	AssigneeId *int `json:"assignee_id"`
+
+	// AssigneeIds The IDs of users assigned to the task. When set, the `assignee_id` field will be set to the first value in this array, or `null` if empty.
+	AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+	// Description The description of the task
+	Description *string `json:"description"`
+
+	// Done Whether the task is done or not. `0` = Not done, `1` = Done.
+	Done *UpdateTaskJSONBodyDone `json:"done,omitempty"`
+
+	// DueDate The due date of the task. Format: YYYY-MM-DD.
+	DueDate *openapi_types.Date `json:"due_date"`
+
+	// Milestone Whether the task is a milestone or not. `0` = Not a milestone, `1` = Milestone.
+	Milestone *UpdateTaskJSONBodyMilestone `json:"milestone,omitempty"`
+
+	// ParentTaskId The ID of the parent task. Cannot be the ID of a task that is already a subtask.
+	ParentTaskId *int `json:"parent_task_id"`
+
+	// Priority The priority of the task
+	Priority *int `json:"priority"`
+
+	// ProjectId The ID of the project this task is associated with
+	ProjectId *int `json:"project_id,omitempty"`
+
+	// StartDate The start date of the task. Format: YYYY-MM-DD.
+	StartDate *openapi_types.Date `json:"start_date"`
+
+	// Title The title of the task
+	Title *string `json:"title,omitempty"`
+}
+
+// UpdateTaskJSONBodyDone defines parameters for UpdateTask.
+type UpdateTaskJSONBodyDone int
+
+// UpdateTaskJSONBodyMilestone defines parameters for UpdateTask.
+type UpdateTaskJSONBodyMilestone int
+
 // GetUserFollowersParams defines parameters for GetUserFollowers.
 type GetUserFollowersParams struct {
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
@@ -3333,6 +3874,12 @@ type AddActivityJSONRequestBody AddActivityJSONBody
 
 // UpdateActivityJSONRequestBody defines body for UpdateActivity for application/json ContentType.
 type UpdateActivityJSONRequestBody UpdateActivityJSONBody
+
+// AddProjectBoardJSONRequestBody defines body for AddProjectBoard for application/json ContentType.
+type AddProjectBoardJSONRequestBody AddProjectBoardJSONBody
+
+// UpdateProjectBoardJSONRequestBody defines body for UpdateProjectBoard for application/json ContentType.
+type UpdateProjectBoardJSONRequestBody UpdateProjectBoardJSONBody
 
 // AddDealFieldJSONRequestBody defines body for AddDealField for application/json ContentType.
 type AddDealFieldJSONRequestBody AddDealFieldJSONBody
@@ -3430,6 +3977,12 @@ type UpdatePersonJSONRequestBody UpdatePersonJSONBody
 // AddPersonFollowerJSONRequestBody defines body for AddPersonFollower for application/json ContentType.
 type AddPersonFollowerJSONRequestBody AddPersonFollowerJSONBody
 
+// AddProjectPhaseJSONRequestBody defines body for AddProjectPhase for application/json ContentType.
+type AddProjectPhaseJSONRequestBody AddProjectPhaseJSONBody
+
+// UpdateProjectPhaseJSONRequestBody defines body for UpdateProjectPhase for application/json ContentType.
+type UpdateProjectPhaseJSONRequestBody UpdateProjectPhaseJSONBody
+
 // AddPipelineJSONRequestBody defines body for AddPipeline for application/json ContentType.
 type AddPipelineJSONRequestBody AddPipelineJSONBody
 
@@ -3472,11 +4025,38 @@ type AddProductVariationJSONRequestBody AddProductVariationJSONBody
 // UpdateProductVariationJSONRequestBody defines body for UpdateProductVariation for application/json ContentType.
 type UpdateProductVariationJSONRequestBody UpdateProductVariationJSONBody
 
+// AddProjectFieldJSONRequestBody defines body for AddProjectField for application/json ContentType.
+type AddProjectFieldJSONRequestBody AddProjectFieldJSONBody
+
+// UpdateProjectFieldJSONRequestBody defines body for UpdateProjectField for application/json ContentType.
+type UpdateProjectFieldJSONRequestBody UpdateProjectFieldJSONBody
+
+// DeleteProjectFieldOptionsJSONRequestBody defines body for DeleteProjectFieldOptions for application/json ContentType.
+type DeleteProjectFieldOptionsJSONRequestBody = DeleteProjectFieldOptionsJSONBody
+
+// UpdateProjectFieldOptionsJSONRequestBody defines body for UpdateProjectFieldOptions for application/json ContentType.
+type UpdateProjectFieldOptionsJSONRequestBody = UpdateProjectFieldOptionsJSONBody
+
+// AddProjectFieldOptionsJSONRequestBody defines body for AddProjectFieldOptions for application/json ContentType.
+type AddProjectFieldOptionsJSONRequestBody = AddProjectFieldOptionsJSONBody
+
+// AddProjectJSONRequestBody defines body for AddProject for application/json ContentType.
+type AddProjectJSONRequestBody AddProjectJSONBody
+
+// UpdateProjectJSONRequestBody defines body for UpdateProject for application/json ContentType.
+type UpdateProjectJSONRequestBody UpdateProjectJSONBody
+
 // AddStageJSONRequestBody defines body for AddStage for application/json ContentType.
 type AddStageJSONRequestBody AddStageJSONBody
 
 // UpdateStageJSONRequestBody defines body for UpdateStage for application/json ContentType.
 type UpdateStageJSONRequestBody UpdateStageJSONBody
+
+// AddTaskJSONRequestBody defines body for AddTask for application/json ContentType.
+type AddTaskJSONRequestBody AddTaskJSONBody
+
+// UpdateTaskJSONRequestBody defines body for UpdateTask for application/json ContentType.
+type UpdateTaskJSONRequestBody UpdateTaskJSONBody
 
 // Getter for additional properties for AddDealFieldJSONBody_ImportantFields. Returns the specified
 // element and whether it was found
@@ -5258,6 +5838,474 @@ func (a UpdateProductFieldJSONBody_UiVisibility) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for AddProjectFieldJSONBody_ImportantFields. Returns the specified
+// element and whether it was found
+func (a AddProjectFieldJSONBody_ImportantFields) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AddProjectFieldJSONBody_ImportantFields
+func (a *AddProjectFieldJSONBody_ImportantFields) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AddProjectFieldJSONBody_ImportantFields to handle AdditionalProperties
+func (a *AddProjectFieldJSONBody_ImportantFields) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["enabled"]; found {
+		err = json.Unmarshal(raw, &a.Enabled)
+		if err != nil {
+			return fmt.Errorf("error reading 'enabled': %w", err)
+		}
+		delete(object, "enabled")
+	}
+
+	if raw, found := object["stage_ids"]; found {
+		err = json.Unmarshal(raw, &a.StageIds)
+		if err != nil {
+			return fmt.Errorf("error reading 'stage_ids': %w", err)
+		}
+		delete(object, "stage_ids")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AddProjectFieldJSONBody_ImportantFields to handle AdditionalProperties
+func (a AddProjectFieldJSONBody_ImportantFields) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Enabled != nil {
+		object["enabled"], err = json.Marshal(a.Enabled)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'enabled': %w", err)
+		}
+	}
+
+	if a.StageIds != nil {
+		object["stage_ids"], err = json.Marshal(a.StageIds)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'stage_ids': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AddProjectFieldJSONBody_RequiredFields. Returns the specified
+// element and whether it was found
+func (a AddProjectFieldJSONBody_RequiredFields) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AddProjectFieldJSONBody_RequiredFields
+func (a *AddProjectFieldJSONBody_RequiredFields) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AddProjectFieldJSONBody_RequiredFields to handle AdditionalProperties
+func (a *AddProjectFieldJSONBody_RequiredFields) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["enabled"]; found {
+		err = json.Unmarshal(raw, &a.Enabled)
+		if err != nil {
+			return fmt.Errorf("error reading 'enabled': %w", err)
+		}
+		delete(object, "enabled")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AddProjectFieldJSONBody_RequiredFields to handle AdditionalProperties
+func (a AddProjectFieldJSONBody_RequiredFields) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Enabled != nil {
+		object["enabled"], err = json.Marshal(a.Enabled)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'enabled': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AddProjectFieldJSONBody_UiVisibility. Returns the specified
+// element and whether it was found
+func (a AddProjectFieldJSONBody_UiVisibility) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AddProjectFieldJSONBody_UiVisibility
+func (a *AddProjectFieldJSONBody_UiVisibility) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AddProjectFieldJSONBody_UiVisibility to handle AdditionalProperties
+func (a *AddProjectFieldJSONBody_UiVisibility) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["add_visible_flag"]; found {
+		err = json.Unmarshal(raw, &a.AddVisibleFlag)
+		if err != nil {
+			return fmt.Errorf("error reading 'add_visible_flag': %w", err)
+		}
+		delete(object, "add_visible_flag")
+	}
+
+	if raw, found := object["details_visible_flag"]; found {
+		err = json.Unmarshal(raw, &a.DetailsVisibleFlag)
+		if err != nil {
+			return fmt.Errorf("error reading 'details_visible_flag': %w", err)
+		}
+		delete(object, "details_visible_flag")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AddProjectFieldJSONBody_UiVisibility to handle AdditionalProperties
+func (a AddProjectFieldJSONBody_UiVisibility) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AddVisibleFlag != nil {
+		object["add_visible_flag"], err = json.Marshal(a.AddVisibleFlag)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'add_visible_flag': %w", err)
+		}
+	}
+
+	if a.DetailsVisibleFlag != nil {
+		object["details_visible_flag"], err = json.Marshal(a.DetailsVisibleFlag)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'details_visible_flag': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateProjectFieldJSONBody_ImportantFields. Returns the specified
+// element and whether it was found
+func (a UpdateProjectFieldJSONBody_ImportantFields) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateProjectFieldJSONBody_ImportantFields
+func (a *UpdateProjectFieldJSONBody_ImportantFields) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateProjectFieldJSONBody_ImportantFields to handle AdditionalProperties
+func (a *UpdateProjectFieldJSONBody_ImportantFields) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["enabled"]; found {
+		err = json.Unmarshal(raw, &a.Enabled)
+		if err != nil {
+			return fmt.Errorf("error reading 'enabled': %w", err)
+		}
+		delete(object, "enabled")
+	}
+
+	if raw, found := object["stage_ids"]; found {
+		err = json.Unmarshal(raw, &a.StageIds)
+		if err != nil {
+			return fmt.Errorf("error reading 'stage_ids': %w", err)
+		}
+		delete(object, "stage_ids")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateProjectFieldJSONBody_ImportantFields to handle AdditionalProperties
+func (a UpdateProjectFieldJSONBody_ImportantFields) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Enabled != nil {
+		object["enabled"], err = json.Marshal(a.Enabled)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'enabled': %w", err)
+		}
+	}
+
+	if a.StageIds != nil {
+		object["stage_ids"], err = json.Marshal(a.StageIds)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'stage_ids': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateProjectFieldJSONBody_RequiredFields. Returns the specified
+// element and whether it was found
+func (a UpdateProjectFieldJSONBody_RequiredFields) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateProjectFieldJSONBody_RequiredFields
+func (a *UpdateProjectFieldJSONBody_RequiredFields) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateProjectFieldJSONBody_RequiredFields to handle AdditionalProperties
+func (a *UpdateProjectFieldJSONBody_RequiredFields) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["enabled"]; found {
+		err = json.Unmarshal(raw, &a.Enabled)
+		if err != nil {
+			return fmt.Errorf("error reading 'enabled': %w", err)
+		}
+		delete(object, "enabled")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateProjectFieldJSONBody_RequiredFields to handle AdditionalProperties
+func (a UpdateProjectFieldJSONBody_RequiredFields) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Enabled != nil {
+		object["enabled"], err = json.Marshal(a.Enabled)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'enabled': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateProjectFieldJSONBody_UiVisibility. Returns the specified
+// element and whether it was found
+func (a UpdateProjectFieldJSONBody_UiVisibility) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateProjectFieldJSONBody_UiVisibility
+func (a *UpdateProjectFieldJSONBody_UiVisibility) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateProjectFieldJSONBody_UiVisibility to handle AdditionalProperties
+func (a *UpdateProjectFieldJSONBody_UiVisibility) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["add_visible_flag"]; found {
+		err = json.Unmarshal(raw, &a.AddVisibleFlag)
+		if err != nil {
+			return fmt.Errorf("error reading 'add_visible_flag': %w", err)
+		}
+		delete(object, "add_visible_flag")
+	}
+
+	if raw, found := object["details_visible_flag"]; found {
+		err = json.Unmarshal(raw, &a.DetailsVisibleFlag)
+		if err != nil {
+			return fmt.Errorf("error reading 'details_visible_flag': %w", err)
+		}
+		delete(object, "details_visible_flag")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateProjectFieldJSONBody_UiVisibility to handle AdditionalProperties
+func (a UpdateProjectFieldJSONBody_UiVisibility) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AddVisibleFlag != nil {
+		object["add_visible_flag"], err = json.Marshal(a.AddVisibleFlag)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'add_visible_flag': %w", err)
+		}
+	}
+
+	if a.DetailsVisibleFlag != nil {
+		object["details_visible_flag"], err = json.Marshal(a.DetailsVisibleFlag)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'details_visible_flag': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
 
@@ -5355,6 +6403,25 @@ type ClientInterface interface {
 
 	// GetActivityField request
 	GetActivityField(ctx context.Context, fieldCode string, params *GetActivityFieldParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectsBoards request
+	GetProjectsBoards(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddProjectBoardWithBody request with any body
+	AddProjectBoardWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	AddProjectBoard(ctx context.Context, body AddProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteProjectBoard request
+	DeleteProjectBoard(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectsBoard request
+	GetProjectsBoard(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateProjectBoardWithBody request with any body
+	UpdateProjectBoardWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateProjectBoard(ctx context.Context, id int, body UpdateProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDealFields request
 	GetDealFields(ctx context.Context, params *GetDealFieldsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5654,6 +6721,25 @@ type ClientInterface interface {
 	// GetPersonPicture request
 	GetPersonPicture(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetProjectsPhases request
+	GetProjectsPhases(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddProjectPhaseWithBody request with any body
+	AddProjectPhaseWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	AddProjectPhase(ctx context.Context, body AddProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteProjectPhase request
+	DeleteProjectPhase(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectsPhase request
+	GetProjectsPhase(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateProjectPhaseWithBody request with any body
+	UpdateProjectPhaseWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateProjectPhase(ctx context.Context, id int, body UpdateProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetPipelines request
 	GetPipelines(ctx context.Context, params *GetPipelinesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -5774,6 +6860,80 @@ type ClientInterface interface {
 
 	UpdateProductVariation(ctx context.Context, id int, productVariationId int, body UpdateProductVariationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetProjectFields request
+	GetProjectFields(ctx context.Context, params *GetProjectFieldsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddProjectFieldWithBody request with any body
+	AddProjectFieldWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	AddProjectField(ctx context.Context, body AddProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteProjectField request
+	DeleteProjectField(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectField request
+	GetProjectField(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateProjectFieldWithBody request with any body
+	UpdateProjectFieldWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateProjectField(ctx context.Context, fieldCode string, body UpdateProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteProjectFieldOptionsWithBody request with any body
+	DeleteProjectFieldOptionsWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	DeleteProjectFieldOptions(ctx context.Context, fieldCode string, body DeleteProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateProjectFieldOptionsWithBody request with any body
+	UpdateProjectFieldOptionsWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateProjectFieldOptions(ctx context.Context, fieldCode string, body UpdateProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddProjectFieldOptionsWithBody request with any body
+	AddProjectFieldOptionsWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	AddProjectFieldOptions(ctx context.Context, fieldCode string, body AddProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectTemplates request
+	GetProjectTemplates(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectTemplate request
+	GetProjectTemplate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjects request
+	GetProjects(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddProjectWithBody request with any body
+	AddProjectWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	AddProject(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetArchivedProjects request
+	GetArchivedProjects(ctx context.Context, params *GetArchivedProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SearchProjects request
+	SearchProjects(ctx context.Context, params *SearchProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteProject request
+	DeleteProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProject request
+	GetProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateProjectWithBody request with any body
+	UpdateProjectWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateProject(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ArchiveProject request
+	ArchiveProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectChangelog request
+	GetProjectChangelog(ctx context.Context, id int, params *GetProjectChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectUsers request
+	GetProjectUsers(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetStages request
 	GetStages(ctx context.Context, params *GetStagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -5792,6 +6952,25 @@ type ClientInterface interface {
 	UpdateStageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	UpdateStage(ctx context.Context, id int, body UpdateStageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTasks request
+	GetTasks(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddTaskWithBody request with any body
+	AddTaskWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	AddTask(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteTask request
+	DeleteTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTask request
+	GetTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateTaskWithBody request with any body
+	UpdateTaskWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateTask(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetUserFollowers request
 	GetUserFollowers(ctx context.Context, id int, params *GetUserFollowersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5895,6 +7074,90 @@ func (c *Client) GetActivityFields(ctx context.Context, params *GetActivityField
 
 func (c *Client) GetActivityField(ctx context.Context, fieldCode string, params *GetActivityFieldParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetActivityFieldRequest(c.Server, fieldCode, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectsBoards(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectsBoardsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectBoardWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectBoardRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectBoard(ctx context.Context, body AddProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectBoardRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteProjectBoard(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteProjectBoardRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectsBoard(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectsBoardRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectBoardWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectBoardRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectBoard(ctx context.Context, id int, body UpdateProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectBoardRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7225,6 +8488,90 @@ func (c *Client) GetPersonPicture(ctx context.Context, id int, reqEditors ...Req
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetProjectsPhases(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectsPhasesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectPhaseWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectPhaseRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectPhase(ctx context.Context, body AddProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectPhaseRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteProjectPhase(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteProjectPhaseRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectsPhase(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectsPhaseRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectPhaseWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectPhaseRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectPhase(ctx context.Context, id int, body UpdateProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectPhaseRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetPipelines(ctx context.Context, params *GetPipelinesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPipelinesRequest(c.Server, params)
 	if err != nil {
@@ -7753,6 +9100,330 @@ func (c *Client) UpdateProductVariation(ctx context.Context, id int, productVari
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetProjectFields(ctx context.Context, params *GetProjectFieldsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectFieldsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectFieldWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectFieldRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectField(ctx context.Context, body AddProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectFieldRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteProjectField(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteProjectFieldRequest(c.Server, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectField(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectFieldRequest(c.Server, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectFieldWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectFieldRequestWithBody(c.Server, fieldCode, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectField(ctx context.Context, fieldCode string, body UpdateProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectFieldRequest(c.Server, fieldCode, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteProjectFieldOptionsWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteProjectFieldOptionsRequestWithBody(c.Server, fieldCode, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteProjectFieldOptions(ctx context.Context, fieldCode string, body DeleteProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteProjectFieldOptionsRequest(c.Server, fieldCode, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectFieldOptionsWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectFieldOptionsRequestWithBody(c.Server, fieldCode, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectFieldOptions(ctx context.Context, fieldCode string, body UpdateProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectFieldOptionsRequest(c.Server, fieldCode, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectFieldOptionsWithBody(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectFieldOptionsRequestWithBody(c.Server, fieldCode, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectFieldOptions(ctx context.Context, fieldCode string, body AddProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectFieldOptionsRequest(c.Server, fieldCode, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectTemplates(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectTemplatesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectTemplate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectTemplateRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjects(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProjectWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddProject(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddProjectRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetArchivedProjects(ctx context.Context, params *GetArchivedProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetArchivedProjectsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SearchProjects(ctx context.Context, params *SearchProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSearchProjectsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteProjectRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProjectWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateProject(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateProjectRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ArchiveProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveProjectRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectChangelog(ctx context.Context, id int, params *GetProjectChangelogParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectChangelogRequest(c.Server, id, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetProjectUsers(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectUsersRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetStages(ctx context.Context, params *GetStagesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetStagesRequest(c.Server, params)
 	if err != nil {
@@ -7827,6 +9498,90 @@ func (c *Client) UpdateStageWithBody(ctx context.Context, id int, contentType st
 
 func (c *Client) UpdateStage(ctx context.Context, id int, body UpdateStageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateStageRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetTasks(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTasksRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddTaskWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddTaskRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AddTask(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddTaskRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteTaskRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTaskRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateTaskWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateTaskRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateTask(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateTaskRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8432,6 +10187,188 @@ func NewGetActivityFieldRequest(server string, fieldCode string, params *GetActi
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewGetProjectsBoardsRequest generates requests for GetProjectsBoards
+func NewGetProjectsBoardsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/boards")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAddProjectBoardRequest calls the generic AddProjectBoard builder with application/json body
+func NewAddProjectBoardRequest(server string, body AddProjectBoardJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddProjectBoardRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewAddProjectBoardRequestWithBody generates requests for AddProjectBoard with any type of body
+func NewAddProjectBoardRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/boards")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteProjectBoardRequest generates requests for DeleteProjectBoard
+func NewDeleteProjectBoardRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/boards/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectsBoardRequest generates requests for GetProjectsBoard
+func NewGetProjectsBoardRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/boards/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateProjectBoardRequest calls the generic UpdateProjectBoard builder with application/json body
+func NewUpdateProjectBoardRequest(server string, id int, body UpdateProjectBoardJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateProjectBoardRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateProjectBoardRequestWithBody generates requests for UpdateProjectBoard with any type of body
+func NewUpdateProjectBoardRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/boards/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -9081,6 +11018,38 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		}
 
+		if params.IncludeOptionLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_option_labels", runtime.ParamLocationQuery, *params.IncludeOptionLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_labels", runtime.ParamLocationQuery, *params.IncludeLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
@@ -9584,7 +11553,7 @@ func NewGetDealsProductsRequest(server string, params *GetDealsProductsParams) (
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deal_ids", runtime.ParamLocationQuery, params.DealIds); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("form", false, "deal_ids", runtime.ParamLocationQuery, params.DealIds); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -9926,6 +11895,38 @@ func NewGetDealRequest(server string, id int, params *GetDealParams) (*http.Requ
 		if params.CustomFields != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeOptionLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_option_labels", runtime.ParamLocationQuery, *params.IncludeOptionLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_labels", runtime.ParamLocationQuery, *params.IncludeLabels); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12055,6 +14056,38 @@ func NewGetOrganizationsRequest(server string, params *GetOrganizationsParams) (
 
 		}
 
+		if params.IncludeOptionLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_option_labels", runtime.ParamLocationQuery, *params.IncludeOptionLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_labels", runtime.ParamLocationQuery, *params.IncludeLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
@@ -12329,6 +14362,38 @@ func NewGetOrganizationRequest(server string, id int, params *GetOrganizationPar
 		if params.CustomFields != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeOptionLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_option_labels", runtime.ParamLocationQuery, *params.IncludeOptionLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_labels", runtime.ParamLocationQuery, *params.IncludeLabels); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13229,6 +15294,38 @@ func NewGetPersonsRequest(server string, params *GetPersonsParams) (*http.Reques
 
 		}
 
+		if params.IncludeOptionLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_option_labels", runtime.ParamLocationQuery, *params.IncludeOptionLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_labels", runtime.ParamLocationQuery, *params.IncludeLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
@@ -13535,6 +15632,38 @@ func NewGetPersonRequest(server string, id int, params *GetPersonParams) (*http.
 		if params.CustomFields != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeOptionLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_option_labels", runtime.ParamLocationQuery, *params.IncludeOptionLabels); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeLabels != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_labels", runtime.ParamLocationQuery, *params.IncludeLabels); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13868,6 +15997,206 @@ func NewGetPersonPictureRequest(server string, id int) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewGetProjectsPhasesRequest generates requests for GetProjectsPhases
+func NewGetProjectsPhasesRequest(server string, params *GetProjectsPhasesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/phases")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "board_id", runtime.ParamLocationQuery, params.BoardId); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAddProjectPhaseRequest calls the generic AddProjectPhase builder with application/json body
+func NewAddProjectPhaseRequest(server string, body AddProjectPhaseJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddProjectPhaseRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewAddProjectPhaseRequestWithBody generates requests for AddProjectPhase with any type of body
+func NewAddProjectPhaseRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/phases")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteProjectPhaseRequest generates requests for DeleteProjectPhase
+func NewDeleteProjectPhaseRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/phases/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectsPhaseRequest generates requests for GetProjectsPhase
+func NewGetProjectsPhaseRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/phases/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateProjectPhaseRequest calls the generic UpdateProjectPhase builder with application/json body
+func NewUpdateProjectPhaseRequest(server string, id int, body UpdateProjectPhaseJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateProjectPhaseRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateProjectPhaseRequestWithBody generates requests for UpdateProjectPhase with any type of body
+func NewUpdateProjectPhaseRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/phases/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -14644,6 +16973,22 @@ func NewGetProductsRequest(server string, params *GetProductsParams) (*http.Requ
 		if params.SortDirection != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort_direction", runtime.ParamLocationQuery, *params.SortDirection); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UpdatedSince != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_since", runtime.ParamLocationQuery, *params.UpdatedSince); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15584,6 +17929,1176 @@ func NewUpdateProductVariationRequestWithBody(server string, id int, productVari
 	return req, nil
 }
 
+// NewGetProjectFieldsRequest generates requests for GetProjectFields
+func NewGetProjectFieldsRequest(server string, params *GetProjectFieldsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAddProjectFieldRequest calls the generic AddProjectField builder with application/json body
+func NewAddProjectFieldRequest(server string, body AddProjectFieldJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddProjectFieldRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewAddProjectFieldRequestWithBody generates requests for AddProjectField with any type of body
+func NewAddProjectFieldRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteProjectFieldRequest generates requests for DeleteProjectField
+func NewDeleteProjectFieldRequest(server string, fieldCode string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "field_code", runtime.ParamLocationPath, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectFieldRequest generates requests for GetProjectField
+func NewGetProjectFieldRequest(server string, fieldCode string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "field_code", runtime.ParamLocationPath, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateProjectFieldRequest calls the generic UpdateProjectField builder with application/json body
+func NewUpdateProjectFieldRequest(server string, fieldCode string, body UpdateProjectFieldJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateProjectFieldRequestWithBody(server, fieldCode, "application/json", bodyReader)
+}
+
+// NewUpdateProjectFieldRequestWithBody generates requests for UpdateProjectField with any type of body
+func NewUpdateProjectFieldRequestWithBody(server string, fieldCode string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "field_code", runtime.ParamLocationPath, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteProjectFieldOptionsRequest calls the generic DeleteProjectFieldOptions builder with application/json body
+func NewDeleteProjectFieldOptionsRequest(server string, fieldCode string, body DeleteProjectFieldOptionsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewDeleteProjectFieldOptionsRequestWithBody(server, fieldCode, "application/json", bodyReader)
+}
+
+// NewDeleteProjectFieldOptionsRequestWithBody generates requests for DeleteProjectFieldOptions with any type of body
+func NewDeleteProjectFieldOptionsRequestWithBody(server string, fieldCode string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "field_code", runtime.ParamLocationPath, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields/%s/options", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateProjectFieldOptionsRequest calls the generic UpdateProjectFieldOptions builder with application/json body
+func NewUpdateProjectFieldOptionsRequest(server string, fieldCode string, body UpdateProjectFieldOptionsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateProjectFieldOptionsRequestWithBody(server, fieldCode, "application/json", bodyReader)
+}
+
+// NewUpdateProjectFieldOptionsRequestWithBody generates requests for UpdateProjectFieldOptions with any type of body
+func NewUpdateProjectFieldOptionsRequestWithBody(server string, fieldCode string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "field_code", runtime.ParamLocationPath, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields/%s/options", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewAddProjectFieldOptionsRequest calls the generic AddProjectFieldOptions builder with application/json body
+func NewAddProjectFieldOptionsRequest(server string, fieldCode string, body AddProjectFieldOptionsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddProjectFieldOptionsRequestWithBody(server, fieldCode, "application/json", bodyReader)
+}
+
+// NewAddProjectFieldOptionsRequestWithBody generates requests for AddProjectFieldOptions with any type of body
+func NewAddProjectFieldOptionsRequestWithBody(server string, fieldCode string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "field_code", runtime.ParamLocationPath, fieldCode)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectFields/%s/options", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetProjectTemplatesRequest generates requests for GetProjectTemplates
+func NewGetProjectTemplatesRequest(server string, params *GetProjectTemplatesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectTemplates")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectTemplateRequest generates requests for GetProjectTemplate
+func NewGetProjectTemplateRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projectTemplates/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectsRequest generates requests for GetProjects
+func NewGetProjectsRequest(server string, params *GetProjectsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.FilterId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter_id", runtime.ParamLocationQuery, *params.FilterId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Status != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PhaseId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "phase_id", runtime.ParamLocationQuery, *params.PhaseId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DealId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deal_id", runtime.ParamLocationQuery, *params.DealId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PersonId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "person_id", runtime.ParamLocationQuery, *params.PersonId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.OrgId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "org_id", runtime.ParamLocationQuery, *params.OrgId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAddProjectRequest calls the generic AddProject builder with application/json body
+func NewAddProjectRequest(server string, body AddProjectJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddProjectRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewAddProjectRequestWithBody generates requests for AddProject with any type of body
+func NewAddProjectRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetArchivedProjectsRequest generates requests for GetArchivedProjects
+func NewGetArchivedProjectsRequest(server string, params *GetArchivedProjectsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/archived")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.FilterId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter_id", runtime.ParamLocationQuery, *params.FilterId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Status != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PhaseId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "phase_id", runtime.ParamLocationQuery, *params.PhaseId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewSearchProjectsRequest generates requests for SearchProjects
+func NewSearchProjectsRequest(server string, params *SearchProjectsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/search")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "term", runtime.ParamLocationQuery, params.Term); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+		if params.Fields != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ExactMatch != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "exact_match", runtime.ParamLocationQuery, *params.ExactMatch); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PersonId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "person_id", runtime.ParamLocationQuery, *params.PersonId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.OrganizationId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "organization_id", runtime.ParamLocationQuery, *params.OrganizationId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewDeleteProjectRequest generates requests for DeleteProject
+func NewDeleteProjectRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectRequest generates requests for GetProject
+func NewGetProjectRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateProjectRequest calls the generic UpdateProject builder with application/json body
+func NewUpdateProjectRequest(server string, id int, body UpdateProjectJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateProjectRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateProjectRequestWithBody generates requests for UpdateProject with any type of body
+func NewUpdateProjectRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewArchiveProjectRequest generates requests for ArchiveProject
+func NewArchiveProjectRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s/archive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectChangelogRequest generates requests for GetProjectChangelog
+func NewGetProjectChangelogRequest(server string, id int, params *GetProjectChangelogParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s/changelog", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectUsersRequest generates requests for GetProjectUsers
+func NewGetProjectUsersRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s/permittedUsers", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewGetStagesRequest generates requests for GetStages
 func NewGetStagesRequest(server string, params *GetStagesParams) (*http.Request, error) {
 	var err error
@@ -15852,6 +19367,306 @@ func NewUpdateStageRequestWithBody(server string, id int, contentType string, bo
 	return req, nil
 }
 
+// NewGetTasksRequest generates requests for GetTasks
+func NewGetTasksRequest(server string, params *GetTasksParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tasks")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IsDone != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "is_done", runtime.ParamLocationQuery, *params.IsDone); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IsMilestone != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "is_milestone", runtime.ParamLocationQuery, *params.IsMilestone); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.AssigneeId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "assignee_id", runtime.ParamLocationQuery, *params.AssigneeId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ProjectId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "project_id", runtime.ParamLocationQuery, *params.ProjectId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ParentTaskId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "parent_task_id", runtime.ParamLocationQuery, *params.ParentTaskId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAddTaskRequest calls the generic AddTask builder with application/json body
+func NewAddTaskRequest(server string, body AddTaskJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddTaskRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewAddTaskRequestWithBody generates requests for AddTask with any type of body
+func NewAddTaskRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tasks")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteTaskRequest generates requests for DeleteTask
+func NewDeleteTaskRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tasks/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetTaskRequest generates requests for GetTask
+func NewGetTaskRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tasks/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateTaskRequest calls the generic UpdateTask builder with application/json body
+func NewUpdateTaskRequest(server string, id int, body UpdateTaskJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateTaskRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateTaskRequestWithBody generates requests for UpdateTask with any type of body
+func NewUpdateTaskRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tasks/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewGetUserFollowersRequest generates requests for GetUserFollowers
 func NewGetUserFollowersRequest(server string, id int, params *GetUserFollowersParams) (*http.Request, error) {
 	var err error
@@ -15991,6 +19806,25 @@ type ClientWithResponsesInterface interface {
 
 	// GetActivityFieldWithResponse request
 	GetActivityFieldWithResponse(ctx context.Context, fieldCode string, params *GetActivityFieldParams, reqEditors ...RequestEditorFn) (*GetActivityFieldResponse, error)
+
+	// GetProjectsBoardsWithResponse request
+	GetProjectsBoardsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetProjectsBoardsResponse, error)
+
+	// AddProjectBoardWithBodyWithResponse request with any body
+	AddProjectBoardWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectBoardResponse, error)
+
+	AddProjectBoardWithResponse(ctx context.Context, body AddProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectBoardResponse, error)
+
+	// DeleteProjectBoardWithResponse request
+	DeleteProjectBoardWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectBoardResponse, error)
+
+	// GetProjectsBoardWithResponse request
+	GetProjectsBoardWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsBoardResponse, error)
+
+	// UpdateProjectBoardWithBodyWithResponse request with any body
+	UpdateProjectBoardWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectBoardResponse, error)
+
+	UpdateProjectBoardWithResponse(ctx context.Context, id int, body UpdateProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectBoardResponse, error)
 
 	// GetDealFieldsWithResponse request
 	GetDealFieldsWithResponse(ctx context.Context, params *GetDealFieldsParams, reqEditors ...RequestEditorFn) (*GetDealFieldsResponse, error)
@@ -16290,6 +20124,25 @@ type ClientWithResponsesInterface interface {
 	// GetPersonPictureWithResponse request
 	GetPersonPictureWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetPersonPictureResponse, error)
 
+	// GetProjectsPhasesWithResponse request
+	GetProjectsPhasesWithResponse(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*GetProjectsPhasesResponse, error)
+
+	// AddProjectPhaseWithBodyWithResponse request with any body
+	AddProjectPhaseWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectPhaseResponse, error)
+
+	AddProjectPhaseWithResponse(ctx context.Context, body AddProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectPhaseResponse, error)
+
+	// DeleteProjectPhaseWithResponse request
+	DeleteProjectPhaseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectPhaseResponse, error)
+
+	// GetProjectsPhaseWithResponse request
+	GetProjectsPhaseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsPhaseResponse, error)
+
+	// UpdateProjectPhaseWithBodyWithResponse request with any body
+	UpdateProjectPhaseWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectPhaseResponse, error)
+
+	UpdateProjectPhaseWithResponse(ctx context.Context, id int, body UpdateProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectPhaseResponse, error)
+
 	// GetPipelinesWithResponse request
 	GetPipelinesWithResponse(ctx context.Context, params *GetPipelinesParams, reqEditors ...RequestEditorFn) (*GetPipelinesResponse, error)
 
@@ -16410,6 +20263,80 @@ type ClientWithResponsesInterface interface {
 
 	UpdateProductVariationWithResponse(ctx context.Context, id int, productVariationId int, body UpdateProductVariationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProductVariationResponse, error)
 
+	// GetProjectFieldsWithResponse request
+	GetProjectFieldsWithResponse(ctx context.Context, params *GetProjectFieldsParams, reqEditors ...RequestEditorFn) (*GetProjectFieldsResponse, error)
+
+	// AddProjectFieldWithBodyWithResponse request with any body
+	AddProjectFieldWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectFieldResponse, error)
+
+	AddProjectFieldWithResponse(ctx context.Context, body AddProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectFieldResponse, error)
+
+	// DeleteProjectFieldWithResponse request
+	DeleteProjectFieldWithResponse(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*DeleteProjectFieldResponse, error)
+
+	// GetProjectFieldWithResponse request
+	GetProjectFieldWithResponse(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*GetProjectFieldResponse, error)
+
+	// UpdateProjectFieldWithBodyWithResponse request with any body
+	UpdateProjectFieldWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectFieldResponse, error)
+
+	UpdateProjectFieldWithResponse(ctx context.Context, fieldCode string, body UpdateProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectFieldResponse, error)
+
+	// DeleteProjectFieldOptionsWithBodyWithResponse request with any body
+	DeleteProjectFieldOptionsWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DeleteProjectFieldOptionsResponse, error)
+
+	DeleteProjectFieldOptionsWithResponse(ctx context.Context, fieldCode string, body DeleteProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteProjectFieldOptionsResponse, error)
+
+	// UpdateProjectFieldOptionsWithBodyWithResponse request with any body
+	UpdateProjectFieldOptionsWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectFieldOptionsResponse, error)
+
+	UpdateProjectFieldOptionsWithResponse(ctx context.Context, fieldCode string, body UpdateProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectFieldOptionsResponse, error)
+
+	// AddProjectFieldOptionsWithBodyWithResponse request with any body
+	AddProjectFieldOptionsWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectFieldOptionsResponse, error)
+
+	AddProjectFieldOptionsWithResponse(ctx context.Context, fieldCode string, body AddProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectFieldOptionsResponse, error)
+
+	// GetProjectTemplatesWithResponse request
+	GetProjectTemplatesWithResponse(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*GetProjectTemplatesResponse, error)
+
+	// GetProjectTemplateWithResponse request
+	GetProjectTemplateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectTemplateResponse, error)
+
+	// GetProjectsWithResponse request
+	GetProjectsWithResponse(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*GetProjectsResponse, error)
+
+	// AddProjectWithBodyWithResponse request with any body
+	AddProjectWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectResponse, error)
+
+	AddProjectWithResponse(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectResponse, error)
+
+	// GetArchivedProjectsWithResponse request
+	GetArchivedProjectsWithResponse(ctx context.Context, params *GetArchivedProjectsParams, reqEditors ...RequestEditorFn) (*GetArchivedProjectsResponse, error)
+
+	// SearchProjectsWithResponse request
+	SearchProjectsWithResponse(ctx context.Context, params *SearchProjectsParams, reqEditors ...RequestEditorFn) (*SearchProjectsResponse, error)
+
+	// DeleteProjectWithResponse request
+	DeleteProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectResponse, error)
+
+	// GetProjectWithResponse request
+	GetProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectResponse, error)
+
+	// UpdateProjectWithBodyWithResponse request with any body
+	UpdateProjectWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error)
+
+	UpdateProjectWithResponse(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error)
+
+	// ArchiveProjectWithResponse request
+	ArchiveProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ArchiveProjectResponse, error)
+
+	// GetProjectChangelogWithResponse request
+	GetProjectChangelogWithResponse(ctx context.Context, id int, params *GetProjectChangelogParams, reqEditors ...RequestEditorFn) (*GetProjectChangelogResponse, error)
+
+	// GetProjectUsersWithResponse request
+	GetProjectUsersWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectUsersResponse, error)
+
 	// GetStagesWithResponse request
 	GetStagesWithResponse(ctx context.Context, params *GetStagesParams, reqEditors ...RequestEditorFn) (*GetStagesResponse, error)
 
@@ -16428,6 +20355,25 @@ type ClientWithResponsesInterface interface {
 	UpdateStageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateStageResponse, error)
 
 	UpdateStageWithResponse(ctx context.Context, id int, body UpdateStageJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateStageResponse, error)
+
+	// GetTasksWithResponse request
+	GetTasksWithResponse(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*GetTasksResponse, error)
+
+	// AddTaskWithBodyWithResponse request with any body
+	AddTaskWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddTaskResponse, error)
+
+	AddTaskWithResponse(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*AddTaskResponse, error)
+
+	// DeleteTaskWithResponse request
+	DeleteTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteTaskResponse, error)
+
+	// GetTaskWithResponse request
+	GetTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetTaskResponse, error)
+
+	// UpdateTaskWithBodyWithResponse request with any body
+	UpdateTaskWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error)
+
+	UpdateTaskWithResponse(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error)
 
 	// GetUserFollowersWithResponse request
 	GetUserFollowersWithResponse(ctx context.Context, id int, params *GetUserFollowersParams, reqEditors ...RequestEditorFn) (*GetUserFollowersResponse, error)
@@ -17162,8 +21108,8 @@ type GetActivityFieldsResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetActivityFields_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -17199,6 +21145,11 @@ type GetActivityFieldsResponse struct {
 	}
 }
 type GetActivityFields200DataFieldType string
+type GetActivityFields200DataOptionsId0 = int
+type GetActivityFields200DataOptionsId1 = string
+type GetActivityFields_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetActivityFieldsResponse) Status() string {
@@ -17244,8 +21195,8 @@ type GetActivityFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetActivityField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -17281,6 +21232,11 @@ type GetActivityFieldResponse struct {
 	}
 }
 type GetActivityField200DataFieldType string
+type GetActivityField200DataOptionsId0 = int
+type GetActivityField200DataOptionsId1 = string
+type GetActivityField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetActivityFieldResponse) Status() string {
@@ -17298,6 +21254,207 @@ func (r GetActivityFieldResponse) StatusCode() int {
 	return 0
 }
 
+type GetProjectsBoardsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+
+		// Data The array of project boards
+		Data *[]struct {
+			// AddTime The creation date and time of the board in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// Id The ID of the project board
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project board
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the board in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectsBoardsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectsBoardsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type AddProjectBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the board in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// Id The ID of the project board
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project board
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the board in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r AddProjectBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddProjectBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteProjectBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// Id The ID of the deleted project board
+			Id *int `json:"id,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteProjectBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteProjectBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectsBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the board in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// Id The ID of the project board
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project board
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the board in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectsBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectsBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateProjectBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the board in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// Id The ID of the project board
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project board
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the board in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateProjectBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateProjectBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type GetDealFieldsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -17308,7 +21465,7 @@ type GetDealFieldsResponse struct {
 		} `json:"additional_data,omitempty"`
 		Data *[]struct {
 			// Description The description of the field
-			Description string `json:"description"`
+			Description *string `json:"description,omitempty"`
 
 			// FieldCode The unique identifier for the field (40-character hash for custom fields)
 			FieldCode string `json:"field_code"`
@@ -17342,8 +21499,8 @@ type GetDealFieldsResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetDealFields_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -17403,6 +21560,11 @@ type GetDealFieldsResponse struct {
 	}
 }
 type GetDealFields200DataFieldType string
+type GetDealFields200DataOptionsId0 = int
+type GetDealFields200DataOptionsId1 = string
+type GetDealFields_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 type GetDealFields200DataRequiredFieldsStatuses string
 
 // Status returns HTTPResponse.Status
@@ -17427,7 +21589,7 @@ type AddDealFieldResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			// Description The description of the field
-			Description string `json:"description"`
+			Description *string `json:"description,omitempty"`
 
 			// FieldCode The unique identifier for the field (40-character hash for custom fields)
 			FieldCode string `json:"field_code"`
@@ -17461,8 +21623,8 @@ type AddDealFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *AddDealField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -17522,6 +21684,11 @@ type AddDealFieldResponse struct {
 	}
 }
 type AddDealField200DataFieldType string
+type AddDealField200DataOptionsId0 = int
+type AddDealField200DataOptionsId1 = string
+type AddDealField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 type AddDealField200DataRequiredFieldsStatuses string
 
 // Status returns HTTPResponse.Status
@@ -17546,7 +21713,7 @@ type DeleteDealFieldResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			// Description The description of the field
-			Description string `json:"description"`
+			Description *string `json:"description,omitempty"`
 
 			// FieldCode The unique identifier for the field (40-character hash for custom fields)
 			FieldCode string `json:"field_code"`
@@ -17597,7 +21764,7 @@ type GetDealFieldResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			// Description The description of the field
-			Description string `json:"description"`
+			Description *string `json:"description,omitempty"`
 
 			// FieldCode The unique identifier for the field (40-character hash for custom fields)
 			FieldCode string `json:"field_code"`
@@ -17631,8 +21798,8 @@ type GetDealFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetDealField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -17692,6 +21859,11 @@ type GetDealFieldResponse struct {
 	}
 }
 type GetDealField200DataFieldType string
+type GetDealField200DataOptionsId0 = int
+type GetDealField200DataOptionsId1 = string
+type GetDealField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 type GetDealField200DataRequiredFieldsStatuses string
 
 // Status returns HTTPResponse.Status
@@ -17716,7 +21888,7 @@ type UpdateDealFieldResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			// Description The description of the field
-			Description string `json:"description"`
+			Description *string `json:"description,omitempty"`
 
 			// FieldCode The unique identifier for the field (40-character hash for custom fields)
 			FieldCode string `json:"field_code"`
@@ -17750,8 +21922,8 @@ type UpdateDealFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *UpdateDealField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -17811,6 +21983,11 @@ type UpdateDealFieldResponse struct {
 	}
 }
 type UpdateDealField200DataFieldType string
+type UpdateDealField200DataOptionsId0 = int
+type UpdateDealField200DataOptionsId1 = string
+type UpdateDealField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 type UpdateDealField200DataRequiredFieldsStatuses string
 
 // Status returns HTTPResponse.Status
@@ -17966,7 +22143,7 @@ type GetDealsResponse struct {
 			// Currency The currency associated with the deal
 			Currency *string `json:"currency,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
@@ -18101,7 +22278,7 @@ type AddDealResponse struct {
 			// Currency The currency associated with the deal
 			Currency *string `json:"currency,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
@@ -18243,7 +22420,7 @@ type GetArchivedDealsResponse struct {
 			// Currency The currency associated with the deal
 			Currency *string `json:"currency,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
@@ -18427,7 +22604,7 @@ type GetDealsProductsResponse struct {
 			// BillingStartDate Only available in Growth and above plans
 			//
 			// The billing start date. Must be between 10 years in the past and 10 years in the future
-			BillingStartDate *string `json:"billing_start_date"`
+			BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 			// Comments The comments of the product
 			Comments *string `json:"comments,omitempty"`
@@ -18466,7 +22643,7 @@ type GetDealsProductsResponse struct {
 			ProductVariationId *int `json:"product_variation_id"`
 
 			// Quantity The quantity of the product
-			Quantity *int `json:"quantity,omitempty"`
+			Quantity *float32 `json:"quantity,omitempty"`
 
 			// Sum The sum of all the products attached to the deal
 			Sum *float32 `json:"sum,omitempty"`
@@ -18664,7 +22841,7 @@ type GetDealResponse struct {
 			// Currency The currency associated with the deal
 			Currency *string `json:"currency,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
@@ -18799,7 +22976,7 @@ type UpdateDealResponse struct {
 			// Currency The currency associated with the deal
 			Currency *string `json:"currency,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
@@ -19527,7 +23704,7 @@ type GetDealProductsResponse struct {
 			// BillingStartDate Only available in Growth and above plans
 			//
 			// The billing start date. Must be between 10 years in the past and 10 years in the future
-			BillingStartDate *string `json:"billing_start_date"`
+			BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 			// Comments The comments of the product
 			Comments *string `json:"comments,omitempty"`
@@ -19566,7 +23743,7 @@ type GetDealProductsResponse struct {
 			ProductVariationId *int `json:"product_variation_id"`
 
 			// Quantity The quantity of the product
-			Quantity *int `json:"quantity,omitempty"`
+			Quantity *float32 `json:"quantity,omitempty"`
 
 			// Sum The sum of all the products attached to the deal
 			Sum *float32 `json:"sum,omitempty"`
@@ -19638,7 +23815,7 @@ type AddDealProductResponse struct {
 			// BillingStartDate Only available in Growth and above plans
 			//
 			// The billing start date. Must be between 10 years in the past and 10 years in the future
-			BillingStartDate *string `json:"billing_start_date"`
+			BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 			// Comments The comments of the product
 			Comments *string `json:"comments,omitempty"`
@@ -19677,7 +23854,7 @@ type AddDealProductResponse struct {
 			ProductVariationId *int `json:"product_variation_id"`
 
 			// Quantity The quantity of the product
-			Quantity *int `json:"quantity,omitempty"`
+			Quantity *float32 `json:"quantity,omitempty"`
 
 			// Sum The sum of all the products attached to the deal
 			Sum *float32 `json:"sum,omitempty"`
@@ -19750,7 +23927,7 @@ type AddManyDealProductsResponse struct {
 			// BillingStartDate Only available in Growth and above plans
 			//
 			// The billing start date. Must be between 10 years in the past and 10 years in the future
-			BillingStartDate *string `json:"billing_start_date"`
+			BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 			// Comments The comments of the product
 			Comments *string `json:"comments,omitempty"`
@@ -19789,7 +23966,7 @@ type AddManyDealProductsResponse struct {
 			ProductVariationId *int `json:"product_variation_id"`
 
 			// Quantity The quantity of the product
-			Quantity *int `json:"quantity,omitempty"`
+			Quantity *float32 `json:"quantity,omitempty"`
 
 			// Sum The sum of all the products attached to the deal
 			Sum *float32 `json:"sum,omitempty"`
@@ -19891,7 +24068,7 @@ type UpdateDealProductResponse struct {
 			// BillingStartDate Only available in Growth and above plans
 			//
 			// The billing start date. Must be between 10 years in the past and 10 years in the future
-			BillingStartDate *string `json:"billing_start_date"`
+			BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 			// Comments The comments of the product
 			Comments *string `json:"comments,omitempty"`
@@ -19930,7 +24107,7 @@ type UpdateDealProductResponse struct {
 			ProductVariationId *int `json:"product_variation_id"`
 
 			// Quantity The quantity of the product
-			Quantity *int `json:"quantity,omitempty"`
+			Quantity *float32 `json:"quantity,omitempty"`
 
 			// Sum The sum of all the products attached to the deal
 			Sum *float32 `json:"sum,omitempty"`
@@ -20281,8 +24458,8 @@ type GetOrganizationFieldsResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetOrganizationFields_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -20351,6 +24528,11 @@ type GetOrganizationFieldsResponse struct {
 	}
 }
 type GetOrganizationFields200DataFieldType string
+type GetOrganizationFields200DataOptionsId0 = int
+type GetOrganizationFields200DataOptionsId1 = string
+type GetOrganizationFields_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetOrganizationFieldsResponse) Status() string {
@@ -20405,8 +24587,8 @@ type AddOrganizationFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *AddOrganizationField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -20475,6 +24657,11 @@ type AddOrganizationFieldResponse struct {
 	}
 }
 type AddOrganizationField200DataFieldType string
+type AddOrganizationField200DataOptionsId0 = int
+type AddOrganizationField200DataOptionsId1 = string
+type AddOrganizationField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r AddOrganizationFieldResponse) Status() string {
@@ -20577,8 +24764,8 @@ type GetOrganizationFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetOrganizationField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -20647,6 +24834,11 @@ type GetOrganizationFieldResponse struct {
 	}
 }
 type GetOrganizationField200DataFieldType string
+type GetOrganizationField200DataOptionsId0 = int
+type GetOrganizationField200DataOptionsId1 = string
+type GetOrganizationField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetOrganizationFieldResponse) Status() string {
@@ -20701,8 +24893,8 @@ type UpdateOrganizationFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *UpdateOrganizationField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -20771,6 +24963,11 @@ type UpdateOrganizationFieldResponse struct {
 	}
 }
 type UpdateOrganizationField200DataFieldType string
+type UpdateOrganizationField200DataOptionsId0 = int
+type UpdateOrganizationField200DataOptionsId1 = string
+type UpdateOrganizationField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r UpdateOrganizationFieldResponse) Status() string {
@@ -20932,17 +25129,29 @@ type GetOrganizationsResponse struct {
 				Value *string `json:"value,omitempty"`
 			} `json:"address,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// AnnualRevenue The annual revenue of the organization
+			AnnualRevenue *int `json:"annual_revenue"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// EmployeeCount The number of employees in the organization
+			EmployeeCount *int `json:"employee_count"`
 
 			// Id The ID of the organization
 			Id *int `json:"id,omitempty"`
+
+			// Industry The industry the organization belongs to
+			Industry *int `json:"industry"`
 
 			// IsDeleted Whether the organization is deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LabelIds The IDs of labels assigned to the organization
 			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// Linkedin The LinkedIn profile URL of the organization
+			Linkedin *string `json:"linkedin"`
 
 			// Name The name of the organization
 			Name *string `json:"name,omitempty"`
@@ -20955,6 +25164,9 @@ type GetOrganizationsResponse struct {
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
+
+			// Website The website of the organization
+			Website *string `json:"website"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -21019,17 +25231,29 @@ type AddOrganizationResponse struct {
 				Value *string `json:"value,omitempty"`
 			} `json:"address,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// AnnualRevenue The annual revenue of the organization
+			AnnualRevenue *int `json:"annual_revenue"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// EmployeeCount The number of employees in the organization
+			EmployeeCount *int `json:"employee_count"`
 
 			// Id The ID of the organization
 			Id *int `json:"id,omitempty"`
+
+			// Industry The industry the organization belongs to
+			Industry *int `json:"industry"`
 
 			// IsDeleted Whether the organization is deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LabelIds The IDs of labels assigned to the organization
 			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// Linkedin The LinkedIn profile URL of the organization
+			Linkedin *string `json:"linkedin"`
 
 			// Name The name of the organization
 			Name *string `json:"name,omitempty"`
@@ -21042,6 +25266,9 @@ type AddOrganizationResponse struct {
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
+
+			// Website The website of the organization
+			Website *string `json:"website"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -21201,17 +25428,29 @@ type GetOrganizationResponse struct {
 				Value *string `json:"value,omitempty"`
 			} `json:"address,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// AnnualRevenue The annual revenue of the organization
+			AnnualRevenue *int `json:"annual_revenue"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// EmployeeCount The number of employees in the organization
+			EmployeeCount *int `json:"employee_count"`
 
 			// Id The ID of the organization
 			Id *int `json:"id,omitempty"`
+
+			// Industry The industry the organization belongs to
+			Industry *int `json:"industry"`
 
 			// IsDeleted Whether the organization is deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LabelIds The IDs of labels assigned to the organization
 			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// Linkedin The LinkedIn profile URL of the organization
+			Linkedin *string `json:"linkedin"`
 
 			// Name The name of the organization
 			Name *string `json:"name,omitempty"`
@@ -21224,6 +25463,9 @@ type GetOrganizationResponse struct {
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
+
+			// Website The website of the organization
+			Website *string `json:"website"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -21288,17 +25530,29 @@ type UpdateOrganizationResponse struct {
 				Value *string `json:"value,omitempty"`
 			} `json:"address,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// AnnualRevenue The annual revenue of the organization
+			AnnualRevenue *int `json:"annual_revenue"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// EmployeeCount The number of employees in the organization
+			EmployeeCount *int `json:"employee_count"`
 
 			// Id The ID of the organization
 			Id *int `json:"id,omitempty"`
+
+			// Industry The industry the organization belongs to
+			Industry *int `json:"industry"`
 
 			// IsDeleted Whether the organization is deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LabelIds The IDs of labels assigned to the organization
 			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// Linkedin The LinkedIn profile URL of the organization
+			Linkedin *string `json:"linkedin"`
 
 			// Name The name of the organization
 			Name *string `json:"name,omitempty"`
@@ -21311,6 +25565,9 @@ type UpdateOrganizationResponse struct {
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
+
+			// Website The website of the organization
+			Website *string `json:"website"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -21524,8 +25781,8 @@ type GetPersonFieldsResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetPersonFields_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -21576,6 +25833,11 @@ type GetPersonFieldsResponse struct {
 	}
 }
 type GetPersonFields200DataFieldType string
+type GetPersonFields200DataOptionsId0 = int
+type GetPersonFields200DataOptionsId1 = string
+type GetPersonFields_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetPersonFieldsResponse) Status() string {
@@ -21630,8 +25892,8 @@ type AddPersonFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *AddPersonField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -21682,6 +25944,11 @@ type AddPersonFieldResponse struct {
 	}
 }
 type AddPersonField200DataFieldType string
+type AddPersonField200DataOptionsId0 = int
+type AddPersonField200DataOptionsId1 = string
+type AddPersonField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r AddPersonFieldResponse) Status() string {
@@ -21784,8 +26051,8 @@ type GetPersonFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetPersonField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -21836,6 +26103,11 @@ type GetPersonFieldResponse struct {
 	}
 }
 type GetPersonField200DataFieldType string
+type GetPersonField200DataOptionsId0 = int
+type GetPersonField200DataOptionsId1 = string
+type GetPersonField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetPersonFieldResponse) Status() string {
@@ -21890,8 +26162,8 @@ type UpdatePersonFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *UpdatePersonField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -21942,6 +26214,11 @@ type UpdatePersonFieldResponse struct {
 	}
 }
 type UpdatePersonField200DataFieldType string
+type UpdatePersonField200DataOptionsId0 = int
+type UpdatePersonField200DataOptionsId1 = string
+type UpdatePersonField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r UpdatePersonFieldResponse) Status() string {
@@ -22073,7 +26350,7 @@ type GetPersonsResponse struct {
 			// Birthday The birthday of the person, included if contact sync is enabled for the company
 			Birthday *string `json:"birthday,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// Emails The emails of the person
@@ -22217,7 +26494,7 @@ type AddPersonResponse struct {
 			// Birthday The birthday of the person, included if contact sync is enabled for the company
 			Birthday *string `json:"birthday,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// Emails The emails of the person
@@ -22466,7 +26743,7 @@ type GetPersonResponse struct {
 			// Birthday The birthday of the person, included if contact sync is enabled for the company
 			Birthday *string `json:"birthday,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// Emails The emails of the person
@@ -22610,7 +26887,7 @@ type UpdatePersonResponse struct {
 			// Birthday The birthday of the person, included if contact sync is enabled for the company
 			Birthday *string `json:"birthday,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// Emails The emails of the person
@@ -22946,6 +27223,219 @@ func (r GetPersonPictureResponse) StatusCode() int {
 	return 0
 }
 
+type GetProjectsPhasesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+
+		// Data The array of project phases
+		Data *[]struct {
+			// AddTime The creation date and time of the phase in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// BoardId The ID of the project board this phase belongs to
+			BoardId *int `json:"board_id,omitempty"`
+
+			// Id The ID of the project phase
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project phase
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the phase within its board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the phase in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectsPhasesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectsPhasesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type AddProjectPhaseResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the phase in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// BoardId The ID of the project board this phase belongs to
+			BoardId *int `json:"board_id,omitempty"`
+
+			// Id The ID of the project phase
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project phase
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the phase within its board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the phase in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r AddProjectPhaseResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddProjectPhaseResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteProjectPhaseResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// Id The ID of the deleted project phase
+			Id *int `json:"id,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteProjectPhaseResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteProjectPhaseResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectsPhaseResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the phase in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// BoardId The ID of the project board this phase belongs to
+			BoardId *int `json:"board_id,omitempty"`
+
+			// Id The ID of the project phase
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project phase
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the phase within its board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the phase in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectsPhaseResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectsPhaseResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateProjectPhaseResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the phase in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// BoardId The ID of the project board this phase belongs to
+			BoardId *int `json:"board_id,omitempty"`
+
+			// Id The ID of the project phase
+			Id *int `json:"id,omitempty"`
+
+			// Name The name of the project phase
+			Name *string `json:"name,omitempty"`
+
+			// OrderNr The order of the phase within its board
+			OrderNr *int `json:"order_nr,omitempty"`
+
+			// UpdateTime The update date and time of the phase in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateProjectPhaseResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateProjectPhaseResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type GetPipelinesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -23210,8 +27700,8 @@ type GetProductFieldsResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetProductFields_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -23247,6 +27737,11 @@ type GetProductFieldsResponse struct {
 	}
 }
 type GetProductFields200DataFieldType string
+type GetProductFields200DataOptionsId0 = int
+type GetProductFields200DataOptionsId1 = string
+type GetProductFields_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetProductFieldsResponse) Status() string {
@@ -23292,8 +27787,8 @@ type AddProductFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *AddProductField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -23329,6 +27824,11 @@ type AddProductFieldResponse struct {
 	}
 }
 type AddProductField200DataFieldType string
+type AddProductField200DataOptionsId0 = int
+type AddProductField200DataOptionsId1 = string
+type AddProductField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r AddProductFieldResponse) Status() string {
@@ -23422,8 +27922,8 @@ type GetProductFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetProductField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -23459,6 +27959,11 @@ type GetProductFieldResponse struct {
 	}
 }
 type GetProductField200DataFieldType string
+type GetProductField200DataOptionsId0 = int
+type GetProductField200DataOptionsId1 = string
+type GetProductField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r GetProductFieldResponse) Status() string {
@@ -23504,8 +28009,8 @@ type UpdateProductFieldResponse struct {
 				// Color Optional color code for the option
 				Color *string `json:"color"`
 
-				// Id The option ID
-				Id *int `json:"id,omitempty"`
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *UpdateProductField_200_Data_Options_Id `json:"id,omitempty"`
 
 				// Label The option display label
 				Label *string `json:"label,omitempty"`
@@ -23541,6 +28046,11 @@ type UpdateProductFieldResponse struct {
 	}
 }
 type UpdateProductField200DataFieldType string
+type UpdateProductField200DataOptionsId0 = int
+type UpdateProductField200DataOptionsId1 = string
+type UpdateProductField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
 
 // Status returns HTTPResponse.Status
 func (r UpdateProductFieldResponse) Status() string {
@@ -23666,69 +28176,94 @@ type GetProductsResponse struct {
 
 		// Data Array containing data for all products
 		Data *[]struct {
-			Data *struct {
-				// BillingFrequency Only available in Growth and above plans
-				//
-				// How often a customer is billed for access to a service or product
-				BillingFrequency *GetProducts200DataDataBillingFrequency `json:"billing_frequency,omitempty"`
+			// AddTime The date and time when the product was added
+			AddTime *string `json:"add_time,omitempty"`
 
-				// BillingFrequencyCycles Only available in Growth and above plans
-				//
-				// The number of times the billing frequency repeats for a product in a deal
-				//
-				// When `billing_frequency` is set to `one-time`, this field must be `null`
-				//
-				// When `billing_frequency` is set to `weekly`, this field cannot be `null`
-				//
-				// For all the other values of `billing_frequency`, `null` represents a product billed indefinitely
-				//
-				// Must be a positive integer less or equal to 208
-				BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
+			// BillingFrequency Only available in Growth and above plans
+			//
+			// How often a customer is billed for access to a service or product
+			BillingFrequency *GetProducts200DataBillingFrequency `json:"billing_frequency,omitempty"`
 
-				// Code The product code
-				Code *string `json:"code,omitempty"`
+			// BillingFrequencyCycles Only available in Growth and above plans
+			//
+			// The number of times the billing frequency repeats for a product in a deal
+			//
+			// When `billing_frequency` is set to `one-time`, this field must be `null`
+			//
+			// When `billing_frequency` is set to `weekly`, this field cannot be `null`
+			//
+			// For all the other values of `billing_frequency`, `null` represents a product billed indefinitely
+			//
+			// Must be a positive integer less or equal to 208
+			BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+			// Category The category of the product
+			Category *string `json:"category"`
 
-				// Id The ID of the product
-				Id *float32 `json:"id,omitempty"`
+			// Code The product code
+			Code *string `json:"code,omitempty"`
 
-				// IsDeleted Whether this product will be marked as deleted or not
-				IsDeleted *bool `json:"is_deleted,omitempty"`
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
-				// IsLinkable Whether this product can be added to a deal or not
-				IsLinkable *bool `json:"is_linkable,omitempty"`
+			// Description The description of the product
+			Description *string `json:"description,omitempty"`
 
-				// Name The name of the product
-				Name *string `json:"name,omitempty"`
+			// Id The ID of the product
+			Id *int `json:"id,omitempty"`
 
-				// OwnerId Information about the Pipedrive user who owns the product
-				OwnerId *int `json:"owner_id,omitempty"`
+			// IsDeleted Whether this product will be marked as deleted or not
+			IsDeleted *bool `json:"is_deleted,omitempty"`
 
-				// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// IsLinkable Whether this product can be added to a deal or not
+			IsLinkable *bool `json:"is_linkable,omitempty"`
 
-				// Tax The tax percentage
-				Tax *float32 `json:"tax,omitempty"`
+			// Name The name of the product
+			Name *string `json:"name,omitempty"`
 
-				// Unit The unit in which this product is sold
-				Unit *string `json:"unit,omitempty"`
+			// OwnerId The ID of the Pipedrive user who owns the product
+			OwnerId *int `json:"owner_id,omitempty"`
 
-				// VisibleTo Visibility of the product
-				VisibleTo *GetProducts200DataDataVisibleTo `json:"visible_to,omitempty"`
-			} `json:"data,omitempty"`
+			// Prices The prices of the product in different currencies
+			Prices *[]struct {
+				// Cost The cost of the product
+				Cost *float32 `json:"cost,omitempty"`
 
-			// Success If the response is successful or not
-			Success *bool `json:"success,omitempty"`
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product
+				DirectCost *float32 `json:"direct_cost"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductId The ID of the product
+				ProductId *int `json:"product_id,omitempty"`
+			} `json:"prices,omitempty"`
+
+			// Tax The tax percentage
+			Tax *float32 `json:"tax,omitempty"`
+
+			// Unit The unit in which this product is sold
+			Unit *string `json:"unit,omitempty"`
+
+			// UpdateTime The date and time when the product was last updated
+			UpdateTime *string `json:"update_time,omitempty"`
+
+			// VisibleTo Visibility of the product
+			VisibleTo *GetProducts200DataVisibleTo `json:"visible_to,omitempty"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
 		Success *bool `json:"success,omitempty"`
 	}
 }
-type GetProducts200DataDataBillingFrequency string
-type GetProducts200DataDataVisibleTo float32
+type GetProducts200DataBillingFrequency string
+type GetProducts200DataVisibleTo float32
 
 // Status returns HTTPResponse.Status
 func (r GetProductsResponse) Status() string {
@@ -23751,6 +28286,9 @@ type AddProductResponse struct {
 	HTTPResponse *http.Response
 	JSON201      *struct {
 		Data *struct {
+			// AddTime The date and time when the product was added
+			AddTime *string `json:"add_time,omitempty"`
+
 			// BillingFrequency Only available in Growth and above plans
 			//
 			// How often a customer is billed for access to a service or product
@@ -23769,14 +28307,20 @@ type AddProductResponse struct {
 			// Must be a positive integer less or equal to 208
 			BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+			// Category The category of the product
+			Category *string `json:"category"`
+
 			// Code The product code
 			Code *string `json:"code,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+			// Description The description of the product
+			Description *string `json:"description,omitempty"`
+
 			// Id The ID of the product
-			Id *float32 `json:"id,omitempty"`
+			Id *int `json:"id,omitempty"`
 
 			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -23787,17 +28331,38 @@ type AddProductResponse struct {
 			// Name The name of the product
 			Name *string `json:"name,omitempty"`
 
-			// OwnerId Information about the Pipedrive user who owns the product
+			// OwnerId The ID of the Pipedrive user who owns the product
 			OwnerId *int `json:"owner_id,omitempty"`
 
-			// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-			Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// Prices The prices of the product in different currencies
+			Prices *[]struct {
+				// Cost The cost of the product
+				Cost *float32 `json:"cost,omitempty"`
+
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product
+				DirectCost *float32 `json:"direct_cost"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductId The ID of the product
+				ProductId *int `json:"product_id,omitempty"`
+			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
 			Tax *float32 `json:"tax,omitempty"`
 
 			// Unit The unit in which this product is sold
 			Unit *string `json:"unit,omitempty"`
+
+			// UpdateTime The date and time when the product was last updated
+			UpdateTime *string `json:"update_time,omitempty"`
 
 			// VisibleTo Visibility of the product
 			VisibleTo *AddProduct201DataVisibleTo `json:"visible_to,omitempty"`
@@ -23923,6 +28488,9 @@ type GetProductResponse struct {
 	HTTPResponse *http.Response
 	JSON200      *struct {
 		Data *struct {
+			// AddTime The date and time when the product was added
+			AddTime *string `json:"add_time,omitempty"`
+
 			// BillingFrequency Only available in Growth and above plans
 			//
 			// How often a customer is billed for access to a service or product
@@ -23941,14 +28509,20 @@ type GetProductResponse struct {
 			// Must be a positive integer less or equal to 208
 			BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+			// Category The category of the product
+			Category *string `json:"category"`
+
 			// Code The product code
 			Code *string `json:"code,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+			// Description The description of the product
+			Description *string `json:"description,omitempty"`
+
 			// Id The ID of the product
-			Id *float32 `json:"id,omitempty"`
+			Id *int `json:"id,omitempty"`
 
 			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -23959,17 +28533,38 @@ type GetProductResponse struct {
 			// Name The name of the product
 			Name *string `json:"name,omitempty"`
 
-			// OwnerId Information about the Pipedrive user who owns the product
+			// OwnerId The ID of the Pipedrive user who owns the product
 			OwnerId *int `json:"owner_id,omitempty"`
 
-			// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-			Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// Prices The prices of the product in different currencies
+			Prices *[]struct {
+				// Cost The cost of the product
+				Cost *float32 `json:"cost,omitempty"`
+
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product
+				DirectCost *float32 `json:"direct_cost"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductId The ID of the product
+				ProductId *int `json:"product_id,omitempty"`
+			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
 			Tax *float32 `json:"tax,omitempty"`
 
 			// Unit The unit in which this product is sold
 			Unit *string `json:"unit,omitempty"`
+
+			// UpdateTime The date and time when the product was last updated
+			UpdateTime *string `json:"update_time,omitempty"`
 
 			// VisibleTo Visibility of the product
 			VisibleTo *GetProduct200DataVisibleTo `json:"visible_to,omitempty"`
@@ -24003,6 +28598,9 @@ type UpdateProductResponse struct {
 	HTTPResponse *http.Response
 	JSON200      *struct {
 		Data *struct {
+			// AddTime The date and time when the product was added
+			AddTime *string `json:"add_time,omitempty"`
+
 			// BillingFrequency Only available in Growth and above plans
 			//
 			// How often a customer is billed for access to a service or product
@@ -24021,14 +28619,20 @@ type UpdateProductResponse struct {
 			// Must be a positive integer less or equal to 208
 			BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+			// Category The category of the product
+			Category *string `json:"category"`
+
 			// Code The product code
 			Code *string `json:"code,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+			// Description The description of the product
+			Description *string `json:"description,omitempty"`
+
 			// Id The ID of the product
-			Id *float32 `json:"id,omitempty"`
+			Id *int `json:"id,omitempty"`
 
 			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -24039,17 +28643,38 @@ type UpdateProductResponse struct {
 			// Name The name of the product
 			Name *string `json:"name,omitempty"`
 
-			// OwnerId Information about the Pipedrive user who owns the product
+			// OwnerId The ID of the Pipedrive user who owns the product
 			OwnerId *int `json:"owner_id,omitempty"`
 
-			// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-			Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// Prices The prices of the product in different currencies
+			Prices *[]struct {
+				// Cost The cost of the product
+				Cost *float32 `json:"cost,omitempty"`
+
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product
+				DirectCost *float32 `json:"direct_cost"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductId The ID of the product
+				ProductId *int `json:"product_id,omitempty"`
+			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
 			Tax *float32 `json:"tax,omitempty"`
 
 			// Unit The unit in which this product is sold
 			Unit *string `json:"unit,omitempty"`
+
+			// UpdateTime The date and time when the product was last updated
+			UpdateTime *string `json:"update_time,omitempty"`
 
 			// VisibleTo Visibility of the product
 			VisibleTo *UpdateProduct200DataVisibleTo `json:"visible_to,omitempty"`
@@ -24083,6 +28708,9 @@ type DuplicateProductResponse struct {
 	HTTPResponse *http.Response
 	JSON201      *struct {
 		Data *struct {
+			// AddTime The date and time when the product was added
+			AddTime *string `json:"add_time,omitempty"`
+
 			// BillingFrequency Only available in Growth and above plans
 			//
 			// How often a customer is billed for access to a service or product
@@ -24101,14 +28729,20 @@ type DuplicateProductResponse struct {
 			// Must be a positive integer less or equal to 208
 			BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+			// Category The category of the product
+			Category *string `json:"category"`
+
 			// Code The product code
 			Code *string `json:"code,omitempty"`
 
-			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+			// Description The description of the product
+			Description *string `json:"description,omitempty"`
+
 			// Id The ID of the product
-			Id *float32 `json:"id,omitempty"`
+			Id *int `json:"id,omitempty"`
 
 			// IsDeleted Whether this product will be marked as deleted or not
 			IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -24119,17 +28753,38 @@ type DuplicateProductResponse struct {
 			// Name The name of the product
 			Name *string `json:"name,omitempty"`
 
-			// OwnerId Information about the Pipedrive user who owns the product
+			// OwnerId The ID of the Pipedrive user who owns the product
 			OwnerId *int `json:"owner_id,omitempty"`
 
-			// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-			Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// Prices The prices of the product in different currencies
+			Prices *[]struct {
+				// Cost The cost of the product
+				Cost *float32 `json:"cost,omitempty"`
+
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product
+				DirectCost *float32 `json:"direct_cost"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductId The ID of the product
+				ProductId *int `json:"product_id,omitempty"`
+			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
 			Tax *float32 `json:"tax,omitempty"`
 
 			// Unit The unit in which this product is sold
 			Unit *string `json:"unit,omitempty"`
+
+			// UpdateTime The date and time when the product was last updated
+			UpdateTime *string `json:"update_time,omitempty"`
 
 			// VisibleTo Visibility of the product
 			VisibleTo *DuplicateProduct201DataVisibleTo `json:"visible_to,omitempty"`
@@ -24401,7 +29056,7 @@ type UploadProductImageResponse struct {
 			Id *int `json:"id,omitempty"`
 
 			// ProductId The ID of the product associated
-			ProductId *float32 `json:"product_id,omitempty"`
+			ProductId *int `json:"product_id,omitempty"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -24440,7 +29095,7 @@ type UpdateProductImageResponse struct {
 			Id *int `json:"id,omitempty"`
 
 			// ProductId The ID of the product associated
-			ProductId *float32 `json:"product_id,omitempty"`
+			ProductId *int `json:"product_id,omitempty"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -24477,7 +29132,7 @@ type GetProductVariationsResponse struct {
 		// Data Array containing data for all products
 		Data *[]struct {
 			// Id The ID of the product variation
-			Id *float32 `json:"id,omitempty"`
+			Id *int `json:"id,omitempty"`
 
 			// Name The name of the product variation
 			Name *string `json:"name,omitempty"`
@@ -24516,7 +29171,7 @@ type AddProductVariationResponse struct {
 	JSON201      *struct {
 		Data *struct {
 			// Id The ID of the product variation
-			Id *float32 `json:"id,omitempty"`
+			Id *int `json:"id,omitempty"`
 
 			// Name The name of the product variation
 			Name *string `json:"name,omitempty"`
@@ -24585,7 +29240,7 @@ type UpdateProductVariationResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			// Id The ID of the product variation
-			Id *float32 `json:"id,omitempty"`
+			Id *int `json:"id,omitempty"`
 
 			// Name The name of the product variation
 			Name *string `json:"name,omitempty"`
@@ -24612,6 +29267,1393 @@ func (r UpdateProductVariationResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r UpdateProductVariationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectFieldsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *struct {
+			// NextCursor Base64url-encoded cursor for fetching the next page of results, null if no more pages
+			NextCursor *string `json:"next_cursor"`
+		} `json:"additional_data,omitempty"`
+		Data *[]struct {
+			// FieldCode The unique identifier for the field (40-character hash for custom fields)
+			FieldCode string `json:"field_code"`
+
+			// FieldName The display name/label of the field
+			FieldName string `json:"field_name"`
+
+			// FieldType The type of the field
+			FieldType GetProjectFields200DataFieldType `json:"field_type"`
+
+			// ImportantFields Important fields configuration
+			ImportantFields *struct {
+				// Enabled Whether the field is marked as important
+				Enabled *bool `json:"enabled,omitempty"`
+
+				// StageIds Array of deal stage IDs where the field is important
+				StageIds *[]int `json:"stage_ids,omitempty"`
+			} `json:"important_fields,omitempty"`
+
+			// IsCustomField Whether this is a user-created custom field
+			IsCustomField bool `json:"is_custom_field"`
+
+			// IsOptionalResponseField Whether this field is not returned by default in entity responses
+			IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+			// Options Array of available options for enum/set fields, null for other field types
+			Options *[]struct {
+				// AddTime When the option was created
+				AddTime *time.Time `json:"add_time"`
+
+				// Color Optional color code for the option
+				Color *string `json:"color"`
+
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetProjectFields_200_Data_Options_Id `json:"id,omitempty"`
+
+				// Label The option display label
+				Label *string `json:"label,omitempty"`
+
+				// UpdateTime When the option was last updated
+				UpdateTime *time.Time `json:"update_time"`
+			} `json:"options"`
+
+			// RequiredFields Required fields configuration
+			RequiredFields *struct {
+				// Enabled Whether the field is required
+				Enabled *bool `json:"enabled,omitempty"`
+			} `json:"required_fields,omitempty"`
+
+			// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+			Subfields *[]struct {
+				// FieldCode The subfield identifier
+				FieldCode *string `json:"field_code,omitempty"`
+
+				// FieldName The subfield display name
+				FieldName *string `json:"field_name,omitempty"`
+
+				// FieldType The subfield type
+				FieldType *string `json:"field_type,omitempty"`
+			} `json:"subfields"`
+
+			// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+			UiVisibility *struct {
+				// AddVisibleFlag Whether the field is shown in the add modal
+				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+				// DetailsVisibleFlag Whether the field is shown in the details view
+				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+			} `json:"ui_visibility,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success Whether the request was successful
+		Success *bool `json:"success,omitempty"`
+	}
+}
+type GetProjectFields200DataFieldType string
+type GetProjectFields200DataOptionsId0 = int
+type GetProjectFields200DataOptionsId1 = string
+type GetProjectFields_200_Data_Options_Id struct {
+	union json.RawMessage
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectFieldsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectFieldsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type AddProjectFieldResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// FieldCode The unique identifier for the field (40-character hash for custom fields)
+			FieldCode string `json:"field_code"`
+
+			// FieldName The display name/label of the field
+			FieldName string `json:"field_name"`
+
+			// FieldType The type of the field
+			FieldType AddProjectField200DataFieldType `json:"field_type"`
+
+			// ImportantFields Important fields configuration
+			ImportantFields *struct {
+				// Enabled Whether the field is marked as important
+				Enabled *bool `json:"enabled,omitempty"`
+
+				// StageIds Array of deal stage IDs where the field is important
+				StageIds *[]int `json:"stage_ids,omitempty"`
+			} `json:"important_fields,omitempty"`
+
+			// IsCustomField Whether this is a user-created custom field
+			IsCustomField bool `json:"is_custom_field"`
+
+			// IsOptionalResponseField Whether this field is not returned by default in entity responses
+			IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+			// Options Array of available options for enum/set fields, null for other field types
+			Options *[]struct {
+				// AddTime When the option was created
+				AddTime *time.Time `json:"add_time"`
+
+				// Color Optional color code for the option
+				Color *string `json:"color"`
+
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *AddProjectField_200_Data_Options_Id `json:"id,omitempty"`
+
+				// Label The option display label
+				Label *string `json:"label,omitempty"`
+
+				// UpdateTime When the option was last updated
+				UpdateTime *time.Time `json:"update_time"`
+			} `json:"options"`
+
+			// RequiredFields Required fields configuration
+			RequiredFields *struct {
+				// Enabled Whether the field is required
+				Enabled *bool `json:"enabled,omitempty"`
+			} `json:"required_fields,omitempty"`
+
+			// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+			Subfields *[]struct {
+				// FieldCode The subfield identifier
+				FieldCode *string `json:"field_code,omitempty"`
+
+				// FieldName The subfield display name
+				FieldName *string `json:"field_name,omitempty"`
+
+				// FieldType The subfield type
+				FieldType *string `json:"field_type,omitempty"`
+			} `json:"subfields"`
+
+			// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+			UiVisibility *struct {
+				// AddVisibleFlag Whether the field is shown in the add modal
+				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+				// DetailsVisibleFlag Whether the field is shown in the details view
+				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+			} `json:"ui_visibility,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success Whether the request was successful
+		Success *bool `json:"success,omitempty"`
+	}
+}
+type AddProjectField200DataFieldType string
+type AddProjectField200DataOptionsId0 = int
+type AddProjectField200DataOptionsId1 = string
+type AddProjectField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
+
+// Status returns HTTPResponse.Status
+func (r AddProjectFieldResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddProjectFieldResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteProjectFieldResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// FieldCode The unique identifier for the field (40-character hash for custom fields)
+			FieldCode string `json:"field_code"`
+
+			// FieldName The display name/label of the field
+			FieldName string `json:"field_name"`
+
+			// FieldType The type of the field
+			FieldType string `json:"field_type"`
+
+			// IsCustomField Whether this is a user-created custom field
+			IsCustomField bool `json:"is_custom_field"`
+
+			// IsOptionalResponseField Whether this field is not returned by default in entity responses
+			IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+			// Options Array of available options for enum/set fields, null for other field types
+			Options *[]map[string]interface{} `json:"options"`
+
+			// Subfields Array of subfields for complex field types, null for simple field types
+			Subfields *[]map[string]interface{} `json:"subfields"`
+		} `json:"data,omitempty"`
+
+		// Success Whether the request was successful
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteProjectFieldResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteProjectFieldResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectFieldResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// FieldCode The unique identifier for the field (40-character hash for custom fields)
+			FieldCode string `json:"field_code"`
+
+			// FieldName The display name/label of the field
+			FieldName string `json:"field_name"`
+
+			// FieldType The type of the field
+			FieldType GetProjectField200DataFieldType `json:"field_type"`
+
+			// ImportantFields Important fields configuration
+			ImportantFields *struct {
+				// Enabled Whether the field is marked as important
+				Enabled *bool `json:"enabled,omitempty"`
+
+				// StageIds Array of deal stage IDs where the field is important
+				StageIds *[]int `json:"stage_ids,omitempty"`
+			} `json:"important_fields,omitempty"`
+
+			// IsCustomField Whether this is a user-created custom field
+			IsCustomField bool `json:"is_custom_field"`
+
+			// IsOptionalResponseField Whether this field is not returned by default in entity responses
+			IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+			// Options Array of available options for enum/set fields, null for other field types
+			Options *[]struct {
+				// AddTime When the option was created
+				AddTime *time.Time `json:"add_time"`
+
+				// Color Optional color code for the option
+				Color *string `json:"color"`
+
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *GetProjectField_200_Data_Options_Id `json:"id,omitempty"`
+
+				// Label The option display label
+				Label *string `json:"label,omitempty"`
+
+				// UpdateTime When the option was last updated
+				UpdateTime *time.Time `json:"update_time"`
+			} `json:"options"`
+
+			// RequiredFields Required fields configuration
+			RequiredFields *struct {
+				// Enabled Whether the field is required
+				Enabled *bool `json:"enabled,omitempty"`
+			} `json:"required_fields,omitempty"`
+
+			// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+			Subfields *[]struct {
+				// FieldCode The subfield identifier
+				FieldCode *string `json:"field_code,omitempty"`
+
+				// FieldName The subfield display name
+				FieldName *string `json:"field_name,omitempty"`
+
+				// FieldType The subfield type
+				FieldType *string `json:"field_type,omitempty"`
+			} `json:"subfields"`
+
+			// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+			UiVisibility *struct {
+				// AddVisibleFlag Whether the field is shown in the add modal
+				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+				// DetailsVisibleFlag Whether the field is shown in the details view
+				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+			} `json:"ui_visibility,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success Whether the request was successful
+		Success *bool `json:"success,omitempty"`
+	}
+}
+type GetProjectField200DataFieldType string
+type GetProjectField200DataOptionsId0 = int
+type GetProjectField200DataOptionsId1 = string
+type GetProjectField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectFieldResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectFieldResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateProjectFieldResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// FieldCode The unique identifier for the field (40-character hash for custom fields)
+			FieldCode string `json:"field_code"`
+
+			// FieldName The display name/label of the field
+			FieldName string `json:"field_name"`
+
+			// FieldType The type of the field
+			FieldType UpdateProjectField200DataFieldType `json:"field_type"`
+
+			// ImportantFields Important fields configuration
+			ImportantFields *struct {
+				// Enabled Whether the field is marked as important
+				Enabled *bool `json:"enabled,omitempty"`
+
+				// StageIds Array of deal stage IDs where the field is important
+				StageIds *[]int `json:"stage_ids,omitempty"`
+			} `json:"important_fields,omitempty"`
+
+			// IsCustomField Whether this is a user-created custom field
+			IsCustomField bool `json:"is_custom_field"`
+
+			// IsOptionalResponseField Whether this field is not returned by default in entity responses
+			IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+			// Options Array of available options for enum/set fields, null for other field types
+			Options *[]struct {
+				// AddTime When the option was created
+				AddTime *time.Time `json:"add_time"`
+
+				// Color Optional color code for the option
+				Color *string `json:"color"`
+
+				// Id The option ID (integer for custom fields, string for built-in fields)
+				Id *UpdateProjectField_200_Data_Options_Id `json:"id,omitempty"`
+
+				// Label The option display label
+				Label *string `json:"label,omitempty"`
+
+				// UpdateTime When the option was last updated
+				UpdateTime *time.Time `json:"update_time"`
+			} `json:"options"`
+
+			// RequiredFields Required fields configuration
+			RequiredFields *struct {
+				// Enabled Whether the field is required
+				Enabled *bool `json:"enabled,omitempty"`
+			} `json:"required_fields,omitempty"`
+
+			// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+			Subfields *[]struct {
+				// FieldCode The subfield identifier
+				FieldCode *string `json:"field_code,omitempty"`
+
+				// FieldName The subfield display name
+				FieldName *string `json:"field_name,omitempty"`
+
+				// FieldType The subfield type
+				FieldType *string `json:"field_type,omitempty"`
+			} `json:"subfields"`
+
+			// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+			UiVisibility *struct {
+				// AddVisibleFlag Whether the field is shown in the add modal
+				AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+				// DetailsVisibleFlag Whether the field is shown in the details view
+				DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+			} `json:"ui_visibility,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success Whether the request was successful
+		Success *bool `json:"success,omitempty"`
+	}
+}
+type UpdateProjectField200DataFieldType string
+type UpdateProjectField200DataOptionsId0 = int
+type UpdateProjectField200DataOptionsId1 = string
+type UpdateProjectField_200_Data_Options_Id struct {
+	union json.RawMessage
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateProjectFieldResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateProjectFieldResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteProjectFieldOptionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *[]struct {
+			// Id The unique identifier of the option
+			Id int `json:"id"`
+
+			// Label The display label of the option
+			Label string `json:"label"`
+		} `json:"data,omitempty"`
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteProjectFieldOptionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteProjectFieldOptionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateProjectFieldOptionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *[]struct {
+			// Id The unique identifier of the option
+			Id int `json:"id"`
+
+			// Label The display label of the option
+			Label string `json:"label"`
+		} `json:"data,omitempty"`
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateProjectFieldOptionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateProjectFieldOptionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type AddProjectFieldOptionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *[]struct {
+			// Id The unique identifier of the option
+			Id int `json:"id"`
+
+			// Label The display label of the option
+			Label string `json:"label"`
+		} `json:"data,omitempty"`
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r AddProjectFieldOptionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddProjectFieldOptionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectTemplatesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// AdditionalData The additional data of the list
+		AdditionalData *struct {
+			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+			NextCursor *string `json:"next_cursor,omitempty"`
+		} `json:"additional_data,omitempty"`
+		Data *[]struct {
+			// AddTime The creation date and time of the project template in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// Description The description of the project template
+			Description *string `json:"description,omitempty"`
+
+			// Id The ID of the project template
+			Id *int `json:"id,omitempty"`
+
+			// OwnerId The ID of the owner of the project template
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// ProjectsBoardId The ID of the project board this template is associated with
+			ProjectsBoardId *int `json:"projects_board_id,omitempty"`
+
+			// Title The title of the project template
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The update date and time of the project template in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectTemplatesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectTemplatesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectTemplateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *struct {
+			// AddTime The creation date and time of the project template in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// Description The description of the project template
+			Description *string `json:"description,omitempty"`
+
+			// Id The ID of the project template
+			Id *int `json:"id,omitempty"`
+
+			// OwnerId The ID of the owner of the project template
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// ProjectsBoardId The ID of the project board this template is associated with
+			ProjectsBoardId *int `json:"projects_board_id,omitempty"`
+
+			// Title The title of the project template
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The update date and time of the project template in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectTemplateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectTemplateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// AdditionalData The additional data of the list
+		AdditionalData *struct {
+			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+			NextCursor *string `json:"next_cursor,omitempty"`
+		} `json:"additional_data,omitempty"`
+
+		// Data Projects array
+		Data *[]struct {
+			// AddTime The creation date and time of the project in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+			ArchiveTime *string `json:"archive_time"`
+
+			// BoardId The ID of the board this project is associated with
+			BoardId *int `json:"board_id,omitempty"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// DealIds An array of IDs of the deals this project is associated with
+			DealIds *[]int `json:"deal_ids,omitempty"`
+
+			// Description The description of the project
+			Description *string `json:"description,omitempty"`
+
+			// EndDate The end date of the project. Format: YYYY-MM-DD
+			EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+			// HealthStatus The health status of the project
+			HealthStatus *int `json:"health_status"`
+
+			// Id The ID of the project
+			Id *int `json:"id,omitempty"`
+
+			// LabelIds An array of IDs of the labels this project has
+			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// OrgIds An array of IDs of the organizations this project is associated with
+			OrgIds *[]int `json:"org_ids,omitempty"`
+
+			// OwnerId The ID of the user who owns the project
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// PersonIds An array of IDs of the persons this project is associated with
+			PersonIds *[]int `json:"person_ids,omitempty"`
+
+			// PhaseId The ID of the phase this project is associated with
+			PhaseId *int `json:"phase_id,omitempty"`
+
+			// StartDate The start date of the project. Format: YYYY-MM-DD
+			StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+			// Status The status of the project
+			Status *string `json:"status,omitempty"`
+
+			// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+			StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+			// Title The title of the project
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The last updated date and time of the project in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type AddProjectResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the project in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+			ArchiveTime *string `json:"archive_time"`
+
+			// BoardId The ID of the board this project is associated with
+			BoardId *int `json:"board_id,omitempty"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// DealIds An array of IDs of the deals this project is associated with
+			DealIds *[]int `json:"deal_ids,omitempty"`
+
+			// Description The description of the project
+			Description *string `json:"description,omitempty"`
+
+			// EndDate The end date of the project. Format: YYYY-MM-DD
+			EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+			// HealthStatus The health status of the project
+			HealthStatus *int `json:"health_status"`
+
+			// Id The ID of the project
+			Id *int `json:"id,omitempty"`
+
+			// LabelIds An array of IDs of the labels this project has
+			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// OrgIds An array of IDs of the organizations this project is associated with
+			OrgIds *[]int `json:"org_ids,omitempty"`
+
+			// OwnerId The ID of the user who owns the project
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// PersonIds An array of IDs of the persons this project is associated with
+			PersonIds *[]int `json:"person_ids,omitempty"`
+
+			// PhaseId The ID of the phase this project is associated with
+			PhaseId *int `json:"phase_id,omitempty"`
+
+			// StartDate The start date of the project. Format: YYYY-MM-DD
+			StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+			// Status The status of the project
+			Status *string `json:"status,omitempty"`
+
+			// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+			StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+			// Title The title of the project
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The last updated date and time of the project in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r AddProjectResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddProjectResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetArchivedProjectsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// AdditionalData The additional data of the list
+		AdditionalData *struct {
+			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+			NextCursor *string `json:"next_cursor,omitempty"`
+		} `json:"additional_data,omitempty"`
+
+		// Data Projects array
+		Data *[]struct {
+			// AddTime The creation date and time of the project in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+			ArchiveTime *string `json:"archive_time"`
+
+			// BoardId The ID of the board this project is associated with
+			BoardId *int `json:"board_id,omitempty"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// DealIds An array of IDs of the deals this project is associated with
+			DealIds *[]int `json:"deal_ids,omitempty"`
+
+			// Description The description of the project
+			Description *string `json:"description,omitempty"`
+
+			// EndDate The end date of the project. Format: YYYY-MM-DD
+			EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+			// HealthStatus The health status of the project
+			HealthStatus *int `json:"health_status"`
+
+			// Id The ID of the project
+			Id *int `json:"id,omitempty"`
+
+			// LabelIds An array of IDs of the labels this project has
+			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// OrgIds An array of IDs of the organizations this project is associated with
+			OrgIds *[]int `json:"org_ids,omitempty"`
+
+			// OwnerId The ID of the user who owns the project
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// PersonIds An array of IDs of the persons this project is associated with
+			PersonIds *[]int `json:"person_ids,omitempty"`
+
+			// PhaseId The ID of the phase this project is associated with
+			PhaseId *int `json:"phase_id,omitempty"`
+
+			// StartDate The start date of the project. Format: YYYY-MM-DD
+			StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+			// Status The status of the project
+			Status *string `json:"status,omitempty"`
+
+			// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+			StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+			// Title The title of the project
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The last updated date and time of the project in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetArchivedProjectsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetArchivedProjectsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type SearchProjectsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// AdditionalData The additional data of the list
+		AdditionalData *struct {
+			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+			NextCursor *string `json:"next_cursor,omitempty"`
+		} `json:"additional_data,omitempty"`
+		Data *struct {
+			// Items The array of found projects
+			Items *[]struct {
+				Item *struct {
+					// BoardId The ID of the board the project belongs to
+					BoardId *int `json:"board_id"`
+
+					// CustomFields Custom fields
+					CustomFields *[]string `json:"custom_fields,omitempty"`
+					Deal         *struct {
+						// Id The ID of the deal the project is associated with
+						Id *int `json:"id,omitempty"`
+
+						// Title The title of the deal the project is associated with
+						Title *string `json:"title"`
+					} `json:"deal"`
+
+					// DealCount The number of deals associated with the project
+					DealCount *int `json:"deal_count,omitempty"`
+
+					// Description The description of the project
+					Description *string `json:"description"`
+
+					// EndDate The end date of the project
+					EndDate *string `json:"end_date"`
+
+					// Id The ID of the project
+					Id *int `json:"id,omitempty"`
+
+					// Notes An array of notes
+					Notes        *[]string `json:"notes,omitempty"`
+					Organization *struct {
+						// Address The address of the organization the project is associated with
+						Address *string `json:"address"`
+
+						// Id The ID of the organization the project is associated with
+						Id *int `json:"id,omitempty"`
+
+						// Name The name of the organization the project is associated with
+						Name *string `json:"name"`
+					} `json:"organization"`
+					Owner *struct {
+						// Id The ID of the owner of the project
+						Id *int `json:"id"`
+					} `json:"owner,omitempty"`
+					Person *struct {
+						// Id The ID of the person the project is associated with
+						Id *int `json:"id,omitempty"`
+
+						// Name The name of the person the project is associated with
+						Name *string `json:"name"`
+					} `json:"person"`
+					Phase *struct {
+						// Id The ID of the phase
+						Id *int `json:"id,omitempty"`
+
+						// Name The name of the phase
+						Name *string `json:"name,omitempty"`
+					} `json:"phase"`
+
+					// Status The status of the project
+					Status *string `json:"status"`
+
+					// Title The title of the project
+					Title *string `json:"title,omitempty"`
+
+					// Type The type of the item
+					Type *string `json:"type,omitempty"`
+				} `json:"item,omitempty"`
+
+				// ResultScore Search result relevancy
+				ResultScore *float32 `json:"result_score,omitempty"`
+			} `json:"items,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r SearchProjectsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SearchProjectsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteProjectResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// Id The ID of the deleted project
+			Id *int `json:"id,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteProjectResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteProjectResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the project in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+			ArchiveTime *string `json:"archive_time"`
+
+			// BoardId The ID of the board this project is associated with
+			BoardId *int `json:"board_id,omitempty"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// DealIds An array of IDs of the deals this project is associated with
+			DealIds *[]int `json:"deal_ids,omitempty"`
+
+			// Description The description of the project
+			Description *string `json:"description,omitempty"`
+
+			// EndDate The end date of the project. Format: YYYY-MM-DD
+			EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+			// HealthStatus The health status of the project
+			HealthStatus *int `json:"health_status"`
+
+			// Id The ID of the project
+			Id *int `json:"id,omitempty"`
+
+			// LabelIds An array of IDs of the labels this project has
+			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// OrgIds An array of IDs of the organizations this project is associated with
+			OrgIds *[]int `json:"org_ids,omitempty"`
+
+			// OwnerId The ID of the user who owns the project
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// PersonIds An array of IDs of the persons this project is associated with
+			PersonIds *[]int `json:"person_ids,omitempty"`
+
+			// PhaseId The ID of the phase this project is associated with
+			PhaseId *int `json:"phase_id,omitempty"`
+
+			// StartDate The start date of the project. Format: YYYY-MM-DD
+			StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+			// Status The status of the project
+			Status *string `json:"status,omitempty"`
+
+			// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+			StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+			// Title The title of the project
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The last updated date and time of the project in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateProjectResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the project in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+			ArchiveTime *string `json:"archive_time"`
+
+			// BoardId The ID of the board this project is associated with
+			BoardId *int `json:"board_id,omitempty"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// DealIds An array of IDs of the deals this project is associated with
+			DealIds *[]int `json:"deal_ids,omitempty"`
+
+			// Description The description of the project
+			Description *string `json:"description,omitempty"`
+
+			// EndDate The end date of the project. Format: YYYY-MM-DD
+			EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+			// HealthStatus The health status of the project
+			HealthStatus *int `json:"health_status"`
+
+			// Id The ID of the project
+			Id *int `json:"id,omitempty"`
+
+			// LabelIds An array of IDs of the labels this project has
+			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// OrgIds An array of IDs of the organizations this project is associated with
+			OrgIds *[]int `json:"org_ids,omitempty"`
+
+			// OwnerId The ID of the user who owns the project
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// PersonIds An array of IDs of the persons this project is associated with
+			PersonIds *[]int `json:"person_ids,omitempty"`
+
+			// PhaseId The ID of the phase this project is associated with
+			PhaseId *int `json:"phase_id,omitempty"`
+
+			// StartDate The start date of the project. Format: YYYY-MM-DD
+			StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+			// Status The status of the project
+			Status *string `json:"status,omitempty"`
+
+			// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+			StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+			// Title The title of the project
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The last updated date and time of the project in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateProjectResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateProjectResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ArchiveProjectResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		Data *struct {
+			// AddTime The creation date and time of the project in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+			ArchiveTime *string `json:"archive_time"`
+
+			// BoardId The ID of the board this project is associated with
+			BoardId *int `json:"board_id,omitempty"`
+
+			// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+			// DealIds An array of IDs of the deals this project is associated with
+			DealIds *[]int `json:"deal_ids,omitempty"`
+
+			// Description The description of the project
+			Description *string `json:"description,omitempty"`
+
+			// EndDate The end date of the project. Format: YYYY-MM-DD
+			EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+			// HealthStatus The health status of the project
+			HealthStatus *int `json:"health_status"`
+
+			// Id The ID of the project
+			Id *int `json:"id,omitempty"`
+
+			// LabelIds An array of IDs of the labels this project has
+			LabelIds *[]int `json:"label_ids,omitempty"`
+
+			// OrgIds An array of IDs of the organizations this project is associated with
+			OrgIds *[]int `json:"org_ids,omitempty"`
+
+			// OwnerId The ID of the user who owns the project
+			OwnerId *int `json:"owner_id,omitempty"`
+
+			// PersonIds An array of IDs of the persons this project is associated with
+			PersonIds *[]int `json:"person_ids,omitempty"`
+
+			// PhaseId The ID of the phase this project is associated with
+			PhaseId *int `json:"phase_id,omitempty"`
+
+			// StartDate The start date of the project. Format: YYYY-MM-DD
+			StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+			// Status The status of the project
+			Status *string `json:"status,omitempty"`
+
+			// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+			StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+			// Title The title of the project
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The last updated date and time of the project in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r ArchiveProjectResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ArchiveProjectResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectChangelogResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// AdditionalData The additional data of the list
+		AdditionalData *struct {
+			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+			NextCursor *string `json:"next_cursor,omitempty"`
+		} `json:"additional_data,omitempty"`
+		Data *[]struct {
+			// ActorUserId The ID of the user who made the change
+			ActorUserId *int `json:"actor_user_id,omitempty"`
+
+			// ChangeSource The source of change, for example 'app', 'mobile', 'api', etc.
+			ChangeSource *string `json:"change_source"`
+
+			// ChangeSourceUserAgent The user agent from which the change was made
+			ChangeSourceUserAgent *string `json:"change_source_user_agent"`
+
+			// NewValues A map of field keys to their new values after the change
+			NewValues *map[string]interface{} `json:"new_values,omitempty"`
+
+			// OldValues A map of field keys to their previous values before the change
+			OldValues *map[string]interface{} `json:"old_values,omitempty"`
+
+			// Time The date and time of the change in ISO 8601 format
+			Time *string `json:"time,omitempty"`
+		} `json:"data,omitempty"`
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectChangelogResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectChangelogResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetProjectUsersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// Data The list of permitted user IDs
+		Data *[]int `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectUsersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectUsersResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -24886,6 +30928,333 @@ func (r UpdateStageResponse) StatusCode() int {
 	return 0
 }
 
+type GetTasksResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// AdditionalData The additional data of the list
+		AdditionalData *struct {
+			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+			NextCursor *string `json:"next_cursor,omitempty"`
+		} `json:"additional_data,omitempty"`
+		Data *[]struct {
+			// AddTime The creation date and time of the task in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// AssigneeIds The IDs of users assigned to the task
+			AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+			// CreatorId The ID of the user who created the task
+			CreatorId *int `json:"creator_id,omitempty"`
+
+			// Description The description of the task
+			Description *string `json:"description"`
+
+			// DueDate The due date of the task. Format: YYYY-MM-DD.
+			DueDate *openapi_types.Date `json:"due_date"`
+
+			// Id The ID of the task
+			Id *int `json:"id,omitempty"`
+
+			// IsDone Whether the task is done or not.
+			IsDone *bool `json:"is_done,omitempty"`
+
+			// IsMilestone Whether the task is a milestone or not.
+			IsMilestone *bool `json:"is_milestone,omitempty"`
+
+			// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+			// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+			ParentTaskId *int `json:"parent_task_id"`
+
+			// Priority The priority of the task
+			Priority *int `json:"priority"`
+
+			// ProjectId The ID of the project this task is associated with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// StartDate The start date of the task. Format: YYYY-MM-DD.
+			StartDate *openapi_types.Date `json:"start_date"`
+
+			// Title The title of the task
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The update date and time of the task in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTasksResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTasksResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type AddTaskResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *struct {
+			// AddTime The creation date and time of the task in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// AssigneeIds The IDs of users assigned to the task
+			AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+			// CreatorId The ID of the user who created the task
+			CreatorId *int `json:"creator_id,omitempty"`
+
+			// Description The description of the task
+			Description *string `json:"description"`
+
+			// DueDate The due date of the task. Format: YYYY-MM-DD.
+			DueDate *openapi_types.Date `json:"due_date"`
+
+			// Id The ID of the task
+			Id *int `json:"id,omitempty"`
+
+			// IsDone Whether the task is done or not.
+			IsDone *bool `json:"is_done,omitempty"`
+
+			// IsMilestone Whether the task is a milestone or not.
+			IsMilestone *bool `json:"is_milestone,omitempty"`
+
+			// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+			// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+			ParentTaskId *int `json:"parent_task_id"`
+
+			// Priority The priority of the task
+			Priority *int `json:"priority"`
+
+			// ProjectId The ID of the project this task is associated with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// StartDate The start date of the task. Format: YYYY-MM-DD.
+			StartDate *openapi_types.Date `json:"start_date"`
+
+			// Title The title of the task
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The update date and time of the task in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r AddTaskResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddTaskResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteTaskResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *struct {
+			// Id The ID of the deleted task
+			Id *int `json:"id,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteTaskResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteTaskResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetTaskResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *struct {
+			// AddTime The creation date and time of the task in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// AssigneeIds The IDs of users assigned to the task
+			AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+			// CreatorId The ID of the user who created the task
+			CreatorId *int `json:"creator_id,omitempty"`
+
+			// Description The description of the task
+			Description *string `json:"description"`
+
+			// DueDate The due date of the task. Format: YYYY-MM-DD.
+			DueDate *openapi_types.Date `json:"due_date"`
+
+			// Id The ID of the task
+			Id *int `json:"id,omitempty"`
+
+			// IsDone Whether the task is done or not.
+			IsDone *bool `json:"is_done,omitempty"`
+
+			// IsMilestone Whether the task is a milestone or not.
+			IsMilestone *bool `json:"is_milestone,omitempty"`
+
+			// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+			// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+			ParentTaskId *int `json:"parent_task_id"`
+
+			// Priority The priority of the task
+			Priority *int `json:"priority"`
+
+			// ProjectId The ID of the project this task is associated with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// StartDate The start date of the task. Format: YYYY-MM-DD.
+			StartDate *openapi_types.Date `json:"start_date"`
+
+			// Title The title of the task
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The update date and time of the task in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTaskResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTaskResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateTaskResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		AdditionalData *map[string]interface{} `json:"additional_data"`
+		Data           *struct {
+			// AddTime The creation date and time of the task in ISO 8601 format
+			AddTime *string `json:"add_time,omitempty"`
+
+			// AssigneeIds The IDs of users assigned to the task
+			AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+			// CreatorId The ID of the user who created the task
+			CreatorId *int `json:"creator_id,omitempty"`
+
+			// Description The description of the task
+			Description *string `json:"description"`
+
+			// DueDate The due date of the task. Format: YYYY-MM-DD.
+			DueDate *openapi_types.Date `json:"due_date"`
+
+			// Id The ID of the task
+			Id *int `json:"id,omitempty"`
+
+			// IsDone Whether the task is done or not.
+			IsDone *bool `json:"is_done,omitempty"`
+
+			// IsMilestone Whether the task is a milestone or not.
+			IsMilestone *bool `json:"is_milestone,omitempty"`
+
+			// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+			// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+			ParentTaskId *int `json:"parent_task_id"`
+
+			// Priority The priority of the task
+			Priority *int `json:"priority"`
+
+			// ProjectId The ID of the project this task is associated with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// StartDate The start date of the task. Format: YYYY-MM-DD.
+			StartDate *openapi_types.Date `json:"start_date"`
+
+			// Title The title of the task
+			Title *string `json:"title,omitempty"`
+
+			// UpdateTime The update date and time of the task in ISO 8601 format
+			UpdateTime *string `json:"update_time,omitempty"`
+		} `json:"data,omitempty"`
+
+		// Success If the response is successful or not
+		Success *bool `json:"success,omitempty"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateTaskResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateTaskResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type GetUserFollowersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -25003,6 +31372,67 @@ func (c *ClientWithResponses) GetActivityFieldWithResponse(ctx context.Context, 
 		return nil, err
 	}
 	return ParseGetActivityFieldResponse(rsp)
+}
+
+// GetProjectsBoardsWithResponse request returning *GetProjectsBoardsResponse
+func (c *ClientWithResponses) GetProjectsBoardsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetProjectsBoardsResponse, error) {
+	rsp, err := c.GetProjectsBoards(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectsBoardsResponse(rsp)
+}
+
+// AddProjectBoardWithBodyWithResponse request with arbitrary body returning *AddProjectBoardResponse
+func (c *ClientWithResponses) AddProjectBoardWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectBoardResponse, error) {
+	rsp, err := c.AddProjectBoardWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectBoardResponse(rsp)
+}
+
+func (c *ClientWithResponses) AddProjectBoardWithResponse(ctx context.Context, body AddProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectBoardResponse, error) {
+	rsp, err := c.AddProjectBoard(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectBoardResponse(rsp)
+}
+
+// DeleteProjectBoardWithResponse request returning *DeleteProjectBoardResponse
+func (c *ClientWithResponses) DeleteProjectBoardWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectBoardResponse, error) {
+	rsp, err := c.DeleteProjectBoard(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteProjectBoardResponse(rsp)
+}
+
+// GetProjectsBoardWithResponse request returning *GetProjectsBoardResponse
+func (c *ClientWithResponses) GetProjectsBoardWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsBoardResponse, error) {
+	rsp, err := c.GetProjectsBoard(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectsBoardResponse(rsp)
+}
+
+// UpdateProjectBoardWithBodyWithResponse request with arbitrary body returning *UpdateProjectBoardResponse
+func (c *ClientWithResponses) UpdateProjectBoardWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectBoardResponse, error) {
+	rsp, err := c.UpdateProjectBoardWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectBoardResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateProjectBoardWithResponse(ctx context.Context, id int, body UpdateProjectBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectBoardResponse, error) {
+	rsp, err := c.UpdateProjectBoard(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectBoardResponse(rsp)
 }
 
 // GetDealFieldsWithResponse request returning *GetDealFieldsResponse
@@ -25963,6 +32393,67 @@ func (c *ClientWithResponses) GetPersonPictureWithResponse(ctx context.Context, 
 	return ParseGetPersonPictureResponse(rsp)
 }
 
+// GetProjectsPhasesWithResponse request returning *GetProjectsPhasesResponse
+func (c *ClientWithResponses) GetProjectsPhasesWithResponse(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*GetProjectsPhasesResponse, error) {
+	rsp, err := c.GetProjectsPhases(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectsPhasesResponse(rsp)
+}
+
+// AddProjectPhaseWithBodyWithResponse request with arbitrary body returning *AddProjectPhaseResponse
+func (c *ClientWithResponses) AddProjectPhaseWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectPhaseResponse, error) {
+	rsp, err := c.AddProjectPhaseWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectPhaseResponse(rsp)
+}
+
+func (c *ClientWithResponses) AddProjectPhaseWithResponse(ctx context.Context, body AddProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectPhaseResponse, error) {
+	rsp, err := c.AddProjectPhase(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectPhaseResponse(rsp)
+}
+
+// DeleteProjectPhaseWithResponse request returning *DeleteProjectPhaseResponse
+func (c *ClientWithResponses) DeleteProjectPhaseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectPhaseResponse, error) {
+	rsp, err := c.DeleteProjectPhase(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteProjectPhaseResponse(rsp)
+}
+
+// GetProjectsPhaseWithResponse request returning *GetProjectsPhaseResponse
+func (c *ClientWithResponses) GetProjectsPhaseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsPhaseResponse, error) {
+	rsp, err := c.GetProjectsPhase(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectsPhaseResponse(rsp)
+}
+
+// UpdateProjectPhaseWithBodyWithResponse request with arbitrary body returning *UpdateProjectPhaseResponse
+func (c *ClientWithResponses) UpdateProjectPhaseWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectPhaseResponse, error) {
+	rsp, err := c.UpdateProjectPhaseWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectPhaseResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateProjectPhaseWithResponse(ctx context.Context, id int, body UpdateProjectPhaseJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectPhaseResponse, error) {
+	rsp, err := c.UpdateProjectPhase(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectPhaseResponse(rsp)
+}
+
 // GetPipelinesWithResponse request returning *GetPipelinesResponse
 func (c *ClientWithResponses) GetPipelinesWithResponse(ctx context.Context, params *GetPipelinesParams, reqEditors ...RequestEditorFn) (*GetPipelinesResponse, error) {
 	rsp, err := c.GetPipelines(ctx, params, reqEditors...)
@@ -26347,6 +32838,242 @@ func (c *ClientWithResponses) UpdateProductVariationWithResponse(ctx context.Con
 	return ParseUpdateProductVariationResponse(rsp)
 }
 
+// GetProjectFieldsWithResponse request returning *GetProjectFieldsResponse
+func (c *ClientWithResponses) GetProjectFieldsWithResponse(ctx context.Context, params *GetProjectFieldsParams, reqEditors ...RequestEditorFn) (*GetProjectFieldsResponse, error) {
+	rsp, err := c.GetProjectFields(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectFieldsResponse(rsp)
+}
+
+// AddProjectFieldWithBodyWithResponse request with arbitrary body returning *AddProjectFieldResponse
+func (c *ClientWithResponses) AddProjectFieldWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectFieldResponse, error) {
+	rsp, err := c.AddProjectFieldWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectFieldResponse(rsp)
+}
+
+func (c *ClientWithResponses) AddProjectFieldWithResponse(ctx context.Context, body AddProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectFieldResponse, error) {
+	rsp, err := c.AddProjectField(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectFieldResponse(rsp)
+}
+
+// DeleteProjectFieldWithResponse request returning *DeleteProjectFieldResponse
+func (c *ClientWithResponses) DeleteProjectFieldWithResponse(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*DeleteProjectFieldResponse, error) {
+	rsp, err := c.DeleteProjectField(ctx, fieldCode, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteProjectFieldResponse(rsp)
+}
+
+// GetProjectFieldWithResponse request returning *GetProjectFieldResponse
+func (c *ClientWithResponses) GetProjectFieldWithResponse(ctx context.Context, fieldCode string, reqEditors ...RequestEditorFn) (*GetProjectFieldResponse, error) {
+	rsp, err := c.GetProjectField(ctx, fieldCode, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectFieldResponse(rsp)
+}
+
+// UpdateProjectFieldWithBodyWithResponse request with arbitrary body returning *UpdateProjectFieldResponse
+func (c *ClientWithResponses) UpdateProjectFieldWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectFieldResponse, error) {
+	rsp, err := c.UpdateProjectFieldWithBody(ctx, fieldCode, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectFieldResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateProjectFieldWithResponse(ctx context.Context, fieldCode string, body UpdateProjectFieldJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectFieldResponse, error) {
+	rsp, err := c.UpdateProjectField(ctx, fieldCode, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectFieldResponse(rsp)
+}
+
+// DeleteProjectFieldOptionsWithBodyWithResponse request with arbitrary body returning *DeleteProjectFieldOptionsResponse
+func (c *ClientWithResponses) DeleteProjectFieldOptionsWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DeleteProjectFieldOptionsResponse, error) {
+	rsp, err := c.DeleteProjectFieldOptionsWithBody(ctx, fieldCode, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteProjectFieldOptionsResponse(rsp)
+}
+
+func (c *ClientWithResponses) DeleteProjectFieldOptionsWithResponse(ctx context.Context, fieldCode string, body DeleteProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteProjectFieldOptionsResponse, error) {
+	rsp, err := c.DeleteProjectFieldOptions(ctx, fieldCode, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteProjectFieldOptionsResponse(rsp)
+}
+
+// UpdateProjectFieldOptionsWithBodyWithResponse request with arbitrary body returning *UpdateProjectFieldOptionsResponse
+func (c *ClientWithResponses) UpdateProjectFieldOptionsWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectFieldOptionsResponse, error) {
+	rsp, err := c.UpdateProjectFieldOptionsWithBody(ctx, fieldCode, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectFieldOptionsResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateProjectFieldOptionsWithResponse(ctx context.Context, fieldCode string, body UpdateProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectFieldOptionsResponse, error) {
+	rsp, err := c.UpdateProjectFieldOptions(ctx, fieldCode, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectFieldOptionsResponse(rsp)
+}
+
+// AddProjectFieldOptionsWithBodyWithResponse request with arbitrary body returning *AddProjectFieldOptionsResponse
+func (c *ClientWithResponses) AddProjectFieldOptionsWithBodyWithResponse(ctx context.Context, fieldCode string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectFieldOptionsResponse, error) {
+	rsp, err := c.AddProjectFieldOptionsWithBody(ctx, fieldCode, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectFieldOptionsResponse(rsp)
+}
+
+func (c *ClientWithResponses) AddProjectFieldOptionsWithResponse(ctx context.Context, fieldCode string, body AddProjectFieldOptionsJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectFieldOptionsResponse, error) {
+	rsp, err := c.AddProjectFieldOptions(ctx, fieldCode, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectFieldOptionsResponse(rsp)
+}
+
+// GetProjectTemplatesWithResponse request returning *GetProjectTemplatesResponse
+func (c *ClientWithResponses) GetProjectTemplatesWithResponse(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*GetProjectTemplatesResponse, error) {
+	rsp, err := c.GetProjectTemplates(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectTemplatesResponse(rsp)
+}
+
+// GetProjectTemplateWithResponse request returning *GetProjectTemplateResponse
+func (c *ClientWithResponses) GetProjectTemplateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectTemplateResponse, error) {
+	rsp, err := c.GetProjectTemplate(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectTemplateResponse(rsp)
+}
+
+// GetProjectsWithResponse request returning *GetProjectsResponse
+func (c *ClientWithResponses) GetProjectsWithResponse(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*GetProjectsResponse, error) {
+	rsp, err := c.GetProjects(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectsResponse(rsp)
+}
+
+// AddProjectWithBodyWithResponse request with arbitrary body returning *AddProjectResponse
+func (c *ClientWithResponses) AddProjectWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectResponse, error) {
+	rsp, err := c.AddProjectWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectResponse(rsp)
+}
+
+func (c *ClientWithResponses) AddProjectWithResponse(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectResponse, error) {
+	rsp, err := c.AddProject(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddProjectResponse(rsp)
+}
+
+// GetArchivedProjectsWithResponse request returning *GetArchivedProjectsResponse
+func (c *ClientWithResponses) GetArchivedProjectsWithResponse(ctx context.Context, params *GetArchivedProjectsParams, reqEditors ...RequestEditorFn) (*GetArchivedProjectsResponse, error) {
+	rsp, err := c.GetArchivedProjects(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetArchivedProjectsResponse(rsp)
+}
+
+// SearchProjectsWithResponse request returning *SearchProjectsResponse
+func (c *ClientWithResponses) SearchProjectsWithResponse(ctx context.Context, params *SearchProjectsParams, reqEditors ...RequestEditorFn) (*SearchProjectsResponse, error) {
+	rsp, err := c.SearchProjects(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSearchProjectsResponse(rsp)
+}
+
+// DeleteProjectWithResponse request returning *DeleteProjectResponse
+func (c *ClientWithResponses) DeleteProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectResponse, error) {
+	rsp, err := c.DeleteProject(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteProjectResponse(rsp)
+}
+
+// GetProjectWithResponse request returning *GetProjectResponse
+func (c *ClientWithResponses) GetProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectResponse, error) {
+	rsp, err := c.GetProject(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectResponse(rsp)
+}
+
+// UpdateProjectWithBodyWithResponse request with arbitrary body returning *UpdateProjectResponse
+func (c *ClientWithResponses) UpdateProjectWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error) {
+	rsp, err := c.UpdateProjectWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateProjectWithResponse(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error) {
+	rsp, err := c.UpdateProject(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateProjectResponse(rsp)
+}
+
+// ArchiveProjectWithResponse request returning *ArchiveProjectResponse
+func (c *ClientWithResponses) ArchiveProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ArchiveProjectResponse, error) {
+	rsp, err := c.ArchiveProject(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseArchiveProjectResponse(rsp)
+}
+
+// GetProjectChangelogWithResponse request returning *GetProjectChangelogResponse
+func (c *ClientWithResponses) GetProjectChangelogWithResponse(ctx context.Context, id int, params *GetProjectChangelogParams, reqEditors ...RequestEditorFn) (*GetProjectChangelogResponse, error) {
+	rsp, err := c.GetProjectChangelog(ctx, id, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectChangelogResponse(rsp)
+}
+
+// GetProjectUsersWithResponse request returning *GetProjectUsersResponse
+func (c *ClientWithResponses) GetProjectUsersWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectUsersResponse, error) {
+	rsp, err := c.GetProjectUsers(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectUsersResponse(rsp)
+}
+
 // GetStagesWithResponse request returning *GetStagesResponse
 func (c *ClientWithResponses) GetStagesWithResponse(ctx context.Context, params *GetStagesParams, reqEditors ...RequestEditorFn) (*GetStagesResponse, error) {
 	rsp, err := c.GetStages(ctx, params, reqEditors...)
@@ -26406,6 +33133,67 @@ func (c *ClientWithResponses) UpdateStageWithResponse(ctx context.Context, id in
 		return nil, err
 	}
 	return ParseUpdateStageResponse(rsp)
+}
+
+// GetTasksWithResponse request returning *GetTasksResponse
+func (c *ClientWithResponses) GetTasksWithResponse(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*GetTasksResponse, error) {
+	rsp, err := c.GetTasks(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTasksResponse(rsp)
+}
+
+// AddTaskWithBodyWithResponse request with arbitrary body returning *AddTaskResponse
+func (c *ClientWithResponses) AddTaskWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddTaskResponse, error) {
+	rsp, err := c.AddTaskWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddTaskResponse(rsp)
+}
+
+func (c *ClientWithResponses) AddTaskWithResponse(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*AddTaskResponse, error) {
+	rsp, err := c.AddTask(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddTaskResponse(rsp)
+}
+
+// DeleteTaskWithResponse request returning *DeleteTaskResponse
+func (c *ClientWithResponses) DeleteTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteTaskResponse, error) {
+	rsp, err := c.DeleteTask(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteTaskResponse(rsp)
+}
+
+// GetTaskWithResponse request returning *GetTaskResponse
+func (c *ClientWithResponses) GetTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetTaskResponse, error) {
+	rsp, err := c.GetTask(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTaskResponse(rsp)
+}
+
+// UpdateTaskWithBodyWithResponse request with arbitrary body returning *UpdateTaskResponse
+func (c *ClientWithResponses) UpdateTaskWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error) {
+	rsp, err := c.UpdateTaskWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateTaskResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateTaskWithResponse(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error) {
+	rsp, err := c.UpdateTask(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateTaskResponse(rsp)
 }
 
 // GetUserFollowersWithResponse request returning *GetUserFollowersResponse
@@ -27178,8 +33966,8 @@ func ParseGetActivityFieldsResponse(rsp *http.Response) (*GetActivityFieldsRespo
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetActivityFields_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -27263,8 +34051,8 @@ func ParseGetActivityFieldResponse(rsp *http.Response) (*GetActivityFieldRespons
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetActivityField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -27308,6 +34096,227 @@ func ParseGetActivityFieldResponse(rsp *http.Response) (*GetActivityFieldRespons
 	return response, nil
 }
 
+// ParseGetProjectsBoardsResponse parses an HTTP response from a GetProjectsBoardsWithResponse call
+func ParseGetProjectsBoardsResponse(rsp *http.Response) (*GetProjectsBoardsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectsBoardsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+
+			// Data The array of project boards
+			Data *[]struct {
+				// AddTime The creation date and time of the board in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// Id The ID of the project board
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project board
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the board in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddProjectBoardResponse parses an HTTP response from a AddProjectBoardWithResponse call
+func ParseAddProjectBoardResponse(rsp *http.Response) (*AddProjectBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddProjectBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the board in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// Id The ID of the project board
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project board
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the board in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteProjectBoardResponse parses an HTTP response from a DeleteProjectBoardWithResponse call
+func ParseDeleteProjectBoardResponse(rsp *http.Response) (*DeleteProjectBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteProjectBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// Id The ID of the deleted project board
+				Id *int `json:"id,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectsBoardResponse parses an HTTP response from a GetProjectsBoardWithResponse call
+func ParseGetProjectsBoardResponse(rsp *http.Response) (*GetProjectsBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectsBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the board in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// Id The ID of the project board
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project board
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the board in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateProjectBoardResponse parses an HTTP response from a UpdateProjectBoardWithResponse call
+func ParseUpdateProjectBoardResponse(rsp *http.Response) (*UpdateProjectBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateProjectBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the board in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// Id The ID of the project board
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project board
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the board in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetDealFieldsResponse parses an HTTP response from a GetDealFieldsWithResponse call
 func ParseGetDealFieldsResponse(rsp *http.Response) (*GetDealFieldsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -27330,7 +34339,7 @@ func ParseGetDealFieldsResponse(rsp *http.Response) (*GetDealFieldsResponse, err
 			} `json:"additional_data,omitempty"`
 			Data *[]struct {
 				// Description The description of the field
-				Description string `json:"description"`
+				Description *string `json:"description,omitempty"`
 
 				// FieldCode The unique identifier for the field (40-character hash for custom fields)
 				FieldCode string `json:"field_code"`
@@ -27364,8 +34373,8 @@ func ParseGetDealFieldsResponse(rsp *http.Response) (*GetDealFieldsResponse, err
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetDealFields_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -27451,7 +34460,7 @@ func ParseAddDealFieldResponse(rsp *http.Response) (*AddDealFieldResponse, error
 		var dest struct {
 			Data *struct {
 				// Description The description of the field
-				Description string `json:"description"`
+				Description *string `json:"description,omitempty"`
 
 				// FieldCode The unique identifier for the field (40-character hash for custom fields)
 				FieldCode string `json:"field_code"`
@@ -27485,8 +34494,8 @@ func ParseAddDealFieldResponse(rsp *http.Response) (*AddDealFieldResponse, error
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *AddDealField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -27572,7 +34581,7 @@ func ParseDeleteDealFieldResponse(rsp *http.Response) (*DeleteDealFieldResponse,
 		var dest struct {
 			Data *struct {
 				// Description The description of the field
-				Description string `json:"description"`
+				Description *string `json:"description,omitempty"`
 
 				// FieldCode The unique identifier for the field (40-character hash for custom fields)
 				FieldCode string `json:"field_code"`
@@ -27627,7 +34636,7 @@ func ParseGetDealFieldResponse(rsp *http.Response) (*GetDealFieldResponse, error
 		var dest struct {
 			Data *struct {
 				// Description The description of the field
-				Description string `json:"description"`
+				Description *string `json:"description,omitempty"`
 
 				// FieldCode The unique identifier for the field (40-character hash for custom fields)
 				FieldCode string `json:"field_code"`
@@ -27661,8 +34670,8 @@ func ParseGetDealFieldResponse(rsp *http.Response) (*GetDealFieldResponse, error
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetDealField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -27748,7 +34757,7 @@ func ParseUpdateDealFieldResponse(rsp *http.Response) (*UpdateDealFieldResponse,
 		var dest struct {
 			Data *struct {
 				// Description The description of the field
-				Description string `json:"description"`
+				Description *string `json:"description,omitempty"`
 
 				// FieldCode The unique identifier for the field (40-character hash for custom fields)
 				FieldCode string `json:"field_code"`
@@ -27782,8 +34791,8 @@ func ParseUpdateDealFieldResponse(rsp *http.Response) (*UpdateDealFieldResponse,
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *UpdateDealField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -28012,7 +35021,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				// Currency The currency associated with the deal
 				Currency *string `json:"currency,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
@@ -28151,7 +35160,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				// Currency The currency associated with the deal
 				Currency *string `json:"currency,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
@@ -28297,7 +35306,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				// Currency The currency associated with the deal
 				Currency *string `json:"currency,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
@@ -28489,7 +35498,7 @@ func ParseGetDealsProductsResponse(rsp *http.Response) (*GetDealsProductsRespons
 				// BillingStartDate Only available in Growth and above plans
 				//
 				// The billing start date. Must be between 10 years in the past and 10 years in the future
-				BillingStartDate *string `json:"billing_start_date"`
+				BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 				// Comments The comments of the product
 				Comments *string `json:"comments,omitempty"`
@@ -28528,7 +35537,7 @@ func ParseGetDealsProductsResponse(rsp *http.Response) (*GetDealsProductsRespons
 				ProductVariationId *int `json:"product_variation_id"`
 
 				// Quantity The quantity of the product
-				Quantity *int `json:"quantity,omitempty"`
+				Quantity *float32 `json:"quantity,omitempty"`
 
 				// Sum The sum of all the products attached to the deal
 				Sum *float32 `json:"sum,omitempty"`
@@ -28735,7 +35744,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				// Currency The currency associated with the deal
 				Currency *string `json:"currency,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
@@ -28874,7 +35883,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				// Currency The currency associated with the deal
 				Currency *string `json:"currency,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
@@ -29670,7 +36679,7 @@ func ParseGetDealProductsResponse(rsp *http.Response) (*GetDealProductsResponse,
 				// BillingStartDate Only available in Growth and above plans
 				//
 				// The billing start date. Must be between 10 years in the past and 10 years in the future
-				BillingStartDate *string `json:"billing_start_date"`
+				BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 				// Comments The comments of the product
 				Comments *string `json:"comments,omitempty"`
@@ -29709,7 +36718,7 @@ func ParseGetDealProductsResponse(rsp *http.Response) (*GetDealProductsResponse,
 				ProductVariationId *int `json:"product_variation_id"`
 
 				// Quantity The quantity of the product
-				Quantity *int `json:"quantity,omitempty"`
+				Quantity *float32 `json:"quantity,omitempty"`
 
 				// Sum The sum of all the products attached to the deal
 				Sum *float32 `json:"sum,omitempty"`
@@ -29782,7 +36791,7 @@ func ParseAddDealProductResponse(rsp *http.Response) (*AddDealProductResponse, e
 				// BillingStartDate Only available in Growth and above plans
 				//
 				// The billing start date. Must be between 10 years in the past and 10 years in the future
-				BillingStartDate *string `json:"billing_start_date"`
+				BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 				// Comments The comments of the product
 				Comments *string `json:"comments,omitempty"`
@@ -29821,7 +36830,7 @@ func ParseAddDealProductResponse(rsp *http.Response) (*AddDealProductResponse, e
 				ProductVariationId *int `json:"product_variation_id"`
 
 				// Quantity The quantity of the product
-				Quantity *int `json:"quantity,omitempty"`
+				Quantity *float32 `json:"quantity,omitempty"`
 
 				// Sum The sum of all the products attached to the deal
 				Sum *float32 `json:"sum,omitempty"`
@@ -29895,7 +36904,7 @@ func ParseAddManyDealProductsResponse(rsp *http.Response) (*AddManyDealProductsR
 				// BillingStartDate Only available in Growth and above plans
 				//
 				// The billing start date. Must be between 10 years in the past and 10 years in the future
-				BillingStartDate *string `json:"billing_start_date"`
+				BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 				// Comments The comments of the product
 				Comments *string `json:"comments,omitempty"`
@@ -29934,7 +36943,7 @@ func ParseAddManyDealProductsResponse(rsp *http.Response) (*AddManyDealProductsR
 				ProductVariationId *int `json:"product_variation_id"`
 
 				// Quantity The quantity of the product
-				Quantity *int `json:"quantity,omitempty"`
+				Quantity *float32 `json:"quantity,omitempty"`
 
 				// Sum The sum of all the products attached to the deal
 				Sum *float32 `json:"sum,omitempty"`
@@ -30041,7 +37050,7 @@ func ParseUpdateDealProductResponse(rsp *http.Response) (*UpdateDealProductRespo
 				// BillingStartDate Only available in Growth and above plans
 				//
 				// The billing start date. Must be between 10 years in the past and 10 years in the future
-				BillingStartDate *string `json:"billing_start_date"`
+				BillingStartDate *openapi_types.Date `json:"billing_start_date"`
 
 				// Comments The comments of the product
 				Comments *string `json:"comments,omitempty"`
@@ -30080,7 +37089,7 @@ func ParseUpdateDealProductResponse(rsp *http.Response) (*UpdateDealProductRespo
 				ProductVariationId *int `json:"product_variation_id"`
 
 				// Quantity The quantity of the product
-				Quantity *int `json:"quantity,omitempty"`
+				Quantity *float32 `json:"quantity,omitempty"`
 
 				// Sum The sum of all the products attached to the deal
 				Sum *float32 `json:"sum,omitempty"`
@@ -30463,8 +37472,8 @@ func ParseGetOrganizationFieldsResponse(rsp *http.Response) (*GetOrganizationFie
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetOrganizationFields_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -30590,8 +37599,8 @@ func ParseAddOrganizationFieldResponse(rsp *http.Response) (*AddOrganizationFiel
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *AddOrganizationField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -30769,8 +37778,8 @@ func ParseGetOrganizationFieldResponse(rsp *http.Response) (*GetOrganizationFiel
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetOrganizationField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -30896,8 +37905,8 @@ func ParseUpdateOrganizationFieldResponse(rsp *http.Response) (*UpdateOrganizati
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *UpdateOrganizationField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -31142,17 +38151,29 @@ func ParseGetOrganizationsResponse(rsp *http.Response) (*GetOrganizationsRespons
 					Value *string `json:"value,omitempty"`
 				} `json:"address,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// AnnualRevenue The annual revenue of the organization
+				AnnualRevenue *int `json:"annual_revenue"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// EmployeeCount The number of employees in the organization
+				EmployeeCount *int `json:"employee_count"`
 
 				// Id The ID of the organization
 				Id *int `json:"id,omitempty"`
+
+				// Industry The industry the organization belongs to
+				Industry *int `json:"industry"`
 
 				// IsDeleted Whether the organization is deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LabelIds The IDs of labels assigned to the organization
 				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// Linkedin The LinkedIn profile URL of the organization
+				Linkedin *string `json:"linkedin"`
 
 				// Name The name of the organization
 				Name *string `json:"name,omitempty"`
@@ -31165,6 +38186,9 @@ func ParseGetOrganizationsResponse(rsp *http.Response) (*GetOrganizationsRespons
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
+
+				// Website The website of the organization
+				Website *string `json:"website"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -31233,17 +38257,29 @@ func ParseAddOrganizationResponse(rsp *http.Response) (*AddOrganizationResponse,
 					Value *string `json:"value,omitempty"`
 				} `json:"address,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// AnnualRevenue The annual revenue of the organization
+				AnnualRevenue *int `json:"annual_revenue"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// EmployeeCount The number of employees in the organization
+				EmployeeCount *int `json:"employee_count"`
 
 				// Id The ID of the organization
 				Id *int `json:"id,omitempty"`
+
+				// Industry The industry the organization belongs to
+				Industry *int `json:"industry"`
 
 				// IsDeleted Whether the organization is deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LabelIds The IDs of labels assigned to the organization
 				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// Linkedin The LinkedIn profile URL of the organization
+				Linkedin *string `json:"linkedin"`
 
 				// Name The name of the organization
 				Name *string `json:"name,omitempty"`
@@ -31256,6 +38292,9 @@ func ParseAddOrganizationResponse(rsp *http.Response) (*AddOrganizationResponse,
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
+
+				// Website The website of the organization
+				Website *string `json:"website"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -31427,17 +38466,29 @@ func ParseGetOrganizationResponse(rsp *http.Response) (*GetOrganizationResponse,
 					Value *string `json:"value,omitempty"`
 				} `json:"address,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// AnnualRevenue The annual revenue of the organization
+				AnnualRevenue *int `json:"annual_revenue"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// EmployeeCount The number of employees in the organization
+				EmployeeCount *int `json:"employee_count"`
 
 				// Id The ID of the organization
 				Id *int `json:"id,omitempty"`
+
+				// Industry The industry the organization belongs to
+				Industry *int `json:"industry"`
 
 				// IsDeleted Whether the organization is deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LabelIds The IDs of labels assigned to the organization
 				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// Linkedin The LinkedIn profile URL of the organization
+				Linkedin *string `json:"linkedin"`
 
 				// Name The name of the organization
 				Name *string `json:"name,omitempty"`
@@ -31450,6 +38501,9 @@ func ParseGetOrganizationResponse(rsp *http.Response) (*GetOrganizationResponse,
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
+
+				// Website The website of the organization
+				Website *string `json:"website"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -31518,17 +38572,29 @@ func ParseUpdateOrganizationResponse(rsp *http.Response) (*UpdateOrganizationRes
 					Value *string `json:"value,omitempty"`
 				} `json:"address,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// AnnualRevenue The annual revenue of the organization
+				AnnualRevenue *int `json:"annual_revenue"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// EmployeeCount The number of employees in the organization
+				EmployeeCount *int `json:"employee_count"`
 
 				// Id The ID of the organization
 				Id *int `json:"id,omitempty"`
+
+				// Industry The industry the organization belongs to
+				Industry *int `json:"industry"`
 
 				// IsDeleted Whether the organization is deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LabelIds The IDs of labels assigned to the organization
 				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// Linkedin The LinkedIn profile URL of the organization
+				Linkedin *string `json:"linkedin"`
 
 				// Name The name of the organization
 				Name *string `json:"name,omitempty"`
@@ -31541,6 +38607,9 @@ func ParseUpdateOrganizationResponse(rsp *http.Response) (*UpdateOrganizationRes
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
+
+				// Website The website of the organization
+				Website *string `json:"website"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -31774,8 +38843,8 @@ func ParseGetPersonFieldsResponse(rsp *http.Response) (*GetPersonFieldsResponse,
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetPersonFields_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -31883,8 +38952,8 @@ func ParseAddPersonFieldResponse(rsp *http.Response) (*AddPersonFieldResponse, e
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *AddPersonField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -32044,8 +39113,8 @@ func ParseGetPersonFieldResponse(rsp *http.Response) (*GetPersonFieldResponse, e
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetPersonField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -32153,8 +39222,8 @@ func ParseUpdatePersonFieldResponse(rsp *http.Response) (*UpdatePersonFieldRespo
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *UpdatePersonField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -32351,7 +39420,7 @@ func ParseGetPersonsResponse(rsp *http.Response) (*GetPersonsResponse, error) {
 				// Birthday The birthday of the person, included if contact sync is enabled for the company
 				Birthday *string `json:"birthday,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// Emails The emails of the person
@@ -32499,7 +39568,7 @@ func ParseAddPersonResponse(rsp *http.Response) (*AddPersonResponse, error) {
 				// Birthday The birthday of the person, included if contact sync is enabled for the company
 				Birthday *string `json:"birthday,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// Emails The emails of the person
@@ -32760,7 +39829,7 @@ func ParseGetPersonResponse(rsp *http.Response) (*GetPersonResponse, error) {
 				// Birthday The birthday of the person, included if contact sync is enabled for the company
 				Birthday *string `json:"birthday,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// Emails The emails of the person
@@ -32908,7 +39977,7 @@ func ParseUpdatePersonResponse(rsp *http.Response) (*UpdatePersonResponse, error
 				// Birthday The birthday of the person, included if contact sync is enabled for the company
 				Birthday *string `json:"birthday,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// Emails The emails of the person
@@ -33256,6 +40325,239 @@ func ParseGetPersonPictureResponse(rsp *http.Response) (*GetPersonPictureRespons
 	return response, nil
 }
 
+// ParseGetProjectsPhasesResponse parses an HTTP response from a GetProjectsPhasesWithResponse call
+func ParseGetProjectsPhasesResponse(rsp *http.Response) (*GetProjectsPhasesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectsPhasesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+
+			// Data The array of project phases
+			Data *[]struct {
+				// AddTime The creation date and time of the phase in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// BoardId The ID of the project board this phase belongs to
+				BoardId *int `json:"board_id,omitempty"`
+
+				// Id The ID of the project phase
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project phase
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the phase within its board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the phase in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddProjectPhaseResponse parses an HTTP response from a AddProjectPhaseWithResponse call
+func ParseAddProjectPhaseResponse(rsp *http.Response) (*AddProjectPhaseResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddProjectPhaseResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the phase in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// BoardId The ID of the project board this phase belongs to
+				BoardId *int `json:"board_id,omitempty"`
+
+				// Id The ID of the project phase
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project phase
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the phase within its board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the phase in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteProjectPhaseResponse parses an HTTP response from a DeleteProjectPhaseWithResponse call
+func ParseDeleteProjectPhaseResponse(rsp *http.Response) (*DeleteProjectPhaseResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteProjectPhaseResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// Id The ID of the deleted project phase
+				Id *int `json:"id,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectsPhaseResponse parses an HTTP response from a GetProjectsPhaseWithResponse call
+func ParseGetProjectsPhaseResponse(rsp *http.Response) (*GetProjectsPhaseResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectsPhaseResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the phase in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// BoardId The ID of the project board this phase belongs to
+				BoardId *int `json:"board_id,omitempty"`
+
+				// Id The ID of the project phase
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project phase
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the phase within its board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the phase in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateProjectPhaseResponse parses an HTTP response from a UpdateProjectPhaseWithResponse call
+func ParseUpdateProjectPhaseResponse(rsp *http.Response) (*UpdateProjectPhaseResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateProjectPhaseResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the phase in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// BoardId The ID of the project board this phase belongs to
+				BoardId *int `json:"board_id,omitempty"`
+
+				// Id The ID of the project phase
+				Id *int `json:"id,omitempty"`
+
+				// Name The name of the project phase
+				Name *string `json:"name,omitempty"`
+
+				// OrderNr The order of the phase within its board
+				OrderNr *int `json:"order_nr,omitempty"`
+
+				// UpdateTime The update date and time of the phase in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetPipelinesResponse parses an HTTP response from a GetPipelinesWithResponse call
 func ParseGetPipelinesResponse(rsp *http.Response) (*GetPipelinesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -33552,8 +40854,8 @@ func ParseGetProductFieldsResponse(rsp *http.Response) (*GetProductFieldsRespons
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetProductFields_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -33637,8 +40939,8 @@ func ParseAddProductFieldResponse(rsp *http.Response) (*AddProductFieldResponse,
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *AddProductField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -33774,8 +41076,8 @@ func ParseGetProductFieldResponse(rsp *http.Response) (*GetProductFieldResponse,
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetProductField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -33859,8 +41161,8 @@ func ParseUpdateProductFieldResponse(rsp *http.Response) (*UpdateProductFieldRes
 					// Color Optional color code for the option
 					Color *string `json:"color"`
 
-					// Id The option ID
-					Id *int `json:"id,omitempty"`
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *UpdateProductField_200_Data_Options_Id `json:"id,omitempty"`
 
 					// Label The option display label
 					Label *string `json:"label,omitempty"`
@@ -34036,61 +41338,86 @@ func ParseGetProductsResponse(rsp *http.Response) (*GetProductsResponse, error) 
 
 			// Data Array containing data for all products
 			Data *[]struct {
-				Data *struct {
-					// BillingFrequency Only available in Growth and above plans
-					//
-					// How often a customer is billed for access to a service or product
-					BillingFrequency *GetProducts200DataDataBillingFrequency `json:"billing_frequency,omitempty"`
+				// AddTime The date and time when the product was added
+				AddTime *string `json:"add_time,omitempty"`
 
-					// BillingFrequencyCycles Only available in Growth and above plans
-					//
-					// The number of times the billing frequency repeats for a product in a deal
-					//
-					// When `billing_frequency` is set to `one-time`, this field must be `null`
-					//
-					// When `billing_frequency` is set to `weekly`, this field cannot be `null`
-					//
-					// For all the other values of `billing_frequency`, `null` represents a product billed indefinitely
-					//
-					// Must be a positive integer less or equal to 208
-					BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
+				// BillingFrequency Only available in Growth and above plans
+				//
+				// How often a customer is billed for access to a service or product
+				BillingFrequency *GetProducts200DataBillingFrequency `json:"billing_frequency,omitempty"`
 
-					// Code The product code
-					Code *string `json:"code,omitempty"`
+				// BillingFrequencyCycles Only available in Growth and above plans
+				//
+				// The number of times the billing frequency repeats for a product in a deal
+				//
+				// When `billing_frequency` is set to `one-time`, this field must be `null`
+				//
+				// When `billing_frequency` is set to `weekly`, this field cannot be `null`
+				//
+				// For all the other values of `billing_frequency`, `null` represents a product billed indefinitely
+				//
+				// Must be a positive integer less or equal to 208
+				BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
-					// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
-					CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+				// Category The category of the product
+				Category *string `json:"category"`
 
-					// Id The ID of the product
-					Id *float32 `json:"id,omitempty"`
+				// Code The product code
+				Code *string `json:"code,omitempty"`
 
-					// IsDeleted Whether this product will be marked as deleted or not
-					IsDeleted *bool `json:"is_deleted,omitempty"`
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
-					// IsLinkable Whether this product can be added to a deal or not
-					IsLinkable *bool `json:"is_linkable,omitempty"`
+				// Description The description of the product
+				Description *string `json:"description,omitempty"`
 
-					// Name The name of the product
-					Name *string `json:"name,omitempty"`
+				// Id The ID of the product
+				Id *int `json:"id,omitempty"`
 
-					// OwnerId Information about the Pipedrive user who owns the product
-					OwnerId *int `json:"owner_id,omitempty"`
+				// IsDeleted Whether this product will be marked as deleted or not
+				IsDeleted *bool `json:"is_deleted,omitempty"`
 
-					// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-					Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// IsLinkable Whether this product can be added to a deal or not
+				IsLinkable *bool `json:"is_linkable,omitempty"`
 
-					// Tax The tax percentage
-					Tax *float32 `json:"tax,omitempty"`
+				// Name The name of the product
+				Name *string `json:"name,omitempty"`
 
-					// Unit The unit in which this product is sold
-					Unit *string `json:"unit,omitempty"`
+				// OwnerId The ID of the Pipedrive user who owns the product
+				OwnerId *int `json:"owner_id,omitempty"`
 
-					// VisibleTo Visibility of the product
-					VisibleTo *GetProducts200DataDataVisibleTo `json:"visible_to,omitempty"`
-				} `json:"data,omitempty"`
+				// Prices The prices of the product in different currencies
+				Prices *[]struct {
+					// Cost The cost of the product
+					Cost *float32 `json:"cost,omitempty"`
 
-				// Success If the response is successful or not
-				Success *bool `json:"success,omitempty"`
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product
+					DirectCost *float32 `json:"direct_cost"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductId The ID of the product
+					ProductId *int `json:"product_id,omitempty"`
+				} `json:"prices,omitempty"`
+
+				// Tax The tax percentage
+				Tax *float32 `json:"tax,omitempty"`
+
+				// Unit The unit in which this product is sold
+				Unit *string `json:"unit,omitempty"`
+
+				// UpdateTime The date and time when the product was last updated
+				UpdateTime *string `json:"update_time,omitempty"`
+
+				// VisibleTo Visibility of the product
+				VisibleTo *GetProducts200DataVisibleTo `json:"visible_to,omitempty"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -34123,6 +41450,9 @@ func ParseAddProductResponse(rsp *http.Response) (*AddProductResponse, error) {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
 			Data *struct {
+				// AddTime The date and time when the product was added
+				AddTime *string `json:"add_time,omitempty"`
+
 				// BillingFrequency Only available in Growth and above plans
 				//
 				// How often a customer is billed for access to a service or product
@@ -34141,14 +41471,20 @@ func ParseAddProductResponse(rsp *http.Response) (*AddProductResponse, error) {
 				// Must be a positive integer less or equal to 208
 				BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+				// Category The category of the product
+				Category *string `json:"category"`
+
 				// Code The product code
 				Code *string `json:"code,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+				// Description The description of the product
+				Description *string `json:"description,omitempty"`
+
 				// Id The ID of the product
-				Id *float32 `json:"id,omitempty"`
+				Id *int `json:"id,omitempty"`
 
 				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -34159,17 +41495,38 @@ func ParseAddProductResponse(rsp *http.Response) (*AddProductResponse, error) {
 				// Name The name of the product
 				Name *string `json:"name,omitempty"`
 
-				// OwnerId Information about the Pipedrive user who owns the product
+				// OwnerId The ID of the Pipedrive user who owns the product
 				OwnerId *int `json:"owner_id,omitempty"`
 
-				// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// Prices The prices of the product in different currencies
+				Prices *[]struct {
+					// Cost The cost of the product
+					Cost *float32 `json:"cost,omitempty"`
+
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product
+					DirectCost *float32 `json:"direct_cost"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductId The ID of the product
+					ProductId *int `json:"product_id,omitempty"`
+				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
 				Tax *float32 `json:"tax,omitempty"`
 
 				// Unit The unit in which this product is sold
 				Unit *string `json:"unit,omitempty"`
+
+				// UpdateTime The date and time when the product was last updated
+				UpdateTime *string `json:"update_time,omitempty"`
 
 				// VisibleTo Visibility of the product
 				VisibleTo *AddProduct201DataVisibleTo `json:"visible_to,omitempty"`
@@ -34305,6 +41662,9 @@ func ParseGetProductResponse(rsp *http.Response) (*GetProductResponse, error) {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
 			Data *struct {
+				// AddTime The date and time when the product was added
+				AddTime *string `json:"add_time,omitempty"`
+
 				// BillingFrequency Only available in Growth and above plans
 				//
 				// How often a customer is billed for access to a service or product
@@ -34323,14 +41683,20 @@ func ParseGetProductResponse(rsp *http.Response) (*GetProductResponse, error) {
 				// Must be a positive integer less or equal to 208
 				BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+				// Category The category of the product
+				Category *string `json:"category"`
+
 				// Code The product code
 				Code *string `json:"code,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+				// Description The description of the product
+				Description *string `json:"description,omitempty"`
+
 				// Id The ID of the product
-				Id *float32 `json:"id,omitempty"`
+				Id *int `json:"id,omitempty"`
 
 				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -34341,17 +41707,38 @@ func ParseGetProductResponse(rsp *http.Response) (*GetProductResponse, error) {
 				// Name The name of the product
 				Name *string `json:"name,omitempty"`
 
-				// OwnerId Information about the Pipedrive user who owns the product
+				// OwnerId The ID of the Pipedrive user who owns the product
 				OwnerId *int `json:"owner_id,omitempty"`
 
-				// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// Prices The prices of the product in different currencies
+				Prices *[]struct {
+					// Cost The cost of the product
+					Cost *float32 `json:"cost,omitempty"`
+
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product
+					DirectCost *float32 `json:"direct_cost"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductId The ID of the product
+					ProductId *int `json:"product_id,omitempty"`
+				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
 				Tax *float32 `json:"tax,omitempty"`
 
 				// Unit The unit in which this product is sold
 				Unit *string `json:"unit,omitempty"`
+
+				// UpdateTime The date and time when the product was last updated
+				UpdateTime *string `json:"update_time,omitempty"`
 
 				// VisibleTo Visibility of the product
 				VisibleTo *GetProduct200DataVisibleTo `json:"visible_to,omitempty"`
@@ -34387,6 +41774,9 @@ func ParseUpdateProductResponse(rsp *http.Response) (*UpdateProductResponse, err
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
 			Data *struct {
+				// AddTime The date and time when the product was added
+				AddTime *string `json:"add_time,omitempty"`
+
 				// BillingFrequency Only available in Growth and above plans
 				//
 				// How often a customer is billed for access to a service or product
@@ -34405,14 +41795,20 @@ func ParseUpdateProductResponse(rsp *http.Response) (*UpdateProductResponse, err
 				// Must be a positive integer less or equal to 208
 				BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+				// Category The category of the product
+				Category *string `json:"category"`
+
 				// Code The product code
 				Code *string `json:"code,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+				// Description The description of the product
+				Description *string `json:"description,omitempty"`
+
 				// Id The ID of the product
-				Id *float32 `json:"id,omitempty"`
+				Id *int `json:"id,omitempty"`
 
 				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -34423,17 +41819,38 @@ func ParseUpdateProductResponse(rsp *http.Response) (*UpdateProductResponse, err
 				// Name The name of the product
 				Name *string `json:"name,omitempty"`
 
-				// OwnerId Information about the Pipedrive user who owns the product
+				// OwnerId The ID of the Pipedrive user who owns the product
 				OwnerId *int `json:"owner_id,omitempty"`
 
-				// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// Prices The prices of the product in different currencies
+				Prices *[]struct {
+					// Cost The cost of the product
+					Cost *float32 `json:"cost,omitempty"`
+
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product
+					DirectCost *float32 `json:"direct_cost"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductId The ID of the product
+					ProductId *int `json:"product_id,omitempty"`
+				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
 				Tax *float32 `json:"tax,omitempty"`
 
 				// Unit The unit in which this product is sold
 				Unit *string `json:"unit,omitempty"`
+
+				// UpdateTime The date and time when the product was last updated
+				UpdateTime *string `json:"update_time,omitempty"`
 
 				// VisibleTo Visibility of the product
 				VisibleTo *UpdateProduct200DataVisibleTo `json:"visible_to,omitempty"`
@@ -34469,6 +41886,9 @@ func ParseDuplicateProductResponse(rsp *http.Response) (*DuplicateProductRespons
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
 			Data *struct {
+				// AddTime The date and time when the product was added
+				AddTime *string `json:"add_time,omitempty"`
+
 				// BillingFrequency Only available in Growth and above plans
 				//
 				// How often a customer is billed for access to a service or product
@@ -34487,14 +41907,20 @@ func ParseDuplicateProductResponse(rsp *http.Response) (*DuplicateProductRespons
 				// Must be a positive integer less or equal to 208
 				BillingFrequencyCycles *int `json:"billing_frequency_cycles"`
 
+				// Category The category of the product
+				Category *string `json:"category"`
+
 				// Code The product code
 				Code *string `json:"code,omitempty"`
 
-				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+				// Description The description of the product
+				Description *string `json:"description,omitempty"`
+
 				// Id The ID of the product
-				Id *float32 `json:"id,omitempty"`
+				Id *int `json:"id,omitempty"`
 
 				// IsDeleted Whether this product will be marked as deleted or not
 				IsDeleted *bool `json:"is_deleted,omitempty"`
@@ -34505,17 +41931,38 @@ func ParseDuplicateProductResponse(rsp *http.Response) (*DuplicateProductRespons
 				// Name The name of the product
 				Name *string `json:"name,omitempty"`
 
-				// OwnerId Information about the Pipedrive user who owns the product
+				// OwnerId The ID of the Pipedrive user who owns the product
 				OwnerId *int `json:"owner_id,omitempty"`
 
-				// Prices Array of objects, each containing: product_id (number), currency (string), price (number), cost (number), direct_cost (number | null), notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// Prices The prices of the product in different currencies
+				Prices *[]struct {
+					// Cost The cost of the product
+					Cost *float32 `json:"cost,omitempty"`
+
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product
+					DirectCost *float32 `json:"direct_cost"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductId The ID of the product
+					ProductId *int `json:"product_id,omitempty"`
+				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
 				Tax *float32 `json:"tax,omitempty"`
 
 				// Unit The unit in which this product is sold
 				Unit *string `json:"unit,omitempty"`
+
+				// UpdateTime The date and time when the product was last updated
+				UpdateTime *string `json:"update_time,omitempty"`
 
 				// VisibleTo Visibility of the product
 				VisibleTo *DuplicateProduct201DataVisibleTo `json:"visible_to,omitempty"`
@@ -34813,7 +42260,7 @@ func ParseUploadProductImageResponse(rsp *http.Response) (*UploadProductImageRes
 				Id *int `json:"id,omitempty"`
 
 				// ProductId The ID of the product associated
-				ProductId *float32 `json:"product_id,omitempty"`
+				ProductId *int `json:"product_id,omitempty"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -34856,7 +42303,7 @@ func ParseUpdateProductImageResponse(rsp *http.Response) (*UpdateProductImageRes
 				Id *int `json:"id,omitempty"`
 
 				// ProductId The ID of the product associated
-				ProductId *float32 `json:"product_id,omitempty"`
+				ProductId *int `json:"product_id,omitempty"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -34897,7 +42344,7 @@ func ParseGetProductVariationsResponse(rsp *http.Response) (*GetProductVariation
 			// Data Array containing data for all products
 			Data *[]struct {
 				// Id The ID of the product variation
-				Id *float32 `json:"id,omitempty"`
+				Id *int `json:"id,omitempty"`
 
 				// Name The name of the product variation
 				Name *string `json:"name,omitempty"`
@@ -34940,7 +42387,7 @@ func ParseAddProductVariationResponse(rsp *http.Response) (*AddProductVariationR
 		var dest struct {
 			Data *struct {
 				// Id The ID of the product variation
-				Id *float32 `json:"id,omitempty"`
+				Id *int `json:"id,omitempty"`
 
 				// Name The name of the product variation
 				Name *string `json:"name,omitempty"`
@@ -35017,7 +42464,7 @@ func ParseUpdateProductVariationResponse(rsp *http.Response) (*UpdateProductVari
 		var dest struct {
 			Data *struct {
 				// Id The ID of the product variation
-				Id *float32 `json:"id,omitempty"`
+				Id *int `json:"id,omitempty"`
 
 				// Name The name of the product variation
 				Name *string `json:"name,omitempty"`
@@ -35028,6 +42475,1449 @@ func ParseUpdateProductVariationResponse(rsp *http.Response) (*UpdateProductVari
 				// ProductId The ID of the product
 				ProductId *int `json:"product_id,omitempty"`
 			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectFieldsResponse parses an HTTP response from a GetProjectFieldsWithResponse call
+func ParseGetProjectFieldsResponse(rsp *http.Response) (*GetProjectFieldsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectFieldsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *struct {
+				// NextCursor Base64url-encoded cursor for fetching the next page of results, null if no more pages
+				NextCursor *string `json:"next_cursor"`
+			} `json:"additional_data,omitempty"`
+			Data *[]struct {
+				// FieldCode The unique identifier for the field (40-character hash for custom fields)
+				FieldCode string `json:"field_code"`
+
+				// FieldName The display name/label of the field
+				FieldName string `json:"field_name"`
+
+				// FieldType The type of the field
+				FieldType GetProjectFields200DataFieldType `json:"field_type"`
+
+				// ImportantFields Important fields configuration
+				ImportantFields *struct {
+					// Enabled Whether the field is marked as important
+					Enabled *bool `json:"enabled,omitempty"`
+
+					// StageIds Array of deal stage IDs where the field is important
+					StageIds *[]int `json:"stage_ids,omitempty"`
+				} `json:"important_fields,omitempty"`
+
+				// IsCustomField Whether this is a user-created custom field
+				IsCustomField bool `json:"is_custom_field"`
+
+				// IsOptionalResponseField Whether this field is not returned by default in entity responses
+				IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+				// Options Array of available options for enum/set fields, null for other field types
+				Options *[]struct {
+					// AddTime When the option was created
+					AddTime *time.Time `json:"add_time"`
+
+					// Color Optional color code for the option
+					Color *string `json:"color"`
+
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetProjectFields_200_Data_Options_Id `json:"id,omitempty"`
+
+					// Label The option display label
+					Label *string `json:"label,omitempty"`
+
+					// UpdateTime When the option was last updated
+					UpdateTime *time.Time `json:"update_time"`
+				} `json:"options"`
+
+				// RequiredFields Required fields configuration
+				RequiredFields *struct {
+					// Enabled Whether the field is required
+					Enabled *bool `json:"enabled,omitempty"`
+				} `json:"required_fields,omitempty"`
+
+				// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+				Subfields *[]struct {
+					// FieldCode The subfield identifier
+					FieldCode *string `json:"field_code,omitempty"`
+
+					// FieldName The subfield display name
+					FieldName *string `json:"field_name,omitempty"`
+
+					// FieldType The subfield type
+					FieldType *string `json:"field_type,omitempty"`
+				} `json:"subfields"`
+
+				// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+				UiVisibility *struct {
+					// AddVisibleFlag Whether the field is shown in the add modal
+					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+					// DetailsVisibleFlag Whether the field is shown in the details view
+					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+				} `json:"ui_visibility,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success Whether the request was successful
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddProjectFieldResponse parses an HTTP response from a AddProjectFieldWithResponse call
+func ParseAddProjectFieldResponse(rsp *http.Response) (*AddProjectFieldResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddProjectFieldResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// FieldCode The unique identifier for the field (40-character hash for custom fields)
+				FieldCode string `json:"field_code"`
+
+				// FieldName The display name/label of the field
+				FieldName string `json:"field_name"`
+
+				// FieldType The type of the field
+				FieldType AddProjectField200DataFieldType `json:"field_type"`
+
+				// ImportantFields Important fields configuration
+				ImportantFields *struct {
+					// Enabled Whether the field is marked as important
+					Enabled *bool `json:"enabled,omitempty"`
+
+					// StageIds Array of deal stage IDs where the field is important
+					StageIds *[]int `json:"stage_ids,omitempty"`
+				} `json:"important_fields,omitempty"`
+
+				// IsCustomField Whether this is a user-created custom field
+				IsCustomField bool `json:"is_custom_field"`
+
+				// IsOptionalResponseField Whether this field is not returned by default in entity responses
+				IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+				// Options Array of available options for enum/set fields, null for other field types
+				Options *[]struct {
+					// AddTime When the option was created
+					AddTime *time.Time `json:"add_time"`
+
+					// Color Optional color code for the option
+					Color *string `json:"color"`
+
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *AddProjectField_200_Data_Options_Id `json:"id,omitempty"`
+
+					// Label The option display label
+					Label *string `json:"label,omitempty"`
+
+					// UpdateTime When the option was last updated
+					UpdateTime *time.Time `json:"update_time"`
+				} `json:"options"`
+
+				// RequiredFields Required fields configuration
+				RequiredFields *struct {
+					// Enabled Whether the field is required
+					Enabled *bool `json:"enabled,omitempty"`
+				} `json:"required_fields,omitempty"`
+
+				// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+				Subfields *[]struct {
+					// FieldCode The subfield identifier
+					FieldCode *string `json:"field_code,omitempty"`
+
+					// FieldName The subfield display name
+					FieldName *string `json:"field_name,omitempty"`
+
+					// FieldType The subfield type
+					FieldType *string `json:"field_type,omitempty"`
+				} `json:"subfields"`
+
+				// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+				UiVisibility *struct {
+					// AddVisibleFlag Whether the field is shown in the add modal
+					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+					// DetailsVisibleFlag Whether the field is shown in the details view
+					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+				} `json:"ui_visibility,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success Whether the request was successful
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteProjectFieldResponse parses an HTTP response from a DeleteProjectFieldWithResponse call
+func ParseDeleteProjectFieldResponse(rsp *http.Response) (*DeleteProjectFieldResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteProjectFieldResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// FieldCode The unique identifier for the field (40-character hash for custom fields)
+				FieldCode string `json:"field_code"`
+
+				// FieldName The display name/label of the field
+				FieldName string `json:"field_name"`
+
+				// FieldType The type of the field
+				FieldType string `json:"field_type"`
+
+				// IsCustomField Whether this is a user-created custom field
+				IsCustomField bool `json:"is_custom_field"`
+
+				// IsOptionalResponseField Whether this field is not returned by default in entity responses
+				IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+				// Options Array of available options for enum/set fields, null for other field types
+				Options *[]map[string]interface{} `json:"options"`
+
+				// Subfields Array of subfields for complex field types, null for simple field types
+				Subfields *[]map[string]interface{} `json:"subfields"`
+			} `json:"data,omitempty"`
+
+			// Success Whether the request was successful
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectFieldResponse parses an HTTP response from a GetProjectFieldWithResponse call
+func ParseGetProjectFieldResponse(rsp *http.Response) (*GetProjectFieldResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectFieldResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// FieldCode The unique identifier for the field (40-character hash for custom fields)
+				FieldCode string `json:"field_code"`
+
+				// FieldName The display name/label of the field
+				FieldName string `json:"field_name"`
+
+				// FieldType The type of the field
+				FieldType GetProjectField200DataFieldType `json:"field_type"`
+
+				// ImportantFields Important fields configuration
+				ImportantFields *struct {
+					// Enabled Whether the field is marked as important
+					Enabled *bool `json:"enabled,omitempty"`
+
+					// StageIds Array of deal stage IDs where the field is important
+					StageIds *[]int `json:"stage_ids,omitempty"`
+				} `json:"important_fields,omitempty"`
+
+				// IsCustomField Whether this is a user-created custom field
+				IsCustomField bool `json:"is_custom_field"`
+
+				// IsOptionalResponseField Whether this field is not returned by default in entity responses
+				IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+				// Options Array of available options for enum/set fields, null for other field types
+				Options *[]struct {
+					// AddTime When the option was created
+					AddTime *time.Time `json:"add_time"`
+
+					// Color Optional color code for the option
+					Color *string `json:"color"`
+
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *GetProjectField_200_Data_Options_Id `json:"id,omitempty"`
+
+					// Label The option display label
+					Label *string `json:"label,omitempty"`
+
+					// UpdateTime When the option was last updated
+					UpdateTime *time.Time `json:"update_time"`
+				} `json:"options"`
+
+				// RequiredFields Required fields configuration
+				RequiredFields *struct {
+					// Enabled Whether the field is required
+					Enabled *bool `json:"enabled,omitempty"`
+				} `json:"required_fields,omitempty"`
+
+				// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+				Subfields *[]struct {
+					// FieldCode The subfield identifier
+					FieldCode *string `json:"field_code,omitempty"`
+
+					// FieldName The subfield display name
+					FieldName *string `json:"field_name,omitempty"`
+
+					// FieldType The subfield type
+					FieldType *string `json:"field_type,omitempty"`
+				} `json:"subfields"`
+
+				// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+				UiVisibility *struct {
+					// AddVisibleFlag Whether the field is shown in the add modal
+					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+					// DetailsVisibleFlag Whether the field is shown in the details view
+					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+				} `json:"ui_visibility,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success Whether the request was successful
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateProjectFieldResponse parses an HTTP response from a UpdateProjectFieldWithResponse call
+func ParseUpdateProjectFieldResponse(rsp *http.Response) (*UpdateProjectFieldResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateProjectFieldResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// FieldCode The unique identifier for the field (40-character hash for custom fields)
+				FieldCode string `json:"field_code"`
+
+				// FieldName The display name/label of the field
+				FieldName string `json:"field_name"`
+
+				// FieldType The type of the field
+				FieldType UpdateProjectField200DataFieldType `json:"field_type"`
+
+				// ImportantFields Important fields configuration
+				ImportantFields *struct {
+					// Enabled Whether the field is marked as important
+					Enabled *bool `json:"enabled,omitempty"`
+
+					// StageIds Array of deal stage IDs where the field is important
+					StageIds *[]int `json:"stage_ids,omitempty"`
+				} `json:"important_fields,omitempty"`
+
+				// IsCustomField Whether this is a user-created custom field
+				IsCustomField bool `json:"is_custom_field"`
+
+				// IsOptionalResponseField Whether this field is not returned by default in entity responses
+				IsOptionalResponseField bool `json:"is_optional_response_field"`
+
+				// Options Array of available options for enum/set fields, null for other field types
+				Options *[]struct {
+					// AddTime When the option was created
+					AddTime *time.Time `json:"add_time"`
+
+					// Color Optional color code for the option
+					Color *string `json:"color"`
+
+					// Id The option ID (integer for custom fields, string for built-in fields)
+					Id *UpdateProjectField_200_Data_Options_Id `json:"id,omitempty"`
+
+					// Label The option display label
+					Label *string `json:"label,omitempty"`
+
+					// UpdateTime When the option was last updated
+					UpdateTime *time.Time `json:"update_time"`
+				} `json:"options"`
+
+				// RequiredFields Required fields configuration
+				RequiredFields *struct {
+					// Enabled Whether the field is required
+					Enabled *bool `json:"enabled,omitempty"`
+				} `json:"required_fields,omitempty"`
+
+				// Subfields Array of subfields for complex field types (address, monetary), null for simple field types
+				Subfields *[]struct {
+					// FieldCode The subfield identifier
+					FieldCode *string `json:"field_code,omitempty"`
+
+					// FieldName The subfield display name
+					FieldName *string `json:"field_name,omitempty"`
+
+					// FieldType The subfield type
+					FieldType *string `json:"field_type,omitempty"`
+				} `json:"subfields"`
+
+				// UiVisibility UI visibility settings (only included when requested via include_fields parameter)
+				UiVisibility *struct {
+					// AddVisibleFlag Whether the field is shown in the add modal
+					AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
+
+					// DetailsVisibleFlag Whether the field is shown in the details view
+					DetailsVisibleFlag *bool `json:"details_visible_flag,omitempty"`
+				} `json:"ui_visibility,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success Whether the request was successful
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteProjectFieldOptionsResponse parses an HTTP response from a DeleteProjectFieldOptionsWithResponse call
+func ParseDeleteProjectFieldOptionsResponse(rsp *http.Response) (*DeleteProjectFieldOptionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteProjectFieldOptionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *[]struct {
+				// Id The unique identifier of the option
+				Id int `json:"id"`
+
+				// Label The display label of the option
+				Label string `json:"label"`
+			} `json:"data,omitempty"`
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateProjectFieldOptionsResponse parses an HTTP response from a UpdateProjectFieldOptionsWithResponse call
+func ParseUpdateProjectFieldOptionsResponse(rsp *http.Response) (*UpdateProjectFieldOptionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateProjectFieldOptionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *[]struct {
+				// Id The unique identifier of the option
+				Id int `json:"id"`
+
+				// Label The display label of the option
+				Label string `json:"label"`
+			} `json:"data,omitempty"`
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddProjectFieldOptionsResponse parses an HTTP response from a AddProjectFieldOptionsWithResponse call
+func ParseAddProjectFieldOptionsResponse(rsp *http.Response) (*AddProjectFieldOptionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddProjectFieldOptionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *[]struct {
+				// Id The unique identifier of the option
+				Id int `json:"id"`
+
+				// Label The display label of the option
+				Label string `json:"label"`
+			} `json:"data,omitempty"`
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectTemplatesResponse parses an HTTP response from a GetProjectTemplatesWithResponse call
+func ParseGetProjectTemplatesResponse(rsp *http.Response) (*GetProjectTemplatesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectTemplatesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// AdditionalData The additional data of the list
+			AdditionalData *struct {
+				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+				NextCursor *string `json:"next_cursor,omitempty"`
+			} `json:"additional_data,omitempty"`
+			Data *[]struct {
+				// AddTime The creation date and time of the project template in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// Description The description of the project template
+				Description *string `json:"description,omitempty"`
+
+				// Id The ID of the project template
+				Id *int `json:"id,omitempty"`
+
+				// OwnerId The ID of the owner of the project template
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// ProjectsBoardId The ID of the project board this template is associated with
+				ProjectsBoardId *int `json:"projects_board_id,omitempty"`
+
+				// Title The title of the project template
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The update date and time of the project template in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectTemplateResponse parses an HTTP response from a GetProjectTemplateWithResponse call
+func ParseGetProjectTemplateResponse(rsp *http.Response) (*GetProjectTemplateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectTemplateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *struct {
+				// AddTime The creation date and time of the project template in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// Description The description of the project template
+				Description *string `json:"description,omitempty"`
+
+				// Id The ID of the project template
+				Id *int `json:"id,omitempty"`
+
+				// OwnerId The ID of the owner of the project template
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// ProjectsBoardId The ID of the project board this template is associated with
+				ProjectsBoardId *int `json:"projects_board_id,omitempty"`
+
+				// Title The title of the project template
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The update date and time of the project template in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectsResponse parses an HTTP response from a GetProjectsWithResponse call
+func ParseGetProjectsResponse(rsp *http.Response) (*GetProjectsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// AdditionalData The additional data of the list
+			AdditionalData *struct {
+				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+				NextCursor *string `json:"next_cursor,omitempty"`
+			} `json:"additional_data,omitempty"`
+
+			// Data Projects array
+			Data *[]struct {
+				// AddTime The creation date and time of the project in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+				ArchiveTime *string `json:"archive_time"`
+
+				// BoardId The ID of the board this project is associated with
+				BoardId *int `json:"board_id,omitempty"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// DealIds An array of IDs of the deals this project is associated with
+				DealIds *[]int `json:"deal_ids,omitempty"`
+
+				// Description The description of the project
+				Description *string `json:"description,omitempty"`
+
+				// EndDate The end date of the project. Format: YYYY-MM-DD
+				EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+				// HealthStatus The health status of the project
+				HealthStatus *int `json:"health_status"`
+
+				// Id The ID of the project
+				Id *int `json:"id,omitempty"`
+
+				// LabelIds An array of IDs of the labels this project has
+				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// OrgIds An array of IDs of the organizations this project is associated with
+				OrgIds *[]int `json:"org_ids,omitempty"`
+
+				// OwnerId The ID of the user who owns the project
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// PersonIds An array of IDs of the persons this project is associated with
+				PersonIds *[]int `json:"person_ids,omitempty"`
+
+				// PhaseId The ID of the phase this project is associated with
+				PhaseId *int `json:"phase_id,omitempty"`
+
+				// StartDate The start date of the project. Format: YYYY-MM-DD
+				StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+				// Status The status of the project
+				Status *string `json:"status,omitempty"`
+
+				// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+				StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+				// Title The title of the project
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The last updated date and time of the project in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddProjectResponse parses an HTTP response from a AddProjectWithResponse call
+func ParseAddProjectResponse(rsp *http.Response) (*AddProjectResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddProjectResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the project in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+				ArchiveTime *string `json:"archive_time"`
+
+				// BoardId The ID of the board this project is associated with
+				BoardId *int `json:"board_id,omitempty"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// DealIds An array of IDs of the deals this project is associated with
+				DealIds *[]int `json:"deal_ids,omitempty"`
+
+				// Description The description of the project
+				Description *string `json:"description,omitempty"`
+
+				// EndDate The end date of the project. Format: YYYY-MM-DD
+				EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+				// HealthStatus The health status of the project
+				HealthStatus *int `json:"health_status"`
+
+				// Id The ID of the project
+				Id *int `json:"id,omitempty"`
+
+				// LabelIds An array of IDs of the labels this project has
+				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// OrgIds An array of IDs of the organizations this project is associated with
+				OrgIds *[]int `json:"org_ids,omitempty"`
+
+				// OwnerId The ID of the user who owns the project
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// PersonIds An array of IDs of the persons this project is associated with
+				PersonIds *[]int `json:"person_ids,omitempty"`
+
+				// PhaseId The ID of the phase this project is associated with
+				PhaseId *int `json:"phase_id,omitempty"`
+
+				// StartDate The start date of the project. Format: YYYY-MM-DD
+				StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+				// Status The status of the project
+				Status *string `json:"status,omitempty"`
+
+				// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+				StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+				// Title The title of the project
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The last updated date and time of the project in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetArchivedProjectsResponse parses an HTTP response from a GetArchivedProjectsWithResponse call
+func ParseGetArchivedProjectsResponse(rsp *http.Response) (*GetArchivedProjectsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetArchivedProjectsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// AdditionalData The additional data of the list
+			AdditionalData *struct {
+				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+				NextCursor *string `json:"next_cursor,omitempty"`
+			} `json:"additional_data,omitempty"`
+
+			// Data Projects array
+			Data *[]struct {
+				// AddTime The creation date and time of the project in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+				ArchiveTime *string `json:"archive_time"`
+
+				// BoardId The ID of the board this project is associated with
+				BoardId *int `json:"board_id,omitempty"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// DealIds An array of IDs of the deals this project is associated with
+				DealIds *[]int `json:"deal_ids,omitempty"`
+
+				// Description The description of the project
+				Description *string `json:"description,omitempty"`
+
+				// EndDate The end date of the project. Format: YYYY-MM-DD
+				EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+				// HealthStatus The health status of the project
+				HealthStatus *int `json:"health_status"`
+
+				// Id The ID of the project
+				Id *int `json:"id,omitempty"`
+
+				// LabelIds An array of IDs of the labels this project has
+				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// OrgIds An array of IDs of the organizations this project is associated with
+				OrgIds *[]int `json:"org_ids,omitempty"`
+
+				// OwnerId The ID of the user who owns the project
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// PersonIds An array of IDs of the persons this project is associated with
+				PersonIds *[]int `json:"person_ids,omitempty"`
+
+				// PhaseId The ID of the phase this project is associated with
+				PhaseId *int `json:"phase_id,omitempty"`
+
+				// StartDate The start date of the project. Format: YYYY-MM-DD
+				StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+				// Status The status of the project
+				Status *string `json:"status,omitempty"`
+
+				// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+				StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+				// Title The title of the project
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The last updated date and time of the project in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSearchProjectsResponse parses an HTTP response from a SearchProjectsWithResponse call
+func ParseSearchProjectsResponse(rsp *http.Response) (*SearchProjectsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SearchProjectsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// AdditionalData The additional data of the list
+			AdditionalData *struct {
+				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+				NextCursor *string `json:"next_cursor,omitempty"`
+			} `json:"additional_data,omitempty"`
+			Data *struct {
+				// Items The array of found projects
+				Items *[]struct {
+					Item *struct {
+						// BoardId The ID of the board the project belongs to
+						BoardId *int `json:"board_id"`
+
+						// CustomFields Custom fields
+						CustomFields *[]string `json:"custom_fields,omitempty"`
+						Deal         *struct {
+							// Id The ID of the deal the project is associated with
+							Id *int `json:"id,omitempty"`
+
+							// Title The title of the deal the project is associated with
+							Title *string `json:"title"`
+						} `json:"deal"`
+
+						// DealCount The number of deals associated with the project
+						DealCount *int `json:"deal_count,omitempty"`
+
+						// Description The description of the project
+						Description *string `json:"description"`
+
+						// EndDate The end date of the project
+						EndDate *string `json:"end_date"`
+
+						// Id The ID of the project
+						Id *int `json:"id,omitempty"`
+
+						// Notes An array of notes
+						Notes        *[]string `json:"notes,omitempty"`
+						Organization *struct {
+							// Address The address of the organization the project is associated with
+							Address *string `json:"address"`
+
+							// Id The ID of the organization the project is associated with
+							Id *int `json:"id,omitempty"`
+
+							// Name The name of the organization the project is associated with
+							Name *string `json:"name"`
+						} `json:"organization"`
+						Owner *struct {
+							// Id The ID of the owner of the project
+							Id *int `json:"id"`
+						} `json:"owner,omitempty"`
+						Person *struct {
+							// Id The ID of the person the project is associated with
+							Id *int `json:"id,omitempty"`
+
+							// Name The name of the person the project is associated with
+							Name *string `json:"name"`
+						} `json:"person"`
+						Phase *struct {
+							// Id The ID of the phase
+							Id *int `json:"id,omitempty"`
+
+							// Name The name of the phase
+							Name *string `json:"name,omitempty"`
+						} `json:"phase"`
+
+						// Status The status of the project
+						Status *string `json:"status"`
+
+						// Title The title of the project
+						Title *string `json:"title,omitempty"`
+
+						// Type The type of the item
+						Type *string `json:"type,omitempty"`
+					} `json:"item,omitempty"`
+
+					// ResultScore Search result relevancy
+					ResultScore *float32 `json:"result_score,omitempty"`
+				} `json:"items,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteProjectResponse parses an HTTP response from a DeleteProjectWithResponse call
+func ParseDeleteProjectResponse(rsp *http.Response) (*DeleteProjectResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteProjectResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// Id The ID of the deleted project
+				Id *int `json:"id,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectResponse parses an HTTP response from a GetProjectWithResponse call
+func ParseGetProjectResponse(rsp *http.Response) (*GetProjectResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the project in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+				ArchiveTime *string `json:"archive_time"`
+
+				// BoardId The ID of the board this project is associated with
+				BoardId *int `json:"board_id,omitempty"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// DealIds An array of IDs of the deals this project is associated with
+				DealIds *[]int `json:"deal_ids,omitempty"`
+
+				// Description The description of the project
+				Description *string `json:"description,omitempty"`
+
+				// EndDate The end date of the project. Format: YYYY-MM-DD
+				EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+				// HealthStatus The health status of the project
+				HealthStatus *int `json:"health_status"`
+
+				// Id The ID of the project
+				Id *int `json:"id,omitempty"`
+
+				// LabelIds An array of IDs of the labels this project has
+				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// OrgIds An array of IDs of the organizations this project is associated with
+				OrgIds *[]int `json:"org_ids,omitempty"`
+
+				// OwnerId The ID of the user who owns the project
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// PersonIds An array of IDs of the persons this project is associated with
+				PersonIds *[]int `json:"person_ids,omitempty"`
+
+				// PhaseId The ID of the phase this project is associated with
+				PhaseId *int `json:"phase_id,omitempty"`
+
+				// StartDate The start date of the project. Format: YYYY-MM-DD
+				StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+				// Status The status of the project
+				Status *string `json:"status,omitempty"`
+
+				// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+				StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+				// Title The title of the project
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The last updated date and time of the project in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateProjectResponse parses an HTTP response from a UpdateProjectWithResponse call
+func ParseUpdateProjectResponse(rsp *http.Response) (*UpdateProjectResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateProjectResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the project in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+				ArchiveTime *string `json:"archive_time"`
+
+				// BoardId The ID of the board this project is associated with
+				BoardId *int `json:"board_id,omitempty"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// DealIds An array of IDs of the deals this project is associated with
+				DealIds *[]int `json:"deal_ids,omitempty"`
+
+				// Description The description of the project
+				Description *string `json:"description,omitempty"`
+
+				// EndDate The end date of the project. Format: YYYY-MM-DD
+				EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+				// HealthStatus The health status of the project
+				HealthStatus *int `json:"health_status"`
+
+				// Id The ID of the project
+				Id *int `json:"id,omitempty"`
+
+				// LabelIds An array of IDs of the labels this project has
+				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// OrgIds An array of IDs of the organizations this project is associated with
+				OrgIds *[]int `json:"org_ids,omitempty"`
+
+				// OwnerId The ID of the user who owns the project
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// PersonIds An array of IDs of the persons this project is associated with
+				PersonIds *[]int `json:"person_ids,omitempty"`
+
+				// PhaseId The ID of the phase this project is associated with
+				PhaseId *int `json:"phase_id,omitempty"`
+
+				// StartDate The start date of the project. Format: YYYY-MM-DD
+				StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+				// Status The status of the project
+				Status *string `json:"status,omitempty"`
+
+				// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+				StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+				// Title The title of the project
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The last updated date and time of the project in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseArchiveProjectResponse parses an HTTP response from a ArchiveProjectWithResponse call
+func ParseArchiveProjectResponse(rsp *http.Response) (*ArchiveProjectResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ArchiveProjectResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Data *struct {
+				// AddTime The creation date and time of the project in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// ArchiveTime The date and time the project was archived in ISO 8601 format. If not archived, this field is null.
+				ArchiveTime *string `json:"archive_time"`
+
+				// BoardId The ID of the board this project is associated with
+				BoardId *int `json:"board_id,omitempty"`
+
+				// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
+				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+				// DealIds An array of IDs of the deals this project is associated with
+				DealIds *[]int `json:"deal_ids,omitempty"`
+
+				// Description The description of the project
+				Description *string `json:"description,omitempty"`
+
+				// EndDate The end date of the project. Format: YYYY-MM-DD
+				EndDate *openapi_types.Date `json:"end_date,omitempty"`
+
+				// HealthStatus The health status of the project
+				HealthStatus *int `json:"health_status"`
+
+				// Id The ID of the project
+				Id *int `json:"id,omitempty"`
+
+				// LabelIds An array of IDs of the labels this project has
+				LabelIds *[]int `json:"label_ids,omitempty"`
+
+				// OrgIds An array of IDs of the organizations this project is associated with
+				OrgIds *[]int `json:"org_ids,omitempty"`
+
+				// OwnerId The ID of the user who owns the project
+				OwnerId *int `json:"owner_id,omitempty"`
+
+				// PersonIds An array of IDs of the persons this project is associated with
+				PersonIds *[]int `json:"person_ids,omitempty"`
+
+				// PhaseId The ID of the phase this project is associated with
+				PhaseId *int `json:"phase_id,omitempty"`
+
+				// StartDate The start date of the project. Format: YYYY-MM-DD
+				StartDate *openapi_types.Date `json:"start_date,omitempty"`
+
+				// Status The status of the project
+				Status *string `json:"status,omitempty"`
+
+				// StatusChangeTime The date and time of the last status change of the project in ISO 8601 format
+				StatusChangeTime *string `json:"status_change_time,omitempty"`
+
+				// Title The title of the project
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The last updated date and time of the project in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectChangelogResponse parses an HTTP response from a GetProjectChangelogWithResponse call
+func ParseGetProjectChangelogResponse(rsp *http.Response) (*GetProjectChangelogResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectChangelogResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// AdditionalData The additional data of the list
+			AdditionalData *struct {
+				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+				NextCursor *string `json:"next_cursor,omitempty"`
+			} `json:"additional_data,omitempty"`
+			Data *[]struct {
+				// ActorUserId The ID of the user who made the change
+				ActorUserId *int `json:"actor_user_id,omitempty"`
+
+				// ChangeSource The source of change, for example 'app', 'mobile', 'api', etc.
+				ChangeSource *string `json:"change_source"`
+
+				// ChangeSourceUserAgent The user agent from which the change was made
+				ChangeSourceUserAgent *string `json:"change_source_user_agent"`
+
+				// NewValues A map of field keys to their new values after the change
+				NewValues *map[string]interface{} `json:"new_values,omitempty"`
+
+				// OldValues A map of field keys to their previous values before the change
+				OldValues *map[string]interface{} `json:"old_values,omitempty"`
+
+				// Time The date and time of the change in ISO 8601 format
+				Time *string `json:"time,omitempty"`
+			} `json:"data,omitempty"`
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectUsersResponse parses an HTTP response from a GetProjectUsersWithResponse call
+func ParseGetProjectUsersResponse(rsp *http.Response) (*GetProjectUsersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectUsersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// Data The list of permitted user IDs
+			Data *[]int `json:"data,omitempty"`
 
 			// Success If the response is successful or not
 			Success *bool `json:"success,omitempty"`
@@ -35314,6 +44204,353 @@ func ParseUpdateStageResponse(rsp *http.Response) (*UpdateStageResponse, error) 
 				PipelineId *int `json:"pipeline_id,omitempty"`
 
 				// UpdateTime The stage update time
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetTasksResponse parses an HTTP response from a GetTasksWithResponse call
+func ParseGetTasksResponse(rsp *http.Response) (*GetTasksResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTasksResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// AdditionalData The additional data of the list
+			AdditionalData *struct {
+				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
+				NextCursor *string `json:"next_cursor,omitempty"`
+			} `json:"additional_data,omitempty"`
+			Data *[]struct {
+				// AddTime The creation date and time of the task in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// AssigneeIds The IDs of users assigned to the task
+				AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+				// CreatorId The ID of the user who created the task
+				CreatorId *int `json:"creator_id,omitempty"`
+
+				// Description The description of the task
+				Description *string `json:"description"`
+
+				// DueDate The due date of the task. Format: YYYY-MM-DD.
+				DueDate *openapi_types.Date `json:"due_date"`
+
+				// Id The ID of the task
+				Id *int `json:"id,omitempty"`
+
+				// IsDone Whether the task is done or not.
+				IsDone *bool `json:"is_done,omitempty"`
+
+				// IsMilestone Whether the task is a milestone or not.
+				IsMilestone *bool `json:"is_milestone,omitempty"`
+
+				// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+				// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+				ParentTaskId *int `json:"parent_task_id"`
+
+				// Priority The priority of the task
+				Priority *int `json:"priority"`
+
+				// ProjectId The ID of the project this task is associated with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// StartDate The start date of the task. Format: YYYY-MM-DD.
+				StartDate *openapi_types.Date `json:"start_date"`
+
+				// Title The title of the task
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The update date and time of the task in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddTaskResponse parses an HTTP response from a AddTaskWithResponse call
+func ParseAddTaskResponse(rsp *http.Response) (*AddTaskResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddTaskResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *struct {
+				// AddTime The creation date and time of the task in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// AssigneeIds The IDs of users assigned to the task
+				AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+				// CreatorId The ID of the user who created the task
+				CreatorId *int `json:"creator_id,omitempty"`
+
+				// Description The description of the task
+				Description *string `json:"description"`
+
+				// DueDate The due date of the task. Format: YYYY-MM-DD.
+				DueDate *openapi_types.Date `json:"due_date"`
+
+				// Id The ID of the task
+				Id *int `json:"id,omitempty"`
+
+				// IsDone Whether the task is done or not.
+				IsDone *bool `json:"is_done,omitempty"`
+
+				// IsMilestone Whether the task is a milestone or not.
+				IsMilestone *bool `json:"is_milestone,omitempty"`
+
+				// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+				// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+				ParentTaskId *int `json:"parent_task_id"`
+
+				// Priority The priority of the task
+				Priority *int `json:"priority"`
+
+				// ProjectId The ID of the project this task is associated with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// StartDate The start date of the task. Format: YYYY-MM-DD.
+				StartDate *openapi_types.Date `json:"start_date"`
+
+				// Title The title of the task
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The update date and time of the task in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteTaskResponse parses an HTTP response from a DeleteTaskWithResponse call
+func ParseDeleteTaskResponse(rsp *http.Response) (*DeleteTaskResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteTaskResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *struct {
+				// Id The ID of the deleted task
+				Id *int `json:"id,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetTaskResponse parses an HTTP response from a GetTaskWithResponse call
+func ParseGetTaskResponse(rsp *http.Response) (*GetTaskResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTaskResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *struct {
+				// AddTime The creation date and time of the task in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// AssigneeIds The IDs of users assigned to the task
+				AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+				// CreatorId The ID of the user who created the task
+				CreatorId *int `json:"creator_id,omitempty"`
+
+				// Description The description of the task
+				Description *string `json:"description"`
+
+				// DueDate The due date of the task. Format: YYYY-MM-DD.
+				DueDate *openapi_types.Date `json:"due_date"`
+
+				// Id The ID of the task
+				Id *int `json:"id,omitempty"`
+
+				// IsDone Whether the task is done or not.
+				IsDone *bool `json:"is_done,omitempty"`
+
+				// IsMilestone Whether the task is a milestone or not.
+				IsMilestone *bool `json:"is_milestone,omitempty"`
+
+				// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+				// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+				ParentTaskId *int `json:"parent_task_id"`
+
+				// Priority The priority of the task
+				Priority *int `json:"priority"`
+
+				// ProjectId The ID of the project this task is associated with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// StartDate The start date of the task. Format: YYYY-MM-DD.
+				StartDate *openapi_types.Date `json:"start_date"`
+
+				// Title The title of the task
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The update date and time of the task in ISO 8601 format
+				UpdateTime *string `json:"update_time,omitempty"`
+			} `json:"data,omitempty"`
+
+			// Success If the response is successful or not
+			Success *bool `json:"success,omitempty"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateTaskResponse parses an HTTP response from a UpdateTaskWithResponse call
+func ParseUpdateTaskResponse(rsp *http.Response) (*UpdateTaskResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateTaskResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AdditionalData *map[string]interface{} `json:"additional_data"`
+			Data           *struct {
+				// AddTime The creation date and time of the task in ISO 8601 format
+				AddTime *string `json:"add_time,omitempty"`
+
+				// AssigneeIds The IDs of users assigned to the task
+				AssigneeIds *[]int `json:"assignee_ids,omitempty"`
+
+				// CreatorId The ID of the user who created the task
+				CreatorId *int `json:"creator_id,omitempty"`
+
+				// Description The description of the task
+				Description *string `json:"description"`
+
+				// DueDate The due date of the task. Format: YYYY-MM-DD.
+				DueDate *openapi_types.Date `json:"due_date"`
+
+				// Id The ID of the task
+				Id *int `json:"id,omitempty"`
+
+				// IsDone Whether the task is done or not.
+				IsDone *bool `json:"is_done,omitempty"`
+
+				// IsMilestone Whether the task is a milestone or not.
+				IsMilestone *bool `json:"is_milestone,omitempty"`
+
+				// MarkedAsDoneTime The date and time the task was marked as done in ISO 8601 format
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
+
+				// ParentTaskId The ID of the parent task. If `null`, the task is a root-level task.
+				ParentTaskId *int `json:"parent_task_id"`
+
+				// Priority The priority of the task
+				Priority *int `json:"priority"`
+
+				// ProjectId The ID of the project this task is associated with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// StartDate The start date of the task. Format: YYYY-MM-DD.
+				StartDate *openapi_types.Date `json:"start_date"`
+
+				// Title The title of the task
+				Title *string `json:"title,omitempty"`
+
+				// UpdateTime The update date and time of the task in ISO 8601 format
 				UpdateTime *string `json:"update_time,omitempty"`
 			} `json:"data,omitempty"`
 

@@ -38,9 +38,15 @@ docs:
 
 .PHONY: update-specs
 update-specs:
-	mkdir -p openapi/upstream
-	curl -L -o openapi/upstream/v1.yaml $(OPENAPI_V1_URL)
-	curl -L -o openapi/upstream/v2.yaml $(OPENAPI_V2_URL)
+	@set -eu; \
+		mkdir -p openapi/upstream; \
+		tmp_v1="$$(mktemp)"; \
+		tmp_v2="$$(mktemp)"; \
+		trap 'rm -f "$$tmp_v1" "$$tmp_v2"' EXIT; \
+		curl --fail --show-error --silent --location --output "$$tmp_v1" "$(OPENAPI_V1_URL)"; \
+		curl --fail --show-error --silent --location --output "$$tmp_v2" "$(OPENAPI_V2_URL)"; \
+		mv "$$tmp_v1" openapi/upstream/v1.yaml; \
+		mv "$$tmp_v2" openapi/upstream/v2.yaml
 
 .PHONY: derive-v1-legacy
 derive-v1-legacy:

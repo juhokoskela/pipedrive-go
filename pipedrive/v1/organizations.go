@@ -48,6 +48,16 @@ func WithOrganizationsRequestOptions(opts ...pipedrive.RequestOption) Organizati
 	})
 }
 
+func WithOrganizationsMailMessagesIncludeBody(enabled bool) OrganizationsOption {
+	return organizationsOptionFunc(func(cfg *organizationsOptions) {
+		value := "0"
+		if enabled {
+			value = "1"
+		}
+		cfg.query = mergeQueryValues(cfg.query, url.Values{"include_body": {value}})
+	})
+}
+
 func newOrganizationsOptions(opts []OrganizationsOption) organizationsOptions {
 	var cfg organizationsOptions
 	for _, opt := range opts {

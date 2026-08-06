@@ -22,6 +22,14 @@ type ActivityID int64
 
 type ProjectID int64
 
+type ProjectBoardID int64
+
+type ProjectPhaseID int64
+
+type ProjectTemplateID int64
+
+type TaskID int64
+
 type LeadID string
 
 type ConversionID string

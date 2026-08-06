@@ -103,12 +103,19 @@ func TestOrganizationsService_ListMailMessages(t *testing.T) {
 		if r.URL.Path != "/organizations/15/mailMessages" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.URL.Query().Get("include_body"); got != "1" {
+			t.Fatalf("unexpected include_body: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":9,"subject":"Hello"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
 	})
 
-	messages, page, err := client.Organizations.ListMailMessages(context.Background(), OrganizationID(15))
+	messages, page, err := client.Organizations.ListMailMessages(
+		context.Background(),
+		OrganizationID(15),
+		WithOrganizationsMailMessagesIncludeBody(true),
+	)
 	if err != nil {
 		t.Fatalf("ListMailMessages error: %v", err)
 	}

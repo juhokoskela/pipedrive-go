@@ -1308,7 +1308,7 @@ func TestDealsService_ListProductsAcrossDeals(t *testing.T) {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
 		q := r.URL.Query()
-		if got := q["deal_ids"]; len(got) != 2 || got[0] != "1" || got[1] != "2" {
+		if got := q.Get("deal_ids"); got != "1,2" {
 			t.Fatalf("unexpected deal_ids: %#v", got)
 		}
 		if got := q.Get("limit"); got != "1" {
@@ -1367,7 +1367,7 @@ func TestDealsService_ListProductsAcrossDealsPager(t *testing.T) {
 		if r.URL.Path != "/deals/products" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
-		if got := r.URL.Query()["deal_ids"]; len(got) != 2 || got[0] != "1" || got[1] != "2" {
+		if got := r.URL.Query().Get("deal_ids"); got != "1,2" {
 			t.Fatalf("unexpected deal_ids: %#v", got)
 		}
 		calls++
@@ -1413,7 +1413,7 @@ func TestDealsService_ForEachProductsAcrossDeals(t *testing.T) {
 		if r.URL.Path != "/deals/products" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
-		if got := r.URL.Query()["deal_ids"]; len(got) != 2 || got[0] != "1" || got[1] != "2" {
+		if got := r.URL.Query().Get("deal_ids"); got != "1,2" {
 			t.Fatalf("unexpected deal_ids: %#v", got)
 		}
 		w.Header().Set("Content-Type", "application/json")

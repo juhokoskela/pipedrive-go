@@ -27,6 +27,12 @@ type Client struct {
 	Users              *UsersService
 	Pipelines          *PipelinesService
 	Stages             *StagesService
+	Projects           *ProjectsService
+	ProjectBoards      *ProjectBoardsService
+	ProjectPhases      *ProjectPhasesService
+	ProjectTemplates   *ProjectTemplatesService
+	ProjectFields      *ProjectFieldsService
+	Tasks              *TasksService
 }
 
 func NewClient(cfg pipedrive.Config) (*Client, error) {
@@ -66,5 +72,11 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.Users = &UsersService{client: c}
 	c.Pipelines = &PipelinesService{client: c}
 	c.Stages = &StagesService{client: c}
+	c.Projects = &ProjectsService{client: c}
+	c.ProjectBoards = &ProjectBoardsService{client: c}
+	c.ProjectPhases = &ProjectPhasesService{client: c}
+	c.ProjectTemplates = &ProjectTemplatesService{client: c}
+	c.ProjectFields = &ProjectFieldsService{client: c}
+	c.Tasks = &TasksService{client: c}
 	return c, nil
 }

@@ -52,6 +52,16 @@ func WithPersonsRequestOptions(opts ...pipedrive.RequestOption) PersonsOption {
 	})
 }
 
+func WithPersonsMailMessagesIncludeBody(enabled bool) PersonsOption {
+	return personsOptionFunc(func(cfg *personsOptions) {
+		value := "0"
+		if enabled {
+			value = "1"
+		}
+		cfg.query = mergeQueryValues(cfg.query, url.Values{"include_body": {value}})
+	})
+}
+
 func newPersonsOptions(opts []PersonsOption) personsOptions {
 	var cfg personsOptions
 	for _, opt := range opts {

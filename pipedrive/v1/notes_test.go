@@ -42,6 +42,9 @@ func TestNotesService_List(t *testing.T) {
 		if got := q.Get("project_id"); got != "5" {
 			t.Fatalf("unexpected project_id: %q", got)
 		}
+		if got := q.Get("task_id"); got != "6" {
+			t.Fatalf("unexpected task_id: %q", got)
+		}
 		if got := q.Get("start"); got != "1" {
 			t.Fatalf("unexpected start: %q", got)
 		}
@@ -72,6 +75,9 @@ func TestNotesService_List(t *testing.T) {
 		if got := q.Get("pinned_to_project_flag"); got != "1" {
 			t.Fatalf("unexpected pinned_to_project_flag: %q", got)
 		}
+		if got := q.Get("pinned_to_task_flag"); got != "0" {
+			t.Fatalf("unexpected pinned_to_task_flag: %q", got)
+		}
 		if got := r.Header.Get("X-Test"); got != "1" {
 			t.Fatalf("unexpected header X-Test: %q", got)
 		}
@@ -97,6 +103,7 @@ func TestNotesService_List(t *testing.T) {
 		WithNotesPersonID(PersonID(3)),
 		WithNotesOrganizationID(OrganizationID(4)),
 		WithNotesProjectID(ProjectID(5)),
+		WithNotesTaskID(TaskID(6)),
 		WithNotesStart(1),
 		WithNotesLimit(2),
 		WithNotesSort("add_time DESC"),
@@ -107,6 +114,7 @@ func TestNotesService_List(t *testing.T) {
 		WithNotesPinnedToOrganization(true),
 		WithNotesPinnedToPerson(true),
 		WithNotesPinnedToProject(true),
+		WithNotesPinnedToTask(false),
 		WithNotesRequestOptions(pipedrive.WithHeader("X-Test", "1")),
 	)
 	if err != nil {

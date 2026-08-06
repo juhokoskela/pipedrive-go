@@ -368,6 +368,13 @@ func WithNotesProjectID(id ProjectID) ListNotesOption {
 	})
 }
 
+func WithNotesTaskID(id TaskID) ListNotesOption {
+	return listNotesOptionFunc(func(cfg *listNotesOptions) {
+		value := int(id)
+		cfg.params.TaskId = &value
+	})
+}
+
 func WithNotesStart(start int) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
 		cfg.params.Start = &start
@@ -430,6 +437,13 @@ func WithNotesPinnedToProject(flag bool) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
 		value := genv1.GetNotesParamsPinnedToProjectFlag(boolToNumber(flag))
 		cfg.params.PinnedToProjectFlag = &value
+	})
+}
+
+func WithNotesPinnedToTask(flag bool) ListNotesOption {
+	return listNotesOptionFunc(func(cfg *listNotesOptions) {
+		value := genv1.GetNotesParamsPinnedToTaskFlag(boolToNumber(flag))
+		cfg.params.PinnedToTaskFlag = &value
 	})
 }
 

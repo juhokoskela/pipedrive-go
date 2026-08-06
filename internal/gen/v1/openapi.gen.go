@@ -179,6 +179,12 @@ const (
 	GetArchivedDealsTimelineParamsExcludeDealsN1 GetArchivedDealsTimelineParamsExcludeDeals = 1
 )
 
+// Defines values for GetDealMailMessagesParamsIncludeBody.
+const (
+	GetDealMailMessagesParamsIncludeBodyN0 GetDealMailMessagesParamsIncludeBody = 0
+	GetDealMailMessagesParamsIncludeBodyN1 GetDealMailMessagesParamsIncludeBody = 1
+)
+
 // Defines values for AddFileAndLinkItFormdataBodyFileType.
 const (
 	Gdoc    AddFileAndLinkItFormdataBodyFileType = "gdoc"
@@ -450,6 +456,12 @@ const (
 	GetNotesParamsPinnedToProjectFlagN1 GetNotesParamsPinnedToProjectFlag = 1
 )
 
+// Defines values for GetNotesParamsPinnedToTaskFlag.
+const (
+	GetNotesParamsPinnedToTaskFlagN0 GetNotesParamsPinnedToTaskFlag = 0
+	GetNotesParamsPinnedToTaskFlagN1 GetNotesParamsPinnedToTaskFlag = 1
+)
+
 // Defines values for AddNoteJSONBodyPinnedToDealFlag.
 const (
 	AddNoteJSONBodyPinnedToDealFlagN0 AddNoteJSONBodyPinnedToDealFlag = 0
@@ -478,6 +490,12 @@ const (
 const (
 	AddNoteJSONBodyPinnedToProjectFlagN0 AddNoteJSONBodyPinnedToProjectFlag = 0
 	AddNoteJSONBodyPinnedToProjectFlagN1 AddNoteJSONBodyPinnedToProjectFlag = 1
+)
+
+// Defines values for AddNoteJSONBodyPinnedToTaskFlag.
+const (
+	AddNoteJSONBodyPinnedToTaskFlagN0 AddNoteJSONBodyPinnedToTaskFlag = 0
+	AddNoteJSONBodyPinnedToTaskFlagN1 AddNoteJSONBodyPinnedToTaskFlag = 1
 )
 
 // Defines values for UpdateNoteJSONBodyPinnedToDealFlag.
@@ -510,6 +528,12 @@ const (
 	UpdateNoteJSONBodyPinnedToProjectFlagN1 UpdateNoteJSONBodyPinnedToProjectFlag = 1
 )
 
+// Defines values for UpdateNoteJSONBodyPinnedToTaskFlag.
+const (
+	UpdateNoteJSONBodyPinnedToTaskFlagN0 UpdateNoteJSONBodyPinnedToTaskFlag = 0
+	UpdateNoteJSONBodyPinnedToTaskFlagN1 UpdateNoteJSONBodyPinnedToTaskFlag = 1
+)
+
 // Defines values for GetTokensFormdataBodyGrantType.
 const (
 	GetTokensFormdataBodyGrantTypeAuthorizationCode GetTokensFormdataBodyGrantType = "authorization_code"
@@ -534,6 +558,12 @@ const (
 	UpdateOrganizationRelationshipJSONBodyTypeRelated UpdateOrganizationRelationshipJSONBodyType = "related"
 )
 
+// Defines values for GetOrganizationMailMessagesParamsIncludeBody.
+const (
+	GetOrganizationMailMessagesParamsIncludeBodyN0 GetOrganizationMailMessagesParamsIncludeBody = 0
+	GetOrganizationMailMessagesParamsIncludeBodyN1 GetOrganizationMailMessagesParamsIncludeBody = 1
+)
+
 // Defines values for GetPermissionSetsParamsApp.
 const (
 	GetPermissionSetsParamsAppAccountSettings GetPermissionSetsParamsApp = "account_settings"
@@ -541,6 +571,12 @@ const (
 	GetPermissionSetsParamsAppGlobal          GetPermissionSetsParamsApp = "global"
 	GetPermissionSetsParamsAppProjects        GetPermissionSetsParamsApp = "projects"
 	GetPermissionSetsParamsAppSales           GetPermissionSetsParamsApp = "sales"
+)
+
+// Defines values for GetPersonMailMessagesParamsIncludeBody.
+const (
+	GetPersonMailMessagesParamsIncludeBodyN0 GetPersonMailMessagesParamsIncludeBody = 0
+	GetPersonMailMessagesParamsIncludeBodyN1 GetPersonMailMessagesParamsIncludeBody = 1
 )
 
 // Defines values for GetPipelineDealsParamsEveryone.
@@ -603,24 +639,6 @@ const (
 	GetStageDealsParamsEveryoneN1 GetStageDealsParamsEveryone = 1
 )
 
-// Defines values for GetTasksParamsDone.
-const (
-	GetTasksParamsDoneN0 GetTasksParamsDone = 0
-	GetTasksParamsDoneN1 GetTasksParamsDone = 1
-)
-
-// Defines values for AddTaskJSONBodyDone.
-const (
-	AddTaskJSONBodyDoneN0 AddTaskJSONBodyDone = 0
-	AddTaskJSONBodyDoneN1 AddTaskJSONBodyDone = 1
-)
-
-// Defines values for UpdateTaskJSONBodyDone.
-const (
-	UpdateTaskJSONBodyDoneN0 UpdateTaskJSONBodyDone = 0
-	UpdateTaskJSONBodyDoneN1 UpdateTaskJSONBodyDone = 1
-)
-
 // Defines values for AddUserJSONBodyAccessApp.
 const (
 	AddUserJSONBodyAccessAppAccountSettings AddUserJSONBodyAccessApp = "account_settings"
@@ -633,8 +651,8 @@ const (
 
 // Defines values for FindUsersByNameParamsSearchByEmail.
 const (
-	FindUsersByNameParamsSearchByEmailN0 FindUsersByNameParamsSearchByEmail = 0
-	FindUsersByNameParamsSearchByEmailN1 FindUsersByNameParamsSearchByEmail = 1
+	N0 FindUsersByNameParamsSearchByEmail = 0
+	N1 FindUsersByNameParamsSearchByEmail = 1
 )
 
 // Defines values for AddWebhookJSONBodyEventAction.
@@ -1009,7 +1027,13 @@ type GetDealMailMessagesParams struct {
 
 	// Limit Items shown per page
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// IncludeBody Whether to include the mail message body content in the response. `0` = Don't include, `1` = Include.
+	IncludeBody *GetDealMailMessagesParamsIncludeBody `form:"include_body,omitempty" json:"include_body,omitempty"`
 }
+
+// GetDealMailMessagesParamsIncludeBody defines parameters for GetDealMailMessages.
+type GetDealMailMessagesParamsIncludeBody float32
 
 // MergeDealsJSONBody defines parameters for MergeDeals.
 type MergeDealsJSONBody struct {
@@ -1075,6 +1099,9 @@ type AddFileMultipartBody struct {
 
 	// ProductId The ID of the product to associate file(s) with
 	ProductId *int `json:"product_id,omitempty"`
+
+	// ProjectId The ID of the project to associate file(s) with
+	ProjectId *int `json:"project_id,omitempty"`
 }
 
 // AddFileAndLinkItFormdataBody defines parameters for AddFileAndLinkIt.
@@ -1161,8 +1188,20 @@ type AddFilterJSONBody struct {
 	Type AddFilterJSONBodyType `json:"type"`
 }
 
+// AddFilterParams defines parameters for AddFilter.
+type AddFilterParams struct {
+	// IncludeFieldCode If set to `true`, each condition in the response includes a `field_code` field identifying the field by its code name
+	IncludeFieldCode *bool `form:"include_field_code,omitempty" json:"include_field_code,omitempty"`
+}
+
 // AddFilterJSONBodyType defines parameters for AddFilter.
 type AddFilterJSONBodyType string
+
+// GetFilterParams defines parameters for GetFilter.
+type GetFilterParams struct {
+	// IncludeFieldCode If set to `true`, each condition in the response includes a `field_code` field identifying the field by its code name
+	IncludeFieldCode *bool `form:"include_field_code,omitempty" json:"include_field_code,omitempty"`
+}
 
 // UpdateFilterJSONBody defines parameters for UpdateFilter.
 type UpdateFilterJSONBody struct {
@@ -1171,6 +1210,12 @@ type UpdateFilterJSONBody struct {
 
 	// Name The name of the filter
 	Name *string `json:"name,omitempty"`
+}
+
+// UpdateFilterParams defines parameters for UpdateFilter.
+type UpdateFilterParams struct {
+	// IncludeFieldCode If set to `true`, each condition in the response includes a `field_code` field identifying the field by its code name
+	IncludeFieldCode *bool `form:"include_field_code,omitempty" json:"include_field_code,omitempty"`
 }
 
 // AddGoalJSONBody defines parameters for AddGoal.
@@ -1640,6 +1685,9 @@ type GetNotesParams struct {
 	// ProjectId The ID of the project which notes to fetch. If omitted, notes about all projects will be returned.
 	ProjectId *int `form:"project_id,omitempty" json:"project_id,omitempty"`
 
+	// TaskId The ID of the task which notes to fetch. If omitted, notes about all tasks will be returned.
+	TaskId *int `form:"task_id,omitempty" json:"task_id,omitempty"`
+
 	// Start Pagination start
 	Start *int `form:"start,omitempty" json:"start,omitempty"`
 
@@ -1672,6 +1720,9 @@ type GetNotesParams struct {
 
 	// PinnedToProjectFlag If set, the results are filtered by note to project pinning state
 	PinnedToProjectFlag *GetNotesParamsPinnedToProjectFlag `form:"pinned_to_project_flag,omitempty" json:"pinned_to_project_flag,omitempty"`
+
+	// PinnedToTaskFlag If set, the results are filtered by note to task pinning state
+	PinnedToTaskFlag *GetNotesParamsPinnedToTaskFlag `form:"pinned_to_task_flag,omitempty" json:"pinned_to_task_flag,omitempty"`
 }
 
 // GetNotesParamsPinnedToLeadFlag defines parameters for GetNotes.
@@ -1689,6 +1740,9 @@ type GetNotesParamsPinnedToPersonFlag float32
 // GetNotesParamsPinnedToProjectFlag defines parameters for GetNotes.
 type GetNotesParamsPinnedToProjectFlag float32
 
+// GetNotesParamsPinnedToTaskFlag defines parameters for GetNotes.
+type GetNotesParamsPinnedToTaskFlag float32
+
 // AddNoteJSONBody defines parameters for AddNote.
 type AddNoteJSONBody struct {
 	// AddTime The optional creation date & time of the note in UTC. Can be set in the past or in the future. Format: YYYY-MM-DD HH:MM:SS
@@ -1697,16 +1751,16 @@ type AddNoteJSONBody struct {
 	// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 	Content string `json:"content"`
 
-	// DealId The ID of the deal the note will be attached to. This property is required unless one of (`lead_id/person_id/org_id/project_id`) is specified.
+	// DealId The ID of the deal the note will be attached to. This property is required unless one of (`lead_id/person_id/org_id/project_id/task_id`) is specified.
 	DealId *int `json:"deal_id,omitempty"`
 
-	// LeadId The ID of the lead the note will be attached to. This property is required unless one of (`deal_id/person_id/org_id/project_id`) is specified.
+	// LeadId The ID of the lead the note will be attached to. This property is required unless one of (`deal_id/person_id/org_id/project_id/task_id`) is specified.
 	LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
 
-	// OrgId The ID of the organization this note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/project_id`) is specified.
+	// OrgId The ID of the organization this note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/project_id/task_id`) is specified.
 	OrgId *int `json:"org_id,omitempty"`
 
-	// PersonId The ID of the person this note will be attached to. This property is required unless one of (`deal_id/lead_id/org_id/project_id`) is specified.
+	// PersonId The ID of the person this note will be attached to. This property is required unless one of (`deal_id/lead_id/org_id/project_id/task_id`) is specified.
 	PersonId *int `json:"person_id,omitempty"`
 
 	// PinnedToDealFlag If set, the results are filtered by note to deal pinning state (`deal_id` is also required)
@@ -1724,8 +1778,14 @@ type AddNoteJSONBody struct {
 	// PinnedToProjectFlag If set, the results are filtered by note to project pinning state (`project_id` is also required)
 	PinnedToProjectFlag *AddNoteJSONBodyPinnedToProjectFlag `json:"pinned_to_project_flag,omitempty"`
 
-	// ProjectId The ID of the project the note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/org_id`) is specified.
+	// PinnedToTaskFlag If set, the results are filtered by note to task pinning state (`task_id` is also required)
+	PinnedToTaskFlag *AddNoteJSONBodyPinnedToTaskFlag `json:"pinned_to_task_flag,omitempty"`
+
+	// ProjectId The ID of the project the note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/org_id/task_id`) is specified.
 	ProjectId *int `json:"project_id,omitempty"`
+
+	// TaskId The ID of the task the note will be attached to. This property is required unless one of (`deal_id/lead_id/person_id/org_id/project_id`) is specified.
+	TaskId *int `json:"task_id,omitempty"`
 
 	// UserId The ID of the user who will be marked as the author of the note. Only an admin can change the author.
 	UserId               *int                   `json:"user_id,omitempty"`
@@ -1746,6 +1806,9 @@ type AddNoteJSONBodyPinnedToPersonFlag float32
 
 // AddNoteJSONBodyPinnedToProjectFlag defines parameters for AddNote.
 type AddNoteJSONBodyPinnedToProjectFlag float32
+
+// AddNoteJSONBodyPinnedToTaskFlag defines parameters for AddNote.
+type AddNoteJSONBodyPinnedToTaskFlag float32
 
 // UpdateNoteJSONBody defines parameters for UpdateNote.
 type UpdateNoteJSONBody struct {
@@ -1782,8 +1845,14 @@ type UpdateNoteJSONBody struct {
 	// PinnedToProjectFlag If set, the results are filtered by note to project pinning state (`project_id` is also required)
 	PinnedToProjectFlag *UpdateNoteJSONBodyPinnedToProjectFlag `json:"pinned_to_project_flag,omitempty"`
 
+	// PinnedToTaskFlag If set, the results are filtered by note to task pinning state (`task_id` is also required)
+	PinnedToTaskFlag *UpdateNoteJSONBodyPinnedToTaskFlag `json:"pinned_to_task_flag,omitempty"`
+
 	// ProjectId The ID of the project the note will be attached to
 	ProjectId *int `json:"project_id,omitempty"`
+
+	// TaskId The ID of the task the note will be attached to
+	TaskId *int `json:"task_id,omitempty"`
 
 	// UserId The ID of the user who will be marked as the author of the note. Only an admin can change the author.
 	UserId *int `json:"user_id,omitempty"`
@@ -1803,6 +1872,9 @@ type UpdateNoteJSONBodyPinnedToPersonFlag float32
 
 // UpdateNoteJSONBodyPinnedToProjectFlag defines parameters for UpdateNote.
 type UpdateNoteJSONBodyPinnedToProjectFlag float32
+
+// UpdateNoteJSONBodyPinnedToTaskFlag defines parameters for UpdateNote.
+type UpdateNoteJSONBodyPinnedToTaskFlag float32
 
 // GetNoteCommentsParams defines parameters for GetNoteComments.
 type GetNoteCommentsParams struct {
@@ -1973,7 +2045,13 @@ type GetOrganizationMailMessagesParams struct {
 
 	// Limit Items shown per page
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// IncludeBody Whether to include the mail message body content in the response. `0` = Don't include, `1` = Include.
+	IncludeBody *GetOrganizationMailMessagesParamsIncludeBody `form:"include_body,omitempty" json:"include_body,omitempty"`
 }
+
+// GetOrganizationMailMessagesParamsIncludeBody defines parameters for GetOrganizationMailMessages.
+type GetOrganizationMailMessagesParamsIncludeBody float32
 
 // MergeOrganizationsJSONBody defines parameters for MergeOrganizations.
 type MergeOrganizationsJSONBody struct {
@@ -2048,7 +2126,13 @@ type GetPersonMailMessagesParams struct {
 
 	// Limit Items shown per page
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// IncludeBody Whether to include the mail message body content in the response. `0` = Don't include, `1` = Include.
+	IncludeBody *GetPersonMailMessagesParamsIncludeBody `form:"include_body,omitempty" json:"include_body,omitempty"`
 }
+
+// GetPersonMailMessagesParamsIncludeBody defines parameters for GetPersonMailMessages.
+type GetPersonMailMessagesParamsIncludeBody float32
 
 // MergePersonsJSONBody defines parameters for MergePersons.
 type MergePersonsJSONBody struct {
@@ -2171,123 +2255,6 @@ type GetProductFilesParams struct {
 
 	// Sort Supported fields: `id`, `update_time`
 	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
-}
-
-// GetProjectTemplatesParams defines parameters for GetProjectTemplates.
-type GetProjectTemplatesParams struct {
-	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
-	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit For pagination, the limit of entries to be returned. If not provided, up to 500 items will be returned.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-}
-
-// GetProjectsParams defines parameters for GetProjects.
-type GetProjectsParams struct {
-	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
-	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// FilterId The ID of the filter to use
-	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
-
-	// Status If supplied, includes only projects with the specified statuses. Possible values are `open`, `completed`, `canceled` and `deleted`. By default `deleted` projects are not returned.
-	Status *string `form:"status,omitempty" json:"status,omitempty"`
-
-	// PhaseId If supplied, only projects in specified phase are returned
-	PhaseId *int `form:"phase_id,omitempty" json:"phase_id,omitempty"`
-
-	// IncludeArchived If supplied with `true` then archived projects are also included in the response. By default only not archived projects are returned.
-	IncludeArchived *bool `form:"include_archived,omitempty" json:"include_archived,omitempty"`
-}
-
-// AddProjectJSONBody defines parameters for AddProject.
-type AddProjectJSONBody struct {
-	// BoardId The ID of the board this project is associated with
-	BoardId *float32 `json:"board_id,omitempty"`
-
-	// DealIds An array of IDs of the deals this project is associated with
-	DealIds *[]int `json:"deal_ids,omitempty"`
-
-	// Description The description of the project
-	Description *string `json:"description,omitempty"`
-
-	// EndDate The end date of the project. Format: YYYY-MM-DD.
-	EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-	// Labels An array of IDs of the labels this project has
-	Labels *[]int `json:"labels,omitempty"`
-
-	// OrgId The ID of the organization this project is associated with
-	OrgId *float32 `json:"org_id,omitempty"`
-
-	// OwnerId The ID of a project owner
-	OwnerId *float32 `json:"owner_id,omitempty"`
-
-	// PersonId The ID of the person this project is associated with
-	PersonId *float32 `json:"person_id,omitempty"`
-
-	// PhaseId The ID of the phase this project is associated with
-	PhaseId *float32 `json:"phase_id,omitempty"`
-
-	// StartDate The start date of the project. Format: YYYY-MM-DD.
-	StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-	// Status The status of the project
-	Status *string `json:"status,omitempty"`
-
-	// TemplateId The ID of the template the project will be based on
-	TemplateId *float32 `json:"template_id,omitempty"`
-
-	// Title The title of the project
-	Title string `json:"title"`
-}
-
-// GetProjectsPhasesParams defines parameters for GetProjectsPhases.
-type GetProjectsPhasesParams struct {
-	// BoardId ID of the board for which phases are requested
-	BoardId int `form:"board_id" json:"board_id"`
-}
-
-// UpdateProjectJSONBody defines parameters for UpdateProject.
-type UpdateProjectJSONBody struct {
-	// BoardId The ID of the board this project is associated with
-	BoardId *float32 `json:"board_id,omitempty"`
-
-	// DealIds An array of IDs of the deals this project is associated with
-	DealIds *[]int `json:"deal_ids,omitempty"`
-
-	// Description The description of the project
-	Description *string `json:"description,omitempty"`
-
-	// EndDate The end date of the project. Format: YYYY-MM-DD.
-	EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-	// Labels An array of IDs of the labels this project has
-	Labels *[]int `json:"labels,omitempty"`
-
-	// OrgId The ID of the organization this project is associated with
-	OrgId *float32 `json:"org_id,omitempty"`
-
-	// OwnerId The ID of a project owner
-	OwnerId *float32 `json:"owner_id,omitempty"`
-
-	// PersonId The ID of the person this project is associated with
-	PersonId *float32 `json:"person_id,omitempty"`
-
-	// PhaseId The ID of the phase this project is associated with
-	PhaseId *float32 `json:"phase_id,omitempty"`
-
-	// StartDate The start date of the project. Format: YYYY-MM-DD.
-	StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-	// Status The status of the project
-	Status *string `json:"status,omitempty"`
-
-	// Title The title of the project
-	Title *string `json:"title,omitempty"`
 }
 
 // PutProjectPlanActivityJSONBody defines parameters for PutProjectPlanActivity.
@@ -2421,91 +2388,18 @@ type GetStageDealsParams struct {
 // GetStageDealsParamsEveryone defines parameters for GetStageDeals.
 type GetStageDealsParamsEveryone float32
 
-// GetTasksParams defines parameters for GetTasks.
-type GetTasksParams struct {
-	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
-	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit For pagination, the limit of entries to be returned. If not provided, up to 500 items will be returned.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// AssigneeId If supplied, only tasks that are assigned to this user are returned
-	AssigneeId *int `form:"assignee_id,omitempty" json:"assignee_id,omitempty"`
-
-	// ProjectId If supplied, only tasks that are assigned to this project are returned
-	ProjectId *int `form:"project_id,omitempty" json:"project_id,omitempty"`
-
-	// ParentTaskId If `null` is supplied then only parent tasks are returned. If integer is supplied then only subtasks of a specific task are returned. By default all tasks are returned.
-	ParentTaskId *int `form:"parent_task_id,omitempty" json:"parent_task_id,omitempty"`
-
-	// Done Whether the task is done or not. `0` = Not done, `1` = Done. If not omitted then returns both done and not done tasks.
-	Done *GetTasksParamsDone `form:"done,omitempty" json:"done,omitempty"`
-}
-
-// GetTasksParamsDone defines parameters for GetTasks.
-type GetTasksParamsDone float32
-
-// AddTaskJSONBody defines parameters for AddTask.
-type AddTaskJSONBody struct {
-	// AssigneeId The ID of the user who will be the assignee of the task
-	AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-	// Description The description of the task
-	Description *string `json:"description,omitempty"`
-
-	// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-	Done *AddTaskJSONBodyDone `json:"done,omitempty"`
-
-	// DueDate The due date of the task. Format: YYYY-MM-DD.
-	DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-	// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-	ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-	// ProjectId The ID of a project
-	ProjectId float32 `json:"project_id"`
-
-	// Title The title of the task
-	Title string `json:"title"`
-}
-
-// AddTaskJSONBodyDone defines parameters for AddTask.
-type AddTaskJSONBodyDone float32
-
-// UpdateTaskJSONBody defines parameters for UpdateTask.
-type UpdateTaskJSONBody struct {
-	// AssigneeId The ID of the user who will be the assignee of the task
-	AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-	// Description The description of the task
-	Description *string `json:"description,omitempty"`
-
-	// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-	Done *UpdateTaskJSONBodyDone `json:"done,omitempty"`
-
-	// DueDate The due date of the task. Format: YYYY-MM-DD.
-	DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-	// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-	ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-	// ProjectId The ID of the project this task is associated with
-	ProjectId *float32 `json:"project_id,omitempty"`
-
-	// Title The title of the task
-	Title *string `json:"title,omitempty"`
-}
-
-// UpdateTaskJSONBodyDone defines parameters for UpdateTask.
-type UpdateTaskJSONBodyDone float32
-
 // AddUserJSONBody defines parameters for AddUser.
 type AddUserJSONBody struct {
 	// Access The access given to the user. Each item in the array represents access to a specific app. Optionally may include either admin flag or permission set ID to specify which access to give within the app. If both are omitted, the default access for the corresponding app will be used. It requires structure as follows: `[{ app: 'sales', permission_set_id: '62cc4d7f-4038-4352-abf3-a8c1c822b631' }, { app: 'global', admin: true }, { app: 'account_settings' }]`
 	Access *[]struct {
-		Admin           *bool                    `json:"admin,omitempty"`
-		App             AddUserJSONBodyAccessApp `json:"app"`
-		PermissionSetId *string                  `json:"permission_set_id,omitempty"`
+		// Admin Whether the user has admin access or not
+		Admin *bool `json:"admin,omitempty"`
+
+		// App The granular app access level
+		App AddUserJSONBodyAccessApp `json:"app"`
+
+		// PermissionSetId The ID of the permission set
+		PermissionSetId *string `json:"permission_set_id,omitempty"`
 	} `json:"access,omitempty"`
 
 	// ActiveFlag Whether the user is active or not. `false` = Not activated, `true` = Activated
@@ -2692,12 +2586,6 @@ type MergePersonsJSONRequestBody MergePersonsJSONBody
 // AddPersonPictureMultipartRequestBody defines body for AddPersonPicture for multipart/form-data ContentType.
 type AddPersonPictureMultipartRequestBody AddPersonPictureMultipartBody
 
-// AddProjectJSONRequestBody defines body for AddProject for application/json ContentType.
-type AddProjectJSONRequestBody AddProjectJSONBody
-
-// UpdateProjectJSONRequestBody defines body for UpdateProject for application/json ContentType.
-type UpdateProjectJSONRequestBody UpdateProjectJSONBody
-
 // PutProjectPlanActivityJSONRequestBody defines body for PutProjectPlanActivity for application/json ContentType.
 type PutProjectPlanActivityJSONRequestBody PutProjectPlanActivityJSONBody
 
@@ -2721,12 +2609,6 @@ type UpdateRolePipelinesJSONRequestBody UpdateRolePipelinesJSONBody
 
 // AddOrUpdateRoleSettingJSONRequestBody defines body for AddOrUpdateRoleSetting for application/json ContentType.
 type AddOrUpdateRoleSettingJSONRequestBody AddOrUpdateRoleSettingJSONBody
-
-// AddTaskJSONRequestBody defines body for AddTask for application/json ContentType.
-type AddTaskJSONRequestBody AddTaskJSONBody
-
-// UpdateTaskJSONRequestBody defines body for UpdateTask for application/json ContentType.
-type UpdateTaskJSONRequestBody UpdateTaskJSONBody
 
 // AddUserJSONRequestBody defines body for AddUser for application/json ContentType.
 type AddUserJSONRequestBody AddUserJSONBody
@@ -2850,12 +2732,28 @@ func (a *AddNoteJSONBody) UnmarshalJSON(b []byte) error {
 		delete(object, "pinned_to_project_flag")
 	}
 
+	if raw, found := object["pinned_to_task_flag"]; found {
+		err = json.Unmarshal(raw, &a.PinnedToTaskFlag)
+		if err != nil {
+			return fmt.Errorf("error reading 'pinned_to_task_flag': %w", err)
+		}
+		delete(object, "pinned_to_task_flag")
+	}
+
 	if raw, found := object["project_id"]; found {
 		err = json.Unmarshal(raw, &a.ProjectId)
 		if err != nil {
 			return fmt.Errorf("error reading 'project_id': %w", err)
 		}
 		delete(object, "project_id")
+	}
+
+	if raw, found := object["task_id"]; found {
+		err = json.Unmarshal(raw, &a.TaskId)
+		if err != nil {
+			return fmt.Errorf("error reading 'task_id': %w", err)
+		}
+		delete(object, "task_id")
 	}
 
 	if raw, found := object["user_id"]; found {
@@ -2960,10 +2858,24 @@ func (a AddNoteJSONBody) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.PinnedToTaskFlag != nil {
+		object["pinned_to_task_flag"], err = json.Marshal(a.PinnedToTaskFlag)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'pinned_to_task_flag': %w", err)
+		}
+	}
+
 	if a.ProjectId != nil {
 		object["project_id"], err = json.Marshal(a.ProjectId)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'project_id': %w", err)
+		}
+	}
+
+	if a.TaskId != nil {
+		object["task_id"], err = json.Marshal(a.TaskId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'task_id': %w", err)
 		}
 	}
 
@@ -3200,9 +3112,9 @@ type ClientInterface interface {
 	GetFilters(ctx context.Context, params *GetFiltersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AddFilterWithBody request with any body
-	AddFilterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddFilterWithBody(ctx context.Context, params *AddFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AddFilter(ctx context.Context, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddFilter(ctx context.Context, params *AddFilterParams, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetFilterHelpers request
 	GetFilterHelpers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3211,12 +3123,12 @@ type ClientInterface interface {
 	DeleteFilter(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetFilter request
-	GetFilter(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetFilter(ctx context.Context, id int, params *GetFilterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateFilterWithBody request with any body
-	UpdateFilterWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateFilterWithBody(ctx context.Context, id int, params *UpdateFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateFilter(ctx context.Context, id int, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateFilter(ctx context.Context, id int, params *UpdateFilterParams, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AddGoalWithBody request with any body
 	AddGoalWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3502,48 +3414,8 @@ type ClientInterface interface {
 	// GetProductUsers request
 	GetProductUsers(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetProjectTemplates request
-	GetProjectTemplates(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetProjectTemplate request
-	GetProjectTemplate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetProjects request
-	GetProjects(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// AddProjectWithBody request with any body
-	AddProjectWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	AddProject(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetProjectsBoards request
-	GetProjectsBoards(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetProjectsBoard request
-	GetProjectsBoard(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetProjectsPhases request
-	GetProjectsPhases(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetProjectsPhase request
-	GetProjectsPhase(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteProject request
-	DeleteProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetProject request
-	GetProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateProjectWithBody request with any body
-	UpdateProjectWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	UpdateProject(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetProjectActivities request
 	GetProjectActivities(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ArchiveProject request
-	ArchiveProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetProjectGroups request
 	GetProjectGroups(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3617,25 +3489,6 @@ type ClientInterface interface {
 
 	// GetStageDeals request
 	GetStageDeals(ctx context.Context, id int, params *GetStageDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetTasks request
-	GetTasks(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// AddTaskWithBody request with any body
-	AddTaskWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	AddTask(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteTask request
-	DeleteTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetTask request
-	GetTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateTaskWithBody request with any body
-	UpdateTaskWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	UpdateTask(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetUserConnections request
 	GetUserConnections(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4298,8 +4151,8 @@ func (c *Client) GetFilters(ctx context.Context, params *GetFiltersParams, reqEd
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddFilterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddFilterRequestWithBody(c.Server, contentType, body)
+func (c *Client) AddFilterWithBody(ctx context.Context, params *AddFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddFilterRequestWithBody(c.Server, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4310,8 +4163,8 @@ func (c *Client) AddFilterWithBody(ctx context.Context, contentType string, body
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddFilter(ctx context.Context, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddFilterRequest(c.Server, body)
+func (c *Client) AddFilter(ctx context.Context, params *AddFilterParams, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddFilterRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4346,8 +4199,8 @@ func (c *Client) DeleteFilter(ctx context.Context, id int, reqEditors ...Request
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetFilter(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetFilterRequest(c.Server, id)
+func (c *Client) GetFilter(ctx context.Context, id int, params *GetFilterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFilterRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -4358,8 +4211,8 @@ func (c *Client) GetFilter(ctx context.Context, id int, reqEditors ...RequestEdi
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateFilterWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateFilterRequestWithBody(c.Server, id, contentType, body)
+func (c *Client) UpdateFilterWithBody(ctx context.Context, id int, params *UpdateFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateFilterRequestWithBody(c.Server, id, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4370,8 +4223,8 @@ func (c *Client) UpdateFilterWithBody(ctx context.Context, id int, contentType s
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateFilter(ctx context.Context, id int, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateFilterRequest(c.Server, id, body)
+func (c *Client) UpdateFilter(ctx context.Context, id int, params *UpdateFilterParams, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateFilterRequest(c.Server, id, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5606,176 +5459,8 @@ func (c *Client) GetProductUsers(ctx context.Context, id int, reqEditors ...Requ
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetProjectTemplates(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectTemplatesRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetProjectTemplate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectTemplateRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetProjects(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectsRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) AddProjectWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddProjectRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) AddProject(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddProjectRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetProjectsBoards(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectsBoardsRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetProjectsBoard(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectsBoardRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetProjectsPhases(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectsPhasesRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetProjectsPhase(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectsPhaseRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteProjectRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetProjectRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) UpdateProjectWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateProjectRequestWithBody(c.Server, id, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) UpdateProject(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateProjectRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) GetProjectActivities(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetProjectActivitiesRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) ArchiveProject(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewArchiveProjectRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -6100,90 +5785,6 @@ func (c *Client) AddOrUpdateRoleSetting(ctx context.Context, id int, body AddOrU
 
 func (c *Client) GetStageDeals(ctx context.Context, id int, params *GetStageDealsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetStageDealsRequest(c.Server, id, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetTasks(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetTasksRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) AddTaskWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddTaskRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) AddTask(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddTaskRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteTaskRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetTask(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetTaskRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) UpdateTaskWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateTaskRequestWithBody(c.Server, id, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) UpdateTask(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateTaskRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7938,6 +7539,22 @@ func NewGetDealMailMessagesRequest(server string, id int, params *GetDealMailMes
 
 		}
 
+		if params.IncludeBody != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_body", runtime.ParamLocationQuery, *params.IncludeBody); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -8696,18 +8313,18 @@ func NewGetFiltersRequest(server string, params *GetFiltersParams) (*http.Reques
 }
 
 // NewAddFilterRequest calls the generic AddFilter builder with application/json body
-func NewAddFilterRequest(server string, body AddFilterJSONRequestBody) (*http.Request, error) {
+func NewAddFilterRequest(server string, params *AddFilterParams, body AddFilterJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewAddFilterRequestWithBody(server, "application/json", bodyReader)
+	return NewAddFilterRequestWithBody(server, params, "application/json", bodyReader)
 }
 
 // NewAddFilterRequestWithBody generates requests for AddFilter with any type of body
-func NewAddFilterRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+func NewAddFilterRequestWithBody(server string, params *AddFilterParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -8723,6 +8340,28 @@ func NewAddFilterRequestWithBody(server string, contentType string, body io.Read
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.IncludeFieldCode != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_field_code", runtime.ParamLocationQuery, *params.IncludeFieldCode); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("POST", queryURL.String(), body)
@@ -8797,7 +8436,7 @@ func NewDeleteFilterRequest(server string, id int) (*http.Request, error) {
 }
 
 // NewGetFilterRequest generates requests for GetFilter
-func NewGetFilterRequest(server string, id int) (*http.Request, error) {
+func NewGetFilterRequest(server string, id int, params *GetFilterParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8820,6 +8459,28 @@ func NewGetFilterRequest(server string, id int) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.IncludeFieldCode != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_field_code", runtime.ParamLocationQuery, *params.IncludeFieldCode); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
@@ -8831,18 +8492,18 @@ func NewGetFilterRequest(server string, id int) (*http.Request, error) {
 }
 
 // NewUpdateFilterRequest calls the generic UpdateFilter builder with application/json body
-func NewUpdateFilterRequest(server string, id int, body UpdateFilterJSONRequestBody) (*http.Request, error) {
+func NewUpdateFilterRequest(server string, id int, params *UpdateFilterParams, body UpdateFilterJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateFilterRequestWithBody(server, id, "application/json", bodyReader)
+	return NewUpdateFilterRequestWithBody(server, id, params, "application/json", bodyReader)
 }
 
 // NewUpdateFilterRequestWithBody generates requests for UpdateFilter with any type of body
-func NewUpdateFilterRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateFilterRequestWithBody(server string, id int, params *UpdateFilterParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8865,6 +8526,28 @@ func NewUpdateFilterRequestWithBody(server string, id int, contentType string, b
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.IncludeFieldCode != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_field_code", runtime.ParamLocationQuery, *params.IncludeFieldCode); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("PUT", queryURL.String(), body)
@@ -10947,6 +10630,22 @@ func NewGetNotesRequest(server string, params *GetNotesParams) (*http.Request, e
 
 		}
 
+		if params.TaskId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "task_id", runtime.ParamLocationQuery, *params.TaskId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Start != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "start", runtime.ParamLocationQuery, *params.Start); err != nil {
@@ -11110,6 +10809,22 @@ func NewGetNotesRequest(server string, params *GetNotesParams) (*http.Request, e
 		if params.PinnedToProjectFlag != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "pinned_to_project_flag", runtime.ParamLocationQuery, *params.PinnedToProjectFlag); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PinnedToTaskFlag != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "pinned_to_task_flag", runtime.ParamLocationQuery, *params.PinnedToTaskFlag); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12315,6 +12030,22 @@ func NewGetOrganizationMailMessagesRequest(server string, id int, params *GetOrg
 
 		}
 
+		if params.IncludeBody != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_body", runtime.ParamLocationQuery, *params.IncludeBody); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -12919,6 +12650,22 @@ func NewGetPersonMailMessagesRequest(server string, id int, params *GetPersonMai
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IncludeBody != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_body", runtime.ParamLocationQuery, *params.IncludeBody); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13749,529 +13496,6 @@ func NewGetProductUsersRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
-// NewGetProjectTemplatesRequest generates requests for GetProjectTemplates
-func NewGetProjectTemplatesRequest(server string, params *GetProjectTemplatesParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projectTemplates")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetProjectTemplateRequest generates requests for GetProjectTemplate
-func NewGetProjectTemplateRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projectTemplates/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetProjectsRequest generates requests for GetProjects
-func NewGetProjectsRequest(server string, params *GetProjectsParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.FilterId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter_id", runtime.ParamLocationQuery, *params.FilterId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Status != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.PhaseId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "phase_id", runtime.ParamLocationQuery, *params.PhaseId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.IncludeArchived != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_archived", runtime.ParamLocationQuery, *params.IncludeArchived); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewAddProjectRequest calls the generic AddProject builder with application/json body
-func NewAddProjectRequest(server string, body AddProjectJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewAddProjectRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewAddProjectRequestWithBody generates requests for AddProject with any type of body
-func NewAddProjectRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewGetProjectsBoardsRequest generates requests for GetProjectsBoards
-func NewGetProjectsBoardsRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/boards")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetProjectsBoardRequest generates requests for GetProjectsBoard
-func NewGetProjectsBoardRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/boards/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetProjectsPhasesRequest generates requests for GetProjectsPhases
-func NewGetProjectsPhasesRequest(server string, params *GetProjectsPhasesParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/phases")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "board_id", runtime.ParamLocationQuery, params.BoardId); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
-				}
-			}
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetProjectsPhaseRequest generates requests for GetProjectsPhase
-func NewGetProjectsPhaseRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/phases/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewDeleteProjectRequest generates requests for DeleteProject
-func NewDeleteProjectRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetProjectRequest generates requests for GetProject
-func NewGetProjectRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewUpdateProjectRequest calls the generic UpdateProject builder with application/json body
-func NewUpdateProjectRequest(server string, id int, body UpdateProjectJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdateProjectRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewUpdateProjectRequestWithBody generates requests for UpdateProject with any type of body
-func NewUpdateProjectRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PUT", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewGetProjectActivitiesRequest generates requests for GetProjectActivities
 func NewGetProjectActivitiesRequest(server string, id int) (*http.Request, error) {
 	var err error
@@ -14299,40 +13523,6 @@ func NewGetProjectActivitiesRequest(server string, id int) (*http.Request, error
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewArchiveProjectRequest generates requests for ArchiveProject
-func NewArchiveProjectRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/projects/%s/archive", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15333,290 +14523,6 @@ func NewGetStageDealsRequest(server string, id int, params *GetStageDealsParams)
 	return req, nil
 }
 
-// NewGetTasksRequest generates requests for GetTasks
-func NewGetTasksRequest(server string, params *GetTasksParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/tasks")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.AssigneeId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "assignee_id", runtime.ParamLocationQuery, *params.AssigneeId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.ProjectId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "project_id", runtime.ParamLocationQuery, *params.ProjectId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.ParentTaskId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "parent_task_id", runtime.ParamLocationQuery, *params.ParentTaskId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Done != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "done", runtime.ParamLocationQuery, *params.Done); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewAddTaskRequest calls the generic AddTask builder with application/json body
-func NewAddTaskRequest(server string, body AddTaskJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewAddTaskRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewAddTaskRequestWithBody generates requests for AddTask with any type of body
-func NewAddTaskRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/tasks")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewDeleteTaskRequest generates requests for DeleteTask
-func NewDeleteTaskRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/tasks/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetTaskRequest generates requests for GetTask
-func NewGetTaskRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/tasks/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewUpdateTaskRequest calls the generic UpdateTask builder with application/json body
-func NewUpdateTaskRequest(server string, id int, body UpdateTaskJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdateTaskRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewUpdateTaskRequestWithBody generates requests for UpdateTask with any type of body
-func NewUpdateTaskRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/tasks/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PUT", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewGetUserConnectionsRequest generates requests for GetUserConnections
 func NewGetUserConnectionsRequest(server string) (*http.Request, error) {
 	var err error
@@ -16335,9 +15241,9 @@ type ClientWithResponsesInterface interface {
 	GetFiltersWithResponse(ctx context.Context, params *GetFiltersParams, reqEditors ...RequestEditorFn) (*GetFiltersResponse, error)
 
 	// AddFilterWithBodyWithResponse request with any body
-	AddFilterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddFilterResponse, error)
+	AddFilterWithBodyWithResponse(ctx context.Context, params *AddFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddFilterResponse, error)
 
-	AddFilterWithResponse(ctx context.Context, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*AddFilterResponse, error)
+	AddFilterWithResponse(ctx context.Context, params *AddFilterParams, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*AddFilterResponse, error)
 
 	// GetFilterHelpersWithResponse request
 	GetFilterHelpersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetFilterHelpersResponse, error)
@@ -16346,12 +15252,12 @@ type ClientWithResponsesInterface interface {
 	DeleteFilterWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteFilterResponse, error)
 
 	// GetFilterWithResponse request
-	GetFilterWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetFilterResponse, error)
+	GetFilterWithResponse(ctx context.Context, id int, params *GetFilterParams, reqEditors ...RequestEditorFn) (*GetFilterResponse, error)
 
 	// UpdateFilterWithBodyWithResponse request with any body
-	UpdateFilterWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error)
+	UpdateFilterWithBodyWithResponse(ctx context.Context, id int, params *UpdateFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error)
 
-	UpdateFilterWithResponse(ctx context.Context, id int, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error)
+	UpdateFilterWithResponse(ctx context.Context, id int, params *UpdateFilterParams, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error)
 
 	// AddGoalWithBodyWithResponse request with any body
 	AddGoalWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddGoalResponse, error)
@@ -16637,48 +15543,8 @@ type ClientWithResponsesInterface interface {
 	// GetProductUsersWithResponse request
 	GetProductUsersWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProductUsersResponse, error)
 
-	// GetProjectTemplatesWithResponse request
-	GetProjectTemplatesWithResponse(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*GetProjectTemplatesResponse, error)
-
-	// GetProjectTemplateWithResponse request
-	GetProjectTemplateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectTemplateResponse, error)
-
-	// GetProjectsWithResponse request
-	GetProjectsWithResponse(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*GetProjectsResponse, error)
-
-	// AddProjectWithBodyWithResponse request with any body
-	AddProjectWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectResponse, error)
-
-	AddProjectWithResponse(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectResponse, error)
-
-	// GetProjectsBoardsWithResponse request
-	GetProjectsBoardsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetProjectsBoardsResponse, error)
-
-	// GetProjectsBoardWithResponse request
-	GetProjectsBoardWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsBoardResponse, error)
-
-	// GetProjectsPhasesWithResponse request
-	GetProjectsPhasesWithResponse(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*GetProjectsPhasesResponse, error)
-
-	// GetProjectsPhaseWithResponse request
-	GetProjectsPhaseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsPhaseResponse, error)
-
-	// DeleteProjectWithResponse request
-	DeleteProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectResponse, error)
-
-	// GetProjectWithResponse request
-	GetProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectResponse, error)
-
-	// UpdateProjectWithBodyWithResponse request with any body
-	UpdateProjectWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error)
-
-	UpdateProjectWithResponse(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error)
-
 	// GetProjectActivitiesWithResponse request
 	GetProjectActivitiesWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectActivitiesResponse, error)
-
-	// ArchiveProjectWithResponse request
-	ArchiveProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ArchiveProjectResponse, error)
 
 	// GetProjectGroupsWithResponse request
 	GetProjectGroupsWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectGroupsResponse, error)
@@ -16752,25 +15618,6 @@ type ClientWithResponsesInterface interface {
 
 	// GetStageDealsWithResponse request
 	GetStageDealsWithResponse(ctx context.Context, id int, params *GetStageDealsParams, reqEditors ...RequestEditorFn) (*GetStageDealsResponse, error)
-
-	// GetTasksWithResponse request
-	GetTasksWithResponse(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*GetTasksResponse, error)
-
-	// AddTaskWithBodyWithResponse request with any body
-	AddTaskWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddTaskResponse, error)
-
-	AddTaskWithResponse(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*AddTaskResponse, error)
-
-	// DeleteTaskWithResponse request
-	DeleteTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteTaskResponse, error)
-
-	// GetTaskWithResponse request
-	GetTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetTaskResponse, error)
-
-	// UpdateTaskWithBodyWithResponse request with any body
-	UpdateTaskWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error)
-
-	UpdateTaskWithResponse(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error)
 
 	// GetUserConnectionsWithResponse request
 	GetUserConnectionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetUserConnectionsResponse, error)
@@ -19208,6 +18055,9 @@ type GetDealMailMessagesResponse struct {
 					Name *string `json:"name,omitempty"`
 				} `json:"bcc,omitempty"`
 
+				// Body The mail message body content. Only present when `include_body=1` is passed.
+				Body *string `json:"body,omitempty"`
+
 				// BodyUrl The mail message body URL
 				BodyUrl *string `json:"body_url,omitempty"`
 
@@ -19690,9 +18540,14 @@ type GetDealParticipantsResponse struct {
 			AddedByUserId *struct {
 				Data *struct {
 					Access *[]struct {
-						Admin           *bool                                                 `json:"admin,omitempty"`
-						App             *GetDealParticipants200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
-						PermissionSetId *string                                               `json:"permission_set_id,omitempty"`
+						// Admin Whether the user has admin access or not
+						Admin *bool `json:"admin,omitempty"`
+
+						// App The granular app access level
+						App *GetDealParticipants200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+
+						// PermissionSetId The ID of the permission set
+						PermissionSetId *string `json:"permission_set_id,omitempty"`
 					} `json:"access,omitempty"`
 
 					// Activated Boolean that indicates whether the user is activated
@@ -20153,9 +19008,14 @@ type AddDealParticipantResponse struct {
 			AddedByUserId *struct {
 				Data *struct {
 					Access *[]struct {
-						Admin           *bool                                                `json:"admin,omitempty"`
-						App             *AddDealParticipant200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
-						PermissionSetId *string                                              `json:"permission_set_id,omitempty"`
+						// Admin Whether the user has admin access or not
+						Admin *bool `json:"admin,omitempty"`
+
+						// App The granular app access level
+						App *AddDealParticipant200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+
+						// PermissionSetId The ID of the permission set
+						PermissionSetId *string `json:"permission_set_id,omitempty"`
 					} `json:"access,omitempty"`
 
 					// Activated Boolean that indicates whether the user is activated
@@ -20774,6 +19634,12 @@ type GetFilesResponse struct {
 			// ProductName The name of the product associated with the file
 			ProductName *string `json:"product_name,omitempty"`
 
+			// ProjectId The ID of the project to associate the file with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// ProjectName The name of the project associated with the file
+			ProjectName *string `json:"project_name,omitempty"`
+
 			// RemoteId The ID of the remote item
 			RemoteId *string `json:"remote_id,omitempty"`
 
@@ -20885,6 +19751,12 @@ type AddFileResponse struct {
 
 			// ProductName The name of the product associated with the file
 			ProductName *string `json:"product_name,omitempty"`
+
+			// ProjectId The ID of the project to associate the file with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// ProjectName The name of the project associated with the file
+			ProjectName *string `json:"project_name,omitempty"`
 
 			// RemoteId The ID of the remote item
 			RemoteId *string `json:"remote_id,omitempty"`
@@ -20998,6 +19870,12 @@ type AddFileAndLinkItResponse struct {
 			// ProductName The name of the product associated with the file
 			ProductName *string `json:"product_name,omitempty"`
 
+			// ProjectId The ID of the project to associate the file with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// ProjectName The name of the project associated with the file
+			ProjectName *string `json:"project_name,omitempty"`
+
 			// RemoteId The ID of the remote item
 			RemoteId *string `json:"remote_id,omitempty"`
 
@@ -21109,6 +19987,12 @@ type LinkFileToItemResponse struct {
 
 			// ProductName The name of the product associated with the file
 			ProductName *string `json:"product_name,omitempty"`
+
+			// ProjectId The ID of the project to associate the file with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// ProjectName The name of the project associated with the file
+			ProjectName *string `json:"project_name,omitempty"`
 
 			// RemoteId The ID of the remote item
 			RemoteId *string `json:"remote_id,omitempty"`
@@ -21252,6 +20136,12 @@ type GetFileResponse struct {
 			// ProductName The name of the product associated with the file
 			ProductName *string `json:"product_name,omitempty"`
 
+			// ProjectId The ID of the project to associate the file with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// ProjectName The name of the project associated with the file
+			ProjectName *string `json:"project_name,omitempty"`
+
 			// RemoteId The ID of the remote item
 			RemoteId *string `json:"remote_id,omitempty"`
 
@@ -21364,6 +20254,12 @@ type UpdateFileResponse struct {
 			// ProductName The name of the product associated with the file
 			ProductName *string `json:"product_name,omitempty"`
 
+			// ProjectId The ID of the project to associate the file with
+			ProjectId *int `json:"project_id,omitempty"`
+
+			// ProjectName The name of the project associated with the file
+			ProjectName *string `json:"project_name,omitempty"`
+
 			// RemoteId The ID of the remote item
 			RemoteId *string `json:"remote_id,omitempty"`
 
@@ -21467,32 +20363,44 @@ type GetFiltersResponse struct {
 			// AddTime The date and time when the filter was added
 			AddTime *string `json:"add_time,omitempty"`
 
-			// CustomViewId Used by Pipedrive webapp
-			CustomViewId *int `json:"custom_view_id,omitempty"`
+			// CustomViewId The custom view ID linked to the filter
+			CustomViewId *int `json:"custom_view_id"`
+
+			// FilterCode The system code of the filter
+			FilterCode *string `json:"filter_code"`
 
 			// Id The ID of the filter
 			Id *int `json:"id,omitempty"`
 
+			// IsEditable Whether the filter can be edited by the requesting user
+			IsEditable *bool `json:"is_editable,omitempty"`
+
+			// LastUsedTime The date and time when the filter was last used
+			LastUsedTime *string `json:"last_used_time"`
+
 			// Name The name of the filter
 			Name *string `json:"name,omitempty"`
 
-			// Type The type of the item
-			Type *string `json:"type,omitempty"`
+			// TemporaryFlag Whether the filter is temporary
+			TemporaryFlag *bool                  `json:"temporary_flag"`
+			Type          *GetFilters200DataType `json:"type,omitempty"`
 
 			// UpdateTime The date and time when the filter was updated
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// UserId The owner of the filter
 			UserId *int `json:"user_id,omitempty"`
 
-			// VisibleTo The visibility group ID of who can see then filter
-			VisibleTo *int `json:"visible_to,omitempty"`
+			// VisibleTo The visibility group ID of who can see the filter
+			VisibleTo *GetFilters200DataVisibleTo `json:"visible_to,omitempty"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
 		Success *bool `json:"success,omitempty"`
 	}
 }
+type GetFilters200DataType string
+type GetFilters200DataVisibleTo string
 
 // Status returns HTTPResponse.Status
 func (r GetFiltersResponse) Status() string {
@@ -21515,43 +20423,88 @@ type AddFilterResponse struct {
 	HTTPResponse *http.Response
 	JSON200      *struct {
 		Data *struct {
-			// ActiveFlag The activity flag of the created filter
+			// ActiveFlag The activity flag of the filter
 			ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// AddTime The add time of the created filter
+			// AddTime The date and time when the filter was added
 			AddTime *string `json:"add_time,omitempty"`
 
-			// Conditions The created filter conditions object
-			Conditions *map[string]interface{} `json:"conditions,omitempty"`
+			// Conditions The conditions object of a filter
+			Conditions *struct {
+				// Conditions The condition groups
+				Conditions *[]struct {
+					// Conditions The individual conditions in this group
+					Conditions *[]struct {
+						// ExtraValue An extra value for conditions that require two values
+						ExtraValue *string `json:"extra_value"`
 
-			// CustomViewId The custom view ID of the created filter
-			CustomViewId *int `json:"custom_view_id,omitempty"`
+						// FieldCode The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
+						FieldCode *string `json:"field_code"`
 
-			// Id The ID of the created filter
+						// FieldId The ID of the field
+						FieldId *string `json:"field_id,omitempty"`
+
+						// JsonValueFlag Whether the value is JSON-encoded
+						JsonValueFlag *bool `json:"json_value_flag,omitempty"`
+
+						// Object The type of entity the condition applies to (e.g. "deal", "person")
+						Object *string `json:"object,omitempty"`
+
+						// Operator The operator used in the condition (e.g. "=", "IS NOT NULL")
+						Operator *string `json:"operator,omitempty"`
+
+						// Value The value of the condition
+						Value *string `json:"value"`
+					} `json:"conditions,omitempty"`
+
+					// Glue The logical operator joining conditions within this group
+					Glue *AddFilter200DataConditionsConditionsGlue `json:"glue,omitempty"`
+				} `json:"conditions,omitempty"`
+
+				// Glue The top-level glue is always "and"
+				Glue *AddFilter200DataConditionsGlue `json:"glue,omitempty"`
+			} `json:"conditions,omitempty"`
+
+			// CustomViewId The custom view ID linked to the filter
+			CustomViewId *int `json:"custom_view_id"`
+
+			// FilterCode The system code of the filter
+			FilterCode *string `json:"filter_code"`
+
+			// Id The ID of the filter
 			Id *int `json:"id,omitempty"`
 
-			// Name The name of the created filter
+			// IsEditable Whether the filter can be edited by the requesting user
+			IsEditable *bool `json:"is_editable,omitempty"`
+
+			// LastUsedTime The date and time when the filter was last used
+			LastUsedTime *string `json:"last_used_time"`
+
+			// Name The name of the filter
 			Name *string `json:"name,omitempty"`
 
-			// TemporaryFlag If the created filter is temporary or not
-			TemporaryFlag *bool                 `json:"temporary_flag,omitempty"`
+			// TemporaryFlag Whether the filter is temporary
+			TemporaryFlag *bool                 `json:"temporary_flag"`
 			Type          *AddFilter200DataType `json:"type,omitempty"`
 
-			// UpdateTime The update time of the created filter
-			UpdateTime *string `json:"update_time,omitempty"`
+			// UpdateTime The date and time when the filter was last updated
+			UpdateTime *string `json:"update_time"`
 
-			// UserId The user ID of the created filter
+			// UserId The user ID of the filter owner
 			UserId *int `json:"user_id,omitempty"`
 
-			// VisibleTo The visibility group ID of the created filter
-			VisibleTo *int `json:"visible_to,omitempty"`
+			// VisibleTo The visibility group ID of the filter
+			VisibleTo *AddFilter200DataVisibleTo `json:"visible_to,omitempty"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
 		Success *bool `json:"success,omitempty"`
 	}
 }
+type AddFilter200DataConditionsConditionsGlue string
+type AddFilter200DataConditionsGlue string
 type AddFilter200DataType string
+type AddFilter200DataVisibleTo string
 
 // Status returns HTTPResponse.Status
 func (r AddFilterResponse) Status() string {
@@ -21625,7 +20578,7 @@ type GetFilterResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		// Data The filter object
+		// Data The filter object including conditions
 		Data *struct {
 			// ActiveFlag The active flag of the filter
 			ActiveFlag *bool `json:"active_flag,omitempty"`
@@ -21633,32 +20586,82 @@ type GetFilterResponse struct {
 			// AddTime The date and time when the filter was added
 			AddTime *string `json:"add_time,omitempty"`
 
-			// CustomViewId Used by Pipedrive webapp
-			CustomViewId *int `json:"custom_view_id,omitempty"`
+			// Conditions The conditions object of a filter
+			Conditions *struct {
+				// Conditions The condition groups
+				Conditions *[]struct {
+					// Conditions The individual conditions in this group
+					Conditions *[]struct {
+						// ExtraValue An extra value for conditions that require two values
+						ExtraValue *string `json:"extra_value"`
+
+						// FieldCode The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
+						FieldCode *string `json:"field_code"`
+
+						// FieldId The ID of the field
+						FieldId *string `json:"field_id,omitempty"`
+
+						// JsonValueFlag Whether the value is JSON-encoded
+						JsonValueFlag *bool `json:"json_value_flag,omitempty"`
+
+						// Object The type of entity the condition applies to (e.g. "deal", "person")
+						Object *string `json:"object,omitempty"`
+
+						// Operator The operator used in the condition (e.g. "=", "IS NOT NULL")
+						Operator *string `json:"operator,omitempty"`
+
+						// Value The value of the condition
+						Value *string `json:"value"`
+					} `json:"conditions,omitempty"`
+
+					// Glue The logical operator joining conditions within this group
+					Glue *GetFilter200DataConditionsConditionsGlue `json:"glue,omitempty"`
+				} `json:"conditions,omitempty"`
+
+				// Glue The top-level glue is always "and"
+				Glue *GetFilter200DataConditionsGlue `json:"glue,omitempty"`
+			} `json:"conditions,omitempty"`
+
+			// CustomViewId The custom view ID linked to the filter
+			CustomViewId *int `json:"custom_view_id"`
+
+			// FilterCode The system code of the filter
+			FilterCode *string `json:"filter_code"`
 
 			// Id The ID of the filter
 			Id *int `json:"id,omitempty"`
 
+			// IsEditable Whether the filter can be edited by the requesting user
+			IsEditable *bool `json:"is_editable,omitempty"`
+
+			// LastUsedTime The date and time when the filter was last used
+			LastUsedTime *string `json:"last_used_time"`
+
 			// Name The name of the filter
 			Name *string `json:"name,omitempty"`
 
-			// Type The type of the item
-			Type *string `json:"type,omitempty"`
+			// TemporaryFlag Whether the filter is temporary
+			TemporaryFlag *bool                 `json:"temporary_flag"`
+			Type          *GetFilter200DataType `json:"type,omitempty"`
 
 			// UpdateTime The date and time when the filter was updated
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// UserId The owner of the filter
 			UserId *int `json:"user_id,omitempty"`
 
-			// VisibleTo The visibility group ID of who can see then filter
-			VisibleTo *int `json:"visible_to,omitempty"`
+			// VisibleTo The visibility group ID of who can see the filter
+			VisibleTo *GetFilter200DataVisibleTo `json:"visible_to,omitempty"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
 		Success *bool `json:"success,omitempty"`
 	}
 }
+type GetFilter200DataConditionsConditionsGlue string
+type GetFilter200DataConditionsGlue string
+type GetFilter200DataType string
+type GetFilter200DataVisibleTo string
 
 // Status returns HTTPResponse.Status
 func (r GetFilterResponse) Status() string {
@@ -21681,43 +20684,88 @@ type UpdateFilterResponse struct {
 	HTTPResponse *http.Response
 	JSON200      *struct {
 		Data *struct {
-			// ActiveFlag The activity flag of the created filter
+			// ActiveFlag The activity flag of the filter
 			ActiveFlag *bool `json:"active_flag,omitempty"`
 
-			// AddTime The add time of the created filter
+			// AddTime The date and time when the filter was added
 			AddTime *string `json:"add_time,omitempty"`
 
-			// Conditions The created filter conditions object
-			Conditions *map[string]interface{} `json:"conditions,omitempty"`
+			// Conditions The conditions object of a filter
+			Conditions *struct {
+				// Conditions The condition groups
+				Conditions *[]struct {
+					// Conditions The individual conditions in this group
+					Conditions *[]struct {
+						// ExtraValue An extra value for conditions that require two values
+						ExtraValue *string `json:"extra_value"`
 
-			// CustomViewId The custom view ID of the created filter
-			CustomViewId *int `json:"custom_view_id,omitempty"`
+						// FieldCode The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
+						FieldCode *string `json:"field_code"`
 
-			// Id The ID of the created filter
+						// FieldId The ID of the field
+						FieldId *string `json:"field_id,omitempty"`
+
+						// JsonValueFlag Whether the value is JSON-encoded
+						JsonValueFlag *bool `json:"json_value_flag,omitempty"`
+
+						// Object The type of entity the condition applies to (e.g. "deal", "person")
+						Object *string `json:"object,omitempty"`
+
+						// Operator The operator used in the condition (e.g. "=", "IS NOT NULL")
+						Operator *string `json:"operator,omitempty"`
+
+						// Value The value of the condition
+						Value *string `json:"value"`
+					} `json:"conditions,omitempty"`
+
+					// Glue The logical operator joining conditions within this group
+					Glue *UpdateFilter200DataConditionsConditionsGlue `json:"glue,omitempty"`
+				} `json:"conditions,omitempty"`
+
+				// Glue The top-level glue is always "and"
+				Glue *UpdateFilter200DataConditionsGlue `json:"glue,omitempty"`
+			} `json:"conditions,omitempty"`
+
+			// CustomViewId The custom view ID linked to the filter
+			CustomViewId *int `json:"custom_view_id"`
+
+			// FilterCode The system code of the filter
+			FilterCode *string `json:"filter_code"`
+
+			// Id The ID of the filter
 			Id *int `json:"id,omitempty"`
 
-			// Name The name of the created filter
+			// IsEditable Whether the filter can be edited by the requesting user
+			IsEditable *bool `json:"is_editable,omitempty"`
+
+			// LastUsedTime The date and time when the filter was last used
+			LastUsedTime *string `json:"last_used_time"`
+
+			// Name The name of the filter
 			Name *string `json:"name,omitempty"`
 
-			// TemporaryFlag If the created filter is temporary or not
-			TemporaryFlag *bool                    `json:"temporary_flag,omitempty"`
+			// TemporaryFlag Whether the filter is temporary
+			TemporaryFlag *bool                    `json:"temporary_flag"`
 			Type          *UpdateFilter200DataType `json:"type,omitempty"`
 
-			// UpdateTime The update time of the created filter
-			UpdateTime *string `json:"update_time,omitempty"`
+			// UpdateTime The date and time when the filter was last updated
+			UpdateTime *string `json:"update_time"`
 
-			// UserId The user ID of the created filter
+			// UserId The user ID of the filter owner
 			UserId *int `json:"user_id,omitempty"`
 
-			// VisibleTo The visibility group ID of the created filter
-			VisibleTo *int `json:"visible_to,omitempty"`
+			// VisibleTo The visibility group ID of the filter
+			VisibleTo *UpdateFilter200DataVisibleTo `json:"visible_to,omitempty"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
 		Success *bool `json:"success,omitempty"`
 	}
 }
+type UpdateFilter200DataConditionsConditionsGlue string
+type UpdateFilter200DataConditionsGlue string
 type UpdateFilter200DataType string
+type UpdateFilter200DataVisibleTo string
 
 // Status returns HTTPResponse.Status
 func (r UpdateFilterResponse) Status() string {
@@ -23474,6 +22522,9 @@ type GetMailMessageResponse struct {
 				Name *string `json:"name,omitempty"`
 			} `json:"bcc,omitempty"`
 
+			// Body The mail message body content. Only present when `include_body=1` is passed.
+			Body *string `json:"body,omitempty"`
+
 			// BodyUrl The mail message body URL
 			BodyUrl *string `json:"body_url,omitempty"`
 
@@ -24777,6 +23828,9 @@ type GetNotesResponse struct {
 			// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 			PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+			// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+			PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 			// Project The project the note is attached to
 			Project *struct {
 				// Title The title of the project the note is attached to
@@ -24785,6 +23839,15 @@ type GetNotesResponse struct {
 
 			// ProjectId The ID of the project the note is attached to
 			ProjectId *int `json:"project_id,omitempty"`
+
+			// Task The task the note is attached to
+			Task *struct {
+				// Title The title of the task the note is attached to
+				Title *string `json:"title,omitempty"`
+			} `json:"task,omitempty"`
+
+			// TaskId The ID of the task the note is attached to
+			TaskId *int `json:"task_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -24891,6 +23954,9 @@ type AddNoteResponse struct {
 			// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 			PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+			// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+			PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 			// Project The project the note is attached to
 			Project *struct {
 				// Title The title of the project the note is attached to
@@ -24899,6 +23965,15 @@ type AddNoteResponse struct {
 
 			// ProjectId The ID of the project the note is attached to
 			ProjectId *int `json:"project_id,omitempty"`
+
+			// Task The task the note is attached to
+			Task *struct {
+				// Title The title of the task the note is attached to
+				Title *string `json:"title,omitempty"`
+			} `json:"task,omitempty"`
+
+			// TaskId The ID of the task the note is attached to
+			TaskId *int `json:"task_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -25033,6 +24108,9 @@ type GetNoteResponse struct {
 			// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 			PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+			// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+			PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 			// Project The project the note is attached to
 			Project *struct {
 				// Title The title of the project the note is attached to
@@ -25041,6 +24119,15 @@ type GetNoteResponse struct {
 
 			// ProjectId The ID of the project the note is attached to
 			ProjectId *int `json:"project_id,omitempty"`
+
+			// Task The task the note is attached to
+			Task *struct {
+				// Title The title of the task the note is attached to
+				Title *string `json:"title,omitempty"`
+			} `json:"task,omitempty"`
+
+			// TaskId The ID of the task the note is attached to
+			TaskId *int `json:"task_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -25147,6 +24234,9 @@ type UpdateNoteResponse struct {
 			// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 			PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+			// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+			PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 			// Project The project the note is attached to
 			Project *struct {
 				// Title The title of the project the note is attached to
@@ -25155,6 +24245,15 @@ type UpdateNoteResponse struct {
 
 			// ProjectId The ID of the project the note is attached to
 			ProjectId *int `json:"project_id,omitempty"`
+
+			// Task The task the note is attached to
+			Task *struct {
+				// Title The title of the task the note is attached to
+				Title *string `json:"title,omitempty"`
+			} `json:"task,omitempty"`
+
+			// TaskId The ID of the task the note is attached to
+			TaskId *int `json:"task_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -26396,6 +25495,9 @@ type GetOrganizationMailMessagesResponse struct {
 					Name *string `json:"name,omitempty"`
 				} `json:"bcc,omitempty"`
 
+				// Body The mail message body content. Only present when `include_body=1` is passed.
+				Body *string `json:"body,omitempty"`
+
 				// BodyUrl The mail message body URL
 				BodyUrl *string `json:"body_url,omitempty"`
 
@@ -27196,6 +26298,9 @@ type GetPersonMailMessagesResponse struct {
 					// Name Name of the mail participant
 					Name *string `json:"name,omitempty"`
 				} `json:"bcc,omitempty"`
+
+				// Body The mail message body content. Only present when `include_body=1` is passed.
+				Body *string `json:"body,omitempty"`
 
 				// BodyUrl The mail message body URL
 				BodyUrl *string `json:"body_url,omitempty"`
@@ -29044,620 +28149,6 @@ func (r GetProductUsersResponse) StatusCode() int {
 	return 0
 }
 
-type GetProjectTemplatesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
-		} `json:"additional_data,omitempty"`
-		Data *[]struct {
-			// AddTime The creation date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// Description The description of a template
-			Description *string `json:"description,omitempty"`
-
-			// Id The ID of a template
-			Id *float32 `json:"id,omitempty"`
-
-			// OwnerId The ID of a template owner
-			OwnerId *float32 `json:"owner_id,omitempty"`
-
-			// ProjectsBoardId The ID of the project board this template is associated with
-			ProjectsBoardId *float32 `json:"projects_board_id,omitempty"`
-
-			// Title The title of a template
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectTemplatesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectTemplatesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetProjectTemplateResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// Description The description of a template
-			Description *string `json:"description,omitempty"`
-
-			// Id The ID of a template
-			Id *float32 `json:"id,omitempty"`
-
-			// OwnerId The ID of a template owner
-			OwnerId *float32 `json:"owner_id,omitempty"`
-
-			// ProjectsBoardId The ID of the project board this template is associated with
-			ProjectsBoardId *float32 `json:"projects_board_id,omitempty"`
-
-			// Title The title of a template
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectTemplateResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectTemplateResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetProjectsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
-		} `json:"additional_data,omitempty"`
-		Data *[]struct {
-			// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-			ArchiveTime *string `json:"archive_time,omitempty"`
-
-			// BoardId The ID of the board this project is associated with
-			BoardId *float32 `json:"board_id,omitempty"`
-
-			// DealIds An array of IDs of the deals this project is associated with
-			DealIds *[]int `json:"deal_ids,omitempty"`
-
-			// Description The description of the project
-			Description *string `json:"description,omitempty"`
-
-			// EndDate The end date of the project. Format: YYYY-MM-DD.
-			EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-			// Id The ID of the project, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// Labels An array of IDs of the labels this project has
-			Labels *[]int `json:"labels,omitempty"`
-
-			// OrgId The ID of the organization this project is associated with
-			OrgId *float32 `json:"org_id,omitempty"`
-
-			// OwnerId The ID of a project owner
-			OwnerId *float32 `json:"owner_id,omitempty"`
-
-			// PersonId The ID of the person this project is associated with
-			PersonId *float32 `json:"person_id,omitempty"`
-
-			// PhaseId The ID of the phase this project is associated with
-			PhaseId *float32 `json:"phase_id,omitempty"`
-
-			// StartDate The start date of the project. Format: YYYY-MM-DD.
-			StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-			// Status The status of the project
-			Status *string `json:"status,omitempty"`
-
-			// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-			// Title The title of the project
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type AddProjectResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON201      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-			ArchiveTime *string `json:"archive_time,omitempty"`
-
-			// BoardId The ID of the board this project is associated with
-			BoardId *float32 `json:"board_id,omitempty"`
-
-			// DealIds An array of IDs of the deals this project is associated with
-			DealIds *[]int `json:"deal_ids,omitempty"`
-
-			// Description The description of the project
-			Description *string `json:"description,omitempty"`
-
-			// EndDate The end date of the project. Format: YYYY-MM-DD.
-			EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-			// Id The ID of the project, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// Labels An array of IDs of the labels this project has
-			Labels *[]int `json:"labels,omitempty"`
-
-			// OrgId The ID of the organization this project is associated with
-			OrgId *float32 `json:"org_id,omitempty"`
-
-			// OwnerId The ID of a project owner
-			OwnerId *float32 `json:"owner_id,omitempty"`
-
-			// PersonId The ID of the person this project is associated with
-			PersonId *float32 `json:"person_id,omitempty"`
-
-			// PhaseId The ID of the phase this project is associated with
-			PhaseId *float32 `json:"phase_id,omitempty"`
-
-			// StartDate The start date of the project. Format: YYYY-MM-DD.
-			StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-			// Status The status of the project
-			Status *string `json:"status,omitempty"`
-
-			// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-			// Title The title of the project
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r AddProjectResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r AddProjectResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetProjectsBoardsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *[]struct {
-			// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// Id The ID of the project board
-			Id *int `json:"id,omitempty"`
-
-			// Name Name of a project board
-			Name *string `json:"name,omitempty"`
-
-			// OrderNr The order of a board
-			OrderNr *float32 `json:"order_nr,omitempty"`
-
-			// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectsBoardsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectsBoardsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetProjectsBoardResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// Id The ID of the project board
-			Id *int `json:"id,omitempty"`
-
-			// Name Name of a project board
-			Name *string `json:"name,omitempty"`
-
-			// OrderNr The order of a board
-			OrderNr *float32 `json:"order_nr,omitempty"`
-
-			// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectsBoardResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectsBoardResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetProjectsPhasesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *[]struct {
-			// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// BoardId The ID of the project board this phase is linked to
-			BoardId *float32 `json:"board_id,omitempty"`
-
-			// Id The ID of the project phase
-			Id *int `json:"id,omitempty"`
-
-			// Name Name of a project phase
-			Name *string `json:"name,omitempty"`
-
-			// OrderNr The order of a phase
-			OrderNr *float32 `json:"order_nr,omitempty"`
-
-			// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectsPhasesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectsPhasesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetProjectsPhaseResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// BoardId The ID of the project board this phase is linked to
-			BoardId *float32 `json:"board_id,omitempty"`
-
-			// Id The ID of the project phase
-			Id *int `json:"id,omitempty"`
-
-			// Name Name of a project phase
-			Name *string `json:"name,omitempty"`
-
-			// OrderNr The order of a phase
-			OrderNr *float32 `json:"order_nr,omitempty"`
-
-			// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectsPhaseResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectsPhaseResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteProjectResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			Data *struct {
-				// Id The ID of the project that was deleted
-				Id *int `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the request was successful or not
-			Success *bool `json:"success,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteProjectResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteProjectResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetProjectResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-			ArchiveTime *string `json:"archive_time,omitempty"`
-
-			// BoardId The ID of the board this project is associated with
-			BoardId *float32 `json:"board_id,omitempty"`
-
-			// DealIds An array of IDs of the deals this project is associated with
-			DealIds *[]int `json:"deal_ids,omitempty"`
-
-			// Description The description of the project
-			Description *string `json:"description,omitempty"`
-
-			// EndDate The end date of the project. Format: YYYY-MM-DD.
-			EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-			// Id The ID of the project, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// Labels An array of IDs of the labels this project has
-			Labels *[]int `json:"labels,omitempty"`
-
-			// OrgId The ID of the organization this project is associated with
-			OrgId *float32 `json:"org_id,omitempty"`
-
-			// OwnerId The ID of a project owner
-			OwnerId *float32 `json:"owner_id,omitempty"`
-
-			// PersonId The ID of the person this project is associated with
-			PersonId *float32 `json:"person_id,omitempty"`
-
-			// PhaseId The ID of the phase this project is associated with
-			PhaseId *float32 `json:"phase_id,omitempty"`
-
-			// StartDate The start date of the project. Format: YYYY-MM-DD.
-			StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-			// Status The status of the project
-			Status *string `json:"status,omitempty"`
-
-			// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-			// Title The title of the project
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r GetProjectResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetProjectResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type UpdateProjectResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-			ArchiveTime *string `json:"archive_time,omitempty"`
-
-			// BoardId The ID of the board this project is associated with
-			BoardId *float32 `json:"board_id,omitempty"`
-
-			// DealIds An array of IDs of the deals this project is associated with
-			DealIds *[]int `json:"deal_ids,omitempty"`
-
-			// Description The description of the project
-			Description *string `json:"description,omitempty"`
-
-			// EndDate The end date of the project. Format: YYYY-MM-DD.
-			EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-			// Id The ID of the project, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// Labels An array of IDs of the labels this project has
-			Labels *[]int `json:"labels,omitempty"`
-
-			// OrgId The ID of the organization this project is associated with
-			OrgId *float32 `json:"org_id,omitempty"`
-
-			// OwnerId The ID of a project owner
-			OwnerId *float32 `json:"owner_id,omitempty"`
-
-			// PersonId The ID of the person this project is associated with
-			PersonId *float32 `json:"person_id,omitempty"`
-
-			// PhaseId The ID of the phase this project is associated with
-			PhaseId *float32 `json:"phase_id,omitempty"`
-
-			// StartDate The start date of the project. Format: YYYY-MM-DD.
-			StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-			// Status The status of the project
-			Status *string `json:"status,omitempty"`
-
-			// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-			// Title The title of the project
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r UpdateProjectResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdateProjectResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type GetProjectActivitiesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -29790,83 +28281,6 @@ func (r GetProjectActivitiesResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r GetProjectActivitiesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type ArchiveProjectResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-			ArchiveTime *string `json:"archive_time,omitempty"`
-
-			// BoardId The ID of the board this project is associated with
-			BoardId *float32 `json:"board_id,omitempty"`
-
-			// DealIds An array of IDs of the deals this project is associated with
-			DealIds *[]int `json:"deal_ids,omitempty"`
-
-			// Description The description of the project
-			Description *string `json:"description,omitempty"`
-
-			// EndDate The end date of the project. Format: YYYY-MM-DD.
-			EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-			// Id The ID of the project, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// Labels An array of IDs of the labels this project has
-			Labels *[]int `json:"labels,omitempty"`
-
-			// OrgId The ID of the organization this project is associated with
-			OrgId *float32 `json:"org_id,omitempty"`
-
-			// OwnerId The ID of a project owner
-			OwnerId *float32 `json:"owner_id,omitempty"`
-
-			// PersonId The ID of the person this project is associated with
-			PersonId *float32 `json:"person_id,omitempty"`
-
-			// PhaseId The ID of the phase this project is associated with
-			PhaseId *float32 `json:"phase_id,omitempty"`
-
-			// StartDate The start date of the project. Format: YYYY-MM-DD.
-			StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-			// Status The status of the project
-			Status *string `json:"status,omitempty"`
-
-			// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-			// Title The title of the project
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r ArchiveProjectResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ArchiveProjectResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -30035,8 +28449,11 @@ type GetProjectTasksResponse struct {
 			// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
 			AddTime *string `json:"add_time,omitempty"`
 
-			// AssigneeId The ID of the user who will be the assignee of the task
+			// AssigneeId The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.
 			AssigneeId *float32 `json:"assignee_id,omitempty"`
+
+			// AssigneeIds The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.
+			AssigneeIds *[]float32 `json:"assignee_ids,omitempty"`
 
 			// CreatorId The creator of a task
 			CreatorId *float32 `json:"creator_id,omitempty"`
@@ -30678,30 +29095,42 @@ type GetRecents200Data4 struct {
 		// AddTime The date and time when the filter was added
 		AddTime *string `json:"add_time,omitempty"`
 
-		// CustomViewId Used by Pipedrive webapp
-		CustomViewId *int `json:"custom_view_id,omitempty"`
+		// CustomViewId The custom view ID linked to the filter
+		CustomViewId *int `json:"custom_view_id"`
+
+		// FilterCode The system code of the filter
+		FilterCode *string `json:"filter_code"`
 
 		// Id The ID of the filter
 		Id *int `json:"id,omitempty"`
 
+		// IsEditable Whether the filter can be edited by the requesting user
+		IsEditable *bool `json:"is_editable,omitempty"`
+
+		// LastUsedTime The date and time when the filter was last used
+		LastUsedTime *string `json:"last_used_time"`
+
 		// Name The name of the filter
 		Name *string `json:"name,omitempty"`
 
-		// Type The type of the item
-		Type *string `json:"type,omitempty"`
+		// TemporaryFlag Whether the filter is temporary
+		TemporaryFlag *bool                       `json:"temporary_flag"`
+		Type          *GetRecents200Data4DataType `json:"type,omitempty"`
 
 		// UpdateTime The date and time when the filter was updated
-		UpdateTime *string `json:"update_time,omitempty"`
+		UpdateTime *string `json:"update_time"`
 
 		// UserId The owner of the filter
 		UserId *int `json:"user_id,omitempty"`
 
-		// VisibleTo The visibility group ID of who can see then filter
-		VisibleTo *int `json:"visible_to,omitempty"`
+		// VisibleTo The visibility group ID of who can see the filter
+		VisibleTo *GetRecents200Data4DataVisibleTo `json:"visible_to,omitempty"`
 	} `json:"data,omitempty"`
 	Id   *int                    `json:"id,omitempty"`
 	Item *GetRecents200Data4Item `json:"item,omitempty"`
 }
+type GetRecents200Data4DataType string
+type GetRecents200Data4DataVisibleTo string
 type GetRecents200Data4Item string
 type GetRecents200Data5 struct {
 	Data *struct {
@@ -30762,6 +29191,9 @@ type GetRecents200Data5 struct {
 		// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 		PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+		// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+		PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 		// Project The project the note is attached to
 		Project *struct {
 			// Title The title of the project the note is attached to
@@ -30770,6 +29202,15 @@ type GetRecents200Data5 struct {
 
 		// ProjectId The ID of the project the note is attached to
 		ProjectId *int `json:"project_id,omitempty"`
+
+		// Task The task the note is attached to
+		Task *struct {
+			// Title The title of the task the note is attached to
+			Title *string `json:"title,omitempty"`
+		} `json:"task,omitempty"`
+
+		// TaskId The ID of the task the note is attached to
+		TaskId *int `json:"task_id,omitempty"`
 
 		// UpdateTime The last updated date and time of the note
 		UpdateTime *string `json:"update_time,omitempty"`
@@ -31296,9 +29737,14 @@ type GetRecents200Data10Item string
 type GetRecents200Data11 struct {
 	Data *struct {
 		Access *[]struct {
-			Admin           *bool                             `json:"admin,omitempty"`
-			App             *GetRecents200Data11DataAccessApp `json:"app,omitempty"`
-			PermissionSetId *string                           `json:"permission_set_id,omitempty"`
+			// Admin Whether the user has admin access or not
+			Admin *bool `json:"admin,omitempty"`
+
+			// App The granular app access level
+			App *GetRecents200Data11DataAccessApp `json:"app,omitempty"`
+
+			// PermissionSetId The ID of the permission set
+			PermissionSetId *string `json:"permission_set_id,omitempty"`
 		} `json:"access,omitempty"`
 
 		// Activated Boolean that indicates whether the user is activated
@@ -32171,296 +30617,6 @@ func (r GetStageDealsResponse) StatusCode() int {
 	return 0
 }
 
-type GetTasksResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		// AdditionalData The additional data of the list
-		AdditionalData *struct {
-			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
-		} `json:"additional_data,omitempty"`
-		Data *[]struct {
-			// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// AssigneeId The ID of the user who will be the assignee of the task
-			AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-			// CreatorId The creator of a task
-			CreatorId *float32 `json:"creator_id,omitempty"`
-
-			// Description The description of the task
-			Description *string `json:"description,omitempty"`
-
-			// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-			Done *GetTasks200DataDone `json:"done,omitempty"`
-
-			// DueDate The due date of the task. Format: YYYY-MM-DD.
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// Id The ID of the task, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-			ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-			// ProjectId The ID of the project this task is associated with
-			ProjectId *float32 `json:"project_id,omitempty"`
-
-			// Title The title of the task
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-type GetTasks200DataDone float32
-
-// Status returns HTTPResponse.Status
-func (r GetTasksResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetTasksResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type AddTaskResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON201      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// AssigneeId The ID of the user who will be the assignee of the task
-			AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-			// CreatorId The creator of a task
-			CreatorId *float32 `json:"creator_id,omitempty"`
-
-			// Description The description of the task
-			Description *string `json:"description,omitempty"`
-
-			// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-			Done *AddTask201DataDone `json:"done,omitempty"`
-
-			// DueDate The due date of the task. Format: YYYY-MM-DD.
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// Id The ID of the task, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-			ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-			// ProjectId The ID of the project this task is associated with
-			ProjectId *float32 `json:"project_id,omitempty"`
-
-			// Title The title of the task
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-type AddTask201DataDone float32
-
-// Status returns HTTPResponse.Status
-func (r AddTaskResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r AddTaskResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteTaskResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			Data *struct {
-				// Id The ID of the task that was deleted
-				Id *int `json:"id,omitempty"`
-			} `json:"data,omitempty"`
-
-			// Success If the request was successful or not
-			Success *bool `json:"success,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteTaskResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteTaskResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetTaskResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// AssigneeId The ID of the user who will be the assignee of the task
-			AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-			// CreatorId The creator of a task
-			CreatorId *float32 `json:"creator_id,omitempty"`
-
-			// Description The description of the task
-			Description *string `json:"description,omitempty"`
-
-			// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-			Done *GetTask200DataDone `json:"done,omitempty"`
-
-			// DueDate The due date of the task. Format: YYYY-MM-DD.
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// Id The ID of the task, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-			ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-			// ProjectId The ID of the project this task is associated with
-			ProjectId *float32 `json:"project_id,omitempty"`
-
-			// Title The title of the task
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-type GetTask200DataDone float32
-
-// Status returns HTTPResponse.Status
-func (r GetTaskResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetTaskResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type UpdateTaskResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *struct {
-		AdditionalData *map[string]interface{} `json:"additional_data"`
-		Data           *struct {
-			// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			AddTime *string `json:"add_time,omitempty"`
-
-			// AssigneeId The ID of the user who will be the assignee of the task
-			AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-			// CreatorId The creator of a task
-			CreatorId *float32 `json:"creator_id,omitempty"`
-
-			// Description The description of the task
-			Description *string `json:"description,omitempty"`
-
-			// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-			Done *UpdateTask200DataDone `json:"done,omitempty"`
-
-			// DueDate The due date of the task. Format: YYYY-MM-DD.
-			DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-			// Id The ID of the task, generated when the task was created
-			Id *int `json:"id,omitempty"`
-
-			// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-			// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-			ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-			// ProjectId The ID of the project this task is associated with
-			ProjectId *float32 `json:"project_id,omitempty"`
-
-			// Title The title of the task
-			Title *string `json:"title,omitempty"`
-
-			// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-			UpdateTime *string `json:"update_time,omitempty"`
-		} `json:"data,omitempty"`
-		Success *bool `json:"success,omitempty"`
-	}
-}
-type UpdateTask200DataDone float32
-
-// Status returns HTTPResponse.Status
-func (r UpdateTaskResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdateTaskResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type GetUserConnectionsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -32569,9 +30725,14 @@ type GetUsersResponse struct {
 	JSON200      *struct {
 		Data *[]struct {
 			Access *[]struct {
-				Admin           *bool                     `json:"admin,omitempty"`
-				App             *GetUsers200DataAccessApp `json:"app,omitempty"`
-				PermissionSetId *string                   `json:"permission_set_id,omitempty"`
+				// Admin Whether the user has admin access or not
+				Admin *bool `json:"admin,omitempty"`
+
+				// App The granular app access level
+				App *GetUsers200DataAccessApp `json:"app,omitempty"`
+
+				// PermissionSetId The ID of the permission set
+				PermissionSetId *string `json:"permission_set_id,omitempty"`
 			} `json:"access,omitempty"`
 
 			// Activated Boolean that indicates whether the user is activated
@@ -32660,9 +30821,14 @@ type AddUserResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			Access *[]struct {
-				Admin           *bool                    `json:"admin,omitempty"`
-				App             *AddUser200DataAccessApp `json:"app,omitempty"`
-				PermissionSetId *string                  `json:"permission_set_id,omitempty"`
+				// Admin Whether the user has admin access or not
+				Admin *bool `json:"admin,omitempty"`
+
+				// App The granular app access level
+				App *AddUser200DataAccessApp `json:"app,omitempty"`
+
+				// PermissionSetId The ID of the permission set
+				PermissionSetId *string `json:"permission_set_id,omitempty"`
 			} `json:"access,omitempty"`
 
 			// Activated Boolean that indicates whether the user is activated
@@ -32758,9 +30924,14 @@ type FindUsersByNameResponse struct {
 	JSON200      *struct {
 		Data *[]struct {
 			Access *[]struct {
-				Admin           *bool                            `json:"admin,omitempty"`
-				App             *FindUsersByName200DataAccessApp `json:"app,omitempty"`
-				PermissionSetId *string                          `json:"permission_set_id,omitempty"`
+				// Admin Whether the user has admin access or not
+				Admin *bool `json:"admin,omitempty"`
+
+				// App The granular app access level
+				App *FindUsersByName200DataAccessApp `json:"app,omitempty"`
+
+				// PermissionSetId The ID of the permission set
+				PermissionSetId *string `json:"permission_set_id,omitempty"`
 			} `json:"access,omitempty"`
 
 			// Activated Boolean that indicates whether the user is activated
@@ -32849,9 +31020,14 @@ type GetCurrentUserResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			Access *[]struct {
-				Admin           *bool                           `json:"admin,omitempty"`
-				App             *GetCurrentUser200DataAccessApp `json:"app,omitempty"`
-				PermissionSetId *string                         `json:"permission_set_id,omitempty"`
+				// Admin Whether the user has admin access or not
+				Admin *bool `json:"admin,omitempty"`
+
+				// App The granular app access level
+				App *GetCurrentUser200DataAccessApp `json:"app,omitempty"`
+
+				// PermissionSetId The ID of the permission set
+				PermissionSetId *string `json:"permission_set_id,omitempty"`
 			} `json:"access,omitempty"`
 
 			// Activated Boolean that indicates whether the user is activated
@@ -32974,9 +31150,14 @@ type GetUserResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			Access *[]struct {
-				Admin           *bool                    `json:"admin,omitempty"`
-				App             *GetUser200DataAccessApp `json:"app,omitempty"`
-				PermissionSetId *string                  `json:"permission_set_id,omitempty"`
+				// Admin Whether the user has admin access or not
+				Admin *bool `json:"admin,omitempty"`
+
+				// App The granular app access level
+				App *GetUser200DataAccessApp `json:"app,omitempty"`
+
+				// PermissionSetId The ID of the permission set
+				PermissionSetId *string `json:"permission_set_id,omitempty"`
 			} `json:"access,omitempty"`
 
 			// Activated Boolean that indicates whether the user is activated
@@ -33072,9 +31253,14 @@ type UpdateUserResponse struct {
 	JSON200      *struct {
 		Data *struct {
 			Access *[]struct {
-				Admin           *bool                       `json:"admin,omitempty"`
-				App             *UpdateUser200DataAccessApp `json:"app,omitempty"`
-				PermissionSetId *string                     `json:"permission_set_id,omitempty"`
+				// Admin Whether the user has admin access or not
+				Admin *bool `json:"admin,omitempty"`
+
+				// App The granular app access level
+				App *UpdateUser200DataAccessApp `json:"app,omitempty"`
+
+				// PermissionSetId The ID of the permission set
+				PermissionSetId *string `json:"permission_set_id,omitempty"`
 			} `json:"access,omitempty"`
 
 			// Activated Boolean that indicates whether the user is activated
@@ -34121,16 +32307,16 @@ func (c *ClientWithResponses) GetFiltersWithResponse(ctx context.Context, params
 }
 
 // AddFilterWithBodyWithResponse request with arbitrary body returning *AddFilterResponse
-func (c *ClientWithResponses) AddFilterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddFilterResponse, error) {
-	rsp, err := c.AddFilterWithBody(ctx, contentType, body, reqEditors...)
+func (c *ClientWithResponses) AddFilterWithBodyWithResponse(ctx context.Context, params *AddFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddFilterResponse, error) {
+	rsp, err := c.AddFilterWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseAddFilterResponse(rsp)
 }
 
-func (c *ClientWithResponses) AddFilterWithResponse(ctx context.Context, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*AddFilterResponse, error) {
-	rsp, err := c.AddFilter(ctx, body, reqEditors...)
+func (c *ClientWithResponses) AddFilterWithResponse(ctx context.Context, params *AddFilterParams, body AddFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*AddFilterResponse, error) {
+	rsp, err := c.AddFilter(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -34156,8 +32342,8 @@ func (c *ClientWithResponses) DeleteFilterWithResponse(ctx context.Context, id i
 }
 
 // GetFilterWithResponse request returning *GetFilterResponse
-func (c *ClientWithResponses) GetFilterWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetFilterResponse, error) {
-	rsp, err := c.GetFilter(ctx, id, reqEditors...)
+func (c *ClientWithResponses) GetFilterWithResponse(ctx context.Context, id int, params *GetFilterParams, reqEditors ...RequestEditorFn) (*GetFilterResponse, error) {
+	rsp, err := c.GetFilter(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -34165,16 +32351,16 @@ func (c *ClientWithResponses) GetFilterWithResponse(ctx context.Context, id int,
 }
 
 // UpdateFilterWithBodyWithResponse request with arbitrary body returning *UpdateFilterResponse
-func (c *ClientWithResponses) UpdateFilterWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error) {
-	rsp, err := c.UpdateFilterWithBody(ctx, id, contentType, body, reqEditors...)
+func (c *ClientWithResponses) UpdateFilterWithBodyWithResponse(ctx context.Context, id int, params *UpdateFilterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error) {
+	rsp, err := c.UpdateFilterWithBody(ctx, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateFilterResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateFilterWithResponse(ctx context.Context, id int, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error) {
-	rsp, err := c.UpdateFilter(ctx, id, body, reqEditors...)
+func (c *ClientWithResponses) UpdateFilterWithResponse(ctx context.Context, id int, params *UpdateFilterParams, body UpdateFilterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFilterResponse, error) {
+	rsp, err := c.UpdateFilter(ctx, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -35077,121 +33263,6 @@ func (c *ClientWithResponses) GetProductUsersWithResponse(ctx context.Context, i
 	return ParseGetProductUsersResponse(rsp)
 }
 
-// GetProjectTemplatesWithResponse request returning *GetProjectTemplatesResponse
-func (c *ClientWithResponses) GetProjectTemplatesWithResponse(ctx context.Context, params *GetProjectTemplatesParams, reqEditors ...RequestEditorFn) (*GetProjectTemplatesResponse, error) {
-	rsp, err := c.GetProjectTemplates(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectTemplatesResponse(rsp)
-}
-
-// GetProjectTemplateWithResponse request returning *GetProjectTemplateResponse
-func (c *ClientWithResponses) GetProjectTemplateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectTemplateResponse, error) {
-	rsp, err := c.GetProjectTemplate(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectTemplateResponse(rsp)
-}
-
-// GetProjectsWithResponse request returning *GetProjectsResponse
-func (c *ClientWithResponses) GetProjectsWithResponse(ctx context.Context, params *GetProjectsParams, reqEditors ...RequestEditorFn) (*GetProjectsResponse, error) {
-	rsp, err := c.GetProjects(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectsResponse(rsp)
-}
-
-// AddProjectWithBodyWithResponse request with arbitrary body returning *AddProjectResponse
-func (c *ClientWithResponses) AddProjectWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddProjectResponse, error) {
-	rsp, err := c.AddProjectWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAddProjectResponse(rsp)
-}
-
-func (c *ClientWithResponses) AddProjectWithResponse(ctx context.Context, body AddProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*AddProjectResponse, error) {
-	rsp, err := c.AddProject(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAddProjectResponse(rsp)
-}
-
-// GetProjectsBoardsWithResponse request returning *GetProjectsBoardsResponse
-func (c *ClientWithResponses) GetProjectsBoardsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetProjectsBoardsResponse, error) {
-	rsp, err := c.GetProjectsBoards(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectsBoardsResponse(rsp)
-}
-
-// GetProjectsBoardWithResponse request returning *GetProjectsBoardResponse
-func (c *ClientWithResponses) GetProjectsBoardWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsBoardResponse, error) {
-	rsp, err := c.GetProjectsBoard(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectsBoardResponse(rsp)
-}
-
-// GetProjectsPhasesWithResponse request returning *GetProjectsPhasesResponse
-func (c *ClientWithResponses) GetProjectsPhasesWithResponse(ctx context.Context, params *GetProjectsPhasesParams, reqEditors ...RequestEditorFn) (*GetProjectsPhasesResponse, error) {
-	rsp, err := c.GetProjectsPhases(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectsPhasesResponse(rsp)
-}
-
-// GetProjectsPhaseWithResponse request returning *GetProjectsPhaseResponse
-func (c *ClientWithResponses) GetProjectsPhaseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectsPhaseResponse, error) {
-	rsp, err := c.GetProjectsPhase(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectsPhaseResponse(rsp)
-}
-
-// DeleteProjectWithResponse request returning *DeleteProjectResponse
-func (c *ClientWithResponses) DeleteProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteProjectResponse, error) {
-	rsp, err := c.DeleteProject(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteProjectResponse(rsp)
-}
-
-// GetProjectWithResponse request returning *GetProjectResponse
-func (c *ClientWithResponses) GetProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectResponse, error) {
-	rsp, err := c.GetProject(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetProjectResponse(rsp)
-}
-
-// UpdateProjectWithBodyWithResponse request with arbitrary body returning *UpdateProjectResponse
-func (c *ClientWithResponses) UpdateProjectWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error) {
-	rsp, err := c.UpdateProjectWithBody(ctx, id, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateProjectResponse(rsp)
-}
-
-func (c *ClientWithResponses) UpdateProjectWithResponse(ctx context.Context, id int, body UpdateProjectJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateProjectResponse, error) {
-	rsp, err := c.UpdateProject(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateProjectResponse(rsp)
-}
-
 // GetProjectActivitiesWithResponse request returning *GetProjectActivitiesResponse
 func (c *ClientWithResponses) GetProjectActivitiesWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetProjectActivitiesResponse, error) {
 	rsp, err := c.GetProjectActivities(ctx, id, reqEditors...)
@@ -35199,15 +33270,6 @@ func (c *ClientWithResponses) GetProjectActivitiesWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseGetProjectActivitiesResponse(rsp)
-}
-
-// ArchiveProjectWithResponse request returning *ArchiveProjectResponse
-func (c *ClientWithResponses) ArchiveProjectWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ArchiveProjectResponse, error) {
-	rsp, err := c.ArchiveProject(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseArchiveProjectResponse(rsp)
 }
 
 // GetProjectGroupsWithResponse request returning *GetProjectGroupsResponse
@@ -35443,67 +33505,6 @@ func (c *ClientWithResponses) GetStageDealsWithResponse(ctx context.Context, id 
 		return nil, err
 	}
 	return ParseGetStageDealsResponse(rsp)
-}
-
-// GetTasksWithResponse request returning *GetTasksResponse
-func (c *ClientWithResponses) GetTasksWithResponse(ctx context.Context, params *GetTasksParams, reqEditors ...RequestEditorFn) (*GetTasksResponse, error) {
-	rsp, err := c.GetTasks(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetTasksResponse(rsp)
-}
-
-// AddTaskWithBodyWithResponse request with arbitrary body returning *AddTaskResponse
-func (c *ClientWithResponses) AddTaskWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddTaskResponse, error) {
-	rsp, err := c.AddTaskWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAddTaskResponse(rsp)
-}
-
-func (c *ClientWithResponses) AddTaskWithResponse(ctx context.Context, body AddTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*AddTaskResponse, error) {
-	rsp, err := c.AddTask(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAddTaskResponse(rsp)
-}
-
-// DeleteTaskWithResponse request returning *DeleteTaskResponse
-func (c *ClientWithResponses) DeleteTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteTaskResponse, error) {
-	rsp, err := c.DeleteTask(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteTaskResponse(rsp)
-}
-
-// GetTaskWithResponse request returning *GetTaskResponse
-func (c *ClientWithResponses) GetTaskWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetTaskResponse, error) {
-	rsp, err := c.GetTask(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetTaskResponse(rsp)
-}
-
-// UpdateTaskWithBodyWithResponse request with arbitrary body returning *UpdateTaskResponse
-func (c *ClientWithResponses) UpdateTaskWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error) {
-	rsp, err := c.UpdateTaskWithBody(ctx, id, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateTaskResponse(rsp)
-}
-
-func (c *ClientWithResponses) UpdateTaskWithResponse(ctx context.Context, id int, body UpdateTaskJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTaskResponse, error) {
-	rsp, err := c.UpdateTask(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateTaskResponse(rsp)
 }
 
 // GetUserConnectionsWithResponse request returning *GetUserConnectionsResponse
@@ -38250,6 +36251,9 @@ func ParseGetDealMailMessagesResponse(rsp *http.Response) (*GetDealMailMessagesR
 						Name *string `json:"name,omitempty"`
 					} `json:"bcc,omitempty"`
 
+					// Body The mail message body content. Only present when `include_body=1` is passed.
+					Body *string `json:"body,omitempty"`
+
 					// BodyUrl The mail message body URL
 					BodyUrl *string `json:"body_url,omitempty"`
 
@@ -38727,9 +36731,14 @@ func ParseGetDealParticipantsResponse(rsp *http.Response) (*GetDealParticipantsR
 				AddedByUserId *struct {
 					Data *struct {
 						Access *[]struct {
-							Admin           *bool                                                 `json:"admin,omitempty"`
-							App             *GetDealParticipants200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
-							PermissionSetId *string                                               `json:"permission_set_id,omitempty"`
+							// Admin Whether the user has admin access or not
+							Admin *bool `json:"admin,omitempty"`
+
+							// App The granular app access level
+							App *GetDealParticipants200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+
+							// PermissionSetId The ID of the permission set
+							PermissionSetId *string `json:"permission_set_id,omitempty"`
 						} `json:"access,omitempty"`
 
 						// Activated Boolean that indicates whether the user is activated
@@ -39193,9 +37202,14 @@ func ParseAddDealParticipantResponse(rsp *http.Response) (*AddDealParticipantRes
 				AddedByUserId *struct {
 					Data *struct {
 						Access *[]struct {
-							Admin           *bool                                                `json:"admin,omitempty"`
-							App             *AddDealParticipant200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
-							PermissionSetId *string                                              `json:"permission_set_id,omitempty"`
+							// Admin Whether the user has admin access or not
+							Admin *bool `json:"admin,omitempty"`
+
+							// App The granular app access level
+							App *AddDealParticipant200DataAddedByUserIdDataAccessApp `json:"app,omitempty"`
+
+							// PermissionSetId The ID of the permission set
+							PermissionSetId *string `json:"permission_set_id,omitempty"`
 						} `json:"access,omitempty"`
 
 						// Activated Boolean that indicates whether the user is activated
@@ -39829,6 +37843,12 @@ func ParseGetFilesResponse(rsp *http.Response) (*GetFilesResponse, error) {
 				// ProductName The name of the product associated with the file
 				ProductName *string `json:"product_name,omitempty"`
 
+				// ProjectId The ID of the project to associate the file with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// ProjectName The name of the project associated with the file
+				ProjectName *string `json:"project_name,omitempty"`
+
 				// RemoteId The ID of the remote item
 				RemoteId *string `json:"remote_id,omitempty"`
 
@@ -39944,6 +37964,12 @@ func ParseAddFileResponse(rsp *http.Response) (*AddFileResponse, error) {
 
 				// ProductName The name of the product associated with the file
 				ProductName *string `json:"product_name,omitempty"`
+
+				// ProjectId The ID of the project to associate the file with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// ProjectName The name of the project associated with the file
+				ProjectName *string `json:"project_name,omitempty"`
 
 				// RemoteId The ID of the remote item
 				RemoteId *string `json:"remote_id,omitempty"`
@@ -40061,6 +38087,12 @@ func ParseAddFileAndLinkItResponse(rsp *http.Response) (*AddFileAndLinkItRespons
 				// ProductName The name of the product associated with the file
 				ProductName *string `json:"product_name,omitempty"`
 
+				// ProjectId The ID of the project to associate the file with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// ProjectName The name of the project associated with the file
+				ProjectName *string `json:"project_name,omitempty"`
+
 				// RemoteId The ID of the remote item
 				RemoteId *string `json:"remote_id,omitempty"`
 
@@ -40176,6 +38208,12 @@ func ParseLinkFileToItemResponse(rsp *http.Response) (*LinkFileToItemResponse, e
 
 				// ProductName The name of the product associated with the file
 				ProductName *string `json:"product_name,omitempty"`
+
+				// ProjectId The ID of the project to associate the file with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// ProjectName The name of the project associated with the file
+				ProjectName *string `json:"project_name,omitempty"`
 
 				// RemoteId The ID of the remote item
 				RemoteId *string `json:"remote_id,omitempty"`
@@ -40327,6 +38365,12 @@ func ParseGetFileResponse(rsp *http.Response) (*GetFileResponse, error) {
 				// ProductName The name of the product associated with the file
 				ProductName *string `json:"product_name,omitempty"`
 
+				// ProjectId The ID of the project to associate the file with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// ProjectName The name of the project associated with the file
+				ProjectName *string `json:"project_name,omitempty"`
+
 				// RemoteId The ID of the remote item
 				RemoteId *string `json:"remote_id,omitempty"`
 
@@ -40443,6 +38487,12 @@ func ParseUpdateFileResponse(rsp *http.Response) (*UpdateFileResponse, error) {
 				// ProductName The name of the product associated with the file
 				ProductName *string `json:"product_name,omitempty"`
 
+				// ProjectId The ID of the project to associate the file with
+				ProjectId *int `json:"project_id,omitempty"`
+
+				// ProjectName The name of the project associated with the file
+				ProjectName *string `json:"project_name,omitempty"`
+
 				// RemoteId The ID of the remote item
 				RemoteId *string `json:"remote_id,omitempty"`
 
@@ -40549,26 +38599,36 @@ func ParseGetFiltersResponse(rsp *http.Response) (*GetFiltersResponse, error) {
 				// AddTime The date and time when the filter was added
 				AddTime *string `json:"add_time,omitempty"`
 
-				// CustomViewId Used by Pipedrive webapp
-				CustomViewId *int `json:"custom_view_id,omitempty"`
+				// CustomViewId The custom view ID linked to the filter
+				CustomViewId *int `json:"custom_view_id"`
+
+				// FilterCode The system code of the filter
+				FilterCode *string `json:"filter_code"`
 
 				// Id The ID of the filter
 				Id *int `json:"id,omitempty"`
 
+				// IsEditable Whether the filter can be edited by the requesting user
+				IsEditable *bool `json:"is_editable,omitempty"`
+
+				// LastUsedTime The date and time when the filter was last used
+				LastUsedTime *string `json:"last_used_time"`
+
 				// Name The name of the filter
 				Name *string `json:"name,omitempty"`
 
-				// Type The type of the item
-				Type *string `json:"type,omitempty"`
+				// TemporaryFlag Whether the filter is temporary
+				TemporaryFlag *bool                  `json:"temporary_flag"`
+				Type          *GetFilters200DataType `json:"type,omitempty"`
 
 				// UpdateTime The date and time when the filter was updated
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The owner of the filter
 				UserId *int `json:"user_id,omitempty"`
 
-				// VisibleTo The visibility group ID of who can see then filter
-				VisibleTo *int `json:"visible_to,omitempty"`
+				// VisibleTo The visibility group ID of who can see the filter
+				VisibleTo *GetFilters200DataVisibleTo `json:"visible_to,omitempty"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -40601,36 +38661,78 @@ func ParseAddFilterResponse(rsp *http.Response) (*AddFilterResponse, error) {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
 			Data *struct {
-				// ActiveFlag The activity flag of the created filter
+				// ActiveFlag The activity flag of the filter
 				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// AddTime The add time of the created filter
+				// AddTime The date and time when the filter was added
 				AddTime *string `json:"add_time,omitempty"`
 
-				// Conditions The created filter conditions object
-				Conditions *map[string]interface{} `json:"conditions,omitempty"`
+				// Conditions The conditions object of a filter
+				Conditions *struct {
+					// Conditions The condition groups
+					Conditions *[]struct {
+						// Conditions The individual conditions in this group
+						Conditions *[]struct {
+							// ExtraValue An extra value for conditions that require two values
+							ExtraValue *string `json:"extra_value"`
 
-				// CustomViewId The custom view ID of the created filter
-				CustomViewId *int `json:"custom_view_id,omitempty"`
+							// FieldCode The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
+							FieldCode *string `json:"field_code"`
 
-				// Id The ID of the created filter
+							// FieldId The ID of the field
+							FieldId *string `json:"field_id,omitempty"`
+
+							// JsonValueFlag Whether the value is JSON-encoded
+							JsonValueFlag *bool `json:"json_value_flag,omitempty"`
+
+							// Object The type of entity the condition applies to (e.g. "deal", "person")
+							Object *string `json:"object,omitempty"`
+
+							// Operator The operator used in the condition (e.g. "=", "IS NOT NULL")
+							Operator *string `json:"operator,omitempty"`
+
+							// Value The value of the condition
+							Value *string `json:"value"`
+						} `json:"conditions,omitempty"`
+
+						// Glue The logical operator joining conditions within this group
+						Glue *AddFilter200DataConditionsConditionsGlue `json:"glue,omitempty"`
+					} `json:"conditions,omitempty"`
+
+					// Glue The top-level glue is always "and"
+					Glue *AddFilter200DataConditionsGlue `json:"glue,omitempty"`
+				} `json:"conditions,omitempty"`
+
+				// CustomViewId The custom view ID linked to the filter
+				CustomViewId *int `json:"custom_view_id"`
+
+				// FilterCode The system code of the filter
+				FilterCode *string `json:"filter_code"`
+
+				// Id The ID of the filter
 				Id *int `json:"id,omitempty"`
 
-				// Name The name of the created filter
+				// IsEditable Whether the filter can be edited by the requesting user
+				IsEditable *bool `json:"is_editable,omitempty"`
+
+				// LastUsedTime The date and time when the filter was last used
+				LastUsedTime *string `json:"last_used_time"`
+
+				// Name The name of the filter
 				Name *string `json:"name,omitempty"`
 
-				// TemporaryFlag If the created filter is temporary or not
-				TemporaryFlag *bool                 `json:"temporary_flag,omitempty"`
+				// TemporaryFlag Whether the filter is temporary
+				TemporaryFlag *bool                 `json:"temporary_flag"`
 				Type          *AddFilter200DataType `json:"type,omitempty"`
 
-				// UpdateTime The update time of the created filter
-				UpdateTime *string `json:"update_time,omitempty"`
+				// UpdateTime The date and time when the filter was last updated
+				UpdateTime *string `json:"update_time"`
 
-				// UserId The user ID of the created filter
+				// UserId The user ID of the filter owner
 				UserId *int `json:"user_id,omitempty"`
 
-				// VisibleTo The visibility group ID of the created filter
-				VisibleTo *int `json:"visible_to,omitempty"`
+				// VisibleTo The visibility group ID of the filter
+				VisibleTo *AddFilter200DataVisibleTo `json:"visible_to,omitempty"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -40722,7 +38824,7 @@ func ParseGetFilterResponse(rsp *http.Response) (*GetFilterResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			// Data The filter object
+			// Data The filter object including conditions
 			Data *struct {
 				// ActiveFlag The active flag of the filter
 				ActiveFlag *bool `json:"active_flag,omitempty"`
@@ -40730,26 +38832,72 @@ func ParseGetFilterResponse(rsp *http.Response) (*GetFilterResponse, error) {
 				// AddTime The date and time when the filter was added
 				AddTime *string `json:"add_time,omitempty"`
 
-				// CustomViewId Used by Pipedrive webapp
-				CustomViewId *int `json:"custom_view_id,omitempty"`
+				// Conditions The conditions object of a filter
+				Conditions *struct {
+					// Conditions The condition groups
+					Conditions *[]struct {
+						// Conditions The individual conditions in this group
+						Conditions *[]struct {
+							// ExtraValue An extra value for conditions that require two values
+							ExtraValue *string `json:"extra_value"`
+
+							// FieldCode The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
+							FieldCode *string `json:"field_code"`
+
+							// FieldId The ID of the field
+							FieldId *string `json:"field_id,omitempty"`
+
+							// JsonValueFlag Whether the value is JSON-encoded
+							JsonValueFlag *bool `json:"json_value_flag,omitempty"`
+
+							// Object The type of entity the condition applies to (e.g. "deal", "person")
+							Object *string `json:"object,omitempty"`
+
+							// Operator The operator used in the condition (e.g. "=", "IS NOT NULL")
+							Operator *string `json:"operator,omitempty"`
+
+							// Value The value of the condition
+							Value *string `json:"value"`
+						} `json:"conditions,omitempty"`
+
+						// Glue The logical operator joining conditions within this group
+						Glue *GetFilter200DataConditionsConditionsGlue `json:"glue,omitempty"`
+					} `json:"conditions,omitempty"`
+
+					// Glue The top-level glue is always "and"
+					Glue *GetFilter200DataConditionsGlue `json:"glue,omitempty"`
+				} `json:"conditions,omitempty"`
+
+				// CustomViewId The custom view ID linked to the filter
+				CustomViewId *int `json:"custom_view_id"`
+
+				// FilterCode The system code of the filter
+				FilterCode *string `json:"filter_code"`
 
 				// Id The ID of the filter
 				Id *int `json:"id,omitempty"`
 
+				// IsEditable Whether the filter can be edited by the requesting user
+				IsEditable *bool `json:"is_editable,omitempty"`
+
+				// LastUsedTime The date and time when the filter was last used
+				LastUsedTime *string `json:"last_used_time"`
+
 				// Name The name of the filter
 				Name *string `json:"name,omitempty"`
 
-				// Type The type of the item
-				Type *string `json:"type,omitempty"`
+				// TemporaryFlag Whether the filter is temporary
+				TemporaryFlag *bool                 `json:"temporary_flag"`
+				Type          *GetFilter200DataType `json:"type,omitempty"`
 
 				// UpdateTime The date and time when the filter was updated
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The owner of the filter
 				UserId *int `json:"user_id,omitempty"`
 
-				// VisibleTo The visibility group ID of who can see then filter
-				VisibleTo *int `json:"visible_to,omitempty"`
+				// VisibleTo The visibility group ID of who can see the filter
+				VisibleTo *GetFilter200DataVisibleTo `json:"visible_to,omitempty"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -40782,36 +38930,78 @@ func ParseUpdateFilterResponse(rsp *http.Response) (*UpdateFilterResponse, error
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
 			Data *struct {
-				// ActiveFlag The activity flag of the created filter
+				// ActiveFlag The activity flag of the filter
 				ActiveFlag *bool `json:"active_flag,omitempty"`
 
-				// AddTime The add time of the created filter
+				// AddTime The date and time when the filter was added
 				AddTime *string `json:"add_time,omitempty"`
 
-				// Conditions The created filter conditions object
-				Conditions *map[string]interface{} `json:"conditions,omitempty"`
+				// Conditions The conditions object of a filter
+				Conditions *struct {
+					// Conditions The condition groups
+					Conditions *[]struct {
+						// Conditions The individual conditions in this group
+						Conditions *[]struct {
+							// ExtraValue An extra value for conditions that require two values
+							ExtraValue *string `json:"extra_value"`
 
-				// CustomViewId The custom view ID of the created filter
-				CustomViewId *int `json:"custom_view_id,omitempty"`
+							// FieldCode The code name of the field. Present when `include_field_code=true` is passed as a query parameter; `null` if the field code cannot be resolved
+							FieldCode *string `json:"field_code"`
 
-				// Id The ID of the created filter
+							// FieldId The ID of the field
+							FieldId *string `json:"field_id,omitempty"`
+
+							// JsonValueFlag Whether the value is JSON-encoded
+							JsonValueFlag *bool `json:"json_value_flag,omitempty"`
+
+							// Object The type of entity the condition applies to (e.g. "deal", "person")
+							Object *string `json:"object,omitempty"`
+
+							// Operator The operator used in the condition (e.g. "=", "IS NOT NULL")
+							Operator *string `json:"operator,omitempty"`
+
+							// Value The value of the condition
+							Value *string `json:"value"`
+						} `json:"conditions,omitempty"`
+
+						// Glue The logical operator joining conditions within this group
+						Glue *UpdateFilter200DataConditionsConditionsGlue `json:"glue,omitempty"`
+					} `json:"conditions,omitempty"`
+
+					// Glue The top-level glue is always "and"
+					Glue *UpdateFilter200DataConditionsGlue `json:"glue,omitempty"`
+				} `json:"conditions,omitempty"`
+
+				// CustomViewId The custom view ID linked to the filter
+				CustomViewId *int `json:"custom_view_id"`
+
+				// FilterCode The system code of the filter
+				FilterCode *string `json:"filter_code"`
+
+				// Id The ID of the filter
 				Id *int `json:"id,omitempty"`
 
-				// Name The name of the created filter
+				// IsEditable Whether the filter can be edited by the requesting user
+				IsEditable *bool `json:"is_editable,omitempty"`
+
+				// LastUsedTime The date and time when the filter was last used
+				LastUsedTime *string `json:"last_used_time"`
+
+				// Name The name of the filter
 				Name *string `json:"name,omitempty"`
 
-				// TemporaryFlag If the created filter is temporary or not
-				TemporaryFlag *bool                    `json:"temporary_flag,omitempty"`
+				// TemporaryFlag Whether the filter is temporary
+				TemporaryFlag *bool                    `json:"temporary_flag"`
 				Type          *UpdateFilter200DataType `json:"type,omitempty"`
 
-				// UpdateTime The update time of the created filter
-				UpdateTime *string `json:"update_time,omitempty"`
+				// UpdateTime The date and time when the filter was last updated
+				UpdateTime *string `json:"update_time"`
 
-				// UserId The user ID of the created filter
+				// UserId The user ID of the filter owner
 				UserId *int `json:"user_id,omitempty"`
 
-				// VisibleTo The visibility group ID of the created filter
-				VisibleTo *int `json:"visible_to,omitempty"`
+				// VisibleTo The visibility group ID of the filter
+				VisibleTo *UpdateFilter200DataVisibleTo `json:"visible_to,omitempty"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -42747,6 +40937,9 @@ func ParseGetMailMessageResponse(rsp *http.Response) (*GetMailMessageResponse, e
 					Name *string `json:"name,omitempty"`
 				} `json:"bcc,omitempty"`
 
+				// Body The mail message body content. Only present when `include_body=1` is passed.
+				Body *string `json:"body,omitempty"`
+
 				// BodyUrl The mail message body URL
 				BodyUrl *string `json:"body_url,omitempty"`
 
@@ -44034,6 +42227,9 @@ func ParseGetNotesResponse(rsp *http.Response) (*GetNotesResponse, error) {
 				// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 				PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+				// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+				PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 				// Project The project the note is attached to
 				Project *struct {
 					// Title The title of the project the note is attached to
@@ -44042,6 +42238,15 @@ func ParseGetNotesResponse(rsp *http.Response) (*GetNotesResponse, error) {
 
 				// ProjectId The ID of the project the note is attached to
 				ProjectId *int `json:"project_id,omitempty"`
+
+				// Task The task the note is attached to
+				Task *struct {
+					// Title The title of the task the note is attached to
+					Title *string `json:"title,omitempty"`
+				} `json:"task,omitempty"`
+
+				// TaskId The ID of the task the note is attached to
+				TaskId *int `json:"task_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -44152,6 +42357,9 @@ func ParseAddNoteResponse(rsp *http.Response) (*AddNoteResponse, error) {
 				// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 				PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+				// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+				PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 				// Project The project the note is attached to
 				Project *struct {
 					// Title The title of the project the note is attached to
@@ -44160,6 +42368,15 @@ func ParseAddNoteResponse(rsp *http.Response) (*AddNoteResponse, error) {
 
 				// ProjectId The ID of the project the note is attached to
 				ProjectId *int `json:"project_id,omitempty"`
+
+				// Task The task the note is attached to
+				Task *struct {
+					// Title The title of the task the note is attached to
+					Title *string `json:"title,omitempty"`
+				} `json:"task,omitempty"`
+
+				// TaskId The ID of the task the note is attached to
+				TaskId *int `json:"task_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -44302,6 +42519,9 @@ func ParseGetNoteResponse(rsp *http.Response) (*GetNoteResponse, error) {
 				// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 				PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+				// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+				PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 				// Project The project the note is attached to
 				Project *struct {
 					// Title The title of the project the note is attached to
@@ -44310,6 +42530,15 @@ func ParseGetNoteResponse(rsp *http.Response) (*GetNoteResponse, error) {
 
 				// ProjectId The ID of the project the note is attached to
 				ProjectId *int `json:"project_id,omitempty"`
+
+				// Task The task the note is attached to
+				Task *struct {
+					// Title The title of the task the note is attached to
+					Title *string `json:"title,omitempty"`
+				} `json:"task,omitempty"`
+
+				// TaskId The ID of the task the note is attached to
+				TaskId *int `json:"task_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -44420,6 +42649,9 @@ func ParseUpdateNoteResponse(rsp *http.Response) (*UpdateNoteResponse, error) {
 				// PinnedToProjectFlag If true, the results are filtered by note to project pinning state
 				PinnedToProjectFlag *bool `json:"pinned_to_project_flag,omitempty"`
 
+				// PinnedToTaskFlag If true, the results are filtered by note to task pinning state
+				PinnedToTaskFlag *bool `json:"pinned_to_task_flag,omitempty"`
+
 				// Project The project the note is attached to
 				Project *struct {
 					// Title The title of the project the note is attached to
@@ -44428,6 +42660,15 @@ func ParseUpdateNoteResponse(rsp *http.Response) (*UpdateNoteResponse, error) {
 
 				// ProjectId The ID of the project the note is attached to
 				ProjectId *int `json:"project_id,omitempty"`
+
+				// Task The task the note is attached to
+				Task *struct {
+					// Title The title of the task the note is attached to
+					Title *string `json:"title,omitempty"`
+				} `json:"task,omitempty"`
+
+				// TaskId The ID of the task the note is attached to
+				TaskId *int `json:"task_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -45732,6 +43973,9 @@ func ParseGetOrganizationMailMessagesResponse(rsp *http.Response) (*GetOrganizat
 						Name *string `json:"name,omitempty"`
 					} `json:"bcc,omitempty"`
 
+					// Body The mail message body content. Only present when `include_body=1` is passed.
+					Body *string `json:"body,omitempty"`
+
 					// BodyUrl The mail message body URL
 					BodyUrl *string `json:"body_url,omitempty"`
 
@@ -46567,6 +44811,9 @@ func ParseGetPersonMailMessagesResponse(rsp *http.Response) (*GetPersonMailMessa
 						// Name Name of the mail participant
 						Name *string `json:"name,omitempty"`
 					} `json:"bcc,omitempty"`
+
+					// Body The mail message body content. Only present when `include_body=1` is passed.
+					Body *string `json:"body,omitempty"`
 
 					// BodyUrl The mail message body URL
 					BodyUrl *string `json:"body_url,omitempty"`
@@ -48441,664 +46688,6 @@ func ParseGetProductUsersResponse(rsp *http.Response) (*GetProductUsersResponse,
 	return response, nil
 }
 
-// ParseGetProjectTemplatesResponse parses an HTTP response from a GetProjectTemplatesWithResponse call
-func ParseGetProjectTemplatesResponse(rsp *http.Response) (*GetProjectTemplatesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectTemplatesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
-			} `json:"additional_data,omitempty"`
-			Data *[]struct {
-				// AddTime The creation date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// Description The description of a template
-				Description *string `json:"description,omitempty"`
-
-				// Id The ID of a template
-				Id *float32 `json:"id,omitempty"`
-
-				// OwnerId The ID of a template owner
-				OwnerId *float32 `json:"owner_id,omitempty"`
-
-				// ProjectsBoardId The ID of the project board this template is associated with
-				ProjectsBoardId *float32 `json:"projects_board_id,omitempty"`
-
-				// Title The title of a template
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetProjectTemplateResponse parses an HTTP response from a GetProjectTemplateWithResponse call
-func ParseGetProjectTemplateResponse(rsp *http.Response) (*GetProjectTemplateResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectTemplateResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// Description The description of a template
-				Description *string `json:"description,omitempty"`
-
-				// Id The ID of a template
-				Id *float32 `json:"id,omitempty"`
-
-				// OwnerId The ID of a template owner
-				OwnerId *float32 `json:"owner_id,omitempty"`
-
-				// ProjectsBoardId The ID of the project board this template is associated with
-				ProjectsBoardId *float32 `json:"projects_board_id,omitempty"`
-
-				// Title The title of a template
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the template in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetProjectsResponse parses an HTTP response from a GetProjectsWithResponse call
-func ParseGetProjectsResponse(rsp *http.Response) (*GetProjectsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
-			} `json:"additional_data,omitempty"`
-			Data *[]struct {
-				// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-				ArchiveTime *string `json:"archive_time,omitempty"`
-
-				// BoardId The ID of the board this project is associated with
-				BoardId *float32 `json:"board_id,omitempty"`
-
-				// DealIds An array of IDs of the deals this project is associated with
-				DealIds *[]int `json:"deal_ids,omitempty"`
-
-				// Description The description of the project
-				Description *string `json:"description,omitempty"`
-
-				// EndDate The end date of the project. Format: YYYY-MM-DD.
-				EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-				// Id The ID of the project, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// Labels An array of IDs of the labels this project has
-				Labels *[]int `json:"labels,omitempty"`
-
-				// OrgId The ID of the organization this project is associated with
-				OrgId *float32 `json:"org_id,omitempty"`
-
-				// OwnerId The ID of a project owner
-				OwnerId *float32 `json:"owner_id,omitempty"`
-
-				// PersonId The ID of the person this project is associated with
-				PersonId *float32 `json:"person_id,omitempty"`
-
-				// PhaseId The ID of the phase this project is associated with
-				PhaseId *float32 `json:"phase_id,omitempty"`
-
-				// StartDate The start date of the project. Format: YYYY-MM-DD.
-				StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-				// Status The status of the project
-				Status *string `json:"status,omitempty"`
-
-				// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-				// Title The title of the project
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseAddProjectResponse parses an HTTP response from a AddProjectWithResponse call
-func ParseAddProjectResponse(rsp *http.Response) (*AddProjectResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &AddProjectResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-				ArchiveTime *string `json:"archive_time,omitempty"`
-
-				// BoardId The ID of the board this project is associated with
-				BoardId *float32 `json:"board_id,omitempty"`
-
-				// DealIds An array of IDs of the deals this project is associated with
-				DealIds *[]int `json:"deal_ids,omitempty"`
-
-				// Description The description of the project
-				Description *string `json:"description,omitempty"`
-
-				// EndDate The end date of the project. Format: YYYY-MM-DD.
-				EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-				// Id The ID of the project, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// Labels An array of IDs of the labels this project has
-				Labels *[]int `json:"labels,omitempty"`
-
-				// OrgId The ID of the organization this project is associated with
-				OrgId *float32 `json:"org_id,omitempty"`
-
-				// OwnerId The ID of a project owner
-				OwnerId *float32 `json:"owner_id,omitempty"`
-
-				// PersonId The ID of the person this project is associated with
-				PersonId *float32 `json:"person_id,omitempty"`
-
-				// PhaseId The ID of the phase this project is associated with
-				PhaseId *float32 `json:"phase_id,omitempty"`
-
-				// StartDate The start date of the project. Format: YYYY-MM-DD.
-				StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-				// Status The status of the project
-				Status *string `json:"status,omitempty"`
-
-				// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-				// Title The title of the project
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetProjectsBoardsResponse parses an HTTP response from a GetProjectsBoardsWithResponse call
-func ParseGetProjectsBoardsResponse(rsp *http.Response) (*GetProjectsBoardsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectsBoardsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *[]struct {
-				// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// Id The ID of the project board
-				Id *int `json:"id,omitempty"`
-
-				// Name Name of a project board
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr The order of a board
-				OrderNr *float32 `json:"order_nr,omitempty"`
-
-				// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetProjectsBoardResponse parses an HTTP response from a GetProjectsBoardWithResponse call
-func ParseGetProjectsBoardResponse(rsp *http.Response) (*GetProjectsBoardResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectsBoardResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// Id The ID of the project board
-				Id *int `json:"id,omitempty"`
-
-				// Name Name of a project board
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr The order of a board
-				OrderNr *float32 `json:"order_nr,omitempty"`
-
-				// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetProjectsPhasesResponse parses an HTTP response from a GetProjectsPhasesWithResponse call
-func ParseGetProjectsPhasesResponse(rsp *http.Response) (*GetProjectsPhasesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectsPhasesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *[]struct {
-				// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// BoardId The ID of the project board this phase is linked to
-				BoardId *float32 `json:"board_id,omitempty"`
-
-				// Id The ID of the project phase
-				Id *int `json:"id,omitempty"`
-
-				// Name Name of a project phase
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr The order of a phase
-				OrderNr *float32 `json:"order_nr,omitempty"`
-
-				// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetProjectsPhaseResponse parses an HTTP response from a GetProjectsPhaseWithResponse call
-func ParseGetProjectsPhaseResponse(rsp *http.Response) (*GetProjectsPhaseResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectsPhaseResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// BoardId The ID of the project board this phase is linked to
-				BoardId *float32 `json:"board_id,omitempty"`
-
-				// Id The ID of the project phase
-				Id *int `json:"id,omitempty"`
-
-				// Name Name of a project phase
-				Name *string `json:"name,omitempty"`
-
-				// OrderNr The order of a phase
-				OrderNr *float32 `json:"order_nr,omitempty"`
-
-				// UpdateTime The update date and time of the board in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteProjectResponse parses an HTTP response from a DeleteProjectWithResponse call
-func ParseDeleteProjectResponse(rsp *http.Response) (*DeleteProjectResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteProjectResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				Data *struct {
-					// Id The ID of the project that was deleted
-					Id *int `json:"id,omitempty"`
-				} `json:"data,omitempty"`
-
-				// Success If the request was successful or not
-				Success *bool `json:"success,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetProjectResponse parses an HTTP response from a GetProjectWithResponse call
-func ParseGetProjectResponse(rsp *http.Response) (*GetProjectResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetProjectResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-				ArchiveTime *string `json:"archive_time,omitempty"`
-
-				// BoardId The ID of the board this project is associated with
-				BoardId *float32 `json:"board_id,omitempty"`
-
-				// DealIds An array of IDs of the deals this project is associated with
-				DealIds *[]int `json:"deal_ids,omitempty"`
-
-				// Description The description of the project
-				Description *string `json:"description,omitempty"`
-
-				// EndDate The end date of the project. Format: YYYY-MM-DD.
-				EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-				// Id The ID of the project, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// Labels An array of IDs of the labels this project has
-				Labels *[]int `json:"labels,omitempty"`
-
-				// OrgId The ID of the organization this project is associated with
-				OrgId *float32 `json:"org_id,omitempty"`
-
-				// OwnerId The ID of a project owner
-				OwnerId *float32 `json:"owner_id,omitempty"`
-
-				// PersonId The ID of the person this project is associated with
-				PersonId *float32 `json:"person_id,omitempty"`
-
-				// PhaseId The ID of the phase this project is associated with
-				PhaseId *float32 `json:"phase_id,omitempty"`
-
-				// StartDate The start date of the project. Format: YYYY-MM-DD.
-				StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-				// Status The status of the project
-				Status *string `json:"status,omitempty"`
-
-				// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-				// Title The title of the project
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdateProjectResponse parses an HTTP response from a UpdateProjectWithResponse call
-func ParseUpdateProjectResponse(rsp *http.Response) (*UpdateProjectResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdateProjectResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-				ArchiveTime *string `json:"archive_time,omitempty"`
-
-				// BoardId The ID of the board this project is associated with
-				BoardId *float32 `json:"board_id,omitempty"`
-
-				// DealIds An array of IDs of the deals this project is associated with
-				DealIds *[]int `json:"deal_ids,omitempty"`
-
-				// Description The description of the project
-				Description *string `json:"description,omitempty"`
-
-				// EndDate The end date of the project. Format: YYYY-MM-DD.
-				EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-				// Id The ID of the project, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// Labels An array of IDs of the labels this project has
-				Labels *[]int `json:"labels,omitempty"`
-
-				// OrgId The ID of the organization this project is associated with
-				OrgId *float32 `json:"org_id,omitempty"`
-
-				// OwnerId The ID of a project owner
-				OwnerId *float32 `json:"owner_id,omitempty"`
-
-				// PersonId The ID of the person this project is associated with
-				PersonId *float32 `json:"person_id,omitempty"`
-
-				// PhaseId The ID of the phase this project is associated with
-				PhaseId *float32 `json:"phase_id,omitempty"`
-
-				// StartDate The start date of the project. Format: YYYY-MM-DD.
-				StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-				// Status The status of the project
-				Status *string `json:"status,omitempty"`
-
-				// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-				// Title The title of the project
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetProjectActivitiesResponse parses an HTTP response from a GetProjectActivitiesWithResponse call
 func ParseGetProjectActivitiesResponse(rsp *http.Response) (*GetProjectActivitiesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -49228,87 +46817,6 @@ func ParseGetProjectActivitiesResponse(rsp *http.Response) (*GetProjectActivitie
 
 				// UserId The ID of the user whom the activity is assigned to
 				UserId *int `json:"user_id,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseArchiveProjectResponse parses an HTTP response from a ArchiveProjectWithResponse call
-func ParseArchiveProjectResponse(rsp *http.Response) (*ArchiveProjectResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ArchiveProjectResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// ArchiveTime The archived date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS. If not archived then 'null'.
-				ArchiveTime *string `json:"archive_time,omitempty"`
-
-				// BoardId The ID of the board this project is associated with
-				BoardId *float32 `json:"board_id,omitempty"`
-
-				// DealIds An array of IDs of the deals this project is associated with
-				DealIds *[]int `json:"deal_ids,omitempty"`
-
-				// Description The description of the project
-				Description *string `json:"description,omitempty"`
-
-				// EndDate The end date of the project. Format: YYYY-MM-DD.
-				EndDate *openapi_types.Date `json:"end_date,omitempty"`
-
-				// Id The ID of the project, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// Labels An array of IDs of the labels this project has
-				Labels *[]int `json:"labels,omitempty"`
-
-				// OrgId The ID of the organization this project is associated with
-				OrgId *float32 `json:"org_id,omitempty"`
-
-				// OwnerId The ID of a project owner
-				OwnerId *float32 `json:"owner_id,omitempty"`
-
-				// PersonId The ID of the person this project is associated with
-				PersonId *float32 `json:"person_id,omitempty"`
-
-				// PhaseId The ID of the phase this project is associated with
-				PhaseId *float32 `json:"phase_id,omitempty"`
-
-				// StartDate The start date of the project. Format: YYYY-MM-DD.
-				StartDate *openapi_types.Date `json:"start_date,omitempty"`
-
-				// Status The status of the project
-				Status *string `json:"status,omitempty"`
-
-				// StatusChangeTime The status changed date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				StatusChangeTime *string `json:"status_change_time,omitempty"`
-
-				// Title The title of the project
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the project in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
 			} `json:"data,omitempty"`
 			Success *bool `json:"success,omitempty"`
 		}
@@ -49512,8 +47020,11 @@ func ParseGetProjectTasksResponse(rsp *http.Response) (*GetProjectTasksResponse,
 				// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
 				AddTime *string `json:"add_time,omitempty"`
 
-				// AssigneeId The ID of the user who will be the assignee of the task
+				// AssigneeId The ID of the user assigned to the task. When the `assignee_id` field is updated, the `assignee_ids` field value will be overwritten by the `assignee_id` field value.
 				AssigneeId *float32 `json:"assignee_id,omitempty"`
+
+				// AssigneeIds The IDs of users assigned to the task. When the `assignee_ids` field is updated, the `assignee_id` field value will be set to the first value of the `assignee_ids` field, or `null` if the list is empty.
+				AssigneeIds *[]float32 `json:"assignee_ids,omitempty"`
 
 				// CreatorId The creator of a task
 				CreatorId *float32 `json:"creator_id,omitempty"`
@@ -50446,312 +47957,6 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 	return response, nil
 }
 
-// ParseGetTasksResponse parses an HTTP response from a GetTasksWithResponse call
-func ParseGetTasksResponse(rsp *http.Response) (*GetTasksResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetTasksResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			// AdditionalData The additional data of the list
-			AdditionalData *struct {
-				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
-			} `json:"additional_data,omitempty"`
-			Data *[]struct {
-				// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AssigneeId The ID of the user who will be the assignee of the task
-				AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-				// CreatorId The creator of a task
-				CreatorId *float32 `json:"creator_id,omitempty"`
-
-				// Description The description of the task
-				Description *string `json:"description,omitempty"`
-
-				// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-				Done *GetTasks200DataDone `json:"done,omitempty"`
-
-				// DueDate The due date of the task. Format: YYYY-MM-DD.
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// Id The ID of the task, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-				ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-				// ProjectId The ID of the project this task is associated with
-				ProjectId *float32 `json:"project_id,omitempty"`
-
-				// Title The title of the task
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseAddTaskResponse parses an HTTP response from a AddTaskWithResponse call
-func ParseAddTaskResponse(rsp *http.Response) (*AddTaskResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &AddTaskResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AssigneeId The ID of the user who will be the assignee of the task
-				AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-				// CreatorId The creator of a task
-				CreatorId *float32 `json:"creator_id,omitempty"`
-
-				// Description The description of the task
-				Description *string `json:"description,omitempty"`
-
-				// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-				Done *AddTask201DataDone `json:"done,omitempty"`
-
-				// DueDate The due date of the task. Format: YYYY-MM-DD.
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// Id The ID of the task, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-				ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-				// ProjectId The ID of the project this task is associated with
-				ProjectId *float32 `json:"project_id,omitempty"`
-
-				// Title The title of the task
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteTaskResponse parses an HTTP response from a DeleteTaskWithResponse call
-func ParseDeleteTaskResponse(rsp *http.Response) (*DeleteTaskResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteTaskResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				Data *struct {
-					// Id The ID of the task that was deleted
-					Id *int `json:"id,omitempty"`
-				} `json:"data,omitempty"`
-
-				// Success If the request was successful or not
-				Success *bool `json:"success,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetTaskResponse parses an HTTP response from a GetTaskWithResponse call
-func ParseGetTaskResponse(rsp *http.Response) (*GetTaskResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetTaskResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AssigneeId The ID of the user who will be the assignee of the task
-				AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-				// CreatorId The creator of a task
-				CreatorId *float32 `json:"creator_id,omitempty"`
-
-				// Description The description of the task
-				Description *string `json:"description,omitempty"`
-
-				// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-				Done *GetTask200DataDone `json:"done,omitempty"`
-
-				// DueDate The due date of the task. Format: YYYY-MM-DD.
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// Id The ID of the task, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-				ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-				// ProjectId The ID of the project this task is associated with
-				ProjectId *float32 `json:"project_id,omitempty"`
-
-				// Title The title of the task
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdateTaskResponse parses an HTTP response from a UpdateTaskWithResponse call
-func ParseUpdateTaskResponse(rsp *http.Response) (*UpdateTaskResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdateTaskResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AdditionalData *map[string]interface{} `json:"additional_data"`
-			Data           *struct {
-				// AddTime The creation date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				AddTime *string `json:"add_time,omitempty"`
-
-				// AssigneeId The ID of the user who will be the assignee of the task
-				AssigneeId *float32 `json:"assignee_id,omitempty"`
-
-				// CreatorId The creator of a task
-				CreatorId *float32 `json:"creator_id,omitempty"`
-
-				// Description The description of the task
-				Description *string `json:"description,omitempty"`
-
-				// Done Whether the task is done or not. 0 = Not done, 1 = Done.
-				Done *UpdateTask200DataDone `json:"done,omitempty"`
-
-				// DueDate The due date of the task. Format: YYYY-MM-DD.
-				DueDate *openapi_types.Date `json:"due_date,omitempty"`
-
-				// Id The ID of the task, generated when the task was created
-				Id *int `json:"id,omitempty"`
-
-				// MarkedAsDoneTime The marked as done date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
-
-				// ParentTaskId The ID of a parent task. Can not be ID of a task which is already a subtask.
-				ParentTaskId *float32 `json:"parent_task_id,omitempty"`
-
-				// ProjectId The ID of the project this task is associated with
-				ProjectId *float32 `json:"project_id,omitempty"`
-
-				// Title The title of the task
-				Title *string `json:"title,omitempty"`
-
-				// UpdateTime The update date and time of the task in UTC. Format: YYYY-MM-DD HH:MM:SS.
-				UpdateTime *string `json:"update_time,omitempty"`
-			} `json:"data,omitempty"`
-			Success *bool `json:"success,omitempty"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetUserConnectionsResponse parses an HTTP response from a GetUserConnectionsWithResponse call
 func ParseGetUserConnectionsResponse(rsp *http.Response) (*GetUserConnectionsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -50892,9 +48097,14 @@ func ParseGetUsersResponse(rsp *http.Response) (*GetUsersResponse, error) {
 		var dest struct {
 			Data *[]struct {
 				Access *[]struct {
-					Admin           *bool                     `json:"admin,omitempty"`
-					App             *GetUsers200DataAccessApp `json:"app,omitempty"`
-					PermissionSetId *string                   `json:"permission_set_id,omitempty"`
+					// Admin Whether the user has admin access or not
+					Admin *bool `json:"admin,omitempty"`
+
+					// App The granular app access level
+					App *GetUsers200DataAccessApp `json:"app,omitempty"`
+
+					// PermissionSetId The ID of the permission set
+					PermissionSetId *string `json:"permission_set_id,omitempty"`
 				} `json:"access,omitempty"`
 
 				// Activated Boolean that indicates whether the user is activated
@@ -50986,9 +48196,14 @@ func ParseAddUserResponse(rsp *http.Response) (*AddUserResponse, error) {
 		var dest struct {
 			Data *struct {
 				Access *[]struct {
-					Admin           *bool                    `json:"admin,omitempty"`
-					App             *AddUser200DataAccessApp `json:"app,omitempty"`
-					PermissionSetId *string                  `json:"permission_set_id,omitempty"`
+					// Admin Whether the user has admin access or not
+					Admin *bool `json:"admin,omitempty"`
+
+					// App The granular app access level
+					App *AddUser200DataAccessApp `json:"app,omitempty"`
+
+					// PermissionSetId The ID of the permission set
+					PermissionSetId *string `json:"permission_set_id,omitempty"`
 				} `json:"access,omitempty"`
 
 				// Activated Boolean that indicates whether the user is activated
@@ -51093,9 +48308,14 @@ func ParseFindUsersByNameResponse(rsp *http.Response) (*FindUsersByNameResponse,
 		var dest struct {
 			Data *[]struct {
 				Access *[]struct {
-					Admin           *bool                            `json:"admin,omitempty"`
-					App             *FindUsersByName200DataAccessApp `json:"app,omitempty"`
-					PermissionSetId *string                          `json:"permission_set_id,omitempty"`
+					// Admin Whether the user has admin access or not
+					Admin *bool `json:"admin,omitempty"`
+
+					// App The granular app access level
+					App *FindUsersByName200DataAccessApp `json:"app,omitempty"`
+
+					// PermissionSetId The ID of the permission set
+					PermissionSetId *string `json:"permission_set_id,omitempty"`
 				} `json:"access,omitempty"`
 
 				// Activated Boolean that indicates whether the user is activated
@@ -51187,9 +48407,14 @@ func ParseGetCurrentUserResponse(rsp *http.Response) (*GetCurrentUserResponse, e
 		var dest struct {
 			Data *struct {
 				Access *[]struct {
-					Admin           *bool                           `json:"admin,omitempty"`
-					App             *GetCurrentUser200DataAccessApp `json:"app,omitempty"`
-					PermissionSetId *string                         `json:"permission_set_id,omitempty"`
+					// Admin Whether the user has admin access or not
+					Admin *bool `json:"admin,omitempty"`
+
+					// App The granular app access level
+					App *GetCurrentUser200DataAccessApp `json:"app,omitempty"`
+
+					// PermissionSetId The ID of the permission set
+					PermissionSetId *string `json:"permission_set_id,omitempty"`
 				} `json:"access,omitempty"`
 
 				// Activated Boolean that indicates whether the user is activated
@@ -51321,9 +48546,14 @@ func ParseGetUserResponse(rsp *http.Response) (*GetUserResponse, error) {
 		var dest struct {
 			Data *struct {
 				Access *[]struct {
-					Admin           *bool                    `json:"admin,omitempty"`
-					App             *GetUser200DataAccessApp `json:"app,omitempty"`
-					PermissionSetId *string                  `json:"permission_set_id,omitempty"`
+					// Admin Whether the user has admin access or not
+					Admin *bool `json:"admin,omitempty"`
+
+					// App The granular app access level
+					App *GetUser200DataAccessApp `json:"app,omitempty"`
+
+					// PermissionSetId The ID of the permission set
+					PermissionSetId *string `json:"permission_set_id,omitempty"`
 				} `json:"access,omitempty"`
 
 				// Activated Boolean that indicates whether the user is activated
@@ -51428,9 +48658,14 @@ func ParseUpdateUserResponse(rsp *http.Response) (*UpdateUserResponse, error) {
 		var dest struct {
 			Data *struct {
 				Access *[]struct {
-					Admin           *bool                       `json:"admin,omitempty"`
-					App             *UpdateUser200DataAccessApp `json:"app,omitempty"`
-					PermissionSetId *string                     `json:"permission_set_id,omitempty"`
+					// Admin Whether the user has admin access or not
+					Admin *bool `json:"admin,omitempty"`
+
+					// App The granular app access level
+					App *UpdateUser200DataAccessApp `json:"app,omitempty"`
+
+					// PermissionSetId The ID of the permission set
+					PermissionSetId *string `json:"permission_set_id,omitempty"`
 				} `json:"access,omitempty"`
 
 				// Activated Boolean that indicates whether the user is activated
