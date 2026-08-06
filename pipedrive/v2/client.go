@@ -40,6 +40,9 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	if baseURL == "" {
 		baseURL = DefaultBaseURL
 	}
+	// Ensure the HTTP client pins credentials to the resolved origin even
+	// when the caller relied on the default base URL.
+	cfg.BaseURL = baseURL
 
 	httpClient := pipedrive.NewHTTPClient(cfg)
 
