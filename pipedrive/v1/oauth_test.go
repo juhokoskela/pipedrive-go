@@ -14,11 +14,13 @@ import (
 func TestOAuthService_Authorize(t *testing.T) {
 	t.Parallel()
 
-	client, err := NewClient(pipedrive.Config{BaseURL: "http://example.com"})
+	client, err := NewClient(pipedrive.Config{
+		BaseURL:      "http://example.com",
+		OAuthBaseURL: "https://auth.example.com",
+	})
 	if err != nil {
 		t.Fatalf("NewClient error: %v", err)
 	}
-	client.OAuth.baseURL = "https://auth.example.com"
 
 	urlStr, err := client.OAuth.Authorize(
 		context.Background(),
@@ -64,6 +66,9 @@ func TestOAuthService_GetTokens(t *testing.T) {
 		if got := r.Header.Get("Content-Type"); got != "application/x-www-form-urlencoded" {
 			t.Fatalf("unexpected content type: %q", got)
 		}
+		if got := r.Header.Get("x-api-token"); got != "" {
+			t.Fatalf("api token must not be sent to the oauth endpoint, got %q", got)
+		}
 		body, _ := io.ReadAll(r.Body)
 		if got := string(body); got != "code=auth&grant_type=authorization_code&redirect_uri=https%3A%2F%2Fapp.example.com%2Fcb" {
 			t.Fatalf("unexpected body: %q", got)
@@ -74,16 +79,15 @@ func TestOAuthService_GetTokens(t *testing.T) {
 	}))
 	t.Cleanup(srv.Close)
 
-	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	client, err := NewClient(pipedrive.Config{
+		BaseURL:      srv.URL,
+		OAuthBaseURL: srv.URL,
+		HTTPClient:   srv.Client(),
+		Auth:         pipedrive.APITokenAuth("api-token"),
+	})
 	if err != nil {
 		t.Fatalf("NewClient error: %v", err)
 	}
-	oauthRaw, err := pipedrive.NewRawClient(srv.URL, srv.Client())
-	if err != nil {
-		t.Fatalf("NewRawClient error: %v", err)
-	}
-	client.OAuth.raw = oauthRaw
-	client.OAuth.baseURL = srv.URL
 
 	tokens, err := client.OAuth.GetTokens(
 		context.Background(),
@@ -106,7 +110,7 @@ func TestOAuthService_RefreshTokens(t *testing.T) {
 		if r.Method != http.MethodPost {
 			t.Fatalf("unexpected method: %s", r.Method)
 		}
-		if r.URL.Path != "/oauth/token/" {
+		if r.URL.Path != "/oauth/token" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
 		if got := r.Header.Get("Authorization"); got != "Basic abc" {
@@ -122,16 +126,14 @@ func TestOAuthService_RefreshTokens(t *testing.T) {
 	}))
 	t.Cleanup(srv.Close)
 
-	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	client, err := NewClient(pipedrive.Config{
+		BaseURL:      srv.URL,
+		OAuthBaseURL: srv.URL,
+		HTTPClient:   srv.Client(),
+	})
 	if err != nil {
 		t.Fatalf("NewClient error: %v", err)
 	}
-	oauthRaw, err := pipedrive.NewRawClient(srv.URL, srv.Client())
-	if err != nil {
-		t.Fatalf("NewRawClient error: %v", err)
-	}
-	client.OAuth.raw = oauthRaw
-	client.OAuth.baseURL = srv.URL
 
 	tokens, err := client.OAuth.RefreshTokens(
 		context.Background(),

@@ -257,7 +257,7 @@ func (s *OAuthService) RefreshTokens(ctx context.Context, opts ...RefreshTokensO
 
 	var payload OAuthTokens
 	body := strings.NewReader(form.Encode())
-	if err := s.raw.Do(ctx, http.MethodPost, "/oauth/token/", nil, body, &payload, reqOpts...); err != nil {
+	if err := s.raw.Do(ctx, http.MethodPost, "/oauth/token", nil, body, &payload, reqOpts...); err != nil {
 		return nil, err
 	}
 	return &payload, nil

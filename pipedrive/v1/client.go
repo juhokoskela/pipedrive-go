@@ -58,6 +58,9 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	if baseURL == "" {
 		baseURL = DefaultBaseURL
 	}
+	// Ensure the HTTP client pins credentials to the resolved origin even
+	// when the caller relied on the default base URL.
+	cfg.BaseURL = baseURL
 
 	httpClient := pipedrive.NewHTTPClient(cfg)
 
@@ -71,8 +74,16 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 		return nil, err
 	}
 
-	oauthBaseURL := DefaultOAuthBaseURL
-	oauthRaw, err := pipedrive.NewRawClient(oauthBaseURL, httpClient)
+	oauthBaseURL := cfg.OAuthBaseURL
+	if oauthBaseURL == "" {
+		oauthBaseURL = DefaultOAuthBaseURL
+	}
+	// The OAuth endpoints authenticate with explicit client credentials,
+	// so their HTTP client carries no Auth provider.
+	oauthCfg := cfg
+	oauthCfg.Auth = nil
+	oauthCfg.BaseURL = oauthBaseURL
+	oauthRaw, err := pipedrive.NewRawClient(oauthBaseURL, pipedrive.NewHTTPClient(oauthCfg))
 	if err != nil {
 		return nil, err
 	}
