@@ -5,11 +5,16 @@ import (
 	"encoding/json"
 	"net/http"
 	"testing"
+
+	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
 func TestProjectPhasesService_AllOperations(t *testing.T) {
 	t.Parallel()
 	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if got := r.Header.Get("X-Test"); got != "project-phases" {
+			t.Fatalf("unexpected request header: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		switch r.Method + " " + r.URL.Path {
 		case "GET /phases":
@@ -37,23 +42,24 @@ func TestProjectPhasesService_AllOperations(t *testing.T) {
 		}
 	})
 	ctx := context.Background()
-	items, err := client.ProjectPhases.List(ctx, 2)
+	requestOpt := WithProjectPhaseRequestOptions(pipedrive.WithHeader("X-Test", "project-phases"))
+	items, err := client.ProjectPhases.List(ctx, 2, requestOpt)
 	if err != nil || len(items) != 1 || items[0].ID != 3 {
 		t.Fatalf("List = %#v, %v", items, err)
 	}
-	created, err := client.ProjectPhases.Create(ctx, WithProjectPhaseName("Build"), WithProjectPhaseBoardID(2), WithProjectPhaseOrder(1))
+	created, err := client.ProjectPhases.Create(ctx, WithProjectPhaseName("Build"), WithProjectPhaseBoardID(2), WithProjectPhaseOrder(1), requestOpt)
 	if err != nil || created.ID != 3 {
 		t.Fatalf("Create = %#v, %v", created, err)
 	}
-	got, err := client.ProjectPhases.Get(ctx, 3)
+	got, err := client.ProjectPhases.Get(ctx, 3, requestOpt)
 	if err != nil || got.ID != 3 {
 		t.Fatalf("Get = %#v, %v", got, err)
 	}
-	updated, err := client.ProjectPhases.Update(ctx, 3, WithProjectPhaseName("Test"))
+	updated, err := client.ProjectPhases.Update(ctx, 3, WithProjectPhaseName("Test"), requestOpt)
 	if err != nil || updated.Name != "Test" {
 		t.Fatalf("Update = %#v, %v", updated, err)
 	}
-	deleted, err := client.ProjectPhases.Delete(ctx, 3)
+	deleted, err := client.ProjectPhases.Delete(ctx, 3, requestOpt)
 	if err != nil || deleted.ID != 3 {
 		t.Fatalf("Delete = %#v, %v", deleted, err)
 	}

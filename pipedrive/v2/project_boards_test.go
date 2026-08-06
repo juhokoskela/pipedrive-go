@@ -5,11 +5,16 @@ import (
 	"encoding/json"
 	"net/http"
 	"testing"
+
+	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
 func TestProjectBoardsService_AllOperations(t *testing.T) {
 	t.Parallel()
 	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if got := r.Header.Get("X-Test"); got != "project-boards" {
+			t.Fatalf("unexpected request header: %q", got)
+		}
 		w.Header().Set("Content-Type", "application/json")
 		switch r.Method + " " + r.URL.Path {
 		case "GET /boards":
@@ -34,23 +39,24 @@ func TestProjectBoardsService_AllOperations(t *testing.T) {
 		}
 	})
 	ctx := context.Background()
-	items, err := client.ProjectBoards.List(ctx)
+	requestOpt := WithProjectBoardRequestOptions(pipedrive.WithHeader("X-Test", "project-boards"))
+	items, err := client.ProjectBoards.List(ctx, requestOpt)
 	if err != nil || len(items) != 1 || items[0].ID != 2 {
 		t.Fatalf("List = %#v, %v", items, err)
 	}
-	created, err := client.ProjectBoards.Create(ctx, WithProjectBoardName("Delivery"), WithProjectBoardOrder(1))
+	created, err := client.ProjectBoards.Create(ctx, WithProjectBoardName("Delivery"), WithProjectBoardOrder(1), requestOpt)
 	if err != nil || created.ID != 2 {
 		t.Fatalf("Create = %#v, %v", created, err)
 	}
-	got, err := client.ProjectBoards.Get(ctx, 2)
+	got, err := client.ProjectBoards.Get(ctx, 2, requestOpt)
 	if err != nil || got.ID != 2 {
 		t.Fatalf("Get = %#v, %v", got, err)
 	}
-	updated, err := client.ProjectBoards.Update(ctx, 2, WithProjectBoardName("Updated"))
+	updated, err := client.ProjectBoards.Update(ctx, 2, WithProjectBoardName("Updated"), requestOpt)
 	if err != nil || updated.Name != "Updated" {
 		t.Fatalf("Update = %#v, %v", updated, err)
 	}
-	deleted, err := client.ProjectBoards.Delete(ctx, 2)
+	deleted, err := client.ProjectBoards.Delete(ctx, 2, requestOpt)
 	if err != nil || deleted.ID != 2 {
 		t.Fatalf("Delete = %#v, %v", deleted, err)
 	}
