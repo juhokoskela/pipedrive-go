@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"crypto/rand"
 	"encoding/base64"
+	"fmt"
 	"log"
 
 	"golang.org/x/oauth2"
@@ -27,16 +29,32 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// The state parameter defends against CSRF on the callback: generate it
+	// randomly per authorization request, store it against the user's
+	// session, and reject any callback whose state does not match.
+	state, err := randomState()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	authURL, err := oauthClient.OAuth.Authorize(
 		ctx,
 		v1.WithOAuthClientID(clientID),
 		v1.WithOAuthRedirectURI(redirectURI),
-		v1.WithOAuthState("state123"),
+		v1.WithOAuthState(state),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Printf("open: %s", authURL)
+
+	// On the callback, before exchanging the code:
+	//
+	//	returnedState := r.URL.Query().Get("state")
+	//	if subtle.ConstantTimeCompare([]byte(returnedState), []byte(state)) != 1 {
+	//		http.Error(w, "state mismatch", http.StatusBadRequest)
+	//		return
+	//	}
 
 	authHeader := "Basic " + base64.StdEncoding.EncodeToString([]byte(clientID+":"+clientSecret))
 	tokens, err := oauthClient.OAuth.GetTokens(
@@ -63,4 +81,12 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("pipelines=%d", len(pipelines))
+}
+
+func randomState() (string, error) {
+	buf := make([]byte, 32)
+	if _, err := rand.Read(buf); err != nil {
+		return "", fmt.Errorf("generate oauth state: %w", err)
+	}
+	return base64.RawURLEncoding.EncodeToString(buf), nil
 }
