@@ -2,7 +2,7 @@
 
 Generated from `openapi/upstream/v2.yaml` by `cmd/endpoint-docs`. Do not edit manually.
 
-Total operations: 123
+Total operations: 158
 
 | Method | Path | Summary | Operation ID |
 | --- | --- | --- | --- |
@@ -13,6 +13,11 @@ Total operations: 123
 | DELETE | `/activities/{id}` | Delete an activity | `deleteActivity` |
 | GET | `/activityFields` | Get all activity fields | `getActivityFields` |
 | GET | `/activityFields/{field_code}` | Get one activity field | `getActivityField` |
+| GET | `/boards` | Get all project boards | `getProjectsBoards` |
+| POST | `/boards` | Add a project board | `addProjectBoard` |
+| GET | `/boards/{id}` | Get details of a project board | `getProjectsBoard` |
+| PATCH | `/boards/{id}` | Update a project board | `updateProjectBoard` |
+| DELETE | `/boards/{id}` | Delete a project board | `deleteProjectBoard` |
 | GET | `/dealFields` | Get all deal fields | `getDealFields` |
 | POST | `/dealFields` | Create one deal field | `addDealField` |
 | GET | `/dealFields/{field_code}` | Get one deal field | `getDealField` |
@@ -91,6 +96,11 @@ Total operations: 123
 | GET | `/persons/{id}/followers/changelog` | List followers changelog of a person | `getPersonFollowersChangelog` |
 | DELETE | `/persons/{id}/followers/{follower_id}` | Delete a follower from a person | `deletePersonFollower` |
 | GET | `/persons/{id}/picture` | Get picture of a person | `getPersonPicture` |
+| GET | `/phases` | Get project phases | `getProjectsPhases` |
+| POST | `/phases` | Add a project phase | `addProjectPhase` |
+| GET | `/phases/{id}` | Get details of a project phase | `getProjectsPhase` |
+| PATCH | `/phases/{id}` | Update a project phase | `updateProjectPhase` |
+| DELETE | `/phases/{id}` | Delete a project phase | `deleteProjectPhase` |
 | GET | `/pipelines` | Get all pipelines | `getPipelines` |
 | POST | `/pipelines` | Add a new pipeline | `addPipeline` |
 | GET | `/pipelines/{id}` | Get one pipeline | `getPipeline` |
@@ -123,10 +133,35 @@ Total operations: 123
 | POST | `/products/{id}/variations` | Add a product variation | `addProductVariation` |
 | PATCH | `/products/{id}/variations/{product_variation_id}` | Update a product variation | `updateProductVariation` |
 | DELETE | `/products/{id}/variations/{product_variation_id}` | Delete a product variation | `deleteProductVariation` |
+| GET | `/projectFields` | Get all project fields | `getProjectFields` |
+| POST | `/projectFields` | Create one project field | `addProjectField` |
+| GET | `/projectFields/{field_code}` | Get one project field | `getProjectField` |
+| PATCH | `/projectFields/{field_code}` | Update one project field | `updateProjectField` |
+| DELETE | `/projectFields/{field_code}` | Delete one project field | `deleteProjectField` |
+| POST | `/projectFields/{field_code}/options` | Add project field options in bulk | `addProjectFieldOptions` |
+| PATCH | `/projectFields/{field_code}/options` | Update project field options in bulk | `updateProjectFieldOptions` |
+| DELETE | `/projectFields/{field_code}/options` | Delete project field options in bulk | `deleteProjectFieldOptions` |
+| GET | `/projectTemplates` | Get all project templates | `getProjectTemplates` |
+| GET | `/projectTemplates/{id}` | Get details of a template | `getProjectTemplate` |
+| GET | `/projects` | Get all projects | `getProjects` |
+| POST | `/projects` | Add a project | `addProject` |
+| GET | `/projects/archived` | Get all archived projects | `getArchivedProjects` |
+| GET | `/projects/search` | Search projects | `searchProjects` |
+| GET | `/projects/{id}` | Get details of a project | `getProject` |
+| PATCH | `/projects/{id}` | Update a project | `updateProject` |
+| DELETE | `/projects/{id}` | Delete a project | `deleteProject` |
+| POST | `/projects/{id}/archive` | Archive a project | `archiveProject` |
+| GET | `/projects/{id}/changelog` | List updates about project field values | `getProjectChangelog` |
+| GET | `/projects/{id}/permittedUsers` | List permitted users | `getProjectUsers` |
 | GET | `/stages` | Get all stages | `getStages` |
 | POST | `/stages` | Add a new stage | `addStage` |
 | GET | `/stages/{id}` | Get one stage | `getStage` |
 | PATCH | `/stages/{id}` | Update stage details | `updateStage` |
 | DELETE | `/stages/{id}` | Delete a stage | `deleteStage` |
+| GET | `/tasks` | Get all tasks | `getTasks` |
+| POST | `/tasks` | Add a task | `addTask` |
+| GET | `/tasks/{id}` | Get details of a task | `getTask` |
+| PATCH | `/tasks/{id}` | Update a task | `updateTask` |
+| DELETE | `/tasks/{id}` | Delete a task | `deleteTask` |
 | GET | `/users/{id}/followers` | List followers of a user | `getUserFollowers` |
 

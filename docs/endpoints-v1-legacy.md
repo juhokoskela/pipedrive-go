@@ -2,7 +2,7 @@
 
 Generated from `openapi/derived/v1-legacy.yaml` by `cmd/endpoint-docs`. Do not edit manually.
 
-Total operations: 177
+Total operations: 160
 
 | Method | Path | Summary | Operation ID |
 | --- | --- | --- | --- |
@@ -132,19 +132,7 @@ Total operations: 177
 | GET | `/products/{id}/deals` | Get deals where a product is attached to | `getProductDeals` |
 | GET | `/products/{id}/files` | List files attached to a product | `getProductFiles` |
 | GET | `/products/{id}/permittedUsers` | List permitted users | `getProductUsers` |
-| GET | `/projectTemplates` | Get all project templates | `getProjectTemplates` |
-| GET | `/projectTemplates/{id}` | Get details of a template | `getProjectTemplate` |
-| GET | `/projects` | Get all projects | `getProjects` |
-| POST | `/projects` | Add a project | `addProject` |
-| GET | `/projects/boards` | Get all project boards | `getProjectsBoards` |
-| GET | `/projects/boards/{id}` | Get details of a board | `getProjectsBoard` |
-| GET | `/projects/phases` | Get project phases | `getProjectsPhases` |
-| GET | `/projects/phases/{id}` | Get details of a phase | `getProjectsPhase` |
-| GET | `/projects/{id}` | Get details of a project | `getProject` |
-| PUT | `/projects/{id}` | Update a project | `updateProject` |
-| DELETE | `/projects/{id}` | Delete a project | `deleteProject` |
 | GET | `/projects/{id}/activities` | Returns project activities | `getProjectActivities` |
-| POST | `/projects/{id}/archive` | Archive a project | `archiveProject` |
 | GET | `/projects/{id}/groups` | Returns project groups | `getProjectGroups` |
 | GET | `/projects/{id}/plan` | Returns project plan | `getProjectPlan` |
 | PUT | `/projects/{id}/plan/activities/{activityId}` | Update activity in project plan | `putProjectPlanActivity` |
@@ -164,11 +152,6 @@ Total operations: 177
 | GET | `/roles/{id}/settings` | List role settings | `getRoleSettings` |
 | POST | `/roles/{id}/settings` | Add or update role setting | `addOrUpdateRoleSetting` |
 | GET | `/stages/{id}/deals` | Get deals in a stage | `getStageDeals` |
-| GET | `/tasks` | Get all tasks | `getTasks` |
-| POST | `/tasks` | Add a task | `addTask` |
-| GET | `/tasks/{id}` | Get details of a task | `getTask` |
-| PUT | `/tasks/{id}` | Update a task | `updateTask` |
-| DELETE | `/tasks/{id}` | Delete a task | `deleteTask` |
 | GET | `/userConnections` | Get all user connections | `getUserConnections` |
 | GET | `/userSettings` | List settings of an authorized user | `getUserSettings` |
 | GET | `/users` | Get all users | `getUsers` |
