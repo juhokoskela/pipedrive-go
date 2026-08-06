@@ -62,6 +62,9 @@ func newProductsOptions(opts []ProductsOption) productsOptions {
 }
 
 func (s *ProductsService) ListDeals(ctx context.Context, id ProductID, opts ...ProductsOption) ([]Deal, *Pagination, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newProductsOptions(opts)
 	path := fmt.Sprintf("/products/%d/deals", id)
 
@@ -82,6 +85,9 @@ func (s *ProductsService) ListDeals(ctx context.Context, id ProductID, opts ...P
 }
 
 func (s *ProductsService) ListFiles(ctx context.Context, id ProductID, opts ...ProductsOption) ([]File, *Pagination, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newProductsOptions(opts)
 	path := fmt.Sprintf("/products/%d/files", id)
 
@@ -102,6 +108,9 @@ func (s *ProductsService) ListFiles(ctx context.Context, id ProductID, opts ...P
 }
 
 func (s *ProductsService) ListUsers(ctx context.Context, id ProductID, opts ...ProductsOption) ([]User, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newProductsOptions(opts)
 	path := fmt.Sprintf("/products/%d/permittedUsers", id)
 
