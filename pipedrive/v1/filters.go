@@ -94,21 +94,30 @@ type FilterOption interface {
 	UpdateFilterOption
 }
 
+type FilterIncludeFieldCodeOption interface {
+	GetFilterOption
+	CreateFilterOption
+	UpdateFilterOption
+}
+
 type listFiltersOptions struct {
 	params         genv1.GetFiltersParams
 	requestOptions []pipedrive.RequestOption
 }
 
 type getFilterOptions struct {
+	params         genv1.GetFilterParams
 	requestOptions []pipedrive.RequestOption
 }
 
 type createFilterOptions struct {
+	params         genv1.AddFilterParams
 	payload        filterPayload
 	requestOptions []pipedrive.RequestOption
 }
 
 type updateFilterOptions struct {
+	params         genv1.UpdateFilterParams
 	payload        filterPayload
 	requestOptions []pipedrive.RequestOption
 }
@@ -203,6 +212,23 @@ func (f listFilterHelpersOptionFunc) applyListFilterHelpers(cfg *listFilterHelpe
 	f(cfg)
 }
 
+type filterIncludeFieldCodeOption bool
+
+func (o filterIncludeFieldCodeOption) applyGetFilter(cfg *getFilterOptions) {
+	value := bool(o)
+	cfg.params.IncludeFieldCode = &value
+}
+
+func (o filterIncludeFieldCodeOption) applyCreateFilter(cfg *createFilterOptions) {
+	value := bool(o)
+	cfg.params.IncludeFieldCode = &value
+}
+
+func (o filterIncludeFieldCodeOption) applyUpdateFilter(cfg *updateFilterOptions) {
+	value := bool(o)
+	cfg.params.IncludeFieldCode = &value
+}
+
 func WithFiltersRequestOptions(opts ...pipedrive.RequestOption) FiltersRequestOption {
 	return filtersRequestOptions{requestOptions: opts}
 }
@@ -212,6 +238,10 @@ func WithFiltersType(filterType FilterType) ListFiltersOption {
 		value := genv1.GetFiltersParamsType(filterType)
 		cfg.params.Type = &value
 	})
+}
+
+func WithFilterIncludeFieldCode(enabled bool) FilterIncludeFieldCodeOption {
+	return filterIncludeFieldCodeOption(enabled)
 }
 
 func WithFilterName(name string) FilterOption {
@@ -347,7 +377,7 @@ func (s *FiltersService) Get(ctx context.Context, id FilterID, opts ...GetFilter
 	cfg := newGetFilterOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.GetFilter(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetFilter(ctx, int(id), &cfg.params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
@@ -391,7 +421,7 @@ func (s *FiltersService) Create(ctx context.Context, opts ...CreateFilterOption)
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.AddFilterWithBody(ctx, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddFilterWithBody(ctx, &cfg.params, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
@@ -429,7 +459,7 @@ func (s *FiltersService) Update(ctx context.Context, id FilterID, opts ...Update
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.UpdateFilterWithBody(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateFilterWithBody(ctx, int(id), &cfg.params, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}

@@ -59,6 +59,9 @@ func TestFiltersService_Get(t *testing.T) {
 		if r.URL.Path != "/filters/42" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.URL.Query().Get("include_field_code"); got != "true" {
+			t.Fatalf("unexpected include_field_code: %q", got)
+		}
 		if got := r.Header.Get("X-Test"); got != "1" {
 			t.Fatalf("unexpected header X-Test: %q", got)
 		}
@@ -75,6 +78,7 @@ func TestFiltersService_Get(t *testing.T) {
 	filter, err := client.Filters.Get(
 		context.Background(),
 		FilterID(42),
+		WithFilterIncludeFieldCode(true),
 		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "1")),
 	)
 	if err != nil {
@@ -100,6 +104,9 @@ func TestFiltersService_Create(t *testing.T) {
 		}
 		if got := r.Header.Get("X-Test"); got != "create" {
 			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		if got := r.URL.Query().Get("include_field_code"); got != "true" {
+			t.Fatalf("unexpected include_field_code: %q", got)
 		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -133,6 +140,7 @@ func TestFiltersService_Create(t *testing.T) {
 		WithFilterName("New Filter"),
 		WithFilterType(FilterTypeDeals),
 		WithFilterConditions(conditions),
+		WithFilterIncludeFieldCode(true),
 		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
@@ -155,6 +163,9 @@ func TestFiltersService_Update(t *testing.T) {
 		}
 		if got := r.Header.Get("X-Test"); got != "update" {
 			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		if got := r.URL.Query().Get("include_field_code"); got != "true" {
+			t.Fatalf("unexpected include_field_code: %q", got)
 		}
 		var payload map[string]interface{}
 		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -181,6 +192,7 @@ func TestFiltersService_Update(t *testing.T) {
 		FilterID(10),
 		WithFilterName("Updated Filter"),
 		WithFilterConditions(FilterConditions{"glue": "and"}),
+		WithFilterIncludeFieldCode(true),
 		WithFiltersRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
