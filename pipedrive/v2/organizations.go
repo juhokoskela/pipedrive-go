@@ -179,11 +179,13 @@ type OrganizationOption interface {
 type getOrganizationOptions struct {
 	params         genv2.GetOrganizationParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type listOrganizationsOptions struct {
 	params         genv2.GetOrganizationsParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type createOrganizationOptions struct {
@@ -345,6 +347,12 @@ func WithOrganizationIncludeOptionLabels(enabled bool) GetOrganizationOption {
 
 func WithOrganizationCustomFields(fields ...string) GetOrganizationOption {
 	return getOrganizationOptionFunc(func(cfg *getOrganizationOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -385,6 +393,9 @@ func WithOrganizationVisibleTo(visibleTo int) OrganizationOption {
 
 func WithOrganizationCustomFieldsMap(fields map[string]interface{}) OrganizationOption {
 	return organizationFieldOption(func(payload *organizationPayload) {
+		if len(fields) == 0 {
+			return
+		}
 		payload.customFields = fields
 	})
 }
@@ -454,6 +465,12 @@ func WithOrganizationsIncludeOptionLabels(enabled bool) ListOrganizationsOption 
 
 func WithOrganizationsCustomFields(fields ...string) ListOrganizationsOption {
 	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -672,7 +689,13 @@ func newGetOrganizationFollowersChangelogOptions(opts []GetOrganizationFollowers
 }
 
 func (s *OrganizationsService) Get(ctx context.Context, id OrganizationID, opts ...GetOrganizationOption) (*Organization, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetOrganizationOptions(opts)
+	if cfg.err != nil {
+		return nil, cfg.err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	resp, err := s.client.gen.GetOrganizationWithResponse(ctx, int(id), &cfg.params, toRequestEditors(editors)...)
@@ -697,6 +720,9 @@ func (s *OrganizationsService) Get(ctx context.Context, id OrganizationID, opts 
 
 func (s *OrganizationsService) List(ctx context.Context, opts ...ListOrganizationsOption) ([]Organization, *string, error) {
 	cfg := newListOrganizationsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -706,6 +732,9 @@ func (s *OrganizationsService) ListPager(opts ...ListOrganizationsOption) *piped
 	cfg.params.Cursor = nil
 
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Organization, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -750,6 +779,9 @@ func (s *OrganizationsService) Create(ctx context.Context, opts ...CreateOrganiz
 }
 
 func (s *OrganizationsService) Update(ctx context.Context, id OrganizationID, opts ...UpdateOrganizationOption) (*Organization, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateOrganizationOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -779,6 +811,9 @@ func (s *OrganizationsService) Update(ctx context.Context, id OrganizationID, op
 }
 
 func (s *OrganizationsService) Delete(ctx context.Context, id OrganizationID, opts ...DeleteOrganizationOption) (*OrganizationDeleteResult, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteOrganizationOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -861,6 +896,9 @@ func (s *OrganizationsService) ForEachFollowers(ctx context.Context, id Organiza
 }
 
 func (s *OrganizationsService) AddFollower(ctx context.Context, id OrganizationID, userID UserID, opts ...AddOrganizationFollowerOption) (*Follower, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddOrganizationFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -892,6 +930,12 @@ func (s *OrganizationsService) AddFollower(ctx context.Context, id OrganizationI
 }
 
 func (s *OrganizationsService) DeleteFollower(ctx context.Context, id OrganizationID, followerID UserID, opts ...DeleteOrganizationFollowerOption) (*FollowerDeleteResult, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(followerID, "follower id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteOrganizationFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -969,6 +1013,9 @@ func (s *OrganizationsService) list(ctx context.Context, params genv2.GetOrganiz
 }
 
 func (s *OrganizationsService) listFollowers(ctx context.Context, id OrganizationID, params genv2.GetOrganizationFollowersParams, requestOptions []pipedrive.RequestOption) ([]Follower, *string, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetOrganizationFollowersWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
@@ -997,6 +1044,9 @@ func (s *OrganizationsService) listFollowers(ctx context.Context, id Organizatio
 }
 
 func (s *OrganizationsService) followersChangelog(ctx context.Context, id OrganizationID, params genv2.GetOrganizationFollowersChangelogParams, requestOptions []pipedrive.RequestOption) ([]FollowerChangelog, *string, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetOrganizationFollowersChangelogWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)

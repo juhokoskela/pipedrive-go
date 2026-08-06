@@ -278,6 +278,7 @@ type getProductOptions struct {
 type listProductsOptions struct {
 	params         genv2.GetProductsParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type createProductOptions struct {
@@ -591,6 +592,12 @@ func WithProductsUpdatedSince(t time.Time) ListProductsOption {
 
 func WithProductsCustomFields(fields ...string) ListProductsOption {
 	return listProductsOptionFunc(func(cfg *listProductsOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -996,6 +1003,9 @@ func newGetProductFollowersChangelogOptions(opts []GetProductFollowersChangelogO
 }
 
 func (s *ProductsService) Get(ctx context.Context, id ProductID, opts ...GetProductOption) (*Product, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1025,6 +1035,9 @@ func (s *ProductsService) Get(ctx context.Context, id ProductID, opts ...GetProd
 
 func (s *ProductsService) List(ctx context.Context, opts ...ListProductsOption) ([]Product, *string, error) {
 	cfg := newListProductsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -1034,6 +1047,9 @@ func (s *ProductsService) ListPager(opts ...ListProductsOption) *pipedrive.Curso
 	cfg.params.Cursor = nil
 
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Product, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -1082,6 +1098,9 @@ func (s *ProductsService) Create(ctx context.Context, opts ...CreateProductOptio
 }
 
 func (s *ProductsService) Update(ctx context.Context, id ProductID, opts ...UpdateProductOption) (*Product, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1115,6 +1134,9 @@ func (s *ProductsService) Update(ctx context.Context, id ProductID, opts ...Upda
 }
 
 func (s *ProductsService) Delete(ctx context.Context, id ProductID, opts ...DeleteProductOption) (*ProductDeleteResult, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1172,6 +1194,9 @@ func (s *ProductsService) Search(ctx context.Context, term string, opts ...Searc
 }
 
 func (s *ProductsService) Duplicate(ctx context.Context, id ProductID, opts ...DuplicateProductOption) (*Product, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newDuplicateProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1225,6 +1250,9 @@ func (s *ProductsService) ForEachVariations(ctx context.Context, id ProductID, f
 }
 
 func (s *ProductsService) CreateVariation(ctx context.Context, id ProductID, opts ...CreateProductVariationOption) (*ProductVariation, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newCreateProductVariationOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1254,6 +1282,12 @@ func (s *ProductsService) CreateVariation(ctx context.Context, id ProductID, opt
 }
 
 func (s *ProductsService) UpdateVariation(ctx context.Context, id ProductID, variationID ProductVariationID, opts ...UpdateProductVariationOption) (*ProductVariation, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(variationID, "variation id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateProductVariationOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1283,6 +1317,12 @@ func (s *ProductsService) UpdateVariation(ctx context.Context, id ProductID, var
 }
 
 func (s *ProductsService) DeleteVariation(ctx context.Context, id ProductID, variationID ProductVariationID, opts ...DeleteProductVariationOption) (*ProductVariationDeleteResult, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(variationID, "variation id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteProductVariationOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1307,6 +1347,9 @@ func (s *ProductsService) DeleteVariation(ctx context.Context, id ProductID, var
 }
 
 func (s *ProductsService) GetImage(ctx context.Context, id ProductID, opts ...GetProductImageOption) (*ProductImage, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetProductImageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1331,6 +1374,9 @@ func (s *ProductsService) GetImage(ctx context.Context, id ProductID, opts ...Ge
 }
 
 func (s *ProductsService) UploadImage(ctx context.Context, id ProductID, opts ...UploadProductImageOption) (*ProductImage, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newUploadProductImageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1360,6 +1406,9 @@ func (s *ProductsService) UploadImage(ctx context.Context, id ProductID, opts ..
 }
 
 func (s *ProductsService) UpdateImage(ctx context.Context, id ProductID, opts ...UpdateProductImageOption) (*ProductImage, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateProductImageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1389,6 +1438,9 @@ func (s *ProductsService) UpdateImage(ctx context.Context, id ProductID, opts ..
 }
 
 func (s *ProductsService) DeleteImage(ctx context.Context, id ProductID, opts ...DeleteProductImageOption) (*ProductImageDeleteResult, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteProductImageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1438,6 +1490,9 @@ func (s *ProductsService) ForEachFollowers(ctx context.Context, id ProductID, fn
 }
 
 func (s *ProductsService) AddFollower(ctx context.Context, id ProductID, userID UserID, opts ...AddProductFollowerOption) (*Follower, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddProductFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1469,6 +1524,12 @@ func (s *ProductsService) AddFollower(ctx context.Context, id ProductID, userID 
 }
 
 func (s *ProductsService) DeleteFollower(ctx context.Context, id ProductID, followerID UserID, opts ...DeleteProductFollowerOption) (*FollowerDeleteResult, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(followerID, "follower id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteProductFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1571,6 +1632,9 @@ func readProductResponseBody(resp *http.Response) ([]byte, error) {
 }
 
 func (s *ProductsService) listVariations(ctx context.Context, id ProductID, params genv2.GetProductVariationsParams, requestOptions []pipedrive.RequestOption) ([]ProductVariation, *string, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetProductVariationsWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
@@ -1599,6 +1663,9 @@ func (s *ProductsService) listVariations(ctx context.Context, id ProductID, para
 }
 
 func (s *ProductsService) listFollowers(ctx context.Context, id ProductID, params genv2.GetProductFollowersParams, requestOptions []pipedrive.RequestOption) ([]Follower, *string, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetProductFollowersWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
@@ -1627,6 +1694,9 @@ func (s *ProductsService) listFollowers(ctx context.Context, id ProductID, param
 }
 
 func (s *ProductsService) followersChangelog(ctx context.Context, id ProductID, params genv2.GetProductFollowersChangelogParams, requestOptions []pipedrive.RequestOption) ([]FollowerChangelog, *string, error) {
+	if err := validateID(id, "product id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetProductFollowersChangelogWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
