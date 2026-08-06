@@ -85,6 +85,9 @@ func (s *MailboxService) ListThreads(ctx context.Context, opts ...MailboxOption)
 }
 
 func (s *MailboxService) GetThread(ctx context.Context, id MailThreadID, opts ...MailboxOption) (*MailThread, error) {
+	if err := validateID(id, "mail thread id"); err != nil {
+		return nil, err
+	}
 	cfg := newMailboxOptions(opts)
 	path := fmt.Sprintf("/mailbox/mailThreads/%d", id)
 
@@ -101,6 +104,9 @@ func (s *MailboxService) GetThread(ctx context.Context, id MailThreadID, opts ..
 }
 
 func (s *MailboxService) DeleteThread(ctx context.Context, id MailThreadID, opts ...MailboxOption) (bool, error) {
+	if err := validateID(id, "mail thread id"); err != nil {
+		return false, err
+	}
 	cfg := newMailboxOptions(opts)
 	path := fmt.Sprintf("/mailbox/mailThreads/%d", id)
 
@@ -117,6 +123,9 @@ func (s *MailboxService) DeleteThread(ctx context.Context, id MailThreadID, opts
 }
 
 func (s *MailboxService) UpdateThread(ctx context.Context, id MailThreadID, form url.Values, opts ...MailboxOption) (*MailThread, error) {
+	if err := validateID(id, "mail thread id"); err != nil {
+		return nil, err
+	}
 	cfg := newMailboxOptions(opts)
 	if len(form) == 0 {
 		return nil, fmt.Errorf("form values are required")
@@ -140,6 +149,9 @@ func (s *MailboxService) UpdateThread(ctx context.Context, id MailThreadID, form
 }
 
 func (s *MailboxService) ListThreadMessages(ctx context.Context, id MailThreadID, opts ...MailboxOption) ([]MailMessage, *Pagination, error) {
+	if err := validateID(id, "mail thread id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newMailboxOptions(opts)
 	path := fmt.Sprintf("/mailbox/mailThreads/%d/mailMessages", id)
 
@@ -160,6 +172,9 @@ func (s *MailboxService) ListThreadMessages(ctx context.Context, id MailThreadID
 }
 
 func (s *MailboxService) GetMessage(ctx context.Context, id MailMessageID, opts ...MailboxOption) (*MailMessage, error) {
+	if err := validateID(id, "mail message id"); err != nil {
+		return nil, err
+	}
 	cfg := newMailboxOptions(opts)
 	path := fmt.Sprintf("/mailbox/mailMessages/%d", id)
 

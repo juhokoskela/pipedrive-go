@@ -118,6 +118,9 @@ func (s *ProjectsService) Create(ctx context.Context, payload map[string]any, op
 }
 
 func (s *ProjectsService) Get(ctx context.Context, id ProjectID, opts ...ProjectsOption) (*Project, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/%d", id)
 
@@ -134,6 +137,9 @@ func (s *ProjectsService) Get(ctx context.Context, id ProjectID, opts ...Project
 }
 
 func (s *ProjectsService) Update(ctx context.Context, id ProjectID, payload map[string]any, opts ...ProjectsOption) (*Project, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("project payload is required")
@@ -153,6 +159,9 @@ func (s *ProjectsService) Update(ctx context.Context, id ProjectID, payload map[
 }
 
 func (s *ProjectsService) Delete(ctx context.Context, id ProjectID, opts ...ProjectsOption) (ProjectID, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return 0, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/%d", id)
 
@@ -171,6 +180,9 @@ func (s *ProjectsService) Delete(ctx context.Context, id ProjectID, opts ...Proj
 }
 
 func (s *ProjectsService) Archive(ctx context.Context, id ProjectID, opts ...ProjectsOption) (*Project, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/%d/archive", id)
 
@@ -199,6 +211,9 @@ func (s *ProjectsService) ListBoards(ctx context.Context, opts ...ProjectsOption
 }
 
 func (s *ProjectsService) GetBoard(ctx context.Context, id ProjectBoardID, opts ...ProjectsOption) (*ProjectBoard, error) {
+	if err := validateID(id, "project board id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/boards/%d", id)
 
@@ -227,6 +242,9 @@ func (s *ProjectsService) ListPhases(ctx context.Context, opts ...ProjectsOption
 }
 
 func (s *ProjectsService) GetPhase(ctx context.Context, id ProjectPhaseID, opts ...ProjectsOption) (*ProjectPhase, error) {
+	if err := validateID(id, "project phase id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/phases/%d", id)
 
@@ -243,6 +261,9 @@ func (s *ProjectsService) GetPhase(ctx context.Context, id ProjectPhaseID, opts 
 }
 
 func (s *ProjectsService) ListActivities(ctx context.Context, id ProjectID, opts ...ProjectsOption) ([]Activity, *Pagination, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/%d/activities", id)
 
@@ -263,6 +284,9 @@ func (s *ProjectsService) ListActivities(ctx context.Context, id ProjectID, opts
 }
 
 func (s *ProjectsService) ListGroups(ctx context.Context, id ProjectID, opts ...ProjectsOption) ([]ProjectGroup, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/%d/groups", id)
 
@@ -276,6 +300,9 @@ func (s *ProjectsService) ListGroups(ctx context.Context, id ProjectID, opts ...
 }
 
 func (s *ProjectsService) GetPlan(ctx context.Context, id ProjectID, opts ...ProjectsOption) (map[string]any, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/%d/plan", id)
 
@@ -292,6 +319,12 @@ func (s *ProjectsService) GetPlan(ctx context.Context, id ProjectID, opts ...Pro
 }
 
 func (s *ProjectsService) UpdatePlanActivity(ctx context.Context, id ProjectID, activityID ProjectPlanActivityID, payload map[string]any, opts ...ProjectsOption) (map[string]any, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(activityID, "project plan activity id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("project plan activity payload is required")
@@ -311,6 +344,12 @@ func (s *ProjectsService) UpdatePlanActivity(ctx context.Context, id ProjectID, 
 }
 
 func (s *ProjectsService) UpdatePlanTask(ctx context.Context, id ProjectID, taskID ProjectPlanTaskID, payload map[string]any, opts ...ProjectsOption) (map[string]any, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(taskID, "project plan task id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("project plan task payload is required")
@@ -330,6 +369,9 @@ func (s *ProjectsService) UpdatePlanTask(ctx context.Context, id ProjectID, task
 }
 
 func (s *ProjectsService) ListTasks(ctx context.Context, id ProjectID, opts ...ProjectsOption) ([]ProjectTask, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectsOptions(opts)
 	path := fmt.Sprintf("/projects/%d/tasks", id)
 
