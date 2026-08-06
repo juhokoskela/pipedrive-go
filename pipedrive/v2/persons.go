@@ -79,17 +79,50 @@ type LabeledValue struct {
 }
 
 type Person struct {
-	ID           PersonID               `json:"id"`
-	Name         string                 `json:"name,omitempty"`
-	FirstName    string                 `json:"first_name,omitempty"`
-	LastName     string                 `json:"last_name,omitempty"`
-	OwnerID      *UserID                `json:"owner_id,omitempty"`
-	OrgID        *OrganizationID        `json:"org_id,omitempty"`
-	AddTime      *time.Time             `json:"add_time,omitempty"`
-	UpdateTime   *time.Time             `json:"update_time,omitempty"`
-	Emails       []LabeledValue         `json:"emails,omitempty"`
-	Phones       []LabeledValue         `json:"phones,omitempty"`
-	CustomFields map[string]interface{} `json:"custom_fields,omitempty"`
+	ID                          PersonID               `json:"id"`
+	Name                        string                 `json:"name,omitempty"`
+	FirstName                   string                 `json:"first_name,omitempty"`
+	LastName                    string                 `json:"last_name,omitempty"`
+	OwnerID                     *UserID                `json:"owner_id,omitempty"`
+	OrgID                       *OrganizationID        `json:"org_id,omitempty"`
+	AddTime                     *time.Time             `json:"add_time,omitempty"`
+	UpdateTime                  *time.Time             `json:"update_time,omitempty"`
+	Emails                      []LabeledValue         `json:"emails,omitempty"`
+	Phones                      []LabeledValue         `json:"phones,omitempty"`
+	IsDeleted                   bool                   `json:"is_deleted,omitempty"`
+	VisibleTo                   *int                   `json:"visible_to,omitempty"`
+	LabelIDs                    []int                  `json:"label_ids,omitempty"`
+	PictureID                   *int                   `json:"picture_id,omitempty"`
+	PostalAddress               *OrganizationAddress   `json:"postal_address,omitempty"`
+	Notes                       string                 `json:"notes,omitempty"`
+	IM                          []LabeledValue         `json:"im,omitempty"`
+	Birthday                    *string                `json:"birthday,omitempty"`
+	JobTitle                    string                 `json:"job_title,omitempty"`
+	CustomFields                map[string]interface{} `json:"custom_fields,omitempty"`
+	ActivitiesCount             *int                   `json:"activities_count,omitempty"`
+	ClosedDealsCount            *int                   `json:"closed_deals_count,omitempty"`
+	DOIStatus                   *string                `json:"doi_status,omitempty"`
+	DoneActivitiesCount         *int                   `json:"done_activities_count,omitempty"`
+	EmailMessagesCount          *int                   `json:"email_messages_count,omitempty"`
+	FilesCount                  *int                   `json:"files_count,omitempty"`
+	FollowersCount              *int                   `json:"followers_count,omitempty"`
+	LastActivityID              *ActivityID            `json:"last_activity_id,omitempty"`
+	LastIncomingMailTime        *time.Time             `json:"last_incoming_mail_time,omitempty"`
+	LastOutgoingMailTime        *time.Time             `json:"last_outgoing_mail_time,omitempty"`
+	LostDealsCount              *int                   `json:"lost_deals_count,omitempty"`
+	MarketingStatus             *PersonMarketingStatus `json:"marketing_status,omitempty"`
+	NextActivityID              *ActivityID            `json:"next_activity_id,omitempty"`
+	NotesCount                  *int                   `json:"notes_count,omitempty"`
+	OpenDealsCount              *int                   `json:"open_deals_count,omitempty"`
+	ParticipantClosedDealsCount *int                   `json:"participant_closed_deals_count,omitempty"`
+	ParticipantOpenDealsCount   *int                   `json:"participant_open_deals_count,omitempty"`
+	RelatedClosedDealsCount     *int                   `json:"related_closed_deals_count,omitempty"`
+	RelatedLostDealsCount       *int                   `json:"related_lost_deals_count,omitempty"`
+	RelatedOpenDealsCount       *int                   `json:"related_open_deals_count,omitempty"`
+	RelatedWonDealsCount        *int                   `json:"related_won_deals_count,omitempty"`
+	UndoneActivitiesCount       *int                   `json:"undone_activities_count,omitempty"`
+	WonDealsCount               *int                   `json:"won_deals_count,omitempty"`
+	Labels                      []EntityLabel          `json:"labels,omitempty"`
 }
 
 type PersonSearchItem struct {
@@ -237,11 +270,12 @@ type personPayload struct {
 	name            *string
 	ownerID         *UserID
 	orgID           *OrganizationID
-	emails          []LabeledValue
-	phones          []LabeledValue
-	labelIDs        []int
+	emails          optionalSlice[LabeledValue]
+	phones          optionalSlice[LabeledValue]
+	labelIDs        optionalSlice[int]
 	visibleTo       *int
 	marketingStatus *PersonMarketingStatus
+	customFields    map[string]interface{}
 }
 
 type personRequestOptions struct {
@@ -347,6 +381,18 @@ func WithPersonIncludeFields(fields ...PersonIncludeField) GetPersonOption {
 	})
 }
 
+func WithPersonIncludeLabels(enabled bool) GetPersonOption {
+	return getPersonOptionFunc(func(cfg *getPersonOptions) {
+		cfg.params.IncludeLabels = &enabled
+	})
+}
+
+func WithPersonIncludeOptionLabels(enabled bool) GetPersonOption {
+	return getPersonOptionFunc(func(cfg *getPersonOptions) {
+		cfg.params.IncludeOptionLabels = &enabled
+	})
+}
+
 func WithPersonCustomFields(fields ...string) GetPersonOption {
 	return getPersonOptionFunc(func(cfg *getPersonOptions) {
 		csv := joinCSV(fields)
@@ -377,28 +423,25 @@ func WithPersonOrgID(id OrganizationID) PersonOption {
 
 func WithPersonEmails(emails ...LabeledValue) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
-		if len(emails) == 0 {
-			return
-		}
-		payload.emails = append(payload.emails, emails...)
+		payload.emails.append(emails...)
 	})
 }
 
 func WithPersonPhones(phones ...LabeledValue) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
-		if len(phones) == 0 {
-			return
-		}
-		payload.phones = append(payload.phones, phones...)
+		payload.phones.append(phones...)
 	})
 }
 
 func WithPersonLabelIDs(ids ...int) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
-		if len(ids) == 0 {
-			return
-		}
-		payload.labelIDs = append(payload.labelIDs, ids...)
+		payload.labelIDs.append(ids...)
+	})
+}
+
+func WithPersonCustomFieldsMap(fields map[string]interface{}) PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.customFields = fields
 	})
 }
 
@@ -476,6 +519,18 @@ func WithPersonsIncludeFields(fields ...PersonIncludeField) ListPersonsOption {
 		}
 		value := genv2.GetPersonsParamsIncludeFields(csv)
 		cfg.params.IncludeFields = &value
+	})
+}
+
+func WithPersonsIncludeLabels(enabled bool) ListPersonsOption {
+	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
+		cfg.params.IncludeLabels = &enabled
+	})
+}
+
+func WithPersonsIncludeOptionLabels(enabled bool) ListPersonsOption {
+	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
+		cfg.params.IncludeOptionLabels = &enabled
 	})
 }
 
@@ -1115,20 +1170,23 @@ func (p personPayload) toMap() map[string]interface{} {
 	if p.orgID != nil {
 		body["org_id"] = int(*p.orgID)
 	}
-	if len(p.emails) > 0 {
-		body["emails"] = p.emails
+	if p.emails.set {
+		body["emails"] = p.emails.value
 	}
-	if len(p.phones) > 0 {
-		body["phones"] = p.phones
+	if p.phones.set {
+		body["phones"] = p.phones.value
 	}
-	if len(p.labelIDs) > 0 {
-		body["label_ids"] = p.labelIDs
+	if p.labelIDs.set {
+		body["label_ids"] = p.labelIDs.value
 	}
 	if p.visibleTo != nil {
 		body["visible_to"] = *p.visibleTo
 	}
 	if p.marketingStatus != nil {
 		body["marketing_status"] = *p.marketingStatus
+	}
+	if p.customFields != nil {
+		body["custom_fields"] = p.customFields
 	}
 	return body
 }

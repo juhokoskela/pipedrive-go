@@ -85,8 +85,8 @@ func TestPersonFieldsService_Create(t *testing.T) {
 		if payload["field_type"] != "enum" {
 			t.Fatalf("unexpected field_type: %v", payload["field_type"])
 		}
-		if payload["description"] != "Person priority" {
-			t.Fatalf("unexpected description: %v", payload["description"])
+		if description, ok := payload["description"]; ok {
+			t.Fatalf("unexpected description: %v", description)
 		}
 		options, ok := payload["options"].([]interface{})
 		if !ok || len(options) != 1 {

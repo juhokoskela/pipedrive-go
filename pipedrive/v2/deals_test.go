@@ -1403,6 +1403,48 @@ func TestDealsService_ListProductsAcrossDealsPager(t *testing.T) {
 	}
 }
 
+func TestDealsService_RequiredDealIDsFailBeforePagerRequest(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(_ http.ResponseWriter, r *http.Request) {
+		t.Fatalf("unexpected request: %s %s", r.Method, r.URL.Path)
+	})
+
+	tests := []struct {
+		name string
+		next func(context.Context) (bool, error)
+	}{
+		{
+			name: "products across deals",
+			next: func(ctx context.Context) (bool, error) {
+				pager := client.Deals.ListProductsAcrossDealsPager(nil)
+				return pager.Next(ctx), pager.Err()
+			},
+		},
+		{
+			name: "installments",
+			next: func(ctx context.Context) (bool, error) {
+				pager := client.Deals.ListInstallmentsPager(nil)
+				return pager.Next(ctx), pager.Err()
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			next, err := tt.next(context.Background())
+			if next {
+				t.Fatal("unexpected page")
+			}
+			if err == nil || err.Error() != "deal IDs are required" {
+				t.Fatalf("unexpected error: %v", err)
+			}
+		})
+	}
+}
+
 func TestDealsService_ForEachProductsAcrossDeals(t *testing.T) {
 	t.Parallel()
 

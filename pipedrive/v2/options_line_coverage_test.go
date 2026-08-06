@@ -149,13 +149,13 @@ func TestProductOptionsIgnoreEmptyInputs(t *testing.T) {
 	}
 
 	create := newCreateProductOptions([]CreateProductOption{nil, WithProductPrices()})
-	if len(create.payload.prices) != 0 {
-		t.Fatalf("expected no product prices, got %#v", create.payload.prices)
+	if !create.payload.prices.set || len(create.payload.prices.value) != 0 {
+		t.Fatalf("expected explicit empty product prices, got %#v", create.payload.prices)
 	}
 
 	variationCreate := newCreateProductVariationOptions([]CreateProductVariationOption{nil, WithProductVariationPrices()})
-	if len(variationCreate.payload.prices) != 0 {
-		t.Fatalf("expected no variation prices, got %#v", variationCreate.payload.prices)
+	if !variationCreate.payload.prices.set || len(variationCreate.payload.prices.value) != 0 {
+		t.Fatalf("expected explicit empty variation prices, got %#v", variationCreate.payload.prices)
 	}
 
 	if _, _, err := (productImagePayload{}).toMultipart(); err == nil {
@@ -267,8 +267,10 @@ func TestPersonOptionsIgnoreEmptyInputs(t *testing.T) {
 		WithPersonPhones(),
 		WithPersonLabelIDs(),
 	})
-	if len(create.payload.emails) != 0 || len(create.payload.phones) != 0 || len(create.payload.labelIDs) != 0 {
-		t.Fatalf("expected empty person payload, got %#v", create.payload)
+	if !create.payload.emails.set || len(create.payload.emails.value) != 0 ||
+		!create.payload.phones.set || len(create.payload.phones.value) != 0 ||
+		!create.payload.labelIDs.set || len(create.payload.labelIDs.value) != 0 {
+		t.Fatalf("expected explicit empty person payload, got %#v", create.payload)
 	}
 
 	followers := newGetPersonFollowersOptions([]GetPersonFollowersOption{
@@ -386,8 +388,8 @@ func TestOrganizationOptionsIgnoreEmptyInputs(t *testing.T) {
 		nil,
 		WithOrganizationLabelIDs(),
 	})
-	if len(create.payload.labelIDs) != 0 {
-		t.Fatalf("expected empty organization label IDs, got %#v", create.payload.labelIDs)
+	if !create.payload.labelIDs.set || len(create.payload.labelIDs.value) != 0 {
+		t.Fatalf("expected explicit empty organization label IDs, got %#v", create.payload.labelIDs)
 	}
 
 	followers := newGetOrganizationFollowersOptions([]GetOrganizationFollowersOption{

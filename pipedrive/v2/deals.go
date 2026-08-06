@@ -112,27 +112,54 @@ const (
 )
 
 type Deal struct {
-	ID                DealID                 `json:"id"`
-	Title             string                 `json:"title,omitempty"`
-	Value             *float64               `json:"value,omitempty"`
-	Currency          string                 `json:"currency,omitempty"`
-	Status            DealStatus             `json:"status,omitempty"`
-	OwnerID           *UserID                `json:"owner_id,omitempty"`
-	PersonID          *PersonID              `json:"person_id,omitempty"`
-	OrgID             *OrganizationID        `json:"org_id,omitempty"`
-	StageID           *StageID               `json:"stage_id,omitempty"`
-	PipelineID        *PipelineID            `json:"pipeline_id,omitempty"`
-	AddTime           *time.Time             `json:"add_time,omitempty"`
-	UpdateTime        *time.Time             `json:"update_time,omitempty"`
-	ExpectedCloseDate *string                `json:"expected_close_date,omitempty"`
-	LostReason        *string                `json:"lost_reason,omitempty"`
-	WonTime           *time.Time             `json:"won_time,omitempty"`
-	LostTime          *time.Time             `json:"lost_time,omitempty"`
-	IsArchived        bool                   `json:"is_archived,omitempty"`
-	IsDeleted         bool                   `json:"is_deleted,omitempty"`
-	VisibleTo         *int                   `json:"visible_to,omitempty"`
-	LabelIDs          []int                  `json:"label_ids,omitempty"`
-	CustomFields      map[string]interface{} `json:"custom_fields,omitempty"`
+	ID                    DealID                 `json:"id"`
+	Title                 string                 `json:"title,omitempty"`
+	Value                 *float64               `json:"value,omitempty"`
+	Currency              string                 `json:"currency,omitempty"`
+	Status                DealStatus             `json:"status,omitempty"`
+	OwnerID               *UserID                `json:"owner_id,omitempty"`
+	PersonID              *PersonID              `json:"person_id,omitempty"`
+	OrgID                 *OrganizationID        `json:"org_id,omitempty"`
+	StageID               *StageID               `json:"stage_id,omitempty"`
+	PipelineID            *PipelineID            `json:"pipeline_id,omitempty"`
+	AddTime               *time.Time             `json:"add_time,omitempty"`
+	UpdateTime            *time.Time             `json:"update_time,omitempty"`
+	StageChangeTime       *time.Time             `json:"stage_change_time,omitempty"`
+	ExpectedCloseDate     *string                `json:"expected_close_date,omitempty"`
+	Probability           *float64               `json:"probability,omitempty"`
+	LostReason            *string                `json:"lost_reason,omitempty"`
+	CloseTime             *time.Time             `json:"close_time,omitempty"`
+	WonTime               *time.Time             `json:"won_time,omitempty"`
+	LostTime              *time.Time             `json:"lost_time,omitempty"`
+	IsArchived            bool                   `json:"is_archived,omitempty"`
+	IsDeleted             bool                   `json:"is_deleted,omitempty"`
+	VisibleTo             *int                   `json:"visible_to,omitempty"`
+	LabelIDs              []int                  `json:"label_ids,omitempty"`
+	Origin                string                 `json:"origin,omitempty"`
+	OriginID              *string                `json:"origin_id,omitempty"`
+	Channel               *int                   `json:"channel,omitempty"`
+	ChannelID             *string                `json:"channel_id,omitempty"`
+	SourceLeadID          *LeadID                `json:"source_lead_id,omitempty"`
+	ARR                   *float64               `json:"arr,omitempty"`
+	MRR                   *float64               `json:"mrr,omitempty"`
+	ACV                   *float64               `json:"acv,omitempty"`
+	CustomFields          map[string]interface{} `json:"custom_fields,omitempty"`
+	ActivitiesCount       *int                   `json:"activities_count,omitempty"`
+	DoneActivitiesCount   *int                   `json:"done_activities_count,omitempty"`
+	EmailMessagesCount    *int                   `json:"email_messages_count,omitempty"`
+	FilesCount            *int                   `json:"files_count,omitempty"`
+	FirstWonTime          *time.Time             `json:"first_won_time,omitempty"`
+	FollowersCount        *int                   `json:"followers_count,omitempty"`
+	LastActivityID        *ActivityID            `json:"last_activity_id,omitempty"`
+	LastIncomingMailTime  *time.Time             `json:"last_incoming_mail_time,omitempty"`
+	LastOutgoingMailTime  *time.Time             `json:"last_outgoing_mail_time,omitempty"`
+	NextActivityID        *ActivityID            `json:"next_activity_id,omitempty"`
+	NotesCount            *int                   `json:"notes_count,omitempty"`
+	ParticipantsCount     *int                   `json:"participants_count,omitempty"`
+	ProductsCount         *int                   `json:"products_count,omitempty"`
+	SmartBCCEmail         *string                `json:"smart_bcc_email,omitempty"`
+	UndoneActivitiesCount *int                   `json:"undone_activities_count,omitempty"`
+	Labels                []EntityLabel          `json:"labels,omitempty"`
 }
 
 type DealSearchItem struct {
@@ -532,15 +559,15 @@ type dealPayload struct {
 	pipelineID        *PipelineID
 	status            *DealStatus
 	expectedCloseDate *string
-	probability       *float64
-	lostReason        *string
+	probability       nullableValue[float64]
+	lostReason        nullableValue[string]
 	visibleTo         *int
-	labelIDs          []int
+	labelIDs          optionalSlice[int]
 	customFields      map[string]interface{}
 	isArchived        *bool
 	isDeleted         *bool
 	archiveTime       *string
-	closeTime         *string
+	closeTime         nullableValue[string]
 	lostTime          *string
 	wonTime           *string
 }
@@ -894,6 +921,18 @@ func WithDealsIncludeFields(fields ...DealIncludeField) ListDealsOption {
 	})
 }
 
+func WithDealsIncludeLabels(enabled bool) ListDealsOption {
+	return listDealsOptionFunc(func(cfg *listDealsOptions) {
+		cfg.params.IncludeLabels = &enabled
+	})
+}
+
+func WithDealsIncludeOptionLabels(enabled bool) ListDealsOption {
+	return listDealsOptionFunc(func(cfg *listDealsOptions) {
+		cfg.params.IncludeOptionLabels = &enabled
+	})
+}
+
 func WithDealsCustomFields(fields ...string) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
 		csv := joinCSV(fields)
@@ -1062,6 +1101,18 @@ func WithDealIncludeFields(fields ...DealIncludeField) GetDealOption {
 	})
 }
 
+func WithDealIncludeLabels(enabled bool) GetDealOption {
+	return getDealOptionFunc(func(cfg *getDealOptions) {
+		cfg.params.IncludeLabels = &enabled
+	})
+}
+
+func WithDealIncludeOptionLabels(enabled bool) GetDealOption {
+	return getDealOptionFunc(func(cfg *getDealOptions) {
+		cfg.params.IncludeOptionLabels = &enabled
+	})
+}
+
 func WithDealCustomFields(fields ...string) GetDealOption {
 	return getDealOptionFunc(func(cfg *getDealOptions) {
 		csv := joinCSV(fields)
@@ -1137,7 +1188,14 @@ func WithDealExpectedCloseDate(date string) DealOption {
 
 func WithDealProbability(probability float64) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
-		payload.probability = &probability
+		payload.probability.assign(probability)
+	})
+}
+
+// ClearDealProbability sends an explicit JSON null probability.
+func ClearDealProbability() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.probability.clear()
 	})
 }
 
@@ -1146,7 +1204,14 @@ func WithDealLostReason(reason string) DealOption {
 		if reason == "" {
 			return
 		}
-		payload.lostReason = &reason
+		payload.lostReason.assign(reason)
+	})
+}
+
+// ClearDealLostReason sends an explicit JSON null lost reason.
+func ClearDealLostReason() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.lostReason.clear()
 	})
 }
 
@@ -1158,10 +1223,7 @@ func WithDealVisibleTo(visibleTo int) DealOption {
 
 func WithDealLabelIDs(ids ...int) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
-		if len(ids) == 0 {
-			return
-		}
-		payload.labelIDs = append(payload.labelIDs, ids...)
+		payload.labelIDs.append(ids...)
 	})
 }
 
@@ -1200,7 +1262,14 @@ func WithDealCloseTime(value string) DealOption {
 		if value == "" {
 			return
 		}
-		payload.closeTime = &value
+		payload.closeTime.assign(value)
+	})
+}
+
+// ClearDealCloseTime sends an explicit JSON null close time.
+func ClearDealCloseTime() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.closeTime.clear()
 	})
 }
 
@@ -2264,6 +2333,9 @@ func (s *DealsService) ListProductsAcrossDeals(ctx context.Context, dealIDs []De
 }
 
 func (s *DealsService) ListProductsAcrossDealsPager(dealIDs []DealID, opts ...ListDealsProductsOption) *pipedrive.CursorPager[DealProduct] {
+	if len(dealIDs) == 0 {
+		return newDealIDsRequiredPager[DealProduct]()
+	}
 	cfg := newListDealsProductsOptions(opts)
 	cfg.params.DealIds = make([]int, 0, len(dealIDs))
 	for _, id := range dealIDs {
@@ -2566,6 +2638,9 @@ func (s *DealsService) ListInstallments(ctx context.Context, dealIDs []DealID, o
 }
 
 func (s *DealsService) ListInstallmentsPager(dealIDs []DealID, opts ...ListInstallmentsOption) *pipedrive.CursorPager[Installment] {
+	if len(dealIDs) == 0 {
+		return newDealIDsRequiredPager[Installment]()
+	}
 	cfg := newListInstallmentsOptions(opts)
 	cfg.params.DealIds = make([]int, 0, len(dealIDs))
 	for _, id := range dealIDs {
@@ -2582,6 +2657,12 @@ func (s *DealsService) ListInstallmentsPager(dealIDs []DealID, opts ...ListInsta
 			params.Cursor = startCursor
 		}
 		return s.listInstallments(ctx, params, cfg.requestOptions)
+	})
+}
+
+func newDealIDsRequiredPager[T any]() *pipedrive.CursorPager[T] {
+	return pipedrive.NewCursorPager(func(context.Context, *string) ([]T, *string, error) {
+		return nil, nil, fmt.Errorf("deal IDs are required")
 	})
 }
 
@@ -2899,17 +2980,25 @@ func (p dealPayload) toMap() map[string]interface{} {
 	if p.expectedCloseDate != nil {
 		body["expected_close_date"] = *p.expectedCloseDate
 	}
-	if p.probability != nil {
-		body["probability"] = *p.probability
+	if p.probability.set {
+		if p.probability.value == nil {
+			body["probability"] = nil
+		} else {
+			body["probability"] = *p.probability.value
+		}
 	}
-	if p.lostReason != nil {
-		body["lost_reason"] = *p.lostReason
+	if p.lostReason.set {
+		if p.lostReason.value == nil {
+			body["lost_reason"] = nil
+		} else {
+			body["lost_reason"] = *p.lostReason.value
+		}
 	}
 	if p.visibleTo != nil {
 		body["visible_to"] = *p.visibleTo
 	}
-	if len(p.labelIDs) > 0 {
-		body["label_ids"] = p.labelIDs
+	if p.labelIDs.set {
+		body["label_ids"] = p.labelIDs.value
 	}
 	if p.customFields != nil {
 		body["custom_fields"] = p.customFields
@@ -2923,8 +3012,12 @@ func (p dealPayload) toMap() map[string]interface{} {
 	if p.archiveTime != nil {
 		body["archive_time"] = *p.archiveTime
 	}
-	if p.closeTime != nil {
-		body["close_time"] = *p.closeTime
+	if p.closeTime.set {
+		if p.closeTime.value == nil {
+			body["close_time"] = nil
+		} else {
+			body["close_time"] = *p.closeTime.value
+		}
 	}
 	if p.lostTime != nil {
 		body["lost_time"] = *p.lostTime

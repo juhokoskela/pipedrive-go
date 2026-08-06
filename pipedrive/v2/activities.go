@@ -54,28 +54,34 @@ type ActivityParticipant struct {
 }
 
 type Activity struct {
-	ID                ActivityID            `json:"id"`
-	Subject           string                `json:"subject,omitempty"`
-	Type              string                `json:"type,omitempty"`
-	Done              bool                  `json:"done,omitempty"`
-	Busy              bool                  `json:"busy,omitempty"`
-	DueDate           string                `json:"due_date,omitempty"`
-	DueTime           string                `json:"due_time,omitempty"`
-	Duration          string                `json:"duration,omitempty"`
-	OwnerID           *UserID               `json:"owner_id,omitempty"`
-	PersonID          *PersonID             `json:"person_id,omitempty"`
-	OrgID             *OrganizationID       `json:"org_id,omitempty"`
-	DealID            *DealID               `json:"deal_id,omitempty"`
-	LeadID            *LeadID               `json:"lead_id,omitempty"`
-	ProjectID         *ProjectID            `json:"project_id,omitempty"`
-	Location          *ActivityLocation     `json:"location,omitempty"`
-	Participants      []ActivityParticipant `json:"participants,omitempty"`
-	Attendees         []ActivityAttendee    `json:"attendees,omitempty"`
-	PublicDescription string                `json:"public_description,omitempty"`
-	Priority          *int                  `json:"priority,omitempty"`
-	Note              string                `json:"note,omitempty"`
-	AddTime           *time.Time            `json:"add_time,omitempty"`
-	UpdateTime        *time.Time            `json:"update_time,omitempty"`
+	ID                      ActivityID            `json:"id"`
+	Subject                 string                `json:"subject,omitempty"`
+	Type                    string                `json:"type,omitempty"`
+	Done                    bool                  `json:"done,omitempty"`
+	Busy                    bool                  `json:"busy,omitempty"`
+	DueDate                 string                `json:"due_date,omitempty"`
+	DueTime                 string                `json:"due_time,omitempty"`
+	Duration                string                `json:"duration,omitempty"`
+	OwnerID                 *UserID               `json:"owner_id,omitempty"`
+	CreatorUserID           *UserID               `json:"creator_user_id,omitempty"`
+	IsDeleted               bool                  `json:"is_deleted,omitempty"`
+	PersonID                *PersonID             `json:"person_id,omitempty"`
+	OrgID                   *OrganizationID       `json:"org_id,omitempty"`
+	DealID                  *DealID               `json:"deal_id,omitempty"`
+	LeadID                  *LeadID               `json:"lead_id,omitempty"`
+	ProjectID               *ProjectID            `json:"project_id,omitempty"`
+	Location                *ActivityLocation     `json:"location,omitempty"`
+	Participants            []ActivityParticipant `json:"participants,omitempty"`
+	Attendees               []ActivityAttendee    `json:"attendees,omitempty"`
+	MarkedAsDoneTime        *time.Time            `json:"marked_as_done_time,omitempty"`
+	ConferenceMeetingClient string                `json:"conference_meeting_client,omitempty"`
+	ConferenceMeetingURL    string                `json:"conference_meeting_url,omitempty"`
+	ConferenceMeetingID     string                `json:"conference_meeting_id,omitempty"`
+	PublicDescription       string                `json:"public_description,omitempty"`
+	Priority                *int                  `json:"priority,omitempty"`
+	Note                    string                `json:"note,omitempty"`
+	AddTime                 *time.Time            `json:"add_time,omitempty"`
+	UpdateTime              *time.Time            `json:"update_time,omitempty"`
 }
 
 type ActivityDeleteResult struct {
@@ -158,8 +164,8 @@ type activityPayload struct {
 	busy              *bool
 	done              *bool
 	location          *ActivityLocation
-	participants      []ActivityParticipant
-	attendees         []ActivityAttendee
+	participants      optionalSlice[ActivityParticipant]
+	attendees         optionalSlice[ActivityAttendee]
 	publicDescription *string
 	priority          *int
 	note              *string
@@ -312,19 +318,13 @@ func WithActivityLocation(location ActivityLocation) ActivityOption {
 
 func WithActivityParticipants(participants ...ActivityParticipant) ActivityOption {
 	return activityFieldOption(func(payload *activityPayload) {
-		if len(participants) == 0 {
-			return
-		}
-		payload.participants = append(payload.participants, participants...)
+		payload.participants.append(participants...)
 	})
 }
 
 func WithActivityAttendees(attendees ...ActivityAttendee) ActivityOption {
 	return activityFieldOption(func(payload *activityPayload) {
-		if len(attendees) == 0 {
-			return
-		}
-		payload.attendees = append(payload.attendees, attendees...)
+		payload.attendees.append(attendees...)
 	})
 }
 
@@ -717,11 +717,11 @@ func (p activityPayload) toMap() map[string]interface{} {
 	if p.location != nil {
 		body["location"] = p.location
 	}
-	if len(p.participants) > 0 {
-		body["participants"] = p.participants
+	if p.participants.set {
+		body["participants"] = p.participants.value
 	}
-	if len(p.attendees) > 0 {
-		body["attendees"] = p.attendees
+	if p.attendees.set {
+		body["attendees"] = p.attendees.value
 	}
 	if p.publicDescription != nil {
 		body["public_description"] = *p.publicDescription

@@ -34,7 +34,7 @@ func TestDealFieldsService_List(t *testing.T) {
 			t.Fatalf("unexpected header X-Test: %q", got)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"data":[{"field_code":"cf_1","field_name":"Priority"}],"additional_data":{"next_cursor":null}}`))
+		_, _ = w.Write([]byte(`{"data":[{"field_code":"cf_1","field_name":"Priority","options":[{"id":"system-high","label":"High"}]}],"additional_data":{"next_cursor":null}}`))
 	}))
 	t.Cleanup(srv.Close)
 
@@ -58,6 +58,9 @@ func TestDealFieldsService_List(t *testing.T) {
 	}
 	if len(fields) != 1 || fields[0].FieldCode != "cf_1" {
 		t.Fatalf("unexpected fields: %#v", fields)
+	}
+	if len(fields[0].Options) != 1 || fields[0].Options[0].StringID != "system-high" {
+		t.Fatalf("unexpected field options: %#v", fields[0].Options)
 	}
 }
 
