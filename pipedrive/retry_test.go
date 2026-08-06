@@ -118,6 +118,80 @@ func TestRetryTransport_RespectsRetryAfter(t *testing.T) {
 	}
 }
 
+func TestRetryTransport_CapsServerRetryAfter(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name       string
+		retryAfter string
+		wantSleep  time.Duration
+	}{
+		{name: "beyond cap", retryAfter: "3600", wantSleep: time.Minute},
+		{name: "overflowing seconds", retryAfter: "9999999999999999", wantSleep: time.Minute},
+		{name: "within cap beyond MaxDelay", retryAfter: "30", wantSleep: 30 * time.Second},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			var calls int
+			next := roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+				calls++
+				h := make(http.Header)
+				if calls == 1 {
+					h.Set("Retry-After", tt.retryAfter)
+					return &http.Response{
+						StatusCode: 429,
+						Header:     h,
+						Body:       io.NopCloser(strings.NewReader("")),
+						Request:    req,
+					}, nil
+				}
+				return &http.Response{
+					StatusCode: 200,
+					Header:     h,
+					Body:       io.NopCloser(strings.NewReader("")),
+					Request:    req,
+				}, nil
+			})
+
+			var sleeps []time.Duration
+			policy := DefaultRetryPolicy()
+			policy.Jitter = func(d time.Duration) time.Duration { return d }
+
+			rt := newRetryTransport(next, policy, retryTransportOptions{
+				sleep: func(_ context.Context, d time.Duration) error {
+					sleeps = append(sleeps, d)
+					return nil
+				},
+				now: func() time.Time { return time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC) },
+			})
+
+			req, _ := http.NewRequestWithContext(context.Background(), http.MethodPost, "https://example.test", nil)
+			resp, err := rt.RoundTrip(req)
+			if err != nil {
+				t.Fatalf("unexpected error: %v", err)
+			}
+			_ = resp.Body.Close()
+
+			if len(sleeps) != 1 || sleeps[0] != tt.wantSleep {
+				t.Fatalf("expected sleep %s, got %v", tt.wantSleep, sleeps)
+			}
+		})
+	}
+}
+
+func TestParseRetryAfter_OverflowingSecondsSaturate(t *testing.T) {
+	t.Parallel()
+
+	now := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+	got := parseRetryAfter("9999999999999999", now)
+	if got <= 0 {
+		t.Fatalf("expected positive saturated duration, got %s", got)
+	}
+}
+
 func TestRetryTransport_CanBeDisabledPerRequest(t *testing.T) {
 	t.Parallel()
 
