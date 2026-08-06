@@ -3,7 +3,18 @@ package pipedrive
 import "net/http"
 
 type Config struct {
+	// BaseURL is the API origin requests are sent to. When set, credentials
+	// from Auth are only attached to requests targeting this origin (scheme
+	// and host), including redirect hops — a cross-origin redirect target
+	// never receives them. When empty, Auth applies to every request made
+	// through the client.
 	BaseURL string
+
+	// OAuthBaseURL is the origin the v1 OAuth service uses for authorize
+	// URLs and token exchange/refresh. Empty uses the production default
+	// (https://oauth.pipedrive.com). Requests to it authenticate with
+	// explicit client credentials; Auth is never attached.
+	OAuthBaseURL string
 
 	HTTPClient *http.Client
 
@@ -33,14 +44,20 @@ func NewHTTPClient(cfg Config) *http.Client {
 		transport = http.DefaultTransport
 	}
 
+	origin := authOriginFromBaseURL(cfg.BaseURL)
+
 	middleware := make([]Middleware, 0, len(cfg.Middleware)+2)
 	middleware = append(middleware, cfg.Middleware...)
 	if cfg.UserAgent != "" {
 		middleware = append(middleware, userAgentMiddleware(cfg.UserAgent))
 	}
 	if cfg.Auth != nil {
-		middleware = append(middleware, authMiddleware(cfg.Auth))
+		middleware = append(middleware, authMiddleware(cfg.Auth, origin))
 	}
+
+	// Catches credential headers set directly on the request (for example
+	// through WithHeader), which the auth middleware never sees.
+	clone.CheckRedirect = redirectCredentialGuard(origin, base.CheckRedirect)
 
 	transport = newResponseLimitTransport(transport, cfg.MaxResponseSize)
 	transport = chainMiddleware(transport, middleware)

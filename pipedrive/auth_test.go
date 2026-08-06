@@ -5,7 +5,9 @@ import (
 	"errors"
 	"io"
 	"net/http"
+	"net/http/httptest"
 	"strings"
+	"sync"
 	"testing"
 
 	"golang.org/x/oauth2"
@@ -32,6 +34,227 @@ func TestNewHTTPClient_AppliesUserAgentAndAPIToken(t *testing.T) {
 	httpClient := NewHTTPClient(Config{
 		HTTPClient: &http.Client{Transport: base},
 		UserAgent:  "pipedrive-go/test",
+		Auth:       APITokenAuth("token123"),
+	})
+
+	req, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, "https://example.test", nil)
+	resp, err := httpClient.Transport.RoundTrip(req)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	_ = resp.Body.Close()
+}
+
+func TestNewHTTPClient_AuthNotSentCrossOrigin(t *testing.T) {
+	t.Parallel()
+
+	var mu sync.Mutex
+	var attackerHeaders []http.Header
+	attacker := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		attackerHeaders = append(attackerHeaders, r.Header.Clone())
+		mu.Unlock()
+	}))
+	t.Cleanup(attacker.Close)
+
+	var apiHeaders []http.Header
+	var api *httptest.Server
+	api = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		apiHeaders = append(apiHeaders, r.Header.Clone())
+		mu.Unlock()
+		switch r.URL.Path {
+		case "/cross":
+			http.Redirect(w, r, attacker.URL+"/steal", http.StatusFound)
+		case "/same":
+			http.Redirect(w, r, api.URL+"/landed", http.StatusFound)
+		}
+	}))
+	t.Cleanup(api.Close)
+
+	client := NewHTTPClient(Config{
+		BaseURL: api.URL,
+		Auth: MultiAuth{
+			APITokenAuth("secret-token"),
+			OAuth2Auth{TokenSource: oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "secret-bearer"})},
+		},
+	})
+
+	resp, err := client.Get(api.URL + "/cross")
+	if err != nil {
+		t.Fatalf("cross-origin request error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	resp, err = client.Get(api.URL + "/same")
+	if err != nil {
+		t.Fatalf("same-origin request error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	mu.Lock()
+	defer mu.Unlock()
+
+	if len(attackerHeaders) != 1 {
+		t.Fatalf("expected 1 attacker request, got %d", len(attackerHeaders))
+	}
+	for _, h := range []string{"x-api-token", "Authorization"} {
+		if got := attackerHeaders[0].Get(h); got != "" {
+			t.Fatalf("credential header %s leaked to cross-origin redirect target: %q", h, got)
+		}
+	}
+
+	if len(apiHeaders) != 3 {
+		t.Fatalf("expected 3 api requests, got %d", len(apiHeaders))
+	}
+	for i, h := range apiHeaders {
+		if got := h.Get("x-api-token"); got != "secret-token" {
+			t.Fatalf("api request %d missing x-api-token, got %q", i, got)
+		}
+		if got := h.Get("Authorization"); got != "Bearer secret-bearer" {
+			t.Fatalf("api request %d missing authorization, got %q", i, got)
+		}
+	}
+}
+
+func TestNewHTTPClient_EditorHeadersStrippedCrossOrigin(t *testing.T) {
+	t.Parallel()
+
+	var mu sync.Mutex
+	var attackerHeaders []http.Header
+	attacker := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		attackerHeaders = append(attackerHeaders, r.Header.Clone())
+		mu.Unlock()
+	}))
+	t.Cleanup(attacker.Close)
+
+	var apiHeaders []http.Header
+	var api *httptest.Server
+	api = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		apiHeaders = append(apiHeaders, r.Header.Clone())
+		mu.Unlock()
+		switch r.URL.Path {
+		case "/cross":
+			http.Redirect(w, r, attacker.URL+"/steal", http.StatusFound)
+		case "/same":
+			http.Redirect(w, r, api.URL+"/landed", http.StatusFound)
+		}
+	}))
+	t.Cleanup(api.Close)
+
+	client := NewHTTPClient(Config{BaseURL: api.URL})
+
+	// The escape hatch: a credential header attached by a request editor
+	// rather than by the Auth provider.
+	req, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, api.URL+"/cross", nil)
+	req.Header.Set("x-api-token", "editor-token")
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("cross-origin request error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	req, _ = http.NewRequestWithContext(context.Background(), http.MethodGet, api.URL+"/same", nil)
+	req.Header.Set("x-api-token", "editor-token")
+	resp, err = client.Do(req)
+	if err != nil {
+		t.Fatalf("same-origin request error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	mu.Lock()
+	defer mu.Unlock()
+
+	if len(attackerHeaders) != 1 {
+		t.Fatalf("expected 1 attacker request, got %d", len(attackerHeaders))
+	}
+	if got := attackerHeaders[0].Get("x-api-token"); got != "" {
+		t.Fatalf("editor-set token leaked to cross-origin redirect target: %q", got)
+	}
+
+	// Same-origin redirects must keep working.
+	if len(apiHeaders) != 3 {
+		t.Fatalf("expected 3 api requests, got %d", len(apiHeaders))
+	}
+	for i, h := range apiHeaders {
+		if got := h.Get("x-api-token"); got != "editor-token" {
+			t.Fatalf("api request %d lost its token, got %q", i, got)
+		}
+	}
+}
+
+func TestNewHTTPClient_RedirectLimitPreserved(t *testing.T) {
+	t.Parallel()
+
+	var hops int
+	var mu sync.Mutex
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		hops++
+		mu.Unlock()
+		http.Redirect(w, r, "/loop", http.StatusFound)
+	}))
+	t.Cleanup(srv.Close)
+
+	client := NewHTTPClient(Config{BaseURL: srv.URL})
+	resp, err := client.Get(srv.URL + "/loop")
+	if err == nil {
+		_ = resp.Body.Close()
+		t.Fatal("expected an error from an endless redirect loop")
+	}
+
+	mu.Lock()
+	defer mu.Unlock()
+	if hops > 11 {
+		t.Fatalf("redirect cap not enforced, server saw %d hops", hops)
+	}
+}
+
+func TestNewHTTPClient_UserCheckRedirectPreserved(t *testing.T) {
+	t.Parallel()
+
+	var srv *httptest.Server
+	srv = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/start" {
+			http.Redirect(w, r, srv.URL+"/next", http.StatusFound)
+		}
+	}))
+	t.Cleanup(srv.Close)
+
+	sentinel := errors.New("user check redirect ran")
+	client := NewHTTPClient(Config{
+		BaseURL: srv.URL,
+		HTTPClient: &http.Client{
+			CheckRedirect: func(*http.Request, []*http.Request) error { return sentinel },
+		},
+	})
+
+	_, err := client.Get(srv.URL + "/start")
+	if !errors.Is(err, sentinel) {
+		t.Fatalf("expected the user-provided CheckRedirect to run, got %v", err)
+	}
+}
+
+func TestNewHTTPClient_InvalidBaseURLFailsClosed(t *testing.T) {
+	t.Parallel()
+
+	base := roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		if got := req.Header.Get("x-api-token"); got != "" {
+			t.Fatalf("credentials applied despite invalid base url: %q", got)
+		}
+		return &http.Response{
+			StatusCode: 200,
+			Header:     make(http.Header),
+			Body:       io.NopCloser(strings.NewReader("")),
+			Request:    req,
+		}, nil
+	})
+
+	httpClient := NewHTTPClient(Config{
+		BaseURL:    "not a url",
+		HTTPClient: &http.Client{Transport: base},
 		Auth:       APITokenAuth("token123"),
 	})
 
