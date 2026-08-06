@@ -721,6 +721,9 @@ func (s *GoalsService) Create(ctx context.Context, opts ...CreateGoalOption) (*G
 }
 
 func (s *GoalsService) Update(ctx context.Context, id GoalID, opts ...UpdateGoalOption) (*Goal, error) {
+	if err := validatePathParam(string(id), "goal id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateGoalOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -762,6 +765,9 @@ func (s *GoalsService) Update(ctx context.Context, id GoalID, opts ...UpdateGoal
 }
 
 func (s *GoalsService) Delete(ctx context.Context, id GoalID, opts ...DeleteGoalOption) (bool, error) {
+	if err := validatePathParam(string(id), "goal id"); err != nil {
+		return false, err
+	}
 	cfg := newDeleteGoalOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -791,6 +797,9 @@ func (s *GoalsService) Delete(ctx context.Context, id GoalID, opts ...DeleteGoal
 }
 
 func (s *GoalsService) GetResult(ctx context.Context, id GoalID, opts ...GetGoalResultOption) (*GoalResult, error) {
+	if err := validatePathParam(string(id), "goal id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetGoalResultOptions(opts)
 	if cfg.params.PeriodStart.IsZero() || cfg.params.PeriodEnd.IsZero() {
 		return nil, fmt.Errorf("period start and end are required")

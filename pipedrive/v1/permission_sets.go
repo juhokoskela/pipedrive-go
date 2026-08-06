@@ -198,6 +198,9 @@ func (s *PermissionSetsService) List(ctx context.Context, opts ...ListPermission
 }
 
 func (s *PermissionSetsService) Get(ctx context.Context, id PermissionSetID, opts ...GetPermissionSetOption) (*PermissionSet, error) {
+	if err := validatePathParam(string(id), "permission set id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetPermissionSetOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -228,6 +231,9 @@ func (s *PermissionSetsService) ListAssignments(ctx context.Context, id Permissi
 	cfg := newListPermissionSetAssignmentsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
+	if err := validatePathParam(string(id), "permission set id"); err != nil {
+		return nil, err
+	}
 	resp, err := s.client.gen.GetPermissionSetAssignments(ctx, string(id), &cfg.params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
