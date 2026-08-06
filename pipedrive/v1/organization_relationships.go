@@ -309,6 +309,9 @@ func (s *OrganizationRelationshipsService) List(ctx context.Context, opts ...Lis
 }
 
 func (s *OrganizationRelationshipsService) Get(ctx context.Context, id OrganizationRelationshipID, opts ...GetOrganizationRelationshipOption) (*OrganizationRelationship, error) {
+	if err := validateID(id, "organization relationship id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetOrganizationRelationshipOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -396,6 +399,9 @@ func (s *OrganizationRelationshipsService) Create(ctx context.Context, opts ...C
 }
 
 func (s *OrganizationRelationshipsService) Update(ctx context.Context, id OrganizationRelationshipID, opts ...UpdateOrganizationRelationshipOption) (*OrganizationRelationship, error) {
+	if err := validateID(id, "organization relationship id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateOrganizationRelationshipOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -447,6 +453,9 @@ func (s *OrganizationRelationshipsService) Update(ctx context.Context, id Organi
 }
 
 func (s *OrganizationRelationshipsService) Delete(ctx context.Context, id OrganizationRelationshipID, opts ...DeleteOrganizationRelationshipOption) (*OrganizationRelationshipDeleteResult, error) {
+	if err := validateID(id, "organization relationship id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteOrganizationRelationshipOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

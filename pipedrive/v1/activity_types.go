@@ -253,6 +253,9 @@ func (s *ActivityTypesService) Create(ctx context.Context, opts ...CreateActivit
 }
 
 func (s *ActivityTypesService) Update(ctx context.Context, id ActivityTypeID, opts ...UpdateActivityTypeOption) (*ActivityType, error) {
+	if err := validateID(id, "activity type id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateActivityTypeOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -292,6 +295,9 @@ func (s *ActivityTypesService) Update(ctx context.Context, id ActivityTypeID, op
 }
 
 func (s *ActivityTypesService) Delete(ctx context.Context, id ActivityTypeID, opts ...DeleteActivityTypeOption) (*ActivityType, error) {
+	if err := validateID(id, "activity type id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteActivityTypeOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
