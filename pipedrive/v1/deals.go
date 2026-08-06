@@ -81,6 +81,16 @@ func WithDealsRequestOptions(opts ...pipedrive.RequestOption) DealsOption {
 	})
 }
 
+func WithDealsMailMessagesIncludeBody(enabled bool) DealsOption {
+	return dealsOptionFunc(func(cfg *dealsOptions) {
+		value := "0"
+		if enabled {
+			value = "1"
+		}
+		cfg.query = mergeQueryValues(cfg.query, url.Values{"include_body": {value}})
+	})
+}
+
 func newDealsOptions(opts []DealsOption) dealsOptions {
 	var cfg dealsOptions
 	for _, opt := range opts {

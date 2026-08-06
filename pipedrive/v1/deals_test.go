@@ -170,12 +170,19 @@ func TestDealsService_ListMailMessages(t *testing.T) {
 		if r.URL.Path != "/deals/6/mailMessages" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if got := r.URL.Query().Get("include_body"); got != "1" {
+			t.Fatalf("unexpected include_body: %q", got)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":21,"subject":"Hello"}],"additional_data":{"pagination":{"start":0,"limit":1,"more_items_in_collection":false}}}`))
 	})
 
-	messages, page, err := client.Deals.ListMailMessages(context.Background(), DealID(6))
+	messages, page, err := client.Deals.ListMailMessages(
+		context.Background(),
+		DealID(6),
+		WithDealsMailMessagesIncludeBody(true),
+	)
 	if err != nil {
 		t.Fatalf("ListMailMessages error: %v", err)
 	}
