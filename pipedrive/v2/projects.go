@@ -438,7 +438,12 @@ func WithProjectLabelIDs(ids ...int) ProjectOption {
 	return projectFieldOption(func(p *projectPayload) { p.labelIDsSet = true; p.labelIDs = append([]int{}, ids...) })
 }
 func WithProjectCustomFields(fields map[string]interface{}) ProjectOption {
-	return projectFieldOption(func(p *projectPayload) { p.customFields = fields })
+	return projectFieldOption(func(p *projectPayload) {
+		if len(fields) == 0 {
+			return
+		}
+		p.customFields = fields
+	})
 }
 
 func newListProjectsOptions(opts []ListProjectsOption) listProjectsOptions {
@@ -634,6 +639,9 @@ func (s *ProjectsService) ForEachSearch(ctx context.Context, term string, fn fun
 }
 
 func (s *ProjectsService) Get(ctx context.Context, id ProjectID, opts ...ProjectRequestOption) (*Project, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
 	resp, err := s.client.gen.GetProjectWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
@@ -657,6 +665,9 @@ func (s *ProjectsService) Create(ctx context.Context, opts ...CreateProjectOptio
 }
 
 func (s *ProjectsService) Update(ctx context.Context, id ProjectID, opts ...UpdateProjectOption) (*Project, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateProjectOptions(opts)
 	body, err := encodeV2Body(cfg.payload.body())
 	if err != nil {
@@ -671,6 +682,9 @@ func (s *ProjectsService) Update(ctx context.Context, id ProjectID, opts ...Upda
 }
 
 func (s *ProjectsService) Delete(ctx context.Context, id ProjectID, opts ...ProjectRequestOption) (*ProjectDeleteResult, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
 	resp, err := s.client.gen.DeleteProjectWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
@@ -680,6 +694,9 @@ func (s *ProjectsService) Delete(ctx context.Context, id ProjectID, opts ...Proj
 }
 
 func (s *ProjectsService) Archive(ctx context.Context, id ProjectID, opts ...ProjectRequestOption) (*Project, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
 	resp, err := s.client.gen.ArchiveProjectWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
@@ -713,6 +730,9 @@ func (s *ProjectsService) ForEachChangelog(ctx context.Context, id ProjectID, fn
 }
 
 func (s *ProjectsService) ListPermittedUsers(ctx context.Context, id ProjectID, opts ...ProjectRequestOption) ([]UserID, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
 	resp, err := s.client.gen.GetProjectUsersWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
@@ -767,6 +787,9 @@ func (s *ProjectsService) search(ctx context.Context, params genv2.SearchProject
 }
 
 func (s *ProjectsService) listChangelog(ctx context.Context, id ProjectID, params genv2.GetProjectChangelogParams, requestOptions []pipedrive.RequestOption) ([]ProjectChangelogEntry, *string, error) {
+	if err := validateID(id, "project id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 	resp, err := s.client.gen.GetProjectChangelogWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
 	if err != nil {

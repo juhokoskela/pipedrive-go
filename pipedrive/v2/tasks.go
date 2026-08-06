@@ -301,6 +301,9 @@ func (s *TasksService) ForEach(ctx context.Context, fn func(Task) error, opts ..
 }
 
 func (s *TasksService) Get(ctx context.Context, id TaskID, opts ...TaskRequestOption) (*Task, error) {
+	if err := validateID(id, "task id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, taskRequestOptionValues(opts)...)
 	resp, err := s.client.gen.GetTaskWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
@@ -324,6 +327,9 @@ func (s *TasksService) Create(ctx context.Context, opts ...CreateTaskOption) (*T
 }
 
 func (s *TasksService) Update(ctx context.Context, id TaskID, opts ...UpdateTaskOption) (*Task, error) {
+	if err := validateID(id, "task id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateTaskOptions(opts)
 	body, err := encodeV2Body(cfg.payload.body())
 	if err != nil {
@@ -338,6 +344,9 @@ func (s *TasksService) Update(ctx context.Context, id TaskID, opts ...UpdateTask
 }
 
 func (s *TasksService) Delete(ctx context.Context, id TaskID, opts ...TaskRequestOption) (*TaskDeleteResult, error) {
+	if err := validateID(id, "task id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, taskRequestOptionValues(opts)...)
 	resp, err := s.client.gen.DeleteTaskWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {

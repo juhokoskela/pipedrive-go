@@ -515,6 +515,9 @@ func newDeleteActivityOptions(opts []DeleteActivityOption) deleteActivityOptions
 }
 
 func (s *ActivitiesService) Get(ctx context.Context, id ActivityID, opts ...GetActivityOption) (*Activity, error) {
+	if err := validateID(id, "activity id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetActivityOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -593,6 +596,9 @@ func (s *ActivitiesService) Create(ctx context.Context, opts ...CreateActivityOp
 }
 
 func (s *ActivitiesService) Update(ctx context.Context, id ActivityID, opts ...UpdateActivityOption) (*Activity, error) {
+	if err := validateID(id, "activity id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateActivityOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -622,6 +628,9 @@ func (s *ActivitiesService) Update(ctx context.Context, id ActivityID, opts ...U
 }
 
 func (s *ActivitiesService) Delete(ctx context.Context, id ActivityID, opts ...DeleteActivityOption) (*ActivityDeleteResult, error) {
+	if err := validateID(id, "activity id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteActivityOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

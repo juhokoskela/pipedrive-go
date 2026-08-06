@@ -270,6 +270,9 @@ func (s *PipelinesService) ForEach(ctx context.Context, fn func(Pipeline) error,
 }
 
 func (s *PipelinesService) Get(ctx context.Context, id PipelineID, opts ...GetPipelineOption) (*Pipeline, error) {
+	if err := validateID(id, "pipeline id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetPipelineOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -326,6 +329,9 @@ func (s *PipelinesService) Create(ctx context.Context, opts ...CreatePipelineOpt
 }
 
 func (s *PipelinesService) Update(ctx context.Context, id PipelineID, opts ...UpdatePipelineOption) (*Pipeline, error) {
+	if err := validateID(id, "pipeline id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdatePipelineOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -362,6 +368,9 @@ type PipelineDeleteResult struct {
 }
 
 func (s *PipelinesService) Delete(ctx context.Context, id PipelineID, opts ...DeletePipelineOption) (*PipelineDeleteResult, error) {
+	if err := validateID(id, "pipeline id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeletePipelineOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
