@@ -259,9 +259,8 @@ func readFieldResponseBody(resp *http.Response) ([]byte, error) {
 		)
 	case readErr != nil:
 		return nil, fmt.Errorf("read field response body: %w", readErr)
-	case closeErr != nil:
-		return nil, fmt.Errorf("close field response body: %w", closeErr)
 	default:
+		// A successful read preserves the payload needed for status-derived errors.
 		return body, nil
 	}
 }
