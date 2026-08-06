@@ -421,16 +421,19 @@ type InstallmentOption interface {
 type getDealOptions struct {
 	params         genv2.GetDealParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type listDealsOptions struct {
 	params         genv2.GetDealsParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type listArchivedDealsOptions struct {
 	params         genv2.GetArchivedDealsParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type createDealOptions struct {
@@ -935,6 +938,12 @@ func WithDealsIncludeOptionLabels(enabled bool) ListDealsOption {
 
 func WithDealsCustomFields(fields ...string) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -1064,6 +1073,12 @@ func WithArchivedDealsIncludeFields(fields ...DealIncludeField) ListArchivedDeal
 
 func WithArchivedDealsCustomFields(fields ...string) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -1115,6 +1130,12 @@ func WithDealIncludeOptionLabels(enabled bool) GetDealOption {
 
 func WithDealCustomFields(fields ...string) GetDealOption {
 	return getDealOptionFunc(func(cfg *getDealOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -1949,7 +1970,13 @@ func newDeleteInstallmentOptions(opts []DeleteInstallmentOption) deleteInstallme
 }
 
 func (s *DealsService) Get(ctx context.Context, id DealID, opts ...GetDealOption) (*Deal, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetDealOptions(opts)
+	if cfg.err != nil {
+		return nil, cfg.err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	resp, err := s.client.gen.GetDealWithResponse(ctx, int(id), &cfg.params, toRequestEditors(editors)...)
@@ -1974,6 +2001,9 @@ func (s *DealsService) Get(ctx context.Context, id DealID, opts ...GetDealOption
 
 func (s *DealsService) List(ctx context.Context, opts ...ListDealsOption) ([]Deal, *string, error) {
 	cfg := newListDealsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -1983,6 +2013,9 @@ func (s *DealsService) ListPager(opts ...ListDealsOption) *pipedrive.CursorPager
 	cfg.params.Cursor = nil
 
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Deal, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -1999,6 +2032,9 @@ func (s *DealsService) ForEach(ctx context.Context, fn func(Deal) error, opts ..
 
 func (s *DealsService) ListArchived(ctx context.Context, opts ...ListArchivedDealsOption) ([]Deal, *string, error) {
 	cfg := newListArchivedDealsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.listArchived(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -2008,6 +2044,9 @@ func (s *DealsService) ListArchivedPager(opts ...ListArchivedDealsOption) *piped
 	cfg.params.Cursor = nil
 
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Deal, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -2052,6 +2091,9 @@ func (s *DealsService) Create(ctx context.Context, opts ...CreateDealOption) (*D
 }
 
 func (s *DealsService) Update(ctx context.Context, id DealID, opts ...UpdateDealOption) (*Deal, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateDealOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2081,6 +2123,9 @@ func (s *DealsService) Update(ctx context.Context, id DealID, opts ...UpdateDeal
 }
 
 func (s *DealsService) Delete(ctx context.Context, id DealID, opts ...DeleteDealOption) (*DealDeleteResult, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteDealOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2138,6 +2183,9 @@ func (s *DealsService) Search(ctx context.Context, term string, opts ...SearchDe
 }
 
 func (s *DealsService) ConvertToLead(ctx context.Context, id DealID, opts ...ConvertDealOption) (*DealConversionJob, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newConvertDealOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2162,6 +2210,9 @@ func (s *DealsService) ConvertToLead(ctx context.Context, id DealID, opts ...Con
 }
 
 func (s *DealsService) ConversionStatus(ctx context.Context, id DealID, conversionID ConversionID, opts ...GetDealConversionStatusOption) (*DealConversionStatus, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetDealConversionStatusOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2216,6 +2267,9 @@ func (s *DealsService) ForEachFollowers(ctx context.Context, id DealID, fn func(
 }
 
 func (s *DealsService) AddFollower(ctx context.Context, id DealID, userID UserID, opts ...AddDealFollowerOption) (*Follower, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddDealFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2247,6 +2301,12 @@ func (s *DealsService) AddFollower(ctx context.Context, id DealID, userID UserID
 }
 
 func (s *DealsService) DeleteFollower(ctx context.Context, id DealID, followerID UserID, opts ...DeleteDealFollowerOption) (*FollowerDeleteResult, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(followerID, "follower id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteDealFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2360,6 +2420,9 @@ func (s *DealsService) ForEachProductsAcrossDeals(ctx context.Context, dealIDs [
 }
 
 func (s *DealsService) AddProduct(ctx context.Context, id DealID, opts ...AddDealProductOption) (*DealProduct, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddDealProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2389,6 +2452,9 @@ func (s *DealsService) AddProduct(ctx context.Context, id DealID, opts ...AddDea
 }
 
 func (s *DealsService) AddProducts(ctx context.Context, id DealID, products []DealProductInput, opts ...AddManyDealProductsOption) ([]DealProduct, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddManyDealProductsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2421,6 +2487,12 @@ func (s *DealsService) AddProducts(ctx context.Context, id DealID, products []De
 }
 
 func (s *DealsService) UpdateProduct(ctx context.Context, id DealID, attachmentID DealProductAttachmentID, opts ...UpdateDealProductOption) (*DealProduct, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(attachmentID, "product attachment id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateDealProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2450,6 +2522,12 @@ func (s *DealsService) UpdateProduct(ctx context.Context, id DealID, attachmentI
 }
 
 func (s *DealsService) DeleteProduct(ctx context.Context, id DealID, attachmentID DealProductAttachmentID, opts ...DeleteDealProductOption) (*DealProductDeleteResult, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(attachmentID, "product attachment id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteDealProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2474,6 +2552,9 @@ func (s *DealsService) DeleteProduct(ctx context.Context, id DealID, attachmentI
 }
 
 func (s *DealsService) DeleteProducts(ctx context.Context, id DealID, opts ...DeleteDealProductsOption) (*DealProductsDeleteResult, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteDealProductsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2508,6 +2589,9 @@ func (s *DealsService) DeleteProducts(ctx context.Context, id DealID, opts ...De
 }
 
 func (s *DealsService) ListAdditionalDiscounts(ctx context.Context, id DealID, opts ...ListAdditionalDiscountsOption) ([]AdditionalDiscount, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newListAdditionalDiscountsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2529,6 +2613,9 @@ func (s *DealsService) ListAdditionalDiscounts(ctx context.Context, id DealID, o
 }
 
 func (s *DealsService) AddAdditionalDiscount(ctx context.Context, id DealID, opts ...AddAdditionalDiscountOption) (*AdditionalDiscount, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddAdditionalDiscountOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2558,6 +2645,9 @@ func (s *DealsService) AddAdditionalDiscount(ctx context.Context, id DealID, opt
 }
 
 func (s *DealsService) UpdateAdditionalDiscount(ctx context.Context, id DealID, discountID AdditionalDiscountID, opts ...UpdateAdditionalDiscountOption) (*AdditionalDiscount, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateAdditionalDiscountOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2592,6 +2682,9 @@ func (s *DealsService) UpdateAdditionalDiscount(ctx context.Context, id DealID, 
 }
 
 func (s *DealsService) DeleteAdditionalDiscount(ctx context.Context, id DealID, discountID AdditionalDiscountID, opts ...DeleteAdditionalDiscountOption) (*AdditionalDiscountDeleteResult, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteAdditionalDiscountOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2671,6 +2764,9 @@ func (s *DealsService) ForEachInstallments(ctx context.Context, dealIDs []DealID
 }
 
 func (s *DealsService) AddInstallment(ctx context.Context, id DealID, opts ...AddInstallmentOption) (*Installment, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddInstallmentOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2700,6 +2796,12 @@ func (s *DealsService) AddInstallment(ctx context.Context, id DealID, opts ...Ad
 }
 
 func (s *DealsService) UpdateInstallment(ctx context.Context, id DealID, installmentID InstallmentID, opts ...UpdateInstallmentOption) (*Installment, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(installmentID, "installment id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateInstallmentOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2729,6 +2831,12 @@ func (s *DealsService) UpdateInstallment(ctx context.Context, id DealID, install
 }
 
 func (s *DealsService) DeleteInstallment(ctx context.Context, id DealID, installmentID InstallmentID, opts ...DeleteInstallmentOption) (*InstallmentDeleteResult, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(installmentID, "installment id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteInstallmentOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2809,6 +2917,9 @@ func (s *DealsService) listArchived(ctx context.Context, params genv2.GetArchive
 }
 
 func (s *DealsService) listFollowers(ctx context.Context, id DealID, params genv2.GetDealFollowersParams, requestOptions []pipedrive.RequestOption) ([]Follower, *string, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetDealFollowersWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
@@ -2837,6 +2948,9 @@ func (s *DealsService) listFollowers(ctx context.Context, id DealID, params genv
 }
 
 func (s *DealsService) followersChangelog(ctx context.Context, id DealID, params genv2.GetDealFollowersChangelogParams, requestOptions []pipedrive.RequestOption) ([]FollowerChangelog, *string, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetDealFollowersChangelogWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
@@ -2865,6 +2979,9 @@ func (s *DealsService) followersChangelog(ctx context.Context, id DealID, params
 }
 
 func (s *DealsService) listDealProducts(ctx context.Context, id DealID, params genv2.GetDealProductsParams, requestOptions []pipedrive.RequestOption) ([]DealProduct, *string, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetDealProductsWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)

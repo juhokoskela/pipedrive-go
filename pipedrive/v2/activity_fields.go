@@ -127,6 +127,9 @@ func newListActivityFieldsOptions(opts []ListActivityFieldsOption) listActivityF
 }
 
 func (s *ActivityFieldsService) Get(ctx context.Context, fieldCode string, opts ...GetActivityFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newGetActivityFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

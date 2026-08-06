@@ -331,6 +331,9 @@ func newDeleteDealFieldOptionsOptions(opts []DeleteDealFieldOptionsOption) delet
 }
 
 func (s *DealFieldsService) Get(ctx context.Context, fieldCode string, opts ...GetDealFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newGetDealFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -417,6 +420,9 @@ func (s *DealFieldsService) Create(ctx context.Context, opts ...CreateDealFieldO
 }
 
 func (s *DealFieldsService) Update(ctx context.Context, fieldCode string, opts ...UpdateDealFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateDealFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -450,6 +456,9 @@ func (s *DealFieldsService) Update(ctx context.Context, fieldCode string, opts .
 }
 
 func (s *DealFieldsService) Delete(ctx context.Context, fieldCode string, opts ...DeleteDealFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteDealFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -474,6 +483,9 @@ func (s *DealFieldsService) Delete(ctx context.Context, fieldCode string, opts .
 }
 
 func (s *DealFieldsService) AddOptions(ctx context.Context, fieldCode string, labels []string, opts ...AddDealFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newAddDealFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -508,6 +520,9 @@ func (s *DealFieldsService) AddOptions(ctx context.Context, fieldCode string, la
 }
 
 func (s *DealFieldsService) UpdateOptions(ctx context.Context, fieldCode string, updates []FieldOptionUpdate, opts ...UpdateDealFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateDealFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -548,6 +563,9 @@ func (s *DealFieldsService) UpdateOptions(ctx context.Context, fieldCode string,
 }
 
 func (s *DealFieldsService) DeleteOptions(ctx context.Context, fieldCode string, ids []int, opts ...DeleteDealFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteDealFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

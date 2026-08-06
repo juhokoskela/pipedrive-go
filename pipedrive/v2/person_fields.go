@@ -334,6 +334,9 @@ func newDeletePersonFieldOptionsOptions(opts []DeletePersonFieldOptionsOption) d
 }
 
 func (s *PersonFieldsService) Get(ctx context.Context, fieldCode string, opts ...GetPersonFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newGetPersonFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -420,6 +423,9 @@ func (s *PersonFieldsService) Create(ctx context.Context, opts ...CreatePersonFi
 }
 
 func (s *PersonFieldsService) Update(ctx context.Context, fieldCode string, opts ...UpdatePersonFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdatePersonFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -453,6 +459,9 @@ func (s *PersonFieldsService) Update(ctx context.Context, fieldCode string, opts
 }
 
 func (s *PersonFieldsService) Delete(ctx context.Context, fieldCode string, opts ...DeletePersonFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newDeletePersonFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -477,6 +486,9 @@ func (s *PersonFieldsService) Delete(ctx context.Context, fieldCode string, opts
 }
 
 func (s *PersonFieldsService) AddOptions(ctx context.Context, fieldCode string, labels []string, opts ...AddPersonFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newAddPersonFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -511,6 +523,9 @@ func (s *PersonFieldsService) AddOptions(ctx context.Context, fieldCode string, 
 }
 
 func (s *PersonFieldsService) UpdateOptions(ctx context.Context, fieldCode string, updates []FieldOptionUpdate, opts ...UpdatePersonFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdatePersonFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -551,6 +566,9 @@ func (s *PersonFieldsService) UpdateOptions(ctx context.Context, fieldCode strin
 }
 
 func (s *PersonFieldsService) DeleteOptions(ctx context.Context, fieldCode string, ids []int, opts ...DeletePersonFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newDeletePersonFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
