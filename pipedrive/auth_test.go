@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"sync"
 	"testing"
@@ -358,4 +359,61 @@ type errAuth struct {
 
 func (a errAuth) Apply(*http.Request) error {
 	return a.err
+}
+
+func TestCanonicalAuthHost(t *testing.T) {
+	t.Parallel()
+
+	for _, tc := range []struct {
+		scheme, host, want string
+	}{
+		{"http", "example.com:80", "example.com"},
+		{"https", "example.com:443", "example.com"},
+		{"http", "example.com:8080", "example.com:8080"},
+		{"https", "example.com:8443", "example.com:8443"},
+		{"https", "127.0.0.1:4443", "127.0.0.1:4443"},
+		{"ws", "example.com:443", "example.com:443"},
+	} {
+		if got := canonicalAuthHost(tc.scheme, tc.host); got != tc.want {
+			t.Errorf("canonicalAuthHost(%q, %q) = %q, want %q", tc.scheme, tc.host, got, tc.want)
+		}
+	}
+}
+
+func TestAuthOriginFromBaseURL_ParseErrorFailsClosed(t *testing.T) {
+	t.Parallel()
+
+	origin := authOriginFromBaseURL("https://\x7f.invalid")
+	if origin == nil {
+		t.Fatal("expected a fail-closed origin for an unparseable base URL")
+	}
+	u, _ := url.Parse("https://example.com")
+	if origin.matches(u) {
+		t.Fatal("fail-closed origin must not match any request URL")
+	}
+}
+
+func TestLeavesCredentialScope(t *testing.T) {
+	t.Parallel()
+
+	first, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, "https://api.example.com/deals", nil)
+	same, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, "https://api.example.com/persons", nil)
+	cross, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, "https://evil.example.net/steal", nil)
+
+	// A nil origin with no previous hops leaves nothing to compare against.
+	if leavesCredentialScope(nil, first, nil) {
+		t.Error("nil origin with empty via must not leave scope")
+	}
+	// A nil origin falls back to the previous hop's origin.
+	if leavesCredentialScope(nil, same, []*http.Request{first}) {
+		t.Error("same-origin redirect must not leave scope")
+	}
+	if !leavesCredentialScope(nil, cross, []*http.Request{first}) {
+		t.Error("cross-origin redirect must leave scope")
+	}
+	// A pinned origin decides by itself, ignoring the previous hop.
+	pinned := authOriginFromBaseURL("https://api.example.com")
+	if !leavesCredentialScope(pinned, cross, []*http.Request{cross}) {
+		t.Error("pinned origin must flag a cross-origin request")
+	}
 }

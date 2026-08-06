@@ -2,6 +2,7 @@ package v1
 
 import (
 	"context"
+	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -145,5 +146,41 @@ func TestOAuthService_RefreshTokens(t *testing.T) {
 	}
 	if tokens.AccessToken != "token2" || tokens.RefreshToken != "refresh2" {
 		t.Fatalf("unexpected tokens: %#v", tokens)
+	}
+}
+
+func TestOAuthService_RefreshTokensError(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		_, _ = w.Write([]byte(`{"error":"invalid_grant"}`))
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{
+		BaseURL:      srv.URL,
+		OAuthBaseURL: srv.URL,
+		HTTPClient:   srv.Client(),
+	})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+
+	tokens, err := client.OAuth.RefreshTokens(
+		context.Background(),
+		WithOAuthAuthorization("Basic abc"),
+		WithOAuthRefreshToken("expired"),
+	)
+	if err == nil {
+		t.Fatal("expected an error for a rejected refresh")
+	}
+	if tokens != nil {
+		t.Fatalf("expected no tokens on error, got %#v", tokens)
+	}
+	var apiErr *pipedrive.APIError
+	if !errors.As(err, &apiErr) {
+		t.Fatalf("expected an APIError, got %T", err)
 	}
 }
