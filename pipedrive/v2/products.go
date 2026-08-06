@@ -66,6 +66,9 @@ type Product struct {
 	IsDeleted              bool                   `json:"is_deleted,omitempty"`
 	IsLinkable             bool                   `json:"is_linkable,omitempty"`
 	VisibleTo              int                    `json:"visible_to,omitempty"`
+	AddTime                *time.Time             `json:"add_time,omitempty"`
+	UpdateTime             *time.Time             `json:"update_time,omitempty"`
+	Description            string                 `json:"description,omitempty"`
 	CustomFields           map[string]interface{} `json:"custom_fields,omitempty"`
 	BillingFrequency       BillingFrequency       `json:"billing_frequency,omitempty"`
 	BillingFrequencyCycles *int                   `json:"billing_frequency_cycles,omitempty"`
@@ -365,14 +368,14 @@ type productPayload struct {
 	ownerID                *UserID
 	isLinkable             *bool
 	visibleTo              *int
-	prices                 []ProductPrice
+	prices                 optionalSlice[ProductPrice]
 	billingFrequency       *BillingFrequency
-	billingFrequencyCycles *int
+	billingFrequencyCycles nullableValue[int]
 }
 
 type productVariationPayload struct {
 	name   *string
-	prices []ProductPrice
+	prices optionalSlice[ProductPrice]
 }
 
 type productImagePayload struct {
@@ -579,6 +582,13 @@ func WithProductsSortDirection(direction SortDirection) ListProductsOption {
 	})
 }
 
+func WithProductsUpdatedSince(t time.Time) ListProductsOption {
+	return listProductsOptionFunc(func(cfg *listProductsOptions) {
+		value := formatTime(t)
+		cfg.params.UpdatedSince = &value
+	})
+}
+
 func WithProductsCustomFields(fields ...string) ListProductsOption {
 	return listProductsOptionFunc(func(cfg *listProductsOptions) {
 		csv := joinCSV(fields)
@@ -645,10 +655,7 @@ func WithProductVisibleTo(visibleTo int) ProductOption {
 
 func WithProductPrices(prices ...ProductPrice) ProductOption {
 	return productFieldOption(func(payload *productPayload) {
-		if len(prices) == 0 {
-			return
-		}
-		payload.prices = append(payload.prices, prices...)
+		payload.prices.append(prices...)
 	})
 }
 
@@ -660,7 +667,14 @@ func WithProductBillingFrequency(frequency BillingFrequency) ProductOption {
 
 func WithProductBillingFrequencyCycles(cycles int) ProductOption {
 	return productFieldOption(func(payload *productPayload) {
-		payload.billingFrequencyCycles = &cycles
+		payload.billingFrequencyCycles.assign(cycles)
+	})
+}
+
+// ClearProductBillingFrequencyCycles sends an explicit JSON null cycle count.
+func ClearProductBillingFrequencyCycles() ProductOption {
+	return productFieldOption(func(payload *productPayload) {
+		payload.billingFrequencyCycles.clear()
 	})
 }
 
@@ -725,10 +739,7 @@ func WithProductVariationName(name string) ProductVariationOption {
 
 func WithProductVariationPrices(prices ...ProductPrice) ProductVariationOption {
 	return productVariationFieldOption(func(payload *productVariationPayload) {
-		if len(prices) == 0 {
-			return
-		}
-		payload.prices = append(payload.prices, prices...)
+		payload.prices.append(prices...)
 	})
 }
 
@@ -1673,14 +1684,18 @@ func (p productPayload) toMap() map[string]interface{} {
 	if p.visibleTo != nil {
 		body["visible_to"] = *p.visibleTo
 	}
-	if len(p.prices) > 0 {
-		body["prices"] = p.prices
+	if p.prices.set {
+		body["prices"] = p.prices.value
 	}
 	if p.billingFrequency != nil {
 		body["billing_frequency"] = *p.billingFrequency
 	}
-	if p.billingFrequencyCycles != nil {
-		body["billing_frequency_cycles"] = *p.billingFrequencyCycles
+	if p.billingFrequencyCycles.set {
+		if p.billingFrequencyCycles.value == nil {
+			body["billing_frequency_cycles"] = nil
+		} else {
+			body["billing_frequency_cycles"] = *p.billingFrequencyCycles.value
+		}
 	}
 	return body
 }
@@ -1690,8 +1705,8 @@ func (p productVariationPayload) toMap() map[string]interface{} {
 	if p.name != nil {
 		body["name"] = *p.name
 	}
-	if len(p.prices) > 0 {
-		body["prices"] = p.prices
+	if p.prices.set {
+		body["prices"] = p.prices.value
 	}
 	return body
 }

@@ -65,13 +65,40 @@ type OrganizationAddress struct {
 }
 
 type Organization struct {
-	ID           OrganizationID         `json:"id"`
-	Name         string                 `json:"name,omitempty"`
-	OwnerID      *UserID                `json:"owner_id,omitempty"`
-	AddTime      *time.Time             `json:"add_time,omitempty"`
-	UpdateTime   *time.Time             `json:"update_time,omitempty"`
-	Address      *OrganizationAddress   `json:"address,omitempty"`
-	CustomFields map[string]interface{} `json:"custom_fields,omitempty"`
+	ID                      OrganizationID         `json:"id"`
+	Name                    string                 `json:"name,omitempty"`
+	OwnerID                 *UserID                `json:"owner_id,omitempty"`
+	AddTime                 *time.Time             `json:"add_time,omitempty"`
+	UpdateTime              *time.Time             `json:"update_time,omitempty"`
+	IsDeleted               bool                   `json:"is_deleted,omitempty"`
+	VisibleTo               *int                   `json:"visible_to,omitempty"`
+	Address                 *OrganizationAddress   `json:"address,omitempty"`
+	LabelIDs                []int                  `json:"label_ids,omitempty"`
+	Website                 *string                `json:"website,omitempty"`
+	LinkedIn                *string                `json:"linkedin,omitempty"`
+	Industry                *int                   `json:"industry,omitempty"`
+	AnnualRevenue           *int                   `json:"annual_revenue,omitempty"`
+	EmployeeCount           *int                   `json:"employee_count,omitempty"`
+	CustomFields            map[string]interface{} `json:"custom_fields,omitempty"`
+	ActivitiesCount         *int                   `json:"activities_count,omitempty"`
+	ClosedDealsCount        *int                   `json:"closed_deals_count,omitempty"`
+	DoneActivitiesCount     *int                   `json:"done_activities_count,omitempty"`
+	EmailMessagesCount      *int                   `json:"email_messages_count,omitempty"`
+	FilesCount              *int                   `json:"files_count,omitempty"`
+	FollowersCount          *int                   `json:"followers_count,omitempty"`
+	LastActivityID          *ActivityID            `json:"last_activity_id,omitempty"`
+	LostDealsCount          *int                   `json:"lost_deals_count,omitempty"`
+	NextActivityID          *ActivityID            `json:"next_activity_id,omitempty"`
+	NotesCount              *int                   `json:"notes_count,omitempty"`
+	OpenDealsCount          *int                   `json:"open_deals_count,omitempty"`
+	PeopleCount             *int                   `json:"people_count,omitempty"`
+	RelatedClosedDealsCount *int                   `json:"related_closed_deals_count,omitempty"`
+	RelatedLostDealsCount   *int                   `json:"related_lost_deals_count,omitempty"`
+	RelatedOpenDealsCount   *int                   `json:"related_open_deals_count,omitempty"`
+	RelatedWonDealsCount    *int                   `json:"related_won_deals_count,omitempty"`
+	UndoneActivitiesCount   *int                   `json:"undone_activities_count,omitempty"`
+	WonDealsCount           *int                   `json:"won_deals_count,omitempty"`
+	Labels                  []EntityLabel          `json:"labels,omitempty"`
 }
 
 type OrganizationSearchItem struct {
@@ -200,7 +227,7 @@ type organizationPayload struct {
 	name         *string
 	ownerID      *UserID
 	address      *OrganizationAddress
-	labelIDs     []int
+	labelIDs     optionalSlice[int]
 	visibleTo    *int
 	customFields map[string]interface{}
 }
@@ -304,6 +331,18 @@ func WithOrganizationIncludeFields(fields ...OrganizationIncludeField) GetOrgani
 	})
 }
 
+func WithOrganizationIncludeLabels(enabled bool) GetOrganizationOption {
+	return getOrganizationOptionFunc(func(cfg *getOrganizationOptions) {
+		cfg.params.IncludeLabels = &enabled
+	})
+}
+
+func WithOrganizationIncludeOptionLabels(enabled bool) GetOrganizationOption {
+	return getOrganizationOptionFunc(func(cfg *getOrganizationOptions) {
+		cfg.params.IncludeOptionLabels = &enabled
+	})
+}
+
 func WithOrganizationCustomFields(fields ...string) GetOrganizationOption {
 	return getOrganizationOptionFunc(func(cfg *getOrganizationOptions) {
 		csv := joinCSV(fields)
@@ -334,10 +373,7 @@ func WithOrganizationAddress(address OrganizationAddress) OrganizationOption {
 
 func WithOrganizationLabelIDs(ids ...int) OrganizationOption {
 	return organizationFieldOption(func(payload *organizationPayload) {
-		if len(ids) == 0 {
-			return
-		}
-		payload.labelIDs = append(payload.labelIDs, ids...)
+		payload.labelIDs.append(ids...)
 	})
 }
 
@@ -401,6 +437,18 @@ func WithOrganizationsIncludeFields(fields ...OrganizationIncludeField) ListOrga
 		}
 		value := genv2.GetOrganizationsParamsIncludeFields(csv)
 		cfg.params.IncludeFields = &value
+	})
+}
+
+func WithOrganizationsIncludeLabels(enabled bool) ListOrganizationsOption {
+	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
+		cfg.params.IncludeLabels = &enabled
+	})
+}
+
+func WithOrganizationsIncludeOptionLabels(enabled bool) ListOrganizationsOption {
+	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
+		cfg.params.IncludeOptionLabels = &enabled
 	})
 }
 
@@ -987,8 +1035,8 @@ func (p organizationPayload) toMap() map[string]interface{} {
 	if p.address != nil {
 		body["address"] = p.address
 	}
-	if len(p.labelIDs) > 0 {
-		body["label_ids"] = p.labelIDs
+	if p.labelIDs.set {
+		body["label_ids"] = p.labelIDs.value
 	}
 	if p.visibleTo != nil {
 		body["visible_to"] = *p.visibleTo
