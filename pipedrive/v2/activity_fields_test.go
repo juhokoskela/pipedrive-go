@@ -246,8 +246,8 @@ func runFieldUpdateTest(t *testing.T, path string, update func(context.Context, 
 		if payload["field_type"] != "varchar" {
 			t.Fatalf("unexpected field_type: %#v", payload["field_type"])
 		}
-		if payload["description"] != "Updated description" {
-			t.Fatalf("unexpected description: %#v", payload["description"])
+		if description, ok := payload["description"]; ok {
+			t.Fatalf("unexpected description: %#v", description)
 		}
 		if got := payload["ui_visibility"].(map[string]interface{})["add"]; got != true {
 			t.Fatalf("unexpected ui_visibility: %#v", payload["ui_visibility"])
