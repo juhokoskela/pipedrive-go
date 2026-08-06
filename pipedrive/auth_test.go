@@ -467,7 +467,7 @@ func TestNewHTTPClient_NilOriginRedirectSuppressesCredentials(t *testing.T) {
 	if len(attackerHeaders) != 1 {
 		t.Fatalf("expected 1 attacker request, got %d", len(attackerHeaders))
 	}
-	for _, h := range []string{"x-api-token", "Authorization", suppressAuthHeader} {
+	for _, h := range []string{"x-api-token", "Authorization"} {
 		if got := attackerHeaders[0].Get(h); got != "" {
 			t.Fatalf("header %s reached the cross-origin redirect target: %q", h, got)
 		}
@@ -513,7 +513,7 @@ func TestNewHTTPClient_NilOriginRedirectBackToInitialOrigin(t *testing.T) {
 	}
 }
 
-func TestNewHTTPClient_SuppressHeaderNeverSentWithoutAuth(t *testing.T) {
+func TestNewHTTPClient_EditorHeadersStrippedWithoutAuth(t *testing.T) {
 	t.Parallel()
 
 	var attackerHeaders []http.Header
@@ -527,8 +527,8 @@ func TestNewHTTPClient_SuppressHeaderNeverSentWithoutAuth(t *testing.T) {
 	}))
 	t.Cleanup(api.Close)
 
-	// Editor-set credentials with no Auth provider: the guard strips them,
-	// and with no middleware installed there must be no sentinel on the wire.
+	// Editor-set credentials with no Auth provider: the guard strips them
+	// even when no auth middleware is installed.
 	client := NewHTTPClient(Config{BaseURL: api.URL})
 	req, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, api.URL+"/x", nil)
 	req.Header.Set("x-api-token", "editor-token")
@@ -541,9 +541,7 @@ func TestNewHTTPClient_SuppressHeaderNeverSentWithoutAuth(t *testing.T) {
 	if len(attackerHeaders) != 1 {
 		t.Fatalf("expected 1 attacker request, got %d", len(attackerHeaders))
 	}
-	for _, h := range []string{"x-api-token", suppressAuthHeader} {
-		if got := attackerHeaders[0].Get(h); got != "" {
-			t.Fatalf("header %s reached the cross-origin redirect target: %q", h, got)
-		}
+	if got := attackerHeaders[0].Get("x-api-token"); got != "" {
+		t.Fatalf("editor token reached the cross-origin redirect target: %q", got)
 	}
 }

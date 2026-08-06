@@ -59,7 +59,7 @@ func NewHTTPClient(cfg Config) *http.Client {
 	// Catches credential headers set directly on the request (for example
 	// through WithHeader), which the auth middleware never sees, and marks
 	// off-scope hops so the middleware does not re-attach Auth credentials.
-	clone.CheckRedirect = redirectCredentialGuard(origin, cfg.Auth != nil, base.CheckRedirect)
+	clone.CheckRedirect = redirectCredentialGuard(origin, base.CheckRedirect)
 
 	transport = newResponseLimitTransport(transport, cfg.MaxResponseSize)
 	transport = chainMiddleware(transport, middleware)
