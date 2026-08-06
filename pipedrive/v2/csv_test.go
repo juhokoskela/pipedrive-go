@@ -68,13 +68,31 @@ func TestCustomFieldsWithCommaRejected(t *testing.T) {
 		}
 	}
 
+	dealsPager := client.Deals.ListPager(WithDealsCustomFields("a,b"))
+	archivedPager := client.Deals.ListArchivedPager(WithArchivedDealsCustomFields("a,b"))
+	personsPager := client.Persons.ListPager(WithPersonsCustomFields("a,b"))
+	orgsPager := client.Organizations.ListPager(WithOrganizationsCustomFields("a,b"))
+	productsPager := client.Products.ListPager(WithProductsCustomFields("a,b"))
+
 	// Pagers surface the same error on first fetch.
-	pager := client.Deals.ListPager(WithDealsCustomFields("a,b"))
-	if pager.Next(ctx) {
-		t.Error("expected pager fetch to fail")
+	pagers := []struct {
+		name string
+		next func() bool
+		err  func() error
+	}{
+		{"Deals.ListPager", func() bool { return dealsPager.Next(ctx) }, dealsPager.Err},
+		{"Deals.ListArchivedPager", func() bool { return archivedPager.Next(ctx) }, archivedPager.Err},
+		{"Persons.ListPager", func() bool { return personsPager.Next(ctx) }, personsPager.Err},
+		{"Organizations.ListPager", func() bool { return orgsPager.Next(ctx) }, orgsPager.Err},
+		{"Products.ListPager", func() bool { return productsPager.Next(ctx) }, productsPager.Err},
 	}
-	if pager.Err() == nil {
-		t.Error("expected pager to surface comma rejection")
+	for _, p := range pagers {
+		if p.next() {
+			t.Errorf("%s: expected pager fetch to fail", p.name)
+		}
+		if err := p.err(); err == nil || !strings.Contains(err.Error(), "comma") {
+			t.Errorf("%s: expected comma rejection, got %v", p.name, err)
+		}
 	}
 }
 

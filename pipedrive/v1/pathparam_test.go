@@ -41,13 +41,17 @@ func TestStringIDs_DotSegmentsRejectedClientSide(t *testing.T) {
 		name string
 		call func() error
 	}{
+		{"CallLogs.Get", func() error { _, err := client.CallLogs.Get(ctx, ".."); return err }},
+		{"CallLogs.Delete", func() error { _, err := client.CallLogs.Delete(ctx, ".."); return err }},
+		{"CallLogs.AddRecording", func() error { _, err := client.CallLogs.AddRecording(ctx, "..", "x", nil); return err }},
 		{"Channels.Delete", func() error { _, err := client.Channels.Delete(ctx, ".."); return err }},
-		{"Channels.DeleteConversation", func() error { _, err := client.Channels.DeleteConversation(ctx, "c1", ".."); return err }},
-		{"CallLogs.Get", func() error { _, err := client.CallLogs.Get(ctx, "."); return err }},
-		{"CallLogs.Delete", func() error { _, err := client.CallLogs.Delete(ctx, ""); return err }},
+		{"Channels.DeleteConversation#channelID", func() error { _, err := client.Channels.DeleteConversation(ctx, "..", "x"); return err }},
+		{"Channels.DeleteConversation#conversationID", func() error { _, err := client.Channels.DeleteConversation(ctx, "x", ".."); return err }},
+		{"Goals.Update", func() error { _, err := client.Goals.Update(ctx, ".."); return err }},
 		{"Goals.Delete", func() error { _, err := client.Goals.Delete(ctx, ".."); return err }},
 		{"Goals.GetResult", func() error { _, err := client.Goals.GetResult(ctx, ".."); return err }},
 		{"PermissionSets.Get", func() error { _, err := client.PermissionSets.Get(ctx, ".."); return err }},
+		{"PermissionSets.ListAssignments", func() error { _, err := client.PermissionSets.ListAssignments(ctx, ".."); return err }},
 		{"Leads.ListPermittedUsers", func() error { _, err := client.Leads.ListPermittedUsers(ctx, "not-a-uuid"); return err }},
 	}
 	for _, c := range calls {
