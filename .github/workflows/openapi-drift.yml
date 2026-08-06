@@ -1,0 +1,39 @@
+name: Upstream OpenAPI drift
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: upstream-openapi-drift
+  cancel-in-progress: true
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.5"
+          cache: true
+
+      - name: Pin toolchain to installed version
+        run: echo "GOTOOLCHAIN=local" >> "$GITHUB_ENV"
+
+      - name: Refresh specifications
+        run: make update-specs
+
+      - name: Regenerate clients and endpoint documentation
+        run: |
+          make generate
+          make docs
+
+      - name: Check for upstream drift
+        run: git diff --exit-code
