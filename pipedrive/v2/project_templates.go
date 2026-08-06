@@ -110,6 +110,9 @@ func (s *ProjectTemplatesService) ForEach(ctx context.Context, fn func(ProjectTe
 }
 
 func (s *ProjectTemplatesService) Get(ctx context.Context, id ProjectTemplateID, opts ...ProjectTemplateRequestOption) (*ProjectTemplate, error) {
+	if err := validateID(id, "project template id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectTemplateRequestOptionValues(opts)...)
 	resp, err := s.client.gen.GetProjectTemplateWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
