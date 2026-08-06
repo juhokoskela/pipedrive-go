@@ -212,10 +212,13 @@ func WithProductFieldType(fieldType FieldType) ProductFieldOption {
 	})
 }
 
+// WithProductFieldDescription is retained for source compatibility.
+//
+// Deprecated: Pipedrive API v2 no longer accepts descriptions for product
+// fields. This option is intentionally ignored.
 func WithProductFieldDescription(description string) ProductFieldOption {
-	return productFieldOptionFunc(func(payload *fieldPayload) {
-		payload.description = &description
-	})
+	_ = description
+	return productFieldOptionFunc(func(*fieldPayload) {})
 }
 
 func WithProductFieldOptions(labels ...string) ProductFieldOption {
@@ -334,18 +337,22 @@ func (s *ProductFieldsService) Get(ctx context.Context, fieldCode string, opts .
 	cfg := newGetProductFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.GetProductFieldWithResponse(ctx, fieldCode, &cfg.params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProductField(ctx, fieldCode, &cfg.params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readFieldResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Field `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -388,18 +395,22 @@ func (s *ProductFieldsService) Create(ctx context.Context, opts ...CreateProduct
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.AddProductFieldWithBodyWithResponse(ctx, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddProductFieldWithBody(ctx, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readFieldResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Field `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -417,18 +428,22 @@ func (s *ProductFieldsService) Update(ctx context.Context, fieldCode string, opt
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.UpdateProductFieldWithBodyWithResponse(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateProductFieldWithBody(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readFieldResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Field `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -575,12 +590,16 @@ func (s *ProductFieldsService) DeleteOptions(ctx context.Context, fieldCode stri
 func (s *ProductFieldsService) list(ctx context.Context, params genv2.GetProductFieldsParams, requestOptions []pipedrive.RequestOption) ([]Field, *string, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
-	resp, err := s.client.gen.GetProductFieldsWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProductFields(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readFieldResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
@@ -589,7 +608,7 @@ func (s *ProductFieldsService) list(ctx context.Context, params genv2.GetProduct
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 
