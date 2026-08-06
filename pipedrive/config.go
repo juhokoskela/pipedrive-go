@@ -7,7 +7,8 @@ type Config struct {
 	// from Auth are only attached to requests targeting this origin (scheme
 	// and host), including redirect hops — a cross-origin redirect target
 	// never receives them. When empty, Auth applies to every request made
-	// through the client.
+	// through the client, but a redirect that leaves the initial request's
+	// origin still suppresses credentials on that hop.
 	BaseURL string
 
 	// OAuthBaseURL is the origin the v1 OAuth service uses for authorize
@@ -56,8 +57,9 @@ func NewHTTPClient(cfg Config) *http.Client {
 	}
 
 	// Catches credential headers set directly on the request (for example
-	// through WithHeader), which the auth middleware never sees.
-	clone.CheckRedirect = redirectCredentialGuard(origin, base.CheckRedirect)
+	// through WithHeader), which the auth middleware never sees, and marks
+	// off-scope hops so the middleware does not re-attach Auth credentials.
+	clone.CheckRedirect = redirectCredentialGuard(origin, cfg.Auth != nil, base.CheckRedirect)
 
 	transport = newResponseLimitTransport(transport, cfg.MaxResponseSize)
 	transport = chainMiddleware(transport, middleware)

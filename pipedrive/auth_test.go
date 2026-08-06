@@ -417,3 +417,133 @@ func TestLeavesCredentialScope(t *testing.T) {
 		t.Error("pinned origin must flag a cross-origin request")
 	}
 }
+
+func TestNewHTTPClient_NilOriginRedirectSuppressesCredentials(t *testing.T) {
+	t.Parallel()
+
+	var mu sync.Mutex
+	var attackerHeaders []http.Header
+	attacker := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		attackerHeaders = append(attackerHeaders, r.Header.Clone())
+		mu.Unlock()
+	}))
+	t.Cleanup(attacker.Close)
+
+	var firstHeaders []http.Header
+	api := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		firstHeaders = append(firstHeaders, r.Header.Clone())
+		mu.Unlock()
+		http.Redirect(w, r, attacker.URL+"/steal", http.StatusFound)
+	}))
+	t.Cleanup(api.Close)
+
+	// No BaseURL: Auth still applies to every first-party request, but a
+	// redirect that leaves the initial origin must not carry credentials.
+	client := NewHTTPClient(Config{
+		Auth: MultiAuth{
+			APITokenAuth("secret-token"),
+			OAuth2Auth{TokenSource: oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "secret-bearer"})},
+		},
+	})
+
+	resp, err := client.Get(api.URL + "/start")
+	if err != nil {
+		t.Fatalf("request error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	mu.Lock()
+	defer mu.Unlock()
+
+	if len(firstHeaders) != 1 {
+		t.Fatalf("expected 1 api request, got %d", len(firstHeaders))
+	}
+	if got := firstHeaders[0].Get("x-api-token"); got != "secret-token" {
+		t.Fatalf("first request missing x-api-token, got %q", got)
+	}
+
+	if len(attackerHeaders) != 1 {
+		t.Fatalf("expected 1 attacker request, got %d", len(attackerHeaders))
+	}
+	for _, h := range []string{"x-api-token", "Authorization", suppressAuthHeader} {
+		if got := attackerHeaders[0].Get(h); got != "" {
+			t.Fatalf("header %s reached the cross-origin redirect target: %q", h, got)
+		}
+	}
+}
+
+func TestNewHTTPClient_NilOriginRedirectBackToInitialOrigin(t *testing.T) {
+	t.Parallel()
+
+	var mu sync.Mutex
+	apiHits := make(map[string][]http.Header)
+	var api *httptest.Server
+	bouncer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, api.URL+"/landed", http.StatusFound)
+	}))
+	t.Cleanup(bouncer.Close)
+	api = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		apiHits[r.URL.Path] = append(apiHits[r.URL.Path], r.Header.Clone())
+		mu.Unlock()
+		if r.URL.Path == "/start" {
+			http.Redirect(w, r, bouncer.URL+"/bounce", http.StatusFound)
+		}
+	}))
+	t.Cleanup(api.Close)
+
+	client := NewHTTPClient(Config{Auth: APITokenAuth("secret-token")})
+	resp, err := client.Get(api.URL + "/start")
+	if err != nil {
+		t.Fatalf("request error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	mu.Lock()
+	defer mu.Unlock()
+
+	landed := apiHits["/landed"]
+	if len(landed) != 1 {
+		t.Fatalf("expected 1 landed request, got %d", len(landed))
+	}
+	if got := landed[0].Get("x-api-token"); got != "secret-token" {
+		t.Fatalf("redirect back to the initial origin must be re-authenticated, got %q", got)
+	}
+}
+
+func TestNewHTTPClient_SuppressHeaderNeverSentWithoutAuth(t *testing.T) {
+	t.Parallel()
+
+	var attackerHeaders []http.Header
+	attacker := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		attackerHeaders = append(attackerHeaders, r.Header.Clone())
+	}))
+	t.Cleanup(attacker.Close)
+
+	api := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, attacker.URL+"/x", http.StatusFound)
+	}))
+	t.Cleanup(api.Close)
+
+	// Editor-set credentials with no Auth provider: the guard strips them,
+	// and with no middleware installed there must be no sentinel on the wire.
+	client := NewHTTPClient(Config{BaseURL: api.URL})
+	req, _ := http.NewRequestWithContext(context.Background(), http.MethodGet, api.URL+"/x", nil)
+	req.Header.Set("x-api-token", "editor-token")
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("request error: %v", err)
+	}
+	_ = resp.Body.Close()
+
+	if len(attackerHeaders) != 1 {
+		t.Fatalf("expected 1 attacker request, got %d", len(attackerHeaders))
+	}
+	for _, h := range []string{"x-api-token", suppressAuthHeader} {
+		if got := attackerHeaders[0].Get(h); got != "" {
+			t.Fatalf("header %s reached the cross-origin redirect target: %q", h, got)
+		}
+	}
+}

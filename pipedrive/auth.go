@@ -112,21 +112,34 @@ func canonicalAuthHost(scheme, host string) string {
 func authMiddleware(auth AuthProvider, origin *authOrigin) Middleware {
 	return func(next http.RoundTripper) http.RoundTripper {
 		return roundTripperFunc(func(req *http.Request) (*http.Response, error) {
-			if auth != nil && origin.matches(req.URL) {
-				// Credentials go on a clone, never on the caller's request.
-				// This is load-bearing for redirect safety: http.Client
-				// copies the headers of the request it was handed onto each
-				// redirect hop, so a credential written into that request
-				// would be replayed to the redirect target regardless of the
-				// origin check above. Mutating req in place reintroduces the
-				// cross-origin credential leak.
-				cloned := req.Clone(req.Context())
-				if err := auth.Apply(cloned); err != nil {
-					return nil, err
-				}
-				req = cloned
+			if auth == nil {
+				return next.RoundTrip(req)
 			}
-			return next.RoundTrip(req)
+			suppressed := req.Header.Get(suppressAuthHeader) != ""
+			if !origin.matches(req.URL) {
+				if !suppressed {
+					return next.RoundTrip(req)
+				}
+				cloned := req.Clone(req.Context())
+				cloned.Header.Del(suppressAuthHeader)
+				return next.RoundTrip(cloned)
+			}
+			// Credentials go on a clone, never on the caller's request.
+			// This is load-bearing for redirect safety: http.Client
+			// copies the headers of the request it was handed onto each
+			// redirect hop, so a credential written into that request
+			// would be replayed to the redirect target regardless of the
+			// origin check above. Mutating req in place reintroduces the
+			// cross-origin credential leak.
+			cloned := req.Clone(req.Context())
+			cloned.Header.Del(suppressAuthHeader)
+			if suppressed {
+				return next.RoundTrip(cloned)
+			}
+			if err := auth.Apply(cloned); err != nil {
+				return nil, err
+			}
+			return next.RoundTrip(cloned)
 		})
 	}
 }
@@ -137,18 +150,31 @@ func authMiddleware(auth AuthProvider, origin *authOrigin) Middleware {
 // both are looser than the origin this client is pinned to.
 var credentialHeaders = []string{"x-api-token", "Authorization"}
 
+// suppressAuthHeader is an internal sentinel the redirect guard sets on a hop
+// that leaves the credential scope. The auth middleware honors it and always
+// strips it, so it never reaches the wire. It bridges the one decision the
+// middleware cannot make alone: with no pinned origin the middleware matches
+// every request, but the guard sees the redirect history and knows the chain
+// has crossed origins.
+const suppressAuthHeader = "Pipedrive-Suppress-Auth"
+
 // redirectCredentialGuard removes credential headers when a redirect leaves
-// the pinned origin, then delegates to next.
+// the credential scope, then delegates to next. When suppressAuth is true it
+// also marks the hop so the auth middleware does not re-attach Auth-provider
+// credentials at the transport.
 //
-// authMiddleware cannot cover this case: headers attached through request
-// editors (WithHeader) are already present on the request before it reaches
-// the transport, so they are copied onto redirect hops by http.Client rather
-// than applied per-hop by the middleware.
-func redirectCredentialGuard(origin *authOrigin, next func(*http.Request, []*http.Request) error) func(*http.Request, []*http.Request) error {
+// authMiddleware cannot cover the editor case: headers attached through
+// request editors (WithHeader) are already present on the request before it
+// reaches the transport, so they are copied onto redirect hops by http.Client
+// rather than applied per-hop by the middleware.
+func redirectCredentialGuard(origin *authOrigin, suppressAuth bool, next func(*http.Request, []*http.Request) error) func(*http.Request, []*http.Request) error {
 	return func(req *http.Request, via []*http.Request) error {
 		if req != nil && leavesCredentialScope(origin, req, via) {
 			for _, h := range credentialHeaders {
 				req.Header.Del(h)
+			}
+			if suppressAuth {
+				req.Header.Set(suppressAuthHeader, "1")
 			}
 		}
 		if next != nil {
@@ -166,9 +192,11 @@ func leavesCredentialScope(origin *authOrigin, req *http.Request, via []*http.Re
 	if origin != nil {
 		return !origin.matches(req.URL)
 	}
-	// No pinned origin: fall back to comparing against the previous hop.
+	// No pinned origin: fall back to comparing against the origin of the
+	// chain's initial request. Comparing the first hop (rather than the
+	// previous one) keeps a redirect back to the initial origin in scope.
 	if len(via) == 0 {
 		return false
 	}
-	return !authOriginFromURL(via[len(via)-1].URL).matches(req.URL)
+	return !authOriginFromURL(via[0].URL).matches(req.URL)
 }

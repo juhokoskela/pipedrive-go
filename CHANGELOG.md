@@ -15,7 +15,9 @@ Semantic Versioning.
   matches `Config.BaseURL`. Previously the transport middleware re-applied them
   on every redirect hop, so a cross-origin redirect delivered `x-api-token` and
   OAuth bearer tokens to the redirect target. An unparseable `BaseURL` now fails
-  closed and no credentials are sent at all.
+  closed and no credentials are sent at all. With an empty `Config.BaseURL`
+  credentials still apply to every first-party request, but a redirect leaving
+  the initial request's origin suppresses them on that hop.
 - Credential headers set directly on a request (for example through
   `WithHeader("x-api-token", …)`) are stripped when a redirect leaves the pinned
   origin. `NewHTTPClient` installs a `CheckRedirect` for this; a `CheckRedirect`

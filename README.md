@@ -199,7 +199,9 @@ can also replace auth headers later in the chain.
 
 Credentials never cross origins: `Authorization` and `x-api-token` are only
 sent to the `BaseURL` origin, and are stripped from a request whenever a
-redirect targets a different scheme or host.
+redirect targets a different scheme or host. With an empty `BaseURL`
+credentials apply to every first-party request, but a redirect that leaves
+the initial request's origin still suppresses them.
 
 ## Raw API escape hatch
 
