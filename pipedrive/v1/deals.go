@@ -157,6 +157,9 @@ func (s *DealsService) ArchivedTimeline(ctx context.Context, opts ...DealsOption
 }
 
 func (s *DealsService) Changelog(ctx context.Context, id DealID, opts ...DealsOption) ([]map[string]any, *CollectionPagination, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/changelog", id)
 
@@ -171,6 +174,9 @@ func (s *DealsService) Changelog(ctx context.Context, id DealID, opts ...DealsOp
 }
 
 func (s *DealsService) ListFiles(ctx context.Context, id DealID, opts ...DealsOption) ([]File, *Pagination, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/files", id)
 
@@ -191,6 +197,9 @@ func (s *DealsService) ListFiles(ctx context.Context, id DealID, opts ...DealsOp
 }
 
 func (s *DealsService) ListMailMessages(ctx context.Context, id DealID, opts ...DealsOption) ([]MailMessage, *Pagination, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/mailMessages", id)
 
@@ -211,6 +220,9 @@ func (s *DealsService) ListMailMessages(ctx context.Context, id DealID, opts ...
 }
 
 func (s *DealsService) ListParticipants(ctx context.Context, id DealID, opts ...DealsOption) ([]Person, *Pagination, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/participants", id)
 
@@ -231,6 +243,9 @@ func (s *DealsService) ListParticipants(ctx context.Context, id DealID, opts ...
 }
 
 func (s *DealsService) AddParticipant(ctx context.Context, id DealID, personID PersonID, opts ...DealsOption) (*Person, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/participants", id)
 
@@ -248,6 +263,12 @@ func (s *DealsService) AddParticipant(ctx context.Context, id DealID, personID P
 }
 
 func (s *DealsService) DeleteParticipant(ctx context.Context, id DealID, participantID DealParticipantID, opts ...DealsOption) (bool, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return false, err
+	}
+	if err := validateID(participantID, "deal participant id"); err != nil {
+		return false, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/participants/%d", id, participantID)
 
@@ -264,6 +285,9 @@ func (s *DealsService) DeleteParticipant(ctx context.Context, id DealID, partici
 }
 
 func (s *DealsService) ParticipantsChangelog(ctx context.Context, id DealID, opts ...DealsOption) ([]map[string]any, *CollectionPagination, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/participantsChangelog", id)
 
@@ -278,6 +302,9 @@ func (s *DealsService) ParticipantsChangelog(ctx context.Context, id DealID, opt
 }
 
 func (s *DealsService) ListUpdates(ctx context.Context, id DealID, opts ...DealsOption) ([]map[string]any, *Pagination, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/flow", id)
 
@@ -298,6 +325,9 @@ func (s *DealsService) ListUpdates(ctx context.Context, id DealID, opts ...Deals
 }
 
 func (s *DealsService) ListUsers(ctx context.Context, id DealID, opts ...DealsOption) ([]User, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/permittedUsers", id)
 
@@ -311,6 +341,9 @@ func (s *DealsService) ListUsers(ctx context.Context, id DealID, opts ...DealsOp
 }
 
 func (s *DealsService) Merge(ctx context.Context, id DealID, mergeWithID DealID, opts ...DealsOption) (*Deal, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/merge", id)
 
@@ -328,6 +361,9 @@ func (s *DealsService) Merge(ctx context.Context, id DealID, mergeWithID DealID,
 }
 
 func (s *DealsService) Duplicate(ctx context.Context, id DealID, opts ...DealsOption) (*Deal, error) {
+	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/duplicate", id)
 
