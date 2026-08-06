@@ -197,6 +197,10 @@ transport chain. If you set `Authorization` or `x-api-token` yourself, the
 configured auth provider will not overwrite that header, and custom middleware
 can also replace auth headers later in the chain.
 
+Credentials never cross origins: `Authorization` and `x-api-token` are only
+sent to the `BaseURL` origin, and are stripped from a request whenever a
+redirect targets a different scheme or host.
+
 ## Raw API escape hatch
 
 ```go

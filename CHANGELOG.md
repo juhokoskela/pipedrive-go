@@ -7,6 +7,66 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-06
+
+### Security
+
+- Credentials from `Config.Auth` are now attached only to requests whose origin
+  matches `Config.BaseURL`. Previously the transport middleware re-applied them
+  on every redirect hop, so a cross-origin redirect delivered `x-api-token` and
+  OAuth bearer tokens to the redirect target. An unparseable `BaseURL` now fails
+  closed and no credentials are sent at all.
+- Credential headers set directly on a request (for example through
+  `WithHeader("x-api-token", …)`) are stripped when a redirect leaves the pinned
+  origin. `NewHTTPClient` installs a `CheckRedirect` for this; a `CheckRedirect`
+  already present on a supplied `HTTPClient` is still called, and the standard
+  10-redirect limit is preserved.
+- The v1 OAuth client is built without the `Auth` provider, so an API token is
+  no longer sent to the OAuth host.
+- Non-2xx response bodies are truncated at 1 MiB. They previously bypassed the
+  response size cap entirely and were buffered in full into `APIError.Body`.
+- A server-supplied `Retry-After` is capped and no longer overflows when
+  converted to a duration.
+
+### Added
+
+- `Config.OAuthBaseURL` directs v1 token exchange and refresh at a non-production
+  host. Empty keeps the previous default of `https://oauth.pipedrive.com`.
+- `RetryPolicy.MaxRetryAfter` caps how long a server-provided `Retry-After` may
+  delay a retry. Zero uses the new 1 minute default; negative disables the cap
+  and restores the previous unbounded behaviour.
+
+### Fixed
+
+- v1 `RefreshTokens` posted to `/oauth/token/` with a trailing slash. A redirect
+  from the real endpoint downgrades the POST to GET and drops the form body,
+  silently breaking token refresh.
+
+### Changed
+
+These are behavioural changes that existing code may depend on:
+
+- **Empty custom-field maps no longer clear fields.** `WithOrganizationCustomFieldsMap`
+  and `WithProjectCustomFields` sent `"custom_fields": {}` when given an empty
+  map, which clears every custom field on the record; `WithDealCustomFieldsMap`
+  ignored it. All three now ignore an empty map, matching the deal behaviour. If
+  you relied on an empty map to clear fields, pass the field keys explicitly
+  with the values you want cleared.
+- **Query options are last-wins.** Merging a raw `WithXQuery(url.Values)` with a
+  typed option for the same key previously emitted the key twice and left
+  precedence to the server. The later option now replaces the earlier one.
+  Multiple values passed in a single call are still preserved.
+- **Identifiers are validated client-side.** Zero and negative IDs, and IDs that
+  would not survive conversion to `int` on 32-bit platforms, now return an error
+  instead of being sent. Path parameters that are opaque strings reject `""`,
+  `"."` and `".."`, which URL resolution would otherwise collapse into a
+  different endpoint.
+- **Custom field keys containing a comma are rejected.** Keys are joined into one
+  comma-separated parameter, so an embedded comma was indistinguishable from two
+  keys. The error surfaces from `List`, `Get` and the pagers.
+- v1 `Persons.AddPicture` now requires a non-empty content type, matching
+  `FilesService`.
+
 ## [1.0.9] - 2026-07-16
 
 ### Changed
