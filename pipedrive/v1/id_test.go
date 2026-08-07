@@ -71,6 +71,7 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Files.Delete", func() error { _, err := client.Files.Delete(ctx, 0); return err }},
 		{"Files.Download", func() error { _, err := client.Files.Download(ctx, 0); return err }},
 		{"Files.DownloadTo", func() error { err := client.Files.DownloadTo(ctx, 0, nil); return err }},
+		{"DealFields.Delete#ids", func() error { _, err := client.DealFields.Delete(ctx, []FieldID{1, 0}); return err }},
 		{"Filters.Get", func() error { _, err := client.Filters.Get(ctx, 0); return err }},
 		{"Filters.Update", func() error { _, err := client.Filters.Update(ctx, 0); return err }},
 		{"Filters.Delete", func() error { _, err := client.Filters.Delete(ctx, 0); return err }},
@@ -97,6 +98,10 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Organizations.ListMailMessages", func() error { _, _, err := client.Organizations.ListMailMessages(ctx, 0); return err }},
 		{"Organizations.ListUpdates", func() error { _, _, err := client.Organizations.ListUpdates(ctx, 0); return err }},
 		{"Organizations.ListUsers", func() error { _, err := client.Organizations.ListUsers(ctx, 0); return err }},
+		{"OrganizationFields.Delete#ids", func() error {
+			_, err := client.OrganizationFields.Delete(ctx, []FieldID{1, 0})
+			return err
+		}},
 		{"Persons.Merge#id", func() error { _, err := client.Persons.Merge(ctx, 0, 1); return err }},
 		{"Persons.Merge#mergeWithID", func() error { _, err := client.Persons.Merge(ctx, 1, 0); return err }},
 		{"Persons.Changelog", func() error { _, _, err := client.Persons.Changelog(ctx, 0); return err }},
@@ -107,12 +112,14 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Persons.ListUsers", func() error { _, err := client.Persons.ListUsers(ctx, 0); return err }},
 		{"Persons.AddPicture", func() error { _, err := client.Persons.AddPicture(ctx, 0, nil, ""); return err }},
 		{"Persons.DeletePicture", func() error { _, err := client.Persons.DeletePicture(ctx, 0); return err }},
+		{"PersonFields.Delete#ids", func() error { _, err := client.PersonFields.Delete(ctx, []FieldID{1, 0}); return err }},
 		{"Pipelines.GetConversionStatistics", func() error { _, err := client.Pipelines.GetConversionStatistics(ctx, 0); return err }},
 		{"Pipelines.GetMovementStatistics", func() error { _, err := client.Pipelines.GetMovementStatistics(ctx, 0); return err }},
 		{"Pipelines.ListDeals", func() error { _, _, err := client.Pipelines.ListDeals(ctx, 0); return err }},
 		{"Products.ListDeals", func() error { _, _, err := client.Products.ListDeals(ctx, 0); return err }},
 		{"Products.ListFiles", func() error { _, _, err := client.Products.ListFiles(ctx, 0); return err }},
 		{"Products.ListUsers", func() error { _, err := client.Products.ListUsers(ctx, 0); return err }},
+		{"ProductFields.Delete#ids", func() error { _, err := client.ProductFields.Delete(ctx, []FieldID{1, 0}); return err }},
 		{"ProjectTemplates.Get", func() error { _, err := client.ProjectTemplates.Get(ctx, 0); return err }},
 		{"Projects.Get", func() error { _, err := client.Projects.Get(ctx, 0); return err }},
 		{"Projects.Update", func() error { _, err := client.Projects.Update(ctx, 0, nil); return err }},

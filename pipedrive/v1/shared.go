@@ -30,6 +30,15 @@ func toRequestEditors(editors []pipedrive.RequestEditorFunc) []genv1.RequestEdit
 	return out
 }
 
+func validateIDs[T ~int64](ids []T, label string) error {
+	for _, id := range ids {
+		if err := validateID(id, label); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func joinIDs[T ~int64](ids []T) string {
 	if len(ids) == 0 {
 		return ""
