@@ -569,6 +569,9 @@ func (s *ProductFieldsService) DeleteOptions(ctx context.Context, fieldCode stri
 	if err := validatePathParam(fieldCode, "field code"); err != nil {
 		return nil, err
 	}
+	if err := validateIntIDs(ids, "field option id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteProductFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

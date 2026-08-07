@@ -182,6 +182,66 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 	}
 }
 
+func TestFieldDeleteOptionsRejectsEveryNonPositiveID(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t.Errorf("no request should reach the server, got %s %s", r.Method, r.URL)
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+	ctx := context.Background()
+
+	methods := []struct {
+		name string
+		call func([]int) error
+	}{
+		{"DealFields.DeleteOptions", func(ids []int) error {
+			_, err := client.DealFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+		{"OrganizationFields.DeleteOptions", func(ids []int) error {
+			_, err := client.OrganizationFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+		{"PersonFields.DeleteOptions", func(ids []int) error {
+			_, err := client.PersonFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+		{"ProductFields.DeleteOptions", func(ids []int) error {
+			_, err := client.ProductFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+	}
+	tests := []struct {
+		name string
+		ids  []int
+	}{
+		{"zero after valid ID", []int{1, 0}},
+		{"negative after valid ID", []int{1, -1}},
+	}
+
+	for _, method := range methods {
+		t.Run(method.name, func(t *testing.T) {
+			for _, test := range tests {
+				t.Run(test.name, func(t *testing.T) {
+					err := method.call(test.ids)
+					if err == nil {
+						t.Fatal("expected client-side validation error")
+					}
+					if !strings.Contains(err.Error(), "invalid field option id") {
+						t.Fatalf("expected field option id validation error, got %v", err)
+					}
+				})
+			}
+		})
+	}
+}
+
 func TestPagerIDsValidatedClientSide(t *testing.T) {
 	t.Parallel()
 

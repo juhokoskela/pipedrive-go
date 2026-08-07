@@ -88,6 +88,16 @@ func intIDs[T ~int64](ids []T, label string) ([]int, error) {
 	return out, nil
 }
 
+// validateIntIDs validates every ID in a slice already represented as int.
+func validateIntIDs(ids []int, label string) error {
+	for _, id := range ids {
+		if err := validateID(int64(id), label); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // validateCSVValues rejects values containing a comma. These values are
 // joined into a single comma-separated query parameter, so an embedded
 // comma is indistinguishable from two separate values server-side.
