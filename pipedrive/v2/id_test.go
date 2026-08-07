@@ -216,6 +216,10 @@ func TestFieldDeleteOptionsRejectsEveryNonPositiveID(t *testing.T) {
 			_, err := client.ProductFields.DeleteOptions(ctx, "cf_1", ids)
 			return err
 		}},
+		{"ProjectFields.DeleteOptions", func(ids []int) error {
+			_, err := client.ProjectFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
 	}
 	tests := []struct {
 		name string

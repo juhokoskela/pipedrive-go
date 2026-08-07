@@ -328,6 +328,9 @@ func (s *ProjectFieldsService) DeleteOptions(ctx context.Context, fieldCode stri
 	if err := validatePathParam(fieldCode, "field code"); err != nil {
 		return nil, err
 	}
+	if err := validateIntIDs(ids, "field option id"); err != nil {
+		return nil, err
+	}
 	bodyItems := make([]map[string]interface{}, 0, len(ids))
 	for _, id := range ids {
 		bodyItems = append(bodyItems, map[string]interface{}{"id": id})
