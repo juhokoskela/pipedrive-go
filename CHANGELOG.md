@@ -22,7 +22,8 @@ Semantic Versioning.
   `WithHeader("x-api-token", …)`) are stripped when a redirect leaves the pinned
   origin. `NewHTTPClient` installs a `CheckRedirect` for this; a `CheckRedirect`
   already present on a supplied `HTTPClient` is still called, and the standard
-  10-redirect limit is preserved.
+  10-redirect limit is preserved. Credential headers the preserved callback
+  re-adds to an off-origin hop are removed again after it returns.
 - The v1 OAuth client is built without the `Auth` provider, so an API token is
   no longer sent to the OAuth host.
 - Non-2xx response bodies are truncated at 1 MiB. They previously bypassed the
@@ -58,11 +59,16 @@ These are behavioural changes that existing code may depend on:
   typed option for the same key previously emitted the key twice and left
   precedence to the server. The later option now replaces the earlier one.
   Multiple values passed in a single call are still preserved.
-- **Identifiers are validated client-side.** Zero and negative IDs, and IDs that
-  would not survive conversion to `int` on 32-bit platforms, now return an error
-  instead of being sent. Path parameters that are opaque strings reject `""`,
-  `"."` and `".."`, which URL resolution would otherwise collapse into a
-  different endpoint.
+- **Identifiers are validated client-side.** Every identifier passed as a
+  method argument — primary IDs, secondary IDs such as `mergeWithID`, follower
+  and assignment user IDs, and each entry of bulk ID slices — rejects zero,
+  negative values and values that would not survive conversion to `int` on
+  32-bit platforms, returning an error instead of being sent. Path parameters
+  that are opaque strings reject `""`, `"."` and `".."`, which URL resolution
+  would otherwise collapse into a different endpoint. Identifiers supplied
+  through filter options (for example `WithDealsOwnerID`) are passed through
+  unvalidated, as the server treats them as search criteria rather than
+  resource addresses.
 - **Custom field keys containing a comma are rejected.** Keys are joined into one
   comma-separated parameter, so an embedded comma was indistinguishable from two
   keys. The error surfaces from `List`, `Get` and the pagers.
