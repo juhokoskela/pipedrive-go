@@ -1493,6 +1493,9 @@ func (s *ProductsService) AddFollower(ctx context.Context, id ProductID, userID 
 	if err := validateID(id, "product id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(userID, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddProductFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

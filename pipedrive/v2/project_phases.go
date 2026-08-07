@@ -131,6 +131,9 @@ func (p projectPhasePayload) body() map[string]interface{} {
 }
 
 func (s *ProjectPhasesService) List(ctx context.Context, boardID ProjectBoardID, opts ...ProjectPhaseRequestOption) ([]ProjectPhase, error) {
+	if err := validateID(boardID, "board id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectPhaseRequestOptionValues(opts)...)
 	params := genv2.GetProjectsPhasesParams{BoardId: int(boardID)}
 	resp, err := s.client.gen.GetProjectsPhasesWithResponse(ctx, &params, toRequestEditors(editors)...)

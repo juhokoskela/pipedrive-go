@@ -899,6 +899,9 @@ func (s *OrganizationsService) AddFollower(ctx context.Context, id OrganizationI
 	if err := validateID(id, "organization id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(userID, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddOrganizationFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

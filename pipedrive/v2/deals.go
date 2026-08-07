@@ -2270,6 +2270,9 @@ func (s *DealsService) AddFollower(ctx context.Context, id DealID, userID UserID
 	if err := validateID(id, "deal id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(userID, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddDealFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
