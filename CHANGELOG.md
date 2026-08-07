@@ -7,7 +7,7 @@ Semantic Versioning.
 
 ## [Unreleased]
 
-## [1.1.0] - 2026-08-06
+## [1.10.0] - 2026-08-07
 
 ### Security
 
@@ -33,6 +33,11 @@ Semantic Versioning.
 
 ### Added
 
+- The public v2 SDK now covers all 158 operations in the current Pipedrive
+  specification, including Projects, Tasks, Project Boards, Project Phases,
+  Project Templates and Project Fields.
+- Documented v2 response properties and request options are now represented for
+  Deals, Persons, Organizations, Products, Activities and Fields.
 - `Config.OAuthBaseURL` directs v1 token exchange and refresh at a non-production
   host. Empty keeps the previous default of `https://oauth.pipedrive.com`.
 - `RetryPolicy.MaxRetryAfter` caps how long a server-provided `Retry-After` may
@@ -41,6 +46,10 @@ Semantic Versioning.
 
 ### Fixed
 
+- Field-option IDs returned by Pipedrive now decode from either integer or
+  string representations without exposing generated-client types.
+- Deal-ID cursor pagers reject missing identifiers locally instead of issuing
+  invalid API requests.
 - v1 `RefreshTokens` posted to `/oauth/token/` with a trailing slash. A redirect
   from the real endpoint downgrades the POST to GET and drops the form body,
   silently breaking token refresh.
@@ -49,6 +58,12 @@ Semantic Versioning.
 
 These are behavioural changes that existing code may depend on:
 
+- **Collection options can explicitly clear values.** Zero-argument collection
+  options now serialize an empty array; explicit JSON null updates are also
+  preserved instead of being omitted.
+- Person, Organization and Product field-description options remain callable
+  for source compatibility but are deprecated no-ops because API v2 does not
+  accept those descriptions.
 - **Empty custom-field maps no longer clear fields.** `WithOrganizationCustomFieldsMap`
   and `WithProjectCustomFields` sent `"custom_fields": {}` when given an empty
   map, which clears every custom field on the record; `WithDealCustomFieldsMap`
@@ -74,6 +89,9 @@ These are behavioural changes that existing code may depend on:
   keys. The error surfaces from `List`, `Get` and the pagers.
 - v1 `Persons.AddPicture` now requires a non-empty content type, matching
   `FilesService`.
+- The official v1 and v2 specifications and internal generated clients were
+  refreshed, the v1 legacy-only surface was re-derived, and
+  `github.com/oapi-codegen/runtime` was updated to v1.6.0.
 
 ## [1.0.9] - 2026-07-16
 
