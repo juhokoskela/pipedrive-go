@@ -60,6 +60,11 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Deals.ConversionStatus", func() error { _, err := client.Deals.ConversionStatus(ctx, 0, "x"); return err }},
 		{"Deals.AddFollower#id", func() error { _, err := client.Deals.AddFollower(ctx, 0, 1); return err }},
 		{"Deals.AddFollower#userID", func() error { _, err := client.Deals.AddFollower(ctx, 1, 0); return err }},
+		{"Deals.ListProductsAcrossDeals", func() error {
+			_, _, err := client.Deals.ListProductsAcrossDeals(ctx, []DealID{1, 0})
+			return err
+		}},
+		{"Deals.ListInstallments", func() error { _, _, err := client.Deals.ListInstallments(ctx, []DealID{1, 0}); return err }},
 		{"Deals.DeleteFollower#id", func() error { _, err := client.Deals.DeleteFollower(ctx, 0, 1); return err }},
 		{"Deals.DeleteFollower#followerID", func() error { _, err := client.Deals.DeleteFollower(ctx, 1, 0); return err }},
 		{"Deals.AddProduct", func() error { _, err := client.Deals.AddProduct(ctx, 0); return err }},
