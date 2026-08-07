@@ -59,6 +59,9 @@ func (s *DealFieldsService) Delete(ctx context.Context, ids []FieldID, opts ...D
 	if len(ids) == 0 {
 		return nil, fmt.Errorf("field IDs are required")
 	}
+	if err := validateIDs(ids, "field id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteDealFieldsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

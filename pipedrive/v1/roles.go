@@ -179,6 +179,9 @@ func (s *RolesService) AddAssignment(ctx context.Context, id RoleID, userID User
 	if err := validateID(id, "role id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(userID, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d/assignments", id)
 
@@ -197,6 +200,9 @@ func (s *RolesService) AddAssignment(ctx context.Context, id RoleID, userID User
 
 func (s *RolesService) DeleteAssignment(ctx context.Context, id RoleID, userID UserID, opts ...RolesOption) (bool, error) {
 	if err := validateID(id, "role id"); err != nil {
+		return false, err
+	}
+	if err := validateID(userID, "user id"); err != nil {
 		return false, err
 	}
 	cfg := newRolesOptions(opts)

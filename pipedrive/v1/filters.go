@@ -528,6 +528,9 @@ func (s *FiltersService) DeleteBulk(ctx context.Context, ids []FilterID, opts ..
 	if len(ids) == 0 {
 		return nil, fmt.Errorf("filter IDs are required")
 	}
+	if err := validateIDs(ids, "filter id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteFiltersOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

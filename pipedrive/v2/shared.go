@@ -75,6 +75,29 @@ func validateID[T ~int64](id T, label string) error {
 	return nil
 }
 
+// intIDs validates every ID in the slice and converts it to int, so a bulk
+// parameter gets the same guarantee as a single path parameter.
+func intIDs[T ~int64](ids []T, label string) ([]int, error) {
+	out := make([]int, 0, len(ids))
+	for _, id := range ids {
+		if err := validateID(id, label); err != nil {
+			return nil, err
+		}
+		out = append(out, int(id))
+	}
+	return out, nil
+}
+
+// validateIntIDs validates every ID in a slice already represented as int.
+func validateIntIDs(ids []int, label string) error {
+	for _, id := range ids {
+		if err := validateID(int64(id), label); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // validateCSVValues rejects values containing a comma. These values are
 // joined into a single comma-separated query parameter, so an embedded
 // comma is indistinguishable from two separate values server-side.

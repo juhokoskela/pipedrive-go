@@ -9,6 +9,13 @@ type Config struct {
 	// never receives them. When empty, Auth applies to every request made
 	// through the client, but a redirect that leaves the initial request's
 	// origin still suppresses credentials on that hop.
+	//
+	// The value must be an absolute URL with a scheme and host, e.g.
+	// "https://api.pipedrive.com". A value that lacks either fails closed:
+	// credentials are withheld from every request rather than sent
+	// somewhere unintended, which surfaces as authentication errors from
+	// the API. v1/v2 NewClient reject such values; NewHTTPClient cannot
+	// return an error, so it withholds silently.
 	BaseURL string
 
 	// OAuthBaseURL is the origin the v1 OAuth service uses for authorize

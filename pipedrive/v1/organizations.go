@@ -73,6 +73,9 @@ func (s *OrganizationsService) Merge(ctx context.Context, id OrganizationID, mer
 	if err := validateID(id, "organization id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(mergeWithID, "merge target organization id"); err != nil {
+		return nil, err
+	}
 	cfg := newOrganizationsOptions(opts)
 	path := fmt.Sprintf("/organizations/%d/merge", id)
 

@@ -246,6 +246,9 @@ func (s *DealsService) AddParticipant(ctx context.Context, id DealID, personID P
 	if err := validateID(id, "deal id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(personID, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newDealsOptions(opts)
 	path := fmt.Sprintf("/deals/%d/participants", id)
 
@@ -342,6 +345,9 @@ func (s *DealsService) ListUsers(ctx context.Context, id DealID, opts ...DealsOp
 
 func (s *DealsService) Merge(ctx context.Context, id DealID, mergeWithID DealID, opts ...DealsOption) (*Deal, error) {
 	if err := validateID(id, "deal id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(mergeWithID, "merge target deal id"); err != nil {
 		return nil, err
 	}
 	cfg := newDealsOptions(opts)

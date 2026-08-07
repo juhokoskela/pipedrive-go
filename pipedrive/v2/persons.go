@@ -1007,6 +1007,9 @@ func (s *PersonsService) AddFollower(ctx context.Context, id PersonID, userID Us
 	if err := validateID(id, "person id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(userID, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddPersonFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

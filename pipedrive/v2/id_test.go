@@ -58,7 +58,13 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Deals.Delete", func() error { _, err := client.Deals.Delete(ctx, 0); return err }},
 		{"Deals.ConvertToLead", func() error { _, err := client.Deals.ConvertToLead(ctx, 0); return err }},
 		{"Deals.ConversionStatus", func() error { _, err := client.Deals.ConversionStatus(ctx, 0, "x"); return err }},
-		{"Deals.AddFollower", func() error { _, err := client.Deals.AddFollower(ctx, 0, 1); return err }},
+		{"Deals.AddFollower#id", func() error { _, err := client.Deals.AddFollower(ctx, 0, 1); return err }},
+		{"Deals.AddFollower#userID", func() error { _, err := client.Deals.AddFollower(ctx, 1, 0); return err }},
+		{"Deals.ListProductsAcrossDeals", func() error {
+			_, _, err := client.Deals.ListProductsAcrossDeals(ctx, []DealID{1, 0})
+			return err
+		}},
+		{"Deals.ListInstallments", func() error { _, _, err := client.Deals.ListInstallments(ctx, []DealID{1, 0}); return err }},
 		{"Deals.DeleteFollower#id", func() error { _, err := client.Deals.DeleteFollower(ctx, 0, 1); return err }},
 		{"Deals.DeleteFollower#followerID", func() error { _, err := client.Deals.DeleteFollower(ctx, 1, 0); return err }},
 		{"Deals.AddProduct", func() error { _, err := client.Deals.AddProduct(ctx, 0); return err }},
@@ -80,13 +86,15 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Organizations.Get", func() error { _, err := client.Organizations.Get(ctx, 0); return err }},
 		{"Organizations.Update", func() error { _, err := client.Organizations.Update(ctx, 0); return err }},
 		{"Organizations.Delete", func() error { _, err := client.Organizations.Delete(ctx, 0); return err }},
-		{"Organizations.AddFollower", func() error { _, err := client.Organizations.AddFollower(ctx, 0, 1); return err }},
+		{"Organizations.AddFollower#id", func() error { _, err := client.Organizations.AddFollower(ctx, 0, 1); return err }},
+		{"Organizations.AddFollower#userID", func() error { _, err := client.Organizations.AddFollower(ctx, 1, 0); return err }},
 		{"Organizations.DeleteFollower#id", func() error { _, err := client.Organizations.DeleteFollower(ctx, 0, 1); return err }},
 		{"Organizations.DeleteFollower#followerID", func() error { _, err := client.Organizations.DeleteFollower(ctx, 1, 0); return err }},
 		{"Persons.Get", func() error { _, err := client.Persons.Get(ctx, 0); return err }},
 		{"Persons.Update", func() error { _, err := client.Persons.Update(ctx, 0); return err }},
 		{"Persons.Delete", func() error { _, err := client.Persons.Delete(ctx, 0); return err }},
-		{"Persons.AddFollower", func() error { _, err := client.Persons.AddFollower(ctx, 0, 1); return err }},
+		{"Persons.AddFollower#id", func() error { _, err := client.Persons.AddFollower(ctx, 0, 1); return err }},
+		{"Persons.AddFollower#userID", func() error { _, err := client.Persons.AddFollower(ctx, 1, 0); return err }},
 		{"Persons.DeleteFollower#id", func() error { _, err := client.Persons.DeleteFollower(ctx, 0, 1); return err }},
 		{"Persons.DeleteFollower#followerID", func() error { _, err := client.Persons.DeleteFollower(ctx, 1, 0); return err }},
 		{"Persons.GetPicture", func() error { _, err := client.Persons.GetPicture(ctx, 0); return err }},
@@ -106,12 +114,14 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Products.UploadImage", func() error { _, err := client.Products.UploadImage(ctx, 0); return err }},
 		{"Products.UpdateImage", func() error { _, err := client.Products.UpdateImage(ctx, 0); return err }},
 		{"Products.DeleteImage", func() error { _, err := client.Products.DeleteImage(ctx, 0); return err }},
-		{"Products.AddFollower", func() error { _, err := client.Products.AddFollower(ctx, 0, 1); return err }},
+		{"Products.AddFollower#id", func() error { _, err := client.Products.AddFollower(ctx, 0, 1); return err }},
+		{"Products.AddFollower#userID", func() error { _, err := client.Products.AddFollower(ctx, 1, 0); return err }},
 		{"Products.DeleteFollower#id", func() error { _, err := client.Products.DeleteFollower(ctx, 0, 1); return err }},
 		{"Products.DeleteFollower#followerID", func() error { _, err := client.Products.DeleteFollower(ctx, 1, 0); return err }},
 		{"ProjectBoards.Get", func() error { _, err := client.ProjectBoards.Get(ctx, 0); return err }},
 		{"ProjectBoards.Update", func() error { _, err := client.ProjectBoards.Update(ctx, 0); return err }},
 		{"ProjectBoards.Delete", func() error { _, err := client.ProjectBoards.Delete(ctx, 0); return err }},
+		{"ProjectPhases.List", func() error { _, err := client.ProjectPhases.List(ctx, 0); return err }},
 		{"ProjectPhases.Get", func() error { _, err := client.ProjectPhases.Get(ctx, 0); return err }},
 		{"ProjectPhases.Update", func() error { _, err := client.ProjectPhases.Update(ctx, 0); return err }},
 		{"ProjectPhases.Delete", func() error { _, err := client.ProjectPhases.Delete(ctx, 0); return err }},
@@ -169,6 +179,70 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		if !strings.Contains(err.Error(), "invalid") {
 			t.Errorf("%s: expected id validation error, got %v", c.name, err)
 		}
+	}
+}
+
+func TestFieldDeleteOptionsRejectsEveryNonPositiveID(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t.Errorf("no request should reach the server, got %s %s", r.Method, r.URL)
+	}))
+	t.Cleanup(srv.Close)
+
+	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	if err != nil {
+		t.Fatalf("NewClient error: %v", err)
+	}
+	ctx := context.Background()
+
+	methods := []struct {
+		name string
+		call func([]int) error
+	}{
+		{"DealFields.DeleteOptions", func(ids []int) error {
+			_, err := client.DealFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+		{"OrganizationFields.DeleteOptions", func(ids []int) error {
+			_, err := client.OrganizationFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+		{"PersonFields.DeleteOptions", func(ids []int) error {
+			_, err := client.PersonFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+		{"ProductFields.DeleteOptions", func(ids []int) error {
+			_, err := client.ProductFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+		{"ProjectFields.DeleteOptions", func(ids []int) error {
+			_, err := client.ProjectFields.DeleteOptions(ctx, "cf_1", ids)
+			return err
+		}},
+	}
+	tests := []struct {
+		name string
+		ids  []int
+	}{
+		{"zero after valid ID", []int{1, 0}},
+		{"negative after valid ID", []int{1, -1}},
+	}
+
+	for _, method := range methods {
+		t.Run(method.name, func(t *testing.T) {
+			for _, test := range tests {
+				t.Run(test.name, func(t *testing.T) {
+					err := method.call(test.ids)
+					if err == nil {
+						t.Fatal("expected client-side validation error")
+					}
+					if !strings.Contains(err.Error(), "invalid field option id") {
+						t.Fatalf("expected field option id validation error, got %v", err)
+					}
+				})
+			}
+		})
 	}
 }
 

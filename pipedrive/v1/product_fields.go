@@ -59,6 +59,9 @@ func (s *ProductFieldsService) Delete(ctx context.Context, ids []FieldID, opts .
 	if len(ids) == 0 {
 		return nil, fmt.Errorf("field IDs are required")
 	}
+	if err := validateIDs(ids, "field id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteProductFieldsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

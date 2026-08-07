@@ -2270,6 +2270,9 @@ func (s *DealsService) AddFollower(ctx context.Context, id DealID, userID UserID
 	if err := validateID(id, "deal id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(userID, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddDealFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -2385,10 +2388,11 @@ func (s *DealsService) ListProductsAcrossDeals(ctx context.Context, dealIDs []De
 		return nil, nil, fmt.Errorf("deal IDs are required")
 	}
 	cfg := newListDealsProductsOptions(opts)
-	cfg.params.DealIds = make([]int, 0, len(dealIDs))
-	for _, id := range dealIDs {
-		cfg.params.DealIds = append(cfg.params.DealIds, int(id))
+	ids, err := intIDs(dealIDs, "deal id")
+	if err != nil {
+		return nil, nil, err
 	}
+	cfg.params.DealIds = ids
 	return s.listDealsProducts(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -2397,10 +2401,11 @@ func (s *DealsService) ListProductsAcrossDealsPager(dealIDs []DealID, opts ...Li
 		return newDealIDsRequiredPager[DealProduct]()
 	}
 	cfg := newListDealsProductsOptions(opts)
-	cfg.params.DealIds = make([]int, 0, len(dealIDs))
-	for _, id := range dealIDs {
-		cfg.params.DealIds = append(cfg.params.DealIds, int(id))
+	ids, err := intIDs(dealIDs, "deal id")
+	if err != nil {
+		return newErrorPager[DealProduct](err)
 	}
+	cfg.params.DealIds = ids
 	startCursor := cfg.params.Cursor
 	cfg.params.Cursor = nil
 
@@ -2723,10 +2728,11 @@ func (s *DealsService) ListInstallments(ctx context.Context, dealIDs []DealID, o
 		return nil, nil, fmt.Errorf("deal IDs are required")
 	}
 	cfg := newListInstallmentsOptions(opts)
-	cfg.params.DealIds = make([]int, 0, len(dealIDs))
-	for _, id := range dealIDs {
-		cfg.params.DealIds = append(cfg.params.DealIds, int(id))
+	ids, err := intIDs(dealIDs, "deal id")
+	if err != nil {
+		return nil, nil, err
 	}
+	cfg.params.DealIds = ids
 	return s.listInstallments(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -2735,10 +2741,11 @@ func (s *DealsService) ListInstallmentsPager(dealIDs []DealID, opts ...ListInsta
 		return newDealIDsRequiredPager[Installment]()
 	}
 	cfg := newListInstallmentsOptions(opts)
-	cfg.params.DealIds = make([]int, 0, len(dealIDs))
-	for _, id := range dealIDs {
-		cfg.params.DealIds = append(cfg.params.DealIds, int(id))
+	ids, err := intIDs(dealIDs, "deal id")
+	if err != nil {
+		return newErrorPager[Installment](err)
 	}
+	cfg.params.DealIds = ids
 	startCursor := cfg.params.Cursor
 	cfg.params.Cursor = nil
 
@@ -2754,8 +2761,14 @@ func (s *DealsService) ListInstallmentsPager(dealIDs []DealID, opts ...ListInsta
 }
 
 func newDealIDsRequiredPager[T any]() *pipedrive.CursorPager[T] {
+	return newErrorPager[T](fmt.Errorf("deal IDs are required"))
+}
+
+// newErrorPager returns a pager whose every fetch fails with err, so
+// constructor-time validation errors surface through the usual Err() path.
+func newErrorPager[T any](err error) *pipedrive.CursorPager[T] {
 	return pipedrive.NewCursorPager(func(context.Context, *string) ([]T, *string, error) {
-		return nil, nil, fmt.Errorf("deal IDs are required")
+		return nil, nil, err
 	})
 }
 

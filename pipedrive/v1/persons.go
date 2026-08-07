@@ -77,6 +77,9 @@ func (s *PersonsService) Merge(ctx context.Context, id PersonID, mergeWithID Per
 	if err := validateID(id, "person id"); err != nil {
 		return nil, err
 	}
+	if err := validateID(mergeWithID, "merge target person id"); err != nil {
+		return nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/merge", id)
 

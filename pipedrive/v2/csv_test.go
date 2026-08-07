@@ -147,4 +147,14 @@ func TestPagerVariantsRejectEmptyDealIDs(t *testing.T) {
 	if installments.Next(ctx) || installments.Err() == nil {
 		t.Error("expected ListInstallmentsPager to reject empty deal IDs")
 	}
+
+	// An invalid ID anywhere in the slice surfaces through Err() too.
+	products = client.Deals.ListProductsAcrossDealsPager([]DealID{1, 0})
+	if products.Next(ctx) || products.Err() == nil || !strings.Contains(products.Err().Error(), "invalid") {
+		t.Errorf("expected ListProductsAcrossDealsPager to reject invalid deal IDs, got %v", products.Err())
+	}
+	installments = client.Deals.ListInstallmentsPager([]DealID{1, 0})
+	if installments.Next(ctx) || installments.Err() == nil || !strings.Contains(installments.Err().Error(), "invalid") {
+		t.Errorf("expected ListInstallmentsPager to reject invalid deal IDs, got %v", installments.Err())
+	}
 }

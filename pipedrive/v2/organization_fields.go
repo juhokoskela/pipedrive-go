@@ -569,6 +569,9 @@ func (s *OrganizationFieldsService) DeleteOptions(ctx context.Context, fieldCode
 	if err := validatePathParam(fieldCode, "field code"); err != nil {
 		return nil, err
 	}
+	if err := validateIntIDs(ids, "field option id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteOrganizationFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
