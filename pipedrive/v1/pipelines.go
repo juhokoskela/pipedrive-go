@@ -216,6 +216,9 @@ func newPipelineDealsOptions(opts []PipelineDealsOption) pipelineDealsOptions {
 }
 
 func (s *PipelinesService) GetConversionStatistics(ctx context.Context, id PipelineID, opts ...GetPipelineConversionStatisticsOption) (*PipelineConversionStatistics, error) {
+	if err := validateID(id, "pipeline id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetPipelineConversionStatisticsOptions(opts)
 	if cfg.params.StartDate.IsZero() || cfg.params.EndDate.IsZero() {
 		return nil, fmt.Errorf("start and end dates are required")
@@ -248,6 +251,9 @@ func (s *PipelinesService) GetConversionStatistics(ctx context.Context, id Pipel
 }
 
 func (s *PipelinesService) GetMovementStatistics(ctx context.Context, id PipelineID, opts ...GetPipelineMovementStatisticsOption) (*PipelineMovementStatistics, error) {
+	if err := validateID(id, "pipeline id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetPipelineMovementStatisticsOptions(opts)
 	if cfg.params.StartDate.IsZero() || cfg.params.EndDate.IsZero() {
 		return nil, fmt.Errorf("start and end dates are required")
@@ -280,6 +286,9 @@ func (s *PipelinesService) GetMovementStatistics(ctx context.Context, id Pipelin
 }
 
 func (s *PipelinesService) ListDeals(ctx context.Context, id PipelineID, opts ...PipelineDealsOption) ([]Deal, *PipelineDealsAdditionalData, error) {
+	if err := validateID(id, "pipeline id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newPipelineDealsOptions(opts)
 	path := fmt.Sprintf("/pipelines/%d/deals", id)
 

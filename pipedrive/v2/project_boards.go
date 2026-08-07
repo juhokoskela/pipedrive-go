@@ -138,6 +138,9 @@ func (s *ProjectBoardsService) List(ctx context.Context, opts ...ProjectBoardReq
 }
 
 func (s *ProjectBoardsService) Get(ctx context.Context, id ProjectBoardID, opts ...ProjectBoardRequestOption) (*ProjectBoard, error) {
+	if err := validateID(id, "project board id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectBoardRequestOptionValues(opts)...)
 	resp, err := s.client.gen.GetProjectsBoardWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
@@ -161,6 +164,9 @@ func (s *ProjectBoardsService) Create(ctx context.Context, opts ...CreateProject
 }
 
 func (s *ProjectBoardsService) Update(ctx context.Context, id ProjectBoardID, opts ...UpdateProjectBoardOption) (*ProjectBoard, error) {
+	if err := validateID(id, "project board id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateProjectBoardOptions(opts)
 	body, err := encodeV2Body(cfg.payload.body())
 	if err != nil {
@@ -175,6 +181,9 @@ func (s *ProjectBoardsService) Update(ctx context.Context, id ProjectBoardID, op
 }
 
 func (s *ProjectBoardsService) Delete(ctx context.Context, id ProjectBoardID, opts ...ProjectBoardRequestOption) (*ProjectBoardDeleteResult, error) {
+	if err := validateID(id, "project board id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectBoardRequestOptionValues(opts)...)
 	resp, err := s.client.gen.DeleteProjectBoardWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {

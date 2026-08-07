@@ -74,6 +74,9 @@ func newPersonsOptions(opts []PersonsOption) personsOptions {
 }
 
 func (s *PersonsService) Merge(ctx context.Context, id PersonID, mergeWithID PersonID, opts ...PersonsOption) (*Person, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/merge", id)
 
@@ -91,6 +94,9 @@ func (s *PersonsService) Merge(ctx context.Context, id PersonID, mergeWithID Per
 }
 
 func (s *PersonsService) Changelog(ctx context.Context, id PersonID, opts ...PersonsOption) ([]map[string]any, *CollectionPagination, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/changelog", id)
 
@@ -105,6 +111,9 @@ func (s *PersonsService) Changelog(ctx context.Context, id PersonID, opts ...Per
 }
 
 func (s *PersonsService) ListFiles(ctx context.Context, id PersonID, opts ...PersonsOption) ([]File, *Pagination, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/files", id)
 
@@ -125,6 +134,9 @@ func (s *PersonsService) ListFiles(ctx context.Context, id PersonID, opts ...Per
 }
 
 func (s *PersonsService) ListMailMessages(ctx context.Context, id PersonID, opts ...PersonsOption) ([]MailMessage, *Pagination, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/mailMessages", id)
 
@@ -145,6 +157,9 @@ func (s *PersonsService) ListMailMessages(ctx context.Context, id PersonID, opts
 }
 
 func (s *PersonsService) ListProducts(ctx context.Context, id PersonID, opts ...PersonsOption) ([]Product, *Pagination, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/products", id)
 
@@ -165,6 +180,9 @@ func (s *PersonsService) ListProducts(ctx context.Context, id PersonID, opts ...
 }
 
 func (s *PersonsService) ListUpdates(ctx context.Context, id PersonID, opts ...PersonsOption) ([]map[string]any, *Pagination, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/flow", id)
 
@@ -185,6 +203,9 @@ func (s *PersonsService) ListUpdates(ctx context.Context, id PersonID, opts ...P
 }
 
 func (s *PersonsService) ListUsers(ctx context.Context, id PersonID, opts ...PersonsOption) ([]User, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/permittedUsers", id)
 
@@ -198,16 +219,20 @@ func (s *PersonsService) ListUsers(ctx context.Context, id PersonID, opts ...Per
 }
 
 func (s *PersonsService) AddPicture(ctx context.Context, id PersonID, body io.Reader, contentType string, opts ...PersonsOption) (map[string]any, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/picture", id)
 
 	if body == nil {
 		return nil, fmt.Errorf("picture body is required")
 	}
-	reqOpts := append([]pipedrive.RequestOption{}, cfg.requestOptions...)
-	if contentType != "" {
-		reqOpts = append(reqOpts, pipedrive.WithHeader("Content-Type", contentType))
+	if contentType == "" {
+		return nil, fmt.Errorf("content type is required")
 	}
+	reqOpts := append([]pipedrive.RequestOption{}, cfg.requestOptions...)
+	reqOpts = append(reqOpts, pipedrive.WithHeader("Content-Type", contentType))
 
 	var payload struct {
 		Data map[string]any `json:"data"`
@@ -222,6 +247,9 @@ func (s *PersonsService) AddPicture(ctx context.Context, id PersonID, body io.Re
 }
 
 func (s *PersonsService) DeletePicture(ctx context.Context, id PersonID, opts ...PersonsOption) (PersonID, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return 0, err
+	}
 	cfg := newPersonsOptions(opts)
 	path := fmt.Sprintf("/persons/%d/picture", id)
 

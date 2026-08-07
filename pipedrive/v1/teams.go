@@ -70,6 +70,9 @@ func (s *TeamsService) List(ctx context.Context, opts ...TeamsOption) ([]Team, e
 }
 
 func (s *TeamsService) Get(ctx context.Context, id TeamID, opts ...TeamsOption) (*Team, error) {
+	if err := validateID(id, "team id"); err != nil {
+		return nil, err
+	}
 	cfg := newTeamsOptions(opts)
 	path := fmt.Sprintf("/legacyTeams/%d", id)
 
@@ -104,6 +107,9 @@ func (s *TeamsService) Create(ctx context.Context, payload map[string]any, opts 
 }
 
 func (s *TeamsService) Update(ctx context.Context, id TeamID, payload map[string]any, opts ...TeamsOption) (*Team, error) {
+	if err := validateID(id, "team id"); err != nil {
+		return nil, err
+	}
 	cfg := newTeamsOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("team payload is required")
@@ -123,6 +129,9 @@ func (s *TeamsService) Update(ctx context.Context, id TeamID, payload map[string
 }
 
 func (s *TeamsService) ListUsers(ctx context.Context, id TeamID, opts ...TeamsOption) ([]UserID, error) {
+	if err := validateID(id, "team id"); err != nil {
+		return nil, err
+	}
 	cfg := newTeamsOptions(opts)
 	path := fmt.Sprintf("/legacyTeams/%d/users", id)
 
@@ -136,6 +145,9 @@ func (s *TeamsService) ListUsers(ctx context.Context, id TeamID, opts ...TeamsOp
 }
 
 func (s *TeamsService) AddUsers(ctx context.Context, id TeamID, userIDs []UserID, opts ...TeamsOption) ([]UserID, error) {
+	if err := validateID(id, "team id"); err != nil {
+		return nil, err
+	}
 	cfg := newTeamsOptions(opts)
 	if len(userIDs) == 0 {
 		return nil, fmt.Errorf("at least one user id is required")
@@ -153,6 +165,9 @@ func (s *TeamsService) AddUsers(ctx context.Context, id TeamID, userIDs []UserID
 }
 
 func (s *TeamsService) DeleteUsers(ctx context.Context, id TeamID, userIDs []UserID, opts ...TeamsOption) ([]UserID, error) {
+	if err := validateID(id, "team id"); err != nil {
+		return nil, err
+	}
 	cfg := newTeamsOptions(opts)
 	if len(userIDs) == 0 {
 		return nil, fmt.Errorf("at least one user id is required")

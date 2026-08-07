@@ -617,7 +617,12 @@ func (s *LeadsService) ListPermittedUsers(ctx context.Context, id LeadID, opts .
 	cfg := newListLeadUsersOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.GetLeadUsers(ctx, string(id), toRequestEditors(editors)...)
+	leadUUID, err := parseUUID(string(id), "lead id")
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := s.client.gen.GetLeadUsers(ctx, leadUUID.String(), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}

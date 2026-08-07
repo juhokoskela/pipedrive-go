@@ -94,6 +94,9 @@ func (s *FilesService) List(ctx context.Context, opts ...FilesOption) ([]File, *
 }
 
 func (s *FilesService) Get(ctx context.Context, id FileID, opts ...FilesOption) (*File, error) {
+	if err := validateID(id, "file id"); err != nil {
+		return nil, err
+	}
 	cfg := newFilesOptions(opts)
 	path := fmt.Sprintf("/files/%d", id)
 
@@ -178,6 +181,9 @@ func (s *FilesService) LinkRemoteFile(ctx context.Context, form url.Values, opts
 }
 
 func (s *FilesService) Update(ctx context.Context, id FileID, body io.Reader, contentType string, opts ...FilesOption) (*File, error) {
+	if err := validateID(id, "file id"); err != nil {
+		return nil, err
+	}
 	cfg := newFilesOptions(opts)
 	if body == nil {
 		return nil, fmt.Errorf("file body is required")
@@ -203,6 +209,9 @@ func (s *FilesService) Update(ctx context.Context, id FileID, body io.Reader, co
 }
 
 func (s *FilesService) Delete(ctx context.Context, id FileID, opts ...FilesOption) (bool, error) {
+	if err := validateID(id, "file id"); err != nil {
+		return false, err
+	}
 	cfg := newFilesOptions(opts)
 	path := fmt.Sprintf("/files/%d", id)
 
@@ -219,6 +228,9 @@ func (s *FilesService) Delete(ctx context.Context, id FileID, opts ...FilesOptio
 }
 
 func (s *FilesService) Download(ctx context.Context, id FileID, opts ...FilesOption) ([]byte, error) {
+	if err := validateID(id, "file id"); err != nil {
+		return nil, err
+	}
 	cfg := newFilesOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -238,6 +250,9 @@ func (s *FilesService) Download(ctx context.Context, id FileID, opts ...FilesOpt
 }
 
 func (s *FilesService) DownloadTo(ctx context.Context, id FileID, dst io.Writer, opts ...FilesOption) error {
+	if err := validateID(id, "file id"); err != nil {
+		return err
+	}
 	if dst == nil {
 		return fmt.Errorf("download destination is required")
 	}

@@ -369,6 +369,9 @@ func (s *WebhooksService) Create(ctx context.Context, opts ...CreateWebhookOptio
 }
 
 func (s *WebhooksService) Delete(ctx context.Context, id WebhookID, opts ...DeleteWebhookOption) (bool, error) {
+	if err := validateID(id, "webhook id"); err != nil {
+		return false, err
+	}
 	cfg := newDeleteWebhookOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

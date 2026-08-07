@@ -8,6 +8,13 @@ import (
 
 const defaultMaxResponseSize int64 = 64 << 20
 
+// errorResponseBodyLimit caps how much of a non-2xx response body is kept
+// for error reporting. Unlike the success-path limit, exceeding it is not
+// an error: reads simply stop at the cap. Per-request overrides do not
+// apply — a hostile or broken server must never make the client buffer an
+// unbounded error payload.
+const errorResponseBodyLimit int64 = 1 << 20
+
 type responseSizeLimitOption struct {
 	set       bool
 	limit     int64
@@ -70,6 +77,10 @@ func (t *responseLimitTransport) RoundTrip(req *http.Request) (*http.Response, e
 		return resp, err
 	}
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		resp.Body = &truncatingReadCloser{
+			reader: io.LimitReader(resp.Body, errorResponseBodyLimit),
+			closer: resp.Body,
+		}
 		return resp, nil
 	}
 
@@ -120,4 +131,17 @@ func (r *responseLimitReadCloser) Read(p []byte) (int, error) {
 
 func (r *responseLimitReadCloser) Close() error {
 	return r.body.Close()
+}
+
+type truncatingReadCloser struct {
+	reader io.Reader
+	closer io.Closer
+}
+
+func (t *truncatingReadCloser) Read(p []byte) (int, error) {
+	return t.reader.Read(p)
+}
+
+func (t *truncatingReadCloser) Close() error {
+	return t.closer.Close()
 }

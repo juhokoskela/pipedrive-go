@@ -15,16 +15,25 @@ type RetryPolicy struct {
 	BaseDelay   time.Duration
 	MaxDelay    time.Duration
 
+	// MaxRetryAfter caps how long a server-provided Retry-After header may
+	// delay a retry, so a misbehaving server cannot pin the client
+	// indefinitely. Zero uses the 1 minute default; negative disables the
+	// cap.
+	MaxRetryAfter time.Duration
+
 	Jitter func(time.Duration) time.Duration
 
 	RetryAllMethods bool
 }
+
+const defaultMaxRetryAfter = time.Minute
 
 func DefaultRetryPolicy() RetryPolicy {
 	return RetryPolicy{
 		MaxAttempts:     4,
 		BaseDelay:       200 * time.Millisecond,
 		MaxDelay:        5 * time.Second,
+		MaxRetryAfter:   defaultMaxRetryAfter,
 		Jitter:          fullJitter,
 		RetryAllMethods: false,
 	}
@@ -132,6 +141,9 @@ func (t *retryTransport) shouldRetry(attempt int, req *http.Request, canReplayBo
 func (t *retryTransport) nextDelay(attempt int, resp *http.Response, policy RetryPolicy) time.Duration {
 	if resp != nil && resp.StatusCode == 429 {
 		if ra := parseRetryAfter(resp.Header.Get("Retry-After"), t.opts.now()); ra > 0 {
+			if policy.MaxRetryAfter > 0 && ra > policy.MaxRetryAfter {
+				ra = policy.MaxRetryAfter
+			}
 			return ra
 		}
 	}
@@ -210,6 +222,9 @@ func sanitizeRetryPolicy(policy RetryPolicy) RetryPolicy {
 	}
 	if policy.MaxDelay <= 0 {
 		policy.MaxDelay = policy.BaseDelay
+	}
+	if policy.MaxRetryAfter == 0 {
+		policy.MaxRetryAfter = defaultMaxRetryAfter
 	}
 	if policy.Jitter == nil {
 		policy.Jitter = func(d time.Duration) time.Duration { return d }

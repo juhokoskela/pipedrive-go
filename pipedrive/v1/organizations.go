@@ -70,6 +70,9 @@ func newOrganizationsOptions(opts []OrganizationsOption) organizationsOptions {
 }
 
 func (s *OrganizationsService) Merge(ctx context.Context, id OrganizationID, mergeWithID OrganizationID, opts ...OrganizationsOption) (*Organization, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, err
+	}
 	cfg := newOrganizationsOptions(opts)
 	path := fmt.Sprintf("/organizations/%d/merge", id)
 
@@ -87,6 +90,9 @@ func (s *OrganizationsService) Merge(ctx context.Context, id OrganizationID, mer
 }
 
 func (s *OrganizationsService) Changelog(ctx context.Context, id OrganizationID, opts ...OrganizationsOption) ([]map[string]any, *CollectionPagination, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newOrganizationsOptions(opts)
 	path := fmt.Sprintf("/organizations/%d/changelog", id)
 
@@ -101,6 +107,9 @@ func (s *OrganizationsService) Changelog(ctx context.Context, id OrganizationID,
 }
 
 func (s *OrganizationsService) ListFiles(ctx context.Context, id OrganizationID, opts ...OrganizationsOption) ([]File, *Pagination, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newOrganizationsOptions(opts)
 	path := fmt.Sprintf("/organizations/%d/files", id)
 
@@ -121,6 +130,9 @@ func (s *OrganizationsService) ListFiles(ctx context.Context, id OrganizationID,
 }
 
 func (s *OrganizationsService) ListMailMessages(ctx context.Context, id OrganizationID, opts ...OrganizationsOption) ([]MailMessage, *Pagination, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newOrganizationsOptions(opts)
 	path := fmt.Sprintf("/organizations/%d/mailMessages", id)
 
@@ -141,6 +153,9 @@ func (s *OrganizationsService) ListMailMessages(ctx context.Context, id Organiza
 }
 
 func (s *OrganizationsService) ListUpdates(ctx context.Context, id OrganizationID, opts ...OrganizationsOption) ([]map[string]any, *Pagination, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newOrganizationsOptions(opts)
 	path := fmt.Sprintf("/organizations/%d/flow", id)
 
@@ -161,6 +176,9 @@ func (s *OrganizationsService) ListUpdates(ctx context.Context, id OrganizationI
 }
 
 func (s *OrganizationsService) ListUsers(ctx context.Context, id OrganizationID, opts ...OrganizationsOption) ([]User, error) {
+	if err := validateID(id, "organization id"); err != nil {
+		return nil, err
+	}
 	cfg := newOrganizationsOptions(opts)
 	path := fmt.Sprintf("/organizations/%d/permittedUsers", id)
 

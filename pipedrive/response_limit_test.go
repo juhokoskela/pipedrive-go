@@ -38,14 +38,14 @@ func TestResponseLimitTransport_DefaultLimitApplied(t *testing.T) {
 	}
 }
 
-func TestResponseLimitTransport_SkipsLimitForNon2xxResponses(t *testing.T) {
+func TestResponseLimitTransport_TruncatesNon2xxResponses(t *testing.T) {
 	t.Parallel()
 
 	rt := newResponseLimitTransport(roundTripperFunc(func(req *http.Request) (*http.Response, error) {
 		return &http.Response{
-			StatusCode: http.StatusBadRequest,
+			StatusCode: http.StatusInternalServerError,
 			Header:     make(http.Header),
-			Body:       &fixedSizeReadCloser{remaining: defaultMaxResponseSize + 1},
+			Body:       &fixedSizeReadCloser{remaining: errorResponseBodyLimit + 1024},
 			Request:    req,
 		}, nil
 	}), 1)
@@ -57,8 +57,41 @@ func TestResponseLimitTransport_SkipsLimitForNon2xxResponses(t *testing.T) {
 	}
 	defer resp.Body.Close()
 
-	if _, ok := resp.Body.(*responseLimitReadCloser); ok {
-		t.Fatalf("expected original body for non-2xx responses")
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatalf("ReadAll error: %v", err)
+	}
+	if int64(len(body)) != errorResponseBodyLimit {
+		t.Fatalf("expected error body truncated to %d bytes, got %d", errorResponseBodyLimit, len(body))
+	}
+}
+
+func TestResponseLimitTransport_ErrorBodyCapIgnoresPerRequestOverride(t *testing.T) {
+	t.Parallel()
+
+	rt := newResponseLimitTransport(roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		return &http.Response{
+			StatusCode: http.StatusBadGateway,
+			Header:     make(http.Header),
+			Body:       &fixedSizeReadCloser{remaining: errorResponseBodyLimit + 1024},
+			Request:    req,
+		}, nil
+	}), 1)
+
+	ctx := withResponseSizeLimit(context.Background(), responseSizeLimitOption{set: true, unlimited: true})
+	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "https://example.test", nil)
+	resp, err := rt.RoundTrip(req)
+	if err != nil {
+		t.Fatalf("unexpected round trip error: %v", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatalf("ReadAll error: %v", err)
+	}
+	if int64(len(body)) != errorResponseBodyLimit {
+		t.Fatalf("expected error body truncated to %d bytes, got %d", errorResponseBodyLimit, len(body))
 	}
 }
 

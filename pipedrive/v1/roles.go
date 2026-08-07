@@ -75,6 +75,9 @@ func (s *RolesService) List(ctx context.Context, opts ...RolesOption) ([]Role, e
 }
 
 func (s *RolesService) Get(ctx context.Context, id RoleID, opts ...RolesOption) (*Role, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d", id)
 
@@ -109,6 +112,9 @@ func (s *RolesService) Create(ctx context.Context, payload map[string]any, opts 
 }
 
 func (s *RolesService) Update(ctx context.Context, id RoleID, payload map[string]any, opts ...RolesOption) (*Role, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("role payload is required")
@@ -128,6 +134,9 @@ func (s *RolesService) Update(ctx context.Context, id RoleID, payload map[string
 }
 
 func (s *RolesService) Delete(ctx context.Context, id RoleID, opts ...RolesOption) (bool, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return false, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d", id)
 
@@ -144,6 +153,9 @@ func (s *RolesService) Delete(ctx context.Context, id RoleID, opts ...RolesOptio
 }
 
 func (s *RolesService) ListAssignments(ctx context.Context, id RoleID, opts ...RolesOption) ([]RoleAssignment, *Pagination, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d/assignments", id)
 
@@ -164,6 +176,9 @@ func (s *RolesService) ListAssignments(ctx context.Context, id RoleID, opts ...R
 }
 
 func (s *RolesService) AddAssignment(ctx context.Context, id RoleID, userID UserID, opts ...RolesOption) (*RoleAssignment, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d/assignments", id)
 
@@ -181,6 +196,9 @@ func (s *RolesService) AddAssignment(ctx context.Context, id RoleID, userID User
 }
 
 func (s *RolesService) DeleteAssignment(ctx context.Context, id RoleID, userID UserID, opts ...RolesOption) (bool, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return false, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d/assignments", id)
 
@@ -198,6 +216,9 @@ func (s *RolesService) DeleteAssignment(ctx context.Context, id RoleID, userID U
 }
 
 func (s *RolesService) ListPipelines(ctx context.Context, id RoleID, opts ...RolesOption) ([]map[string]any, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d/pipelines", id)
 
@@ -211,6 +232,9 @@ func (s *RolesService) ListPipelines(ctx context.Context, id RoleID, opts ...Rol
 }
 
 func (s *RolesService) UpdatePipelines(ctx context.Context, id RoleID, payload map[string]any, opts ...RolesOption) (map[string]any, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("role pipelines payload is required")
@@ -230,6 +254,9 @@ func (s *RolesService) UpdatePipelines(ctx context.Context, id RoleID, payload m
 }
 
 func (s *RolesService) ListSettings(ctx context.Context, id RoleID, opts ...RolesOption) ([]map[string]any, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	path := fmt.Sprintf("/roles/%d/settings", id)
 
@@ -243,6 +270,9 @@ func (s *RolesService) ListSettings(ctx context.Context, id RoleID, opts ...Role
 }
 
 func (s *RolesService) UpsertSetting(ctx context.Context, id RoleID, payload map[string]any, opts ...RolesOption) (map[string]any, error) {
+	if err := validateID(id, "role id"); err != nil {
+		return nil, err
+	}
 	cfg := newRolesOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("role setting payload is required")

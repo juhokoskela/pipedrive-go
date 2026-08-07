@@ -3,6 +3,7 @@ package pipedrive
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"net/http"
 	"strconv"
 	"time"
@@ -113,6 +114,10 @@ func parseRetryAfter(value string, now time.Time) time.Duration {
 		return 0
 	}
 	if secs, err := strconv.Atoi(value); err == nil && secs >= 0 {
+		// Saturate instead of letting secs*time.Second wrap int64.
+		if int64(secs) > math.MaxInt64/int64(time.Second) {
+			return time.Duration(math.MaxInt64)
+		}
 		return time.Duration(secs) * time.Second
 	}
 	if t, err := http.ParseTime(value); err == nil {

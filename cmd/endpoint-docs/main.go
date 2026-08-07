@@ -64,15 +64,15 @@ func writeDoc(specPath, outPath, title string) error {
 	var b strings.Builder
 	b.WriteString("# " + title + "\n\n")
 	b.WriteString("Generated from `" + specPath + "` by `cmd/endpoint-docs`. Do not edit manually.\n\n")
-	b.WriteString(fmt.Sprintf("Total operations: %d\n\n", len(endpoints)))
+	fmt.Fprintf(&b, "Total operations: %d\n\n", len(endpoints))
 	b.WriteString("| Method | Path | Summary | Operation ID |\n")
 	b.WriteString("| --- | --- | --- | --- |\n")
 	for _, e := range endpoints {
 		b.WriteString("| ")
 		b.WriteString(e.Method)
-		b.WriteString(" | `")
-		b.WriteString(e.Path)
-		b.WriteString("` | ")
+		b.WriteString(" | ")
+		b.WriteString(formatCodeCell(e.Path))
+		b.WriteString(" | ")
 		b.WriteString(sanitizeCell(e.Summary))
 		b.WriteString(" | ")
 		b.WriteString(formatCodeCell(e.OperationID))
@@ -198,6 +198,8 @@ func formatCodeCell(value string) string {
 		return "-"
 	}
 	value = strings.ReplaceAll(value, "`", "\\`")
+	// A pipe inside a code span still terminates a table cell.
+	value = strings.ReplaceAll(value, "|", "\\|")
 	return "`" + value + "`"
 }
 

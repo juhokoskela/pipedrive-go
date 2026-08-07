@@ -218,11 +218,13 @@ type PersonOption interface {
 type getPersonOptions struct {
 	params         genv2.GetPersonParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type listPersonsOptions struct {
 	params         genv2.GetPersonsParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type createPersonOptions struct {
@@ -395,6 +397,12 @@ func WithPersonIncludeOptionLabels(enabled bool) GetPersonOption {
 
 func WithPersonCustomFields(fields ...string) GetPersonOption {
 	return getPersonOptionFunc(func(cfg *getPersonOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -536,6 +544,12 @@ func WithPersonsIncludeOptionLabels(enabled bool) ListPersonsOption {
 
 func WithPersonsCustomFields(fields ...string) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
+		if err := validateCSVValues(fields, "custom field key"); err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		csv := joinCSV(fields)
 		if csv == "" {
 			return
@@ -783,7 +797,13 @@ func newGetPersonPictureOptions(opts []GetPersonPictureOption) getPersonPictureO
 }
 
 func (s *PersonsService) Get(ctx context.Context, id PersonID, opts ...GetPersonOption) (*Person, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetPersonOptions(opts)
+	if cfg.err != nil {
+		return nil, cfg.err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	resp, err := s.client.gen.GetPersonWithResponse(ctx, int(id), &cfg.params, toRequestEditors(editors)...)
@@ -808,6 +828,9 @@ func (s *PersonsService) Get(ctx context.Context, id PersonID, opts ...GetPerson
 
 func (s *PersonsService) List(ctx context.Context, opts ...ListPersonsOption) ([]Person, *string, error) {
 	cfg := newListPersonsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -817,6 +840,9 @@ func (s *PersonsService) ListPager(opts ...ListPersonsOption) *pipedrive.CursorP
 	cfg.params.Cursor = nil
 
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Person, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -861,6 +887,9 @@ func (s *PersonsService) Create(ctx context.Context, opts ...CreatePersonOption)
 }
 
 func (s *PersonsService) Update(ctx context.Context, id PersonID, opts ...UpdatePersonOption) (*Person, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdatePersonOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -890,6 +919,9 @@ func (s *PersonsService) Update(ctx context.Context, id PersonID, opts ...Update
 }
 
 func (s *PersonsService) Delete(ctx context.Context, id PersonID, opts ...DeletePersonOption) (*PersonDeleteResult, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeletePersonOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -972,6 +1004,9 @@ func (s *PersonsService) ForEachFollowers(ctx context.Context, id PersonID, fn f
 }
 
 func (s *PersonsService) AddFollower(ctx context.Context, id PersonID, userID UserID, opts ...AddPersonFollowerOption) (*Follower, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newAddPersonFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1003,6 +1038,12 @@ func (s *PersonsService) AddFollower(ctx context.Context, id PersonID, userID Us
 }
 
 func (s *PersonsService) DeleteFollower(ctx context.Context, id PersonID, followerID UserID, opts ...DeletePersonFollowerOption) (*FollowerDeleteResult, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
+	if err := validateID(followerID, "follower id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeletePersonFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1052,6 +1093,9 @@ func (s *PersonsService) ForEachFollowersChangelog(ctx context.Context, id Perso
 }
 
 func (s *PersonsService) GetPicture(ctx context.Context, id PersonID, opts ...GetPersonPictureOption) (*PersonPicture, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetPersonPictureOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1104,6 +1148,9 @@ func (s *PersonsService) list(ctx context.Context, params genv2.GetPersonsParams
 }
 
 func (s *PersonsService) listFollowers(ctx context.Context, id PersonID, params genv2.GetPersonFollowersParams, requestOptions []pipedrive.RequestOption) ([]Follower, *string, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetPersonFollowersWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
@@ -1132,6 +1179,9 @@ func (s *PersonsService) listFollowers(ctx context.Context, id PersonID, params 
 }
 
 func (s *PersonsService) followersChangelog(ctx context.Context, id PersonID, params genv2.GetPersonFollowersChangelogParams, requestOptions []pipedrive.RequestOption) ([]FollowerChangelog, *string, error) {
+	if err := validateID(id, "person id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetPersonFollowersChangelogWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)

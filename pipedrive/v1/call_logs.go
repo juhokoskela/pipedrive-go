@@ -361,6 +361,9 @@ func (s *CallLogsService) Create(ctx context.Context, opts ...CreateCallLogOptio
 }
 
 func (s *CallLogsService) Get(ctx context.Context, id CallLogID, opts ...GetCallLogOption) (*CallLog, error) {
+	if err := validatePathParam(string(id), "call log id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetCallLogOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -390,6 +393,9 @@ func (s *CallLogsService) Get(ctx context.Context, id CallLogID, opts ...GetCall
 }
 
 func (s *CallLogsService) Delete(ctx context.Context, id CallLogID, opts ...DeleteCallLogOption) (bool, error) {
+	if err := validatePathParam(string(id), "call log id"); err != nil {
+		return false, err
+	}
 	cfg := newDeleteCallLogOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -416,6 +422,9 @@ func (s *CallLogsService) Delete(ctx context.Context, id CallLogID, opts ...Dele
 }
 
 func (s *CallLogsService) AddRecording(ctx context.Context, id CallLogID, fileName string, content io.Reader, opts ...AddCallLogRecordingOption) (bool, error) {
+	if err := validatePathParam(string(id), "call log id"); err != nil {
+		return false, err
+	}
 	if fileName == "" || content == nil {
 		return false, fmt.Errorf("file name and content are required")
 	}

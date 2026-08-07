@@ -334,6 +334,9 @@ func newDeleteOrganizationFieldOptionsOptions(opts []DeleteOrganizationFieldOpti
 }
 
 func (s *OrganizationFieldsService) Get(ctx context.Context, fieldCode string, opts ...GetOrganizationFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newGetOrganizationFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -420,6 +423,9 @@ func (s *OrganizationFieldsService) Create(ctx context.Context, opts ...CreateOr
 }
 
 func (s *OrganizationFieldsService) Update(ctx context.Context, fieldCode string, opts ...UpdateOrganizationFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateOrganizationFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -453,6 +459,9 @@ func (s *OrganizationFieldsService) Update(ctx context.Context, fieldCode string
 }
 
 func (s *OrganizationFieldsService) Delete(ctx context.Context, fieldCode string, opts ...DeleteOrganizationFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteOrganizationFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -477,6 +486,9 @@ func (s *OrganizationFieldsService) Delete(ctx context.Context, fieldCode string
 }
 
 func (s *OrganizationFieldsService) AddOptions(ctx context.Context, fieldCode string, labels []string, opts ...AddOrganizationFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newAddOrganizationFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -511,6 +523,9 @@ func (s *OrganizationFieldsService) AddOptions(ctx context.Context, fieldCode st
 }
 
 func (s *OrganizationFieldsService) UpdateOptions(ctx context.Context, fieldCode string, updates []FieldOptionUpdate, opts ...UpdateOrganizationFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateOrganizationFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -551,6 +566,9 @@ func (s *OrganizationFieldsService) UpdateOptions(ctx context.Context, fieldCode
 }
 
 func (s *OrganizationFieldsService) DeleteOptions(ctx context.Context, fieldCode string, ids []int, opts ...DeleteOrganizationFieldOptionsOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteOrganizationFieldOptionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

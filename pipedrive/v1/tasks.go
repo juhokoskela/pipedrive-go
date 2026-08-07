@@ -80,6 +80,9 @@ func (s *TasksService) List(ctx context.Context, opts ...TasksOption) ([]Task, *
 }
 
 func (s *TasksService) Get(ctx context.Context, id TaskID, opts ...TasksOption) (*Task, error) {
+	if err := validateID(id, "task id"); err != nil {
+		return nil, err
+	}
 	cfg := newTasksOptions(opts)
 	path := fmt.Sprintf("/tasks/%d", id)
 
@@ -114,6 +117,9 @@ func (s *TasksService) Create(ctx context.Context, payload map[string]any, opts 
 }
 
 func (s *TasksService) Update(ctx context.Context, id TaskID, payload map[string]any, opts ...TasksOption) (*Task, error) {
+	if err := validateID(id, "task id"); err != nil {
+		return nil, err
+	}
 	cfg := newTasksOptions(opts)
 	if len(payload) == 0 {
 		return nil, fmt.Errorf("task payload is required")
@@ -133,6 +139,9 @@ func (s *TasksService) Update(ctx context.Context, id TaskID, payload map[string
 }
 
 func (s *TasksService) Delete(ctx context.Context, id TaskID, opts ...TasksOption) (bool, error) {
+	if err := validateID(id, "task id"); err != nil {
+		return false, err
+	}
 	cfg := newTasksOptions(opts)
 	path := fmt.Sprintf("/tasks/%d", id)
 

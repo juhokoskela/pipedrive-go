@@ -210,6 +210,9 @@ func (s *ProjectFieldsService) ForEach(ctx context.Context, fn func(Field) error
 }
 
 func (s *ProjectFieldsService) Get(ctx context.Context, fieldCode string, opts ...ProjectFieldRequestOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectFieldRequestOptionValues(opts)...)
 	resp, err := s.client.gen.GetProjectField(ctx, fieldCode, toRequestEditors(editors)...)
 	if err != nil {
@@ -239,6 +242,9 @@ func (s *ProjectFieldsService) Create(ctx context.Context, opts ...CreateProject
 	return decodeV2Data[Field](resp, responseBody, "project field")
 }
 func (s *ProjectFieldsService) Update(ctx context.Context, fieldCode string, opts ...UpdateProjectFieldOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateProjectFieldOptions(opts)
 	body, err := encodeV2Body(cfg.payload.body())
 	if err != nil {
@@ -256,6 +262,9 @@ func (s *ProjectFieldsService) Update(ctx context.Context, fieldCode string, opt
 	return decodeV2Data[Field](resp, responseBody, "project field")
 }
 func (s *ProjectFieldsService) Delete(ctx context.Context, fieldCode string, opts ...ProjectFieldRequestOption) (*Field, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectFieldRequestOptionValues(opts)...)
 	resp, err := s.client.gen.DeleteProjectField(ctx, fieldCode, toRequestEditors(editors)...)
 	if err != nil {
@@ -268,6 +277,9 @@ func (s *ProjectFieldsService) Delete(ctx context.Context, fieldCode string, opt
 	return decodeV2Data[Field](resp, responseBody, "project field delete")
 }
 func (s *ProjectFieldsService) AddOptions(ctx context.Context, fieldCode string, labels []string, opts ...ProjectFieldRequestOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	bodyItems := make([]map[string]interface{}, 0, len(labels))
 	for _, label := range labels {
 		if label != "" {
@@ -290,6 +302,9 @@ func (s *ProjectFieldsService) AddOptions(ctx context.Context, fieldCode string,
 	return decodeV2ListNoCursor[FieldOption](resp, responseBody)
 }
 func (s *ProjectFieldsService) UpdateOptions(ctx context.Context, fieldCode string, updates []FieldOptionUpdate, opts ...ProjectFieldRequestOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	bodyItems := make([]map[string]interface{}, 0, len(updates))
 	for _, update := range updates {
 		bodyItems = append(bodyItems, map[string]interface{}{"id": update.ID, "label": update.Label})
@@ -310,6 +325,9 @@ func (s *ProjectFieldsService) UpdateOptions(ctx context.Context, fieldCode stri
 	return decodeV2ListNoCursor[FieldOption](resp, responseBody)
 }
 func (s *ProjectFieldsService) DeleteOptions(ctx context.Context, fieldCode string, ids []int, opts ...ProjectFieldRequestOption) ([]FieldOption, error) {
+	if err := validatePathParam(fieldCode, "field code"); err != nil {
+		return nil, err
+	}
 	bodyItems := make([]map[string]interface{}, 0, len(ids))
 	for _, id := range ids {
 		bodyItems = append(bodyItems, map[string]interface{}{"id": id})

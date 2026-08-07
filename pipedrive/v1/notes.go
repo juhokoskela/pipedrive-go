@@ -688,6 +688,9 @@ func (s *NotesService) List(ctx context.Context, opts ...ListNotesOption) ([]Not
 }
 
 func (s *NotesService) Get(ctx context.Context, id NoteID, opts ...GetNoteOption) (*Note, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetNoteOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -762,6 +765,9 @@ func (s *NotesService) Create(ctx context.Context, opts ...CreateNoteOption) (*N
 }
 
 func (s *NotesService) Update(ctx context.Context, id NoteID, opts ...UpdateNoteOption) (*Note, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateNoteOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -804,6 +810,9 @@ func (s *NotesService) Update(ctx context.Context, id NoteID, opts ...UpdateNote
 }
 
 func (s *NotesService) Delete(ctx context.Context, id NoteID, opts ...DeleteNoteOption) (bool, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return false, err
+	}
 	cfg := newDeleteNoteOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -830,6 +839,9 @@ func (s *NotesService) Delete(ctx context.Context, id NoteID, opts ...DeleteNote
 }
 
 func (s *NotesService) ListComments(ctx context.Context, id NoteID, opts ...ListNoteCommentsOption) ([]NoteComment, *NoteCommentsAdditionalData, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newListNoteCommentsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -857,6 +869,9 @@ func (s *NotesService) ListComments(ctx context.Context, id NoteID, opts ...List
 }
 
 func (s *NotesService) CreateComment(ctx context.Context, id NoteID, opts ...CreateNoteCommentOption) (*NoteComment, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return nil, err
+	}
 	cfg := newCreateNoteCommentOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -898,6 +913,9 @@ func (s *NotesService) CreateComment(ctx context.Context, id NoteID, opts ...Cre
 }
 
 func (s *NotesService) GetComment(ctx context.Context, id NoteID, commentID CommentID, opts ...GetNoteCommentOption) (*NoteComment, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetNoteCommentOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -932,6 +950,9 @@ func (s *NotesService) GetComment(ctx context.Context, id NoteID, commentID Comm
 }
 
 func (s *NotesService) UpdateComment(ctx context.Context, id NoteID, commentID CommentID, opts ...UpdateNoteCommentOption) (*NoteComment, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateNoteCommentOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -977,6 +998,9 @@ func (s *NotesService) UpdateComment(ctx context.Context, id NoteID, commentID C
 }
 
 func (s *NotesService) DeleteComment(ctx context.Context, id NoteID, commentID CommentID, opts ...DeleteNoteCommentOption) (bool, error) {
+	if err := validateID(id, "note id"); err != nil {
+		return false, err
+	}
 	cfg := newDeleteNoteCommentOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

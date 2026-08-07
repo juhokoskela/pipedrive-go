@@ -70,6 +70,9 @@ func (s *ProjectTemplatesService) List(ctx context.Context, opts ...ProjectTempl
 }
 
 func (s *ProjectTemplatesService) Get(ctx context.Context, id ProjectTemplateID, opts ...ProjectTemplatesOption) (*ProjectTemplate, error) {
+	if err := validateID(id, "project template id"); err != nil {
+		return nil, err
+	}
 	cfg := newProjectTemplatesOptions(opts)
 	path := fmt.Sprintf("/projectTemplates/%d", id)
 

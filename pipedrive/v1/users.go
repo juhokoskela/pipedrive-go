@@ -260,6 +260,9 @@ func (s *UsersService) List(ctx context.Context, opts ...ListUsersOption) ([]Use
 }
 
 func (s *UsersService) Get(ctx context.Context, id UserID, opts ...GetUserOption) (*User, error) {
+	if err := validateID(id, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetUserOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -318,6 +321,9 @@ func (s *UsersService) GetCurrent(ctx context.Context, opts ...GetCurrentUserOpt
 }
 
 func (s *UsersService) GetPermissions(ctx context.Context, id UserID, opts ...GetUserPermissionsOption) (*UserPermissions, error) {
+	if err := validateID(id, "user id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetUserPermissionsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

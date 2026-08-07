@@ -141,6 +141,9 @@ func (s *ProjectPhasesService) List(ctx context.Context, boardID ProjectBoardID,
 }
 
 func (s *ProjectPhasesService) Get(ctx context.Context, id ProjectPhaseID, opts ...ProjectPhaseRequestOption) (*ProjectPhase, error) {
+	if err := validateID(id, "project phase id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectPhaseRequestOptionValues(opts)...)
 	resp, err := s.client.gen.GetProjectsPhaseWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
@@ -164,6 +167,9 @@ func (s *ProjectPhasesService) Create(ctx context.Context, opts ...CreateProject
 }
 
 func (s *ProjectPhasesService) Update(ctx context.Context, id ProjectPhaseID, opts ...UpdateProjectPhaseOption) (*ProjectPhase, error) {
+	if err := validateID(id, "project phase id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateProjectPhaseOptions(opts)
 	body, err := encodeV2Body(cfg.payload.body())
 	if err != nil {
@@ -178,6 +184,9 @@ func (s *ProjectPhasesService) Update(ctx context.Context, id ProjectPhaseID, op
 }
 
 func (s *ProjectPhasesService) Delete(ctx context.Context, id ProjectPhaseID, opts ...ProjectPhaseRequestOption) (*ProjectPhaseDeleteResult, error) {
+	if err := validateID(id, "project phase id"); err != nil {
+		return nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectPhaseRequestOptionValues(opts)...)
 	resp, err := s.client.gen.DeleteProjectPhaseWithResponse(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {

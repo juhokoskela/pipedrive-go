@@ -15,9 +15,12 @@ if [ ! -f "$file" ]; then
 	exit 1
 fi
 
+# Match headings literally: version strings contain dots, which would act
+# as regex wildcards and could select a lookalike heading.
 awk -v ver="$version" '
-	$0 ~ "^## \\[" ver "\\]" {found=1; print; next}
-	found && $0 ~ "^## \\[" {exit}
+	BEGIN {heading = "## [" ver "]"}
+	index($0, heading) == 1 {found=1; print; next}
+	found && index($0, "## [") == 1 {exit}
 	found {print}
 	END {
 		if (!found) {

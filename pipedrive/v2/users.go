@@ -99,6 +99,9 @@ func (s *UsersService) ForEachFollowers(ctx context.Context, id UserID, fn func(
 }
 
 func (s *UsersService) listFollowers(ctx context.Context, id UserID, params genv2.GetUserFollowersParams, requestOptions []pipedrive.RequestOption) ([]Follower, *string, error) {
+	if err := validateID(id, "user id"); err != nil {
+		return nil, nil, err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
 	resp, err := s.client.gen.GetUserFollowersWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)

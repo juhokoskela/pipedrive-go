@@ -296,6 +296,9 @@ func (s *StagesService) ForEach(ctx context.Context, fn func(Stage) error, opts 
 }
 
 func (s *StagesService) Get(ctx context.Context, id StageID, opts ...GetStageOption) (*Stage, error) {
+	if err := validateID(id, "stage id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -361,6 +364,9 @@ func (s *StagesService) Create(ctx context.Context, opts ...CreateStageOption) (
 }
 
 func (s *StagesService) Update(ctx context.Context, id StageID, opts ...UpdateStageOption) (*Stage, error) {
+	if err := validateID(id, "stage id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -407,6 +413,9 @@ type StageDeleteResult struct {
 }
 
 func (s *StagesService) Delete(ctx context.Context, id StageID, opts ...DeleteStageOption) (*StageDeleteResult, error) {
+	if err := validateID(id, "stage id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

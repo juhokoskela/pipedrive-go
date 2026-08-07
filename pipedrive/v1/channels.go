@@ -346,6 +346,9 @@ func (s *ChannelsService) Create(ctx context.Context, opts ...CreateChannelOptio
 }
 
 func (s *ChannelsService) Delete(ctx context.Context, id ChannelID, opts ...DeleteChannelOption) (bool, error) {
+	if err := validatePathParam(string(id), "channel id"); err != nil {
+		return false, err
+	}
 	cfg := newDeleteChannelOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -410,6 +413,12 @@ func (s *ChannelsService) ReceiveMessage(ctx context.Context, opts ...ReceiveMes
 }
 
 func (s *ChannelsService) DeleteConversation(ctx context.Context, channelID ChannelID, conversationID ConversationID, opts ...DeleteConversationOption) (bool, error) {
+	if err := validatePathParam(string(channelID), "channel id"); err != nil {
+		return false, err
+	}
+	if err := validatePathParam(string(conversationID), "conversation id"); err != nil {
+		return false, err
+	}
 	cfg := newDeleteConversationOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

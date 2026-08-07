@@ -52,6 +52,9 @@ func newStageDealsOptions(opts []StageDealsOption) stageDealsOptions {
 }
 
 func (s *StagesService) ListDeals(ctx context.Context, id StageID, opts ...StageDealsOption) ([]Deal, *Pagination, error) {
+	if err := validateID(id, "stage id"); err != nil {
+		return nil, nil, err
+	}
 	cfg := newStageDealsOptions(opts)
 	path := fmt.Sprintf("/stages/%d/deals", id)
 

@@ -374,6 +374,9 @@ func (s *FiltersService) List(ctx context.Context, opts ...ListFiltersOption) ([
 }
 
 func (s *FiltersService) Get(ctx context.Context, id FilterID, opts ...GetFilterOption) (*Filter, error) {
+	if err := validateID(id, "filter id"); err != nil {
+		return nil, err
+	}
 	cfg := newGetFilterOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -447,6 +450,9 @@ func (s *FiltersService) Create(ctx context.Context, opts ...CreateFilterOption)
 }
 
 func (s *FiltersService) Update(ctx context.Context, id FilterID, opts ...UpdateFilterOption) (*Filter, error) {
+	if err := validateID(id, "filter id"); err != nil {
+		return nil, err
+	}
 	cfg := newUpdateFilterOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -485,6 +491,9 @@ func (s *FiltersService) Update(ctx context.Context, id FilterID, opts ...Update
 }
 
 func (s *FiltersService) Delete(ctx context.Context, id FilterID, opts ...DeleteFilterOption) (*FilterDeleteResult, error) {
+	if err := validateID(id, "filter id"); err != nil {
+		return nil, err
+	}
 	cfg := newDeleteFilterOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 

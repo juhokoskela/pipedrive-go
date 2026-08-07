@@ -234,6 +234,18 @@ func TestPersonsService_AddPicture(t *testing.T) {
 	}
 }
 
+func TestPersonsService_AddPictureRequiresContentType(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(http.ResponseWriter, *http.Request) {
+		t.Error("no request should reach the server")
+	})
+
+	if _, err := client.Persons.AddPicture(context.Background(), PersonID(25), strings.NewReader("file"), ""); err == nil {
+		t.Fatal("expected error for empty content type")
+	}
+}
+
 func TestPersonsService_DeletePicture(t *testing.T) {
 	t.Parallel()
 
