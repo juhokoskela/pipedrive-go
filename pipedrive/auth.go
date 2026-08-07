@@ -167,20 +167,35 @@ func authSuppressed(req *http.Request) bool {
 // history and knows the chain has crossed origins.
 func redirectCredentialGuard(origin *authOrigin, next func(*http.Request, []*http.Request) error) func(*http.Request, []*http.Request) error {
 	return func(req *http.Request, via []*http.Request) error {
-		if req != nil && leavesCredentialScope(origin, req, via) {
-			for _, h := range credentialHeaders {
-				req.Header.Del(h)
-			}
+		strip := req != nil && leavesCredentialScope(origin, req, via)
+		if strip {
+			stripCredentialHeaders(req)
 			markAuthSuppressed(req)
 		}
 		if next != nil {
-			return next(req, via)
+			err := next(req, via)
+			if req != nil && leavesCredentialScope(origin, req, via) {
+				// The preserved callback saw the prior hops in via and may
+				// have copied their headers back onto req, or replaced the
+				// request context or URL. Re-evaluate the destination,
+				// then re-strip and re-mark so the boundary holds for the
+				// request that will actually reach the transport.
+				stripCredentialHeaders(req)
+				markAuthSuppressed(req)
+			}
+			return err
 		}
 		// Reproduce the net/http default policy, which this replaces.
 		if len(via) >= 10 {
 			return errors.New("stopped after 10 redirects")
 		}
 		return nil
+	}
+}
+
+func stripCredentialHeaders(req *http.Request) {
+	for _, h := range credentialHeaders {
+		req.Header.Del(h)
 	}
 }
 

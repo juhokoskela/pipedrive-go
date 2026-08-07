@@ -383,13 +383,24 @@ func TestCanonicalAuthHost(t *testing.T) {
 func TestAuthOriginFromBaseURL_ParseErrorFailsClosed(t *testing.T) {
 	t.Parallel()
 
-	origin := authOriginFromBaseURL("https://\x7f.invalid")
-	if origin == nil {
-		t.Fatal("expected a fail-closed origin for an unparseable base URL")
-	}
-	u, _ := url.Parse("https://example.com")
-	if origin.matches(u) {
-		t.Fatal("fail-closed origin must not match any request URL")
+	// Unparseable, scheme-less and host-less base URLs all fail closed:
+	// credentials must never be attached on a guess about the origin.
+	for _, baseURL := range []string{
+		"https://\x7f.invalid",
+		"api.example.com",
+		"https://",
+	} {
+		origin := authOriginFromBaseURL(baseURL)
+		if origin == nil {
+			t.Fatalf("expected a fail-closed origin for base URL %q", baseURL)
+		}
+		u, err := url.Parse("https://example.com")
+		if err != nil {
+			t.Fatalf("parse comparison URL: %v", err)
+		}
+		if origin.matches(u) {
+			t.Fatalf("fail-closed origin for base URL %q must not match any request URL", baseURL)
+		}
 	}
 }
 
@@ -543,5 +554,126 @@ func TestNewHTTPClient_EditorHeadersStrippedWithoutAuth(t *testing.T) {
 	}
 	if got := attackerHeaders[0].Get("x-api-token"); got != "" {
 		t.Fatalf("editor token reached the cross-origin redirect target: %q", got)
+	}
+}
+
+func TestNewHTTPClient_UserCheckRedirectCannotRestoreCredentials(t *testing.T) {
+	t.Parallel()
+
+	var mu sync.Mutex
+	var attackerHeaders []http.Header
+	attacker := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		attackerHeaders = append(attackerHeaders, r.Header.Clone())
+		mu.Unlock()
+	}))
+	t.Cleanup(attacker.Close)
+
+	api := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, attacker.URL+"/steal", http.StatusFound)
+	}))
+	t.Cleanup(api.Close)
+
+	// A preserved callback that copies headers from the redirect history back
+	// onto the hop request — the guard must re-strip after it runs.
+	restore := func(req *http.Request, via []*http.Request) error {
+		for _, h := range []string{"x-api-token", "Authorization"} {
+			if v := via[0].Header.Get(h); v != "" {
+				req.Header.Set(h, v)
+			}
+		}
+		return nil
+	}
+
+	client := NewHTTPClient(Config{
+		BaseURL:    api.URL,
+		HTTPClient: &http.Client{CheckRedirect: restore},
+	})
+
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, api.URL+"/cross", nil)
+	if err != nil {
+		t.Fatalf("create request: %v", err)
+	}
+	req.Header.Set("x-api-token", "editor-token")
+	req.Header.Set("Authorization", "Bearer editor-bearer")
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("request error: %v", err)
+	}
+	if err := resp.Body.Close(); err != nil {
+		t.Fatalf("close response body: %v", err)
+	}
+
+	mu.Lock()
+	defer mu.Unlock()
+	if len(attackerHeaders) != 1 {
+		t.Fatalf("expected 1 attacker request, got %d", len(attackerHeaders))
+	}
+	for _, h := range []string{"x-api-token", "Authorization"} {
+		if got := attackerHeaders[0].Get(h); got != "" {
+			t.Fatalf("callback-restored %s reached the cross-origin redirect target: %q", h, got)
+		}
+	}
+}
+
+func TestNewHTTPClient_UserCheckRedirectCannotRewriteCredentialsOffOrigin(t *testing.T) {
+	t.Parallel()
+
+	var mu sync.Mutex
+	var attackerHeaders http.Header
+	attacker := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		attackerHeaders = r.Header.Clone()
+		mu.Unlock()
+		w.WriteHeader(http.StatusNoContent)
+	}))
+	t.Cleanup(attacker.Close)
+
+	api := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/same-origin" {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		http.Redirect(w, r, "/same-origin", http.StatusFound)
+	}))
+	t.Cleanup(api.Close)
+
+	rewrite := func(req *http.Request, _ []*http.Request) error {
+		u, err := url.Parse(attacker.URL + "/steal")
+		if err != nil {
+			return err
+		}
+		req.URL = u
+		return nil
+	}
+
+	client := NewHTTPClient(Config{
+		BaseURL:    api.URL,
+		HTTPClient: &http.Client{CheckRedirect: rewrite},
+	})
+
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, api.URL+"/start", nil)
+	if err != nil {
+		t.Fatalf("create request: %v", err)
+	}
+	req.Header.Set("x-api-token", "editor-token")
+	req.Header.Set("Authorization", "Bearer editor-bearer")
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("request error: %v", err)
+	}
+	if err := resp.Body.Close(); err != nil {
+		t.Fatalf("close response body: %v", err)
+	}
+
+	mu.Lock()
+	defer mu.Unlock()
+	if attackerHeaders == nil {
+		t.Fatal("expected rewritten request to reach attacker server")
+	}
+	for _, h := range []string{"x-api-token", "Authorization"} {
+		if got := attackerHeaders.Get(h); got != "" {
+			t.Fatalf("callback-rewritten %s reached the cross-origin target: %q", h, got)
+		}
 	}
 }
