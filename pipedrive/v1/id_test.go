@@ -75,6 +75,7 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Filters.Get", func() error { _, err := client.Filters.Get(ctx, 0); return err }},
 		{"Filters.Update", func() error { _, err := client.Filters.Update(ctx, 0); return err }},
 		{"Filters.Delete", func() error { _, err := client.Filters.Delete(ctx, 0); return err }},
+		{"Filters.DeleteBulk#ids", func() error { _, err := client.Filters.DeleteBulk(ctx, []FilterID{1, 0}); return err }},
 		{"Mailbox.GetThread", func() error { _, err := client.Mailbox.GetThread(ctx, 0); return err }},
 		{"Mailbox.DeleteThread", func() error { _, err := client.Mailbox.DeleteThread(ctx, 0); return err }},
 		{"Mailbox.UpdateThread", func() error { _, err := client.Mailbox.UpdateThread(ctx, 0, nil); return err }},
@@ -154,8 +155,13 @@ func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 		{"Teams.Get", func() error { _, err := client.Teams.Get(ctx, 0); return err }},
 		{"Teams.Update", func() error { _, err := client.Teams.Update(ctx, 0, nil); return err }},
 		{"Teams.ListUsers", func() error { _, err := client.Teams.ListUsers(ctx, 0); return err }},
-		{"Teams.AddUsers", func() error { _, err := client.Teams.AddUsers(ctx, 0, nil); return err }},
-		{"Teams.DeleteUsers", func() error { _, err := client.Teams.DeleteUsers(ctx, 0, nil); return err }},
+		{"Teams.AddUsers#id", func() error { _, err := client.Teams.AddUsers(ctx, 0, nil); return err }},
+		{"Teams.AddUsers#userIDs", func() error { _, err := client.Teams.AddUsers(ctx, 1, []UserID{1, 0}); return err }},
+		{"Teams.DeleteUsers#id", func() error { _, err := client.Teams.DeleteUsers(ctx, 0, nil); return err }},
+		{"Teams.DeleteUsers#userIDs", func() error {
+			_, err := client.Teams.DeleteUsers(ctx, 1, []UserID{1, 0})
+			return err
+		}},
 		{"Users.Get", func() error { _, err := client.Users.Get(ctx, 0); return err }},
 		{"Users.GetPermissions", func() error { _, err := client.Users.GetPermissions(ctx, 0); return err }},
 		{"Users.Update", func() error { _, err := client.Users.Update(ctx, 0, nil); return err }},

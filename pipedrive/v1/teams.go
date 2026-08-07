@@ -152,6 +152,9 @@ func (s *TeamsService) AddUsers(ctx context.Context, id TeamID, userIDs []UserID
 	if len(userIDs) == 0 {
 		return nil, fmt.Errorf("at least one user id is required")
 	}
+	if err := validateIDs(userIDs, "user id"); err != nil {
+		return nil, err
+	}
 	path := fmt.Sprintf("/legacyTeams/%d/users", id)
 
 	body := map[string]any{"users": userIDs}
@@ -171,6 +174,9 @@ func (s *TeamsService) DeleteUsers(ctx context.Context, id TeamID, userIDs []Use
 	cfg := newTeamsOptions(opts)
 	if len(userIDs) == 0 {
 		return nil, fmt.Errorf("at least one user id is required")
+	}
+	if err := validateIDs(userIDs, "user id"); err != nil {
+		return nil, err
 	}
 	path := fmt.Sprintf("/legacyTeams/%d/users", id)
 
