@@ -7,6 +7,15 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-08-14
+
+### Changed
+
+- Bump the preferred Go toolchain, CI, security scanning and OpenAPI drift
+  checks from Go 1.26.5 to Go 1.26.6. Go 1.25 remains supported.
+- Bump `github/codeql-action` from v4.37.5 to v4.37.6, keeping the `init`
+  and `analyze` steps on the same pinned revision.
+
 ## [1.10.0] - 2026-08-07
 
 ### Security
