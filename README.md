@@ -36,7 +36,7 @@ The repository prefers Go 1.26.6 locally via the `toolchain` directive in
 To pin a specific version:
 
 ```sh
-go get github.com/juhokoskela/pipedrive-go@v1.10.1
+go get github.com/juhokoskela/pipedrive-go@v1.11.0
 ```
 
 ## Quickstart (API token)
