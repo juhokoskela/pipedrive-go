@@ -7781,6 +7781,7 @@ paths:
                               description: The emails of the person
                               items:
                                 type: object
+                                title: PersonItemEmail
                                 properties:
                                   value:
                                     type: string
@@ -7796,6 +7797,7 @@ paths:
                               description: The phones of the person
                               items:
                                 type: object
+                                title: PersonItemPhone
                                 properties:
                                   value:
                                     type: string
@@ -7822,6 +7824,7 @@ paths:
                               description: The ID of the picture associated with the person
                             postal_address:
                               type: object
+                              title: PersonItemAddress
                               description: 'Postal address of the person, included if contact sync is enabled for the company'
                               properties:
                                 value:
@@ -7862,6 +7865,7 @@ paths:
                               description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
                               items:
                                 type: object
+                                title: PersonItemIm
                                 properties:
                                   value:
                                     type: string
@@ -7947,7 +7951,7 @@ paths:
                   next_cursor: eyJmaWVsZCI6ImlkIiwiZmllbGRWYWx1ZSI6Nywic29ydERpcmVjdGlvbiI6ImFzYyIsImlkIjo3fQ
     post:
       summary: Add a new person
-      description: 'Adds a new person. If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field.'
+      description: 'Adds a new person. <br>If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field. <br>The `im`, `postal_address`, `notes`, `birthday` and `job_title` fields don’t exist by default in Pipedrive and are only created when you set up your contact sync.'
       x-token-cost: 5
       operationId: addPerson
       tags:
@@ -7974,14 +7978,12 @@ paths:
                 add_time:
                   type: string
                   description: The creation date and time of the person
-                update_time:
-                  type: string
-                  description: The last updated date and time of the person
                 emails:
                   type: array
                   description: The emails of the person
                   items:
                     type: object
+                    title: PersonItemEmail
                     properties:
                       value:
                         type: string
@@ -7997,6 +7999,7 @@ paths:
                   description: The phones of the person
                   items:
                     type: object
+                    title: PersonItemPhone
                     properties:
                       value:
                         type: string
@@ -8015,6 +8018,66 @@ paths:
                   description: The IDs of labels assigned to the person
                   items:
                     type: integer
+                postal_address:
+                  type: object
+                  title: PersonItemAddress
+                  description: 'Postal address of the person, included if contact sync is enabled for the company'
+                  properties:
+                    value:
+                      type: string
+                      description: The full address of the person
+                    country:
+                      type: string
+                      description: Country of the person
+                    admin_area_level_1:
+                      type: string
+                      description: Admin area level 1 (e.g. state) of the person
+                    admin_area_level_2:
+                      type: string
+                      description: Admin area level 2 (e.g. county) of the person
+                    locality:
+                      type: string
+                      description: Locality (e.g. city) of the person
+                    sublocality:
+                      type: string
+                      description: Sublocality (e.g. neighborhood) of the person
+                    route:
+                      type: string
+                      description: Route (e.g. street) of the person
+                    street_number:
+                      type: string
+                      description: Street number of the person
+                    subpremise:
+                      type: string
+                      description: Subpremise (e.g. apartment/suite number) of the person
+                    postal_code:
+                      type: string
+                      description: Postal code of the person
+                notes:
+                  type: string
+                  description: 'Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company'
+                im:
+                  type: array
+                  description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
+                  items:
+                    type: object
+                    title: PersonItemIm
+                    properties:
+                      value:
+                        type: string
+                        description: The instant messaging account of the person
+                      primary:
+                        type: boolean
+                        description: Whether the instant messaging account is primary or not
+                      label:
+                        type: string
+                        description: The instant messaging account classification label
+                birthday:
+                  type: string
+                  description: 'The birthday of the person, included if contact sync is enabled for the company'
+                job_title:
+                  type: string
+                  description: 'The job title of the person, included if contact sync is enabled for the company'
                 marketing_status:
                   type: string
                   description: 'If the person does not have a valid email address, then the marketing status is **not set** and `no_consent` is returned for the `marketing_status` value when the new person is created. If the change is forbidden, the status will remain unchanged for every call that tries to modify the marketing status. Please be aware that it is only allowed **once** to change the marketing status from an old status to a new one.<table><tr><th>Value</th><th>Description</th></tr><tr><td>`no_consent`</td><td>The customer has not given consent to receive any marketing communications</td></tr><tr><td>`unsubscribed`</td><td>The customers have unsubscribed from ALL marketing communications</td></tr><tr><td>`subscribed`</td><td>The customers are subscribed and are counted towards marketing caps</td></tr><tr><td>`archived`</td><td>The customers with `subscribed` status can be moved to `archived` to save consent, but they are not paid for</td></tr></table>'
@@ -8077,6 +8140,7 @@ paths:
                             description: The emails of the person
                             items:
                               type: object
+                              title: PersonItemEmail
                               properties:
                                 value:
                                   type: string
@@ -8092,6 +8156,7 @@ paths:
                             description: The phones of the person
                             items:
                               type: object
+                              title: PersonItemPhone
                               properties:
                                 value:
                                   type: string
@@ -8118,6 +8183,7 @@ paths:
                             description: The ID of the picture associated with the person
                           postal_address:
                             type: object
+                            title: PersonItemAddress
                             description: 'Postal address of the person, included if contact sync is enabled for the company'
                             properties:
                               value:
@@ -8158,6 +8224,7 @@ paths:
                             description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
                             items:
                               type: object
+                              title: PersonItemIm
                               properties:
                                 value:
                                   type: string
@@ -8387,6 +8454,7 @@ paths:
                             description: The emails of the person
                             items:
                               type: object
+                              title: PersonItemEmail
                               properties:
                                 value:
                                   type: string
@@ -8402,6 +8470,7 @@ paths:
                             description: The phones of the person
                             items:
                               type: object
+                              title: PersonItemPhone
                               properties:
                                 value:
                                   type: string
@@ -8428,6 +8497,7 @@ paths:
                             description: The ID of the picture associated with the person
                           postal_address:
                             type: object
+                            title: PersonItemAddress
                             description: 'Postal address of the person, included if contact sync is enabled for the company'
                             properties:
                               value:
@@ -8468,6 +8538,7 @@ paths:
                             description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
                             items:
                               type: object
+                              title: PersonItemIm
                               properties:
                                 value:
                                   type: string
@@ -8544,7 +8615,7 @@ paths:
                     postal_code: '94085'
     patch:
       summary: Update a person
-      description: 'Updates the properties of a person. <br>If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field.'
+      description: 'Updates the properties of a person. <br>If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field. <br>The `im`, `postal_address`, `notes`, `birthday` and `job_title` fields don’t exist by default in Pipedrive and are only created when you set up your contact sync.'
       x-token-cost: 5
       operationId: updatePerson
       tags:
@@ -8575,17 +8646,12 @@ paths:
                 org_id:
                   type: integer
                   description: The ID of the organization linked to the person
-                add_time:
-                  type: string
-                  description: The creation date and time of the person
-                update_time:
-                  type: string
-                  description: The last updated date and time of the person
                 emails:
                   type: array
                   description: The emails of the person
                   items:
                     type: object
+                    title: PersonItemEmail
                     properties:
                       value:
                         type: string
@@ -8601,6 +8667,7 @@ paths:
                   description: The phones of the person
                   items:
                     type: object
+                    title: PersonItemPhone
                     properties:
                       value:
                         type: string
@@ -8619,6 +8686,66 @@ paths:
                   description: The IDs of labels assigned to the person
                   items:
                     type: integer
+                postal_address:
+                  type: object
+                  title: PersonItemAddress
+                  description: 'Postal address of the person, included if contact sync is enabled for the company'
+                  properties:
+                    value:
+                      type: string
+                      description: The full address of the person
+                    country:
+                      type: string
+                      description: Country of the person
+                    admin_area_level_1:
+                      type: string
+                      description: Admin area level 1 (e.g. state) of the person
+                    admin_area_level_2:
+                      type: string
+                      description: Admin area level 2 (e.g. county) of the person
+                    locality:
+                      type: string
+                      description: Locality (e.g. city) of the person
+                    sublocality:
+                      type: string
+                      description: Sublocality (e.g. neighborhood) of the person
+                    route:
+                      type: string
+                      description: Route (e.g. street) of the person
+                    street_number:
+                      type: string
+                      description: Street number of the person
+                    subpremise:
+                      type: string
+                      description: Subpremise (e.g. apartment/suite number) of the person
+                    postal_code:
+                      type: string
+                      description: Postal code of the person
+                notes:
+                  type: string
+                  description: 'Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company'
+                im:
+                  type: array
+                  description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
+                  items:
+                    type: object
+                    title: PersonItemIm
+                    properties:
+                      value:
+                        type: string
+                        description: The instant messaging account of the person
+                      primary:
+                        type: boolean
+                        description: Whether the instant messaging account is primary or not
+                      label:
+                        type: string
+                        description: The instant messaging account classification label
+                birthday:
+                  type: string
+                  description: 'The birthday of the person, included if contact sync is enabled for the company'
+                job_title:
+                  type: string
+                  description: 'The job title of the person, included if contact sync is enabled for the company'
                 marketing_status:
                   type: string
                   description: 'If the person does not have a valid email address, then the marketing status is **not set** and `no_consent` is returned for the `marketing_status` value when the new person is created. If the change is forbidden, the status will remain unchanged for every call that tries to modify the marketing status. Please be aware that it is only allowed **once** to change the marketing status from an old status to a new one.<table><tr><th>Value</th><th>Description</th></tr><tr><td>`no_consent`</td><td>The customer has not given consent to receive any marketing communications</td></tr><tr><td>`unsubscribed`</td><td>The customers have unsubscribed from ALL marketing communications</td></tr><tr><td>`subscribed`</td><td>The customers are subscribed and are counted towards marketing caps</td></tr><tr><td>`archived`</td><td>The customers with `subscribed` status can be moved to `archived` to save consent, but they are not paid for</td></tr></table>'
@@ -8681,6 +8808,7 @@ paths:
                             description: The emails of the person
                             items:
                               type: object
+                              title: PersonItemEmail
                               properties:
                                 value:
                                   type: string
@@ -8696,6 +8824,7 @@ paths:
                             description: The phones of the person
                             items:
                               type: object
+                              title: PersonItemPhone
                               properties:
                                 value:
                                   type: string
@@ -8722,6 +8851,7 @@ paths:
                             description: The ID of the picture associated with the person
                           postal_address:
                             type: object
+                            title: PersonItemAddress
                             description: 'Postal address of the person, included if contact sync is enabled for the company'
                             properties:
                               value:
@@ -8762,6 +8892,7 @@ paths:
                             description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
                             items:
                               type: object
+                              title: PersonItemIm
                               properties:
                                 value:
                                   type: string
@@ -10654,9 +10785,9 @@ paths:
                               type: integer
                               description: The visibility of the organization
                             address:
-                              description: The address of the organization
                               type: object
                               title: OrganizationItemAddress
+                              description: The address of the organization
                               properties:
                                 value:
                                   type: string
@@ -10750,6 +10881,11 @@ paths:
                       - 1
                       - 2
                       - 3
+                    website: 'https://www.company.com'
+                    linkedin: 'https://linkedin.com/company'
+                    industry: 2
+                    annual_revenue: 0
+                    employee_count: 10
                     custom_fields: {}
                 additional_data:
                   next_cursor: eyJmaWVsZCI6ImlkIiwiZmllbGRWYWx1ZSI6Nywic29ydERpcmVjdGlvbiI6ImFzYyIsImlkIjo3fQ
@@ -10769,7 +10905,7 @@ paths:
           application/json:
             schema:
               required:
-                - title
+                - name
               type: object
               properties:
                 name:
@@ -10781,9 +10917,6 @@ paths:
                 add_time:
                   type: string
                   description: The creation date and time of the organization
-                update_time:
-                  type: string
-                  description: The last updated date and time of the organization
                 visible_to:
                   type: integer
                   description: The visibility of the organization
@@ -10793,9 +10926,9 @@ paths:
                   items:
                     type: integer
                 address:
-                  description: The address of the organization
                   type: object
                   title: OrganizationItemAddress
+                  description: The address of the organization
                   properties:
                     value:
                       type: string
@@ -10827,6 +10960,26 @@ paths:
                     postal_code:
                       type: string
                       description: Postal code of the organization
+                website:
+                  type: string
+                  nullable: true
+                  description: The website of the organization
+                linkedin:
+                  type: string
+                  nullable: true
+                  description: The LinkedIn profile URL of the organization
+                industry:
+                  type: integer
+                  nullable: true
+                  description: The industry the organization belongs to
+                annual_revenue:
+                  type: integer
+                  nullable: true
+                  description: The annual revenue of the organization
+                employee_count:
+                  type: integer
+                  nullable: true
+                  description: The number of employees in the organization
                 custom_fields:
                   type: object
                   additionalProperties: true
@@ -10874,9 +11027,9 @@ paths:
                             type: integer
                             description: The visibility of the organization
                           address:
-                            description: The address of the organization
                             type: object
                             title: OrganizationItemAddress
+                            description: The address of the organization
                             properties:
                               value:
                                 type: string
@@ -10963,6 +11116,11 @@ paths:
                     - 1
                     - 2
                     - 3
+                  website: 'https://www.company.com'
+                  linkedin: 'https://linkedin.com/company'
+                  industry: 2
+                  annual_revenue: 0
+                  employee_count: 10
                   custom_fields: {}
   '/organizations/{id}':
     delete:
@@ -11107,9 +11265,9 @@ paths:
                             type: integer
                             description: The visibility of the organization
                           address:
-                            description: The address of the organization
                             type: object
                             title: OrganizationItemAddress
+                            description: The address of the organization
                             properties:
                               value:
                                 type: string
@@ -11196,6 +11354,11 @@ paths:
                     - 1
                     - 2
                     - 3
+                  website: 'https://www.company.com'
+                  linkedin: 'https://linkedin.com/company'
+                  industry: 2
+                  annual_revenue: 0
+                  employee_count: 10
                   custom_fields: {}
     patch:
       summary: Update a organization
@@ -11227,12 +11390,6 @@ paths:
                 owner_id:
                   type: integer
                   description: The ID of the user who owns the organization
-                add_time:
-                  type: string
-                  description: The creation date and time of the organization
-                update_time:
-                  type: string
-                  description: The last updated date and time of the organization
                 visible_to:
                   type: integer
                   description: The visibility of the organization
@@ -11242,9 +11399,9 @@ paths:
                   items:
                     type: integer
                 address:
-                  description: The address of the organization
                   type: object
                   title: OrganizationItemAddress
+                  description: The address of the organization
                   properties:
                     value:
                       type: string
@@ -11276,6 +11433,26 @@ paths:
                     postal_code:
                       type: string
                       description: Postal code of the organization
+                website:
+                  type: string
+                  nullable: true
+                  description: The website of the organization
+                linkedin:
+                  type: string
+                  nullable: true
+                  description: The LinkedIn profile URL of the organization
+                industry:
+                  type: integer
+                  nullable: true
+                  description: The industry the organization belongs to
+                annual_revenue:
+                  type: integer
+                  nullable: true
+                  description: The annual revenue of the organization
+                employee_count:
+                  type: integer
+                  nullable: true
+                  description: The number of employees in the organization
                 custom_fields:
                   type: object
                   additionalProperties: true
@@ -11323,9 +11500,9 @@ paths:
                             type: integer
                             description: The visibility of the organization
                           address:
-                            description: The address of the organization
                             type: object
                             title: OrganizationItemAddress
+                            description: The address of the organization
                             properties:
                               value:
                                 type: string
@@ -11412,6 +11589,11 @@ paths:
                     - 1
                     - 2
                     - 3
+                  website: 'https://www.company.com'
+                  linkedin: 'https://linkedin.com/company'
+                  industry: 2
+                  annual_revenue: 0
+                  employee_count: 10
                   custom_fields: {}
   '/organizations/{id}/followers':
     get:
@@ -22709,9 +22891,9 @@ components:
           type: integer
           description: The visibility of the organization
         address:
-          description: The address of the organization
           type: object
           title: OrganizationItemAddress
+          description: The address of the organization
           properties:
             value:
               type: string
@@ -22804,6 +22986,7 @@ components:
           description: The emails of the person
           items:
             type: object
+            title: PersonItemEmail
             properties:
               value:
                 type: string
@@ -22819,6 +23002,7 @@ components:
           description: The phones of the person
           items:
             type: object
+            title: PersonItemPhone
             properties:
               value:
                 type: string
@@ -22845,6 +23029,7 @@ components:
           description: The ID of the picture associated with the person
         postal_address:
           type: object
+          title: PersonItemAddress
           description: 'Postal address of the person, included if contact sync is enabled for the company'
           properties:
             value:
@@ -22885,6 +23070,7 @@ components:
           description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
           items:
             type: object
+            title: PersonItemIm
             properties:
               value:
                 type: string

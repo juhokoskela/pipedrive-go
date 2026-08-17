@@ -6009,6 +6009,7 @@ paths:
                                                                                         - projects
                                                                                         - account_settings
                                                                                         - partnership
+                                                                                        - nova
                                                                                     description: The granular app access level
                                                                                 admin:
                                                                                     type: boolean
@@ -6789,6 +6790,7 @@ paths:
                                                                                     - projects
                                                                                     - account_settings
                                                                                     - partnership
+                                                                                    - nova
                                                                                 description: The granular app access level
                                                                             admin:
                                                                                 type: boolean
@@ -19212,6 +19214,8 @@ paths:
                         - campaigns
                         - global
                         - account_settings
+                        - partnership
+                        - nova
             responses:
                 '200':
                     description: Get all permissions
@@ -19252,6 +19256,8 @@ paths:
                                                             - campaigns
                                                             - global
                                                             - account_settings
+                                                            - partnership
+                                                            - nova
                                                     type:
                                                         type: string
                                                         description: The type of permission set
@@ -19345,6 +19351,8 @@ paths:
                                                 - campaigns
                                                 - global
                                                 - account_settings
+                                                - partnership
+                                                - nova
                                         type:
                                             type: string
                                             description: The type of permission set
@@ -25526,6 +25534,7 @@ paths:
                                                                                 - projects
                                                                                 - account_settings
                                                                                 - partnership
+                                                                                - nova
                                                                             description: The granular app access level
                                                                         admin:
                                                                             type: boolean
@@ -27139,6 +27148,7 @@ paths:
                                                                         - projects
                                                                         - account_settings
                                                                         - partnership
+                                                                        - nova
                                                                     description: The granular app access level
                                                                 admin:
                                                                     type: boolean
@@ -27264,6 +27274,7 @@ paths:
                                                     - projects
                                                     - account_settings
                                                     - partnership
+                                                    - nova
                                                 description: The granular app access level
                                             admin:
                                                 type: boolean
@@ -27355,6 +27366,7 @@ paths:
                                                                     - projects
                                                                     - account_settings
                                                                     - partnership
+                                                                    - nova
                                                                 description: The granular app access level
                                                             admin:
                                                                 type: boolean
@@ -27537,6 +27549,7 @@ paths:
                                                                         - projects
                                                                         - account_settings
                                                                         - partnership
+                                                                        - nova
                                                                     description: The granular app access level
                                                                 admin:
                                                                     type: boolean
@@ -27710,6 +27723,7 @@ paths:
                                                                         - projects
                                                                         - account_settings
                                                                         - partnership
+                                                                        - nova
                                                                     description: The granular app access level
                                                                 admin:
                                                                     type: boolean
@@ -27920,6 +27934,7 @@ paths:
                                                                     - projects
                                                                     - account_settings
                                                                     - partnership
+                                                                    - nova
                                                                 description: The granular app access level
                                                             admin:
                                                                 type: boolean
@@ -28099,6 +28114,7 @@ paths:
                                                                     - projects
                                                                     - account_settings
                                                                     - partnership
+                                                                    - nova
                                                                 description: The granular app access level
                                                             admin:
                                                                 type: boolean
