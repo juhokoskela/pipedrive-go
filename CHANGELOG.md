@@ -7,6 +7,24 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-08-18
+
+### Added
+
+- Add v2 organization create and update options for website, LinkedIn URL,
+  industry, annual revenue and employee count, including explicit clear options
+  for nullable values.
+- Add v2 person create and update options for postal address, notes, instant
+  messaging accounts, birthday and job title. `PersonAddress` is an alias of
+  `OrganizationAddress`, preserving compatibility with existing address values.
+- Add v1 support for the `nova` and `partnership` permission-set app values and
+  the `nova` user-access app value.
+
+### Changed
+
+- Refresh the official v1 and v2 OpenAPI specifications, re-derive the v1
+  legacy surface and regenerate the internal clients.
+
 ## [1.10.1] - 2026-08-14
 
 ### Changed
