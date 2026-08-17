@@ -189,6 +189,27 @@ func TestPersonsService_Create(t *testing.T) {
 		if !ok || email["value"] != "ada@example.com" {
 			t.Fatalf("unexpected email: %#v", emails[0])
 		}
+		address, ok := payload["postal_address"].(map[string]interface{})
+		if !ok || address["value"] != "Main Street 1" || address["country"] != "FI" {
+			t.Fatalf("unexpected postal_address: %#v", payload["postal_address"])
+		}
+		if payload["notes"] != "Met at Slush" {
+			t.Fatalf("unexpected notes: %#v", payload["notes"])
+		}
+		im, ok := payload["im"].([]interface{})
+		if !ok || len(im) != 1 {
+			t.Fatalf("unexpected im: %#v", payload["im"])
+		}
+		account, ok := im[0].(map[string]interface{})
+		if !ok || account["value"] != "ada-lovelace" {
+			t.Fatalf("unexpected im account: %#v", im[0])
+		}
+		if payload["birthday"] != "1815-12-10" {
+			t.Fatalf("unexpected birthday: %#v", payload["birthday"])
+		}
+		if payload["job_title"] != "Mathematician" {
+			t.Fatalf("unexpected job_title: %#v", payload["job_title"])
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":12,"name":"Ada"}}`))
@@ -207,6 +228,11 @@ func TestPersonsService_Create(t *testing.T) {
 		WithPersonOrgID(OrganizationID(5)),
 		WithPersonEmails(LabeledValue{Value: "ada@example.com", Primary: true, Label: "work"}),
 		WithPersonMarketingStatus(PersonMarketingStatusSubscribed),
+		WithPersonPostalAddress(PersonAddress{Value: "Main Street 1", Country: "FI"}),
+		WithPersonNotes("Met at Slush"),
+		WithPersonIM(LabeledValue{Value: "ada-lovelace", Primary: true, Label: "work"}),
+		WithPersonBirthday("1815-12-10"),
+		WithPersonJobTitle("Mathematician"),
 		WithPersonRequestOptions(pipedrive.WithHeader("X-Test", "2")),
 	)
 	if err != nil {
