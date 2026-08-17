@@ -226,12 +226,17 @@ type getOrganizationFollowersChangelogOptions struct {
 }
 
 type organizationPayload struct {
-	name         *string
-	ownerID      *UserID
-	address      *OrganizationAddress
-	labelIDs     optionalSlice[int]
-	visibleTo    *int
-	customFields map[string]interface{}
+	name          *string
+	ownerID       *UserID
+	address       *OrganizationAddress
+	labelIDs      optionalSlice[int]
+	visibleTo     *int
+	website       nullableValue[string]
+	linkedIn      nullableValue[string]
+	industry      nullableValue[int]
+	annualRevenue nullableValue[int]
+	employeeCount nullableValue[int]
+	customFields  map[string]interface{}
 }
 
 type organizationRequestOptions struct {
@@ -388,6 +393,71 @@ func WithOrganizationLabelIDs(ids ...int) OrganizationOption {
 func WithOrganizationVisibleTo(visibleTo int) OrganizationOption {
 	return organizationFieldOption(func(payload *organizationPayload) {
 		payload.visibleTo = &visibleTo
+	})
+}
+
+func WithOrganizationWebsite(website string) OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.website.assign(website)
+	})
+}
+
+// ClearOrganizationWebsite sends an explicit JSON null website.
+func ClearOrganizationWebsite() OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.website.clear()
+	})
+}
+
+func WithOrganizationLinkedIn(linkedIn string) OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.linkedIn.assign(linkedIn)
+	})
+}
+
+// ClearOrganizationLinkedIn sends an explicit JSON null LinkedIn URL.
+func ClearOrganizationLinkedIn() OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.linkedIn.clear()
+	})
+}
+
+func WithOrganizationIndustry(industry int) OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.industry.assign(industry)
+	})
+}
+
+// ClearOrganizationIndustry sends an explicit JSON null industry.
+func ClearOrganizationIndustry() OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.industry.clear()
+	})
+}
+
+func WithOrganizationAnnualRevenue(revenue int) OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.annualRevenue.assign(revenue)
+	})
+}
+
+// ClearOrganizationAnnualRevenue sends an explicit JSON null annual revenue.
+func ClearOrganizationAnnualRevenue() OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.annualRevenue.clear()
+	})
+}
+
+func WithOrganizationEmployeeCount(count int) OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.employeeCount.assign(count)
+	})
+}
+
+// ClearOrganizationEmployeeCount sends an explicit JSON null employee count.
+func ClearOrganizationEmployeeCount() OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.employeeCount.clear()
 	})
 }
 
@@ -1093,6 +1163,41 @@ func (p organizationPayload) toMap() map[string]interface{} {
 	}
 	if p.visibleTo != nil {
 		body["visible_to"] = *p.visibleTo
+	}
+	if p.website.set {
+		if p.website.value == nil {
+			body["website"] = nil
+		} else {
+			body["website"] = *p.website.value
+		}
+	}
+	if p.linkedIn.set {
+		if p.linkedIn.value == nil {
+			body["linkedin"] = nil
+		} else {
+			body["linkedin"] = *p.linkedIn.value
+		}
+	}
+	if p.industry.set {
+		if p.industry.value == nil {
+			body["industry"] = nil
+		} else {
+			body["industry"] = *p.industry.value
+		}
+	}
+	if p.annualRevenue.set {
+		if p.annualRevenue.value == nil {
+			body["annual_revenue"] = nil
+		} else {
+			body["annual_revenue"] = *p.annualRevenue.value
+		}
+	}
+	if p.employeeCount.set {
+		if p.employeeCount.value == nil {
+			body["employee_count"] = nil
+		} else {
+			body["employee_count"] = *p.employeeCount.value
+		}
 	}
 	if p.customFields != nil {
 		body["custom_fields"] = p.customFields
