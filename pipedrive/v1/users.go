@@ -18,6 +18,7 @@ const (
 	UserAccessAppProjects        UserAccessApp = "projects"
 	UserAccessAppAccountSettings UserAccessApp = "account_settings"
 	UserAccessAppPartnership     UserAccessApp = "partnership"
+	UserAccessAppNova            UserAccessApp = "nova"
 )
 
 type UserAccess struct {
