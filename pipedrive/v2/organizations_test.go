@@ -127,6 +127,21 @@ func TestOrganizationsService_Create(t *testing.T) {
 		if !ok || customFields["cf_key"] != "value" {
 			t.Fatalf("unexpected custom_fields: %#v", payload["custom_fields"])
 		}
+		if payload["website"] != "https://acme.example" {
+			t.Fatalf("unexpected website: %#v", payload["website"])
+		}
+		if payload["linkedin"] != "https://linkedin.com/company/acme" {
+			t.Fatalf("unexpected linkedin: %#v", payload["linkedin"])
+		}
+		if payload["industry"] != float64(7) {
+			t.Fatalf("unexpected industry: %#v", payload["industry"])
+		}
+		if payload["annual_revenue"] != float64(1_000_000) {
+			t.Fatalf("unexpected annual_revenue: %#v", payload["annual_revenue"])
+		}
+		if payload["employee_count"] != float64(42) {
+			t.Fatalf("unexpected employee_count: %#v", payload["employee_count"])
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":10,"name":"Acme"}}`))
@@ -144,6 +159,11 @@ func TestOrganizationsService_Create(t *testing.T) {
 		WithOrganizationOwnerID(UserID(3)),
 		WithOrganizationAddress(OrganizationAddress{Value: "HQ"}),
 		WithOrganizationCustomFieldsMap(map[string]interface{}{"cf_key": "value"}),
+		WithOrganizationWebsite("https://acme.example"),
+		WithOrganizationLinkedIn("https://linkedin.com/company/acme"),
+		WithOrganizationIndustry(7),
+		WithOrganizationAnnualRevenue(1_000_000),
+		WithOrganizationEmployeeCount(42),
 		WithOrganizationRequestOptions(pipedrive.WithHeader("X-Test", "2")),
 	)
 	if err != nil {
@@ -640,6 +660,12 @@ func TestOrganizationsService_Update(t *testing.T) {
 		if !ok || len(labels) != 2 || labels[0] != float64(10) || labels[1] != float64(11) {
 			t.Fatalf("unexpected label_ids: %#v", payload["label_ids"])
 		}
+		for _, field := range []string{"website", "linkedin", "industry", "annual_revenue", "employee_count"} {
+			value, ok := payload[field]
+			if !ok || value != nil {
+				t.Fatalf("expected null %s, got %#v", field, value)
+			}
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":5,"name":"Updated"}}`))
@@ -651,6 +677,11 @@ func TestOrganizationsService_Update(t *testing.T) {
 		WithOrganizationName("Updated"),
 		WithOrganizationLabelIDs(10, 11),
 		WithOrganizationVisibleTo(3),
+		ClearOrganizationWebsite(),
+		ClearOrganizationLinkedIn(),
+		ClearOrganizationIndustry(),
+		ClearOrganizationAnnualRevenue(),
+		ClearOrganizationEmployeeCount(),
 		WithOrganizationRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {

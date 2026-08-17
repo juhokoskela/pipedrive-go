@@ -569,6 +569,8 @@ const (
 	GetPermissionSetsParamsAppAccountSettings GetPermissionSetsParamsApp = "account_settings"
 	GetPermissionSetsParamsAppCampaigns       GetPermissionSetsParamsApp = "campaigns"
 	GetPermissionSetsParamsAppGlobal          GetPermissionSetsParamsApp = "global"
+	GetPermissionSetsParamsAppNova            GetPermissionSetsParamsApp = "nova"
+	GetPermissionSetsParamsAppPartnership     GetPermissionSetsParamsApp = "partnership"
 	GetPermissionSetsParamsAppProjects        GetPermissionSetsParamsApp = "projects"
 	GetPermissionSetsParamsAppSales           GetPermissionSetsParamsApp = "sales"
 )
@@ -644,6 +646,7 @@ const (
 	AddUserJSONBodyAccessAppAccountSettings AddUserJSONBodyAccessApp = "account_settings"
 	AddUserJSONBodyAccessAppCampaigns       AddUserJSONBodyAccessApp = "campaigns"
 	AddUserJSONBodyAccessAppGlobal          AddUserJSONBodyAccessApp = "global"
+	AddUserJSONBodyAccessAppNova            AddUserJSONBodyAccessApp = "nova"
 	AddUserJSONBodyAccessAppPartnership     AddUserJSONBodyAccessApp = "partnership"
 	AddUserJSONBodyAccessAppProjects        AddUserJSONBodyAccessApp = "projects"
 	AddUserJSONBodyAccessAppSales           AddUserJSONBodyAccessApp = "sales"

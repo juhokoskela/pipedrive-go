@@ -18,6 +18,8 @@ const (
 	PermissionSetAppCampaigns       PermissionSetApp = "campaigns"
 	PermissionSetAppGlobal          PermissionSetApp = "global"
 	PermissionSetAppAccountSettings PermissionSetApp = "account_settings"
+	PermissionSetAppPartnership     PermissionSetApp = "partnership"
+	PermissionSetAppNova            PermissionSetApp = "nova"
 )
 
 type PermissionSetType string

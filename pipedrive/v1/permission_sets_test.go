@@ -12,39 +12,54 @@ import (
 func TestPermissionSetsService_List(t *testing.T) {
 	t.Parallel()
 
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/permissionSets" {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.URL.Query().Get("app"); got != "sales" {
-			t.Fatalf("unexpected app: %q", got)
-		}
-		if got := r.Header.Get("X-Test"); got != "1" {
-			t.Fatalf("unexpected header X-Test: %q", got)
-		}
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"id":"perm-1","name":"Sales admin","description":"desc","app":"sales","type":"admin","assignment_count":2}]}`))
-	}))
-	t.Cleanup(srv.Close)
-
-	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
-	if err != nil {
-		t.Fatalf("NewClient error: %v", err)
+	tests := []struct {
+		name string
+		app  PermissionSetApp
+	}{
+		{name: "sales", app: PermissionSetAppSales},
+		{name: "partnership", app: PermissionSetAppPartnership},
+		{name: "nova", app: PermissionSetAppNova},
 	}
 
-	sets, err := client.PermissionSets.List(
-		context.Background(),
-		WithPermissionSetsApp(PermissionSetAppSales),
-		WithPermissionSetsRequestOptions(pipedrive.WithHeader("X-Test", "1")),
-	)
-	if err != nil {
-		t.Fatalf("List error: %v", err)
-	}
-	if len(sets) != 1 || sets[0].ID != "perm-1" || sets[0].AssignmentCount != 2 {
-		t.Fatalf("unexpected permission sets: %#v", sets)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.Method != http.MethodGet {
+					t.Fatalf("unexpected method: %s", r.Method)
+				}
+				if r.URL.Path != "/permissionSets" {
+					t.Fatalf("unexpected path: %s", r.URL.Path)
+				}
+				if got := r.URL.Query().Get("app"); got != string(tt.app) {
+					t.Fatalf("unexpected app: %q", got)
+				}
+				if got := r.Header.Get("X-Test"); got != "1" {
+					t.Fatalf("unexpected header X-Test: %q", got)
+				}
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"success":true,"data":[{"id":"perm-1","name":"Admin","description":"desc","app":"` + string(tt.app) + `","type":"admin","assignment_count":2}]}`))
+			}))
+			t.Cleanup(srv.Close)
+
+			client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+			if err != nil {
+				t.Fatalf("NewClient error: %v", err)
+			}
+
+			sets, err := client.PermissionSets.List(
+				context.Background(),
+				WithPermissionSetsApp(tt.app),
+				WithPermissionSetsRequestOptions(pipedrive.WithHeader("X-Test", "1")),
+			)
+			if err != nil {
+				t.Fatalf("List error: %v", err)
+			}
+			if len(sets) != 1 || sets[0].ID != "perm-1" || sets[0].App != tt.app || sets[0].AssignmentCount != 2 {
+				t.Fatalf("unexpected permission sets: %#v", sets)
+			}
+		})
 	}
 }
 

@@ -2429,23 +2429,35 @@ type AddOrganizationJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"address,omitempty"`
 
+	// AnnualRevenue The annual revenue of the organization
+	AnnualRevenue *int `json:"annual_revenue"`
+
 	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
+
+	// EmployeeCount The number of employees in the organization
+	EmployeeCount *int `json:"employee_count"`
+
+	// Industry The industry the organization belongs to
+	Industry *int `json:"industry"`
 
 	// LabelIds The IDs of labels assigned to the organization
 	LabelIds *[]int `json:"label_ids,omitempty"`
 
+	// Linkedin The LinkedIn profile URL of the organization
+	Linkedin *string `json:"linkedin"`
+
 	// Name The name of the organization
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 
 	// OwnerId The ID of the user who owns the organization
 	OwnerId *int `json:"owner_id,omitempty"`
 
-	// UpdateTime The last updated date and time of the organization
-	UpdateTime *string `json:"update_time,omitempty"`
-
 	// VisibleTo The visibility of the organization
 	VisibleTo *int `json:"visible_to,omitempty"`
+
+	// Website The website of the organization
+	Website *string `json:"website"`
 }
 
 // SearchOrganizationParams defines parameters for SearchOrganization.
@@ -2489,9 +2501,6 @@ type GetOrganizationParamsIncludeFields string
 
 // UpdateOrganizationJSONBody defines parameters for UpdateOrganization.
 type UpdateOrganizationJSONBody struct {
-	// AddTime The creation date and time of the organization
-	AddTime *string `json:"add_time,omitempty"`
-
 	// Address The address of the organization
 	Address *struct {
 		// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
@@ -2525,11 +2534,23 @@ type UpdateOrganizationJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"address,omitempty"`
 
+	// AnnualRevenue The annual revenue of the organization
+	AnnualRevenue *int `json:"annual_revenue"`
+
 	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
+	// EmployeeCount The number of employees in the organization
+	EmployeeCount *int `json:"employee_count"`
+
+	// Industry The industry the organization belongs to
+	Industry *int `json:"industry"`
+
 	// LabelIds The IDs of labels assigned to the organization
 	LabelIds *[]int `json:"label_ids,omitempty"`
+
+	// Linkedin The LinkedIn profile URL of the organization
+	Linkedin *string `json:"linkedin"`
 
 	// Name The name of the organization
 	Name *string `json:"name,omitempty"`
@@ -2537,11 +2558,11 @@ type UpdateOrganizationJSONBody struct {
 	// OwnerId The ID of the user who owns the organization
 	OwnerId *int `json:"owner_id,omitempty"`
 
-	// UpdateTime The last updated date and time of the organization
-	UpdateTime *string `json:"update_time,omitempty"`
-
 	// VisibleTo The visibility of the organization
 	VisibleTo *int `json:"visible_to,omitempty"`
+
+	// Website The website of the organization
+	Website *string `json:"website"`
 }
 
 // GetOrganizationFollowersParams defines parameters for GetOrganizationFollowers.
@@ -2789,6 +2810,9 @@ type AddPersonJSONBody struct {
 	// AddTime The creation date and time of the person
 	AddTime *string `json:"add_time,omitempty"`
 
+	// Birthday The birthday of the person, included if contact sync is enabled for the company
+	Birthday *string `json:"birthday,omitempty"`
+
 	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
@@ -2804,6 +2828,21 @@ type AddPersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"emails,omitempty"`
 
+	// Im The instant messaging accounts of the person, included if contact sync is enabled for the company
+	Im *[]struct {
+		// Label The instant messaging account classification label
+		Label *string `json:"label,omitempty"`
+
+		// Primary Whether the instant messaging account is primary or not
+		Primary *bool `json:"primary,omitempty"`
+
+		// Value The instant messaging account of the person
+		Value *string `json:"value,omitempty"`
+	} `json:"im,omitempty"`
+
+	// JobTitle The job title of the person, included if contact sync is enabled for the company
+	JobTitle *string `json:"job_title,omitempty"`
+
 	// LabelIds The IDs of labels assigned to the person
 	LabelIds *[]int `json:"label_ids,omitempty"`
 
@@ -2812,6 +2851,9 @@ type AddPersonJSONBody struct {
 
 	// Name The name of the person
 	Name *string `json:"name,omitempty"`
+
+	// Notes Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company
+	Notes *string `json:"notes,omitempty"`
 
 	// OrgId The ID of the organization linked to the person
 	OrgId *int `json:"org_id,omitempty"`
@@ -2831,8 +2873,38 @@ type AddPersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"phones,omitempty"`
 
-	// UpdateTime The last updated date and time of the person
-	UpdateTime *string `json:"update_time,omitempty"`
+	// PostalAddress Postal address of the person, included if contact sync is enabled for the company
+	PostalAddress *struct {
+		// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
+		AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+
+		// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
+		AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+
+		// Country Country of the person
+		Country *string `json:"country,omitempty"`
+
+		// Locality Locality (e.g. city) of the person
+		Locality *string `json:"locality,omitempty"`
+
+		// PostalCode Postal code of the person
+		PostalCode *string `json:"postal_code,omitempty"`
+
+		// Route Route (e.g. street) of the person
+		Route *string `json:"route,omitempty"`
+
+		// StreetNumber Street number of the person
+		StreetNumber *string `json:"street_number,omitempty"`
+
+		// Sublocality Sublocality (e.g. neighborhood) of the person
+		Sublocality *string `json:"sublocality,omitempty"`
+
+		// Subpremise Subpremise (e.g. apartment/suite number) of the person
+		Subpremise *string `json:"subpremise,omitempty"`
+
+		// Value The full address of the person
+		Value *string `json:"value,omitempty"`
+	} `json:"postal_address,omitempty"`
 
 	// VisibleTo The visibility of the person
 	VisibleTo *int `json:"visible_to,omitempty"`
@@ -2891,8 +2963,8 @@ type GetPersonParamsIncludeFields string
 
 // UpdatePersonJSONBody defines parameters for UpdatePerson.
 type UpdatePersonJSONBody struct {
-	// AddTime The creation date and time of the person
-	AddTime *string `json:"add_time,omitempty"`
+	// Birthday The birthday of the person, included if contact sync is enabled for the company
+	Birthday *string `json:"birthday,omitempty"`
 
 	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
 	CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
@@ -2909,6 +2981,21 @@ type UpdatePersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"emails,omitempty"`
 
+	// Im The instant messaging accounts of the person, included if contact sync is enabled for the company
+	Im *[]struct {
+		// Label The instant messaging account classification label
+		Label *string `json:"label,omitempty"`
+
+		// Primary Whether the instant messaging account is primary or not
+		Primary *bool `json:"primary,omitempty"`
+
+		// Value The instant messaging account of the person
+		Value *string `json:"value,omitempty"`
+	} `json:"im,omitempty"`
+
+	// JobTitle The job title of the person, included if contact sync is enabled for the company
+	JobTitle *string `json:"job_title,omitempty"`
+
 	// LabelIds The IDs of labels assigned to the person
 	LabelIds *[]int `json:"label_ids,omitempty"`
 
@@ -2917,6 +3004,9 @@ type UpdatePersonJSONBody struct {
 
 	// Name The name of the person
 	Name *string `json:"name,omitempty"`
+
+	// Notes Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company
+	Notes *string `json:"notes,omitempty"`
 
 	// OrgId The ID of the organization linked to the person
 	OrgId *int `json:"org_id,omitempty"`
@@ -2936,8 +3026,38 @@ type UpdatePersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"phones,omitempty"`
 
-	// UpdateTime The last updated date and time of the person
-	UpdateTime *string `json:"update_time,omitempty"`
+	// PostalAddress Postal address of the person, included if contact sync is enabled for the company
+	PostalAddress *struct {
+		// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
+		AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+
+		// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
+		AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+
+		// Country Country of the person
+		Country *string `json:"country,omitempty"`
+
+		// Locality Locality (e.g. city) of the person
+		Locality *string `json:"locality,omitempty"`
+
+		// PostalCode Postal code of the person
+		PostalCode *string `json:"postal_code,omitempty"`
+
+		// Route Route (e.g. street) of the person
+		Route *string `json:"route,omitempty"`
+
+		// StreetNumber Street number of the person
+		StreetNumber *string `json:"street_number,omitempty"`
+
+		// Sublocality Sublocality (e.g. neighborhood) of the person
+		Sublocality *string `json:"sublocality,omitempty"`
+
+		// Subpremise Subpremise (e.g. apartment/suite number) of the person
+		Subpremise *string `json:"subpremise,omitempty"`
+
+		// Value The full address of the person
+		Value *string `json:"value,omitempty"`
+	} `json:"postal_address,omitempty"`
 
 	// VisibleTo The visibility of the person
 	VisibleTo *int `json:"visible_to,omitempty"`

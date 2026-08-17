@@ -78,6 +78,8 @@ type LabeledValue struct {
 	Label   string `json:"label,omitempty"`
 }
 
+type PersonAddress = OrganizationAddress
+
 type Person struct {
 	ID                          PersonID               `json:"id"`
 	Name                        string                 `json:"name,omitempty"`
@@ -93,7 +95,7 @@ type Person struct {
 	VisibleTo                   *int                   `json:"visible_to,omitempty"`
 	LabelIDs                    []int                  `json:"label_ids,omitempty"`
 	PictureID                   *int                   `json:"picture_id,omitempty"`
-	PostalAddress               *OrganizationAddress   `json:"postal_address,omitempty"`
+	PostalAddress               *PersonAddress         `json:"postal_address,omitempty"`
 	Notes                       string                 `json:"notes,omitempty"`
 	IM                          []LabeledValue         `json:"im,omitempty"`
 	Birthday                    *string                `json:"birthday,omitempty"`
@@ -274,6 +276,11 @@ type personPayload struct {
 	orgID           *OrganizationID
 	emails          optionalSlice[LabeledValue]
 	phones          optionalSlice[LabeledValue]
+	postalAddress   *PersonAddress
+	notes           *string
+	im              optionalSlice[LabeledValue]
+	birthday        *string
+	jobTitle        *string
 	labelIDs        optionalSlice[int]
 	visibleTo       *int
 	marketingStatus *PersonMarketingStatus
@@ -438,6 +445,36 @@ func WithPersonEmails(emails ...LabeledValue) PersonOption {
 func WithPersonPhones(phones ...LabeledValue) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.phones.append(phones...)
+	})
+}
+
+func WithPersonPostalAddress(address PersonAddress) PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.postalAddress = &address
+	})
+}
+
+func WithPersonNotes(notes string) PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.notes = &notes
+	})
+}
+
+func WithPersonIM(accounts ...LabeledValue) PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.im.append(accounts...)
+	})
+}
+
+func WithPersonBirthday(birthday string) PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.birthday = &birthday
+	})
+}
+
+func WithPersonJobTitle(title string) PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.jobTitle = &title
 	})
 }
 
@@ -1228,6 +1265,21 @@ func (p personPayload) toMap() map[string]interface{} {
 	}
 	if p.phones.set {
 		body["phones"] = p.phones.value
+	}
+	if p.postalAddress != nil {
+		body["postal_address"] = p.postalAddress
+	}
+	if p.notes != nil {
+		body["notes"] = *p.notes
+	}
+	if p.im.set {
+		body["im"] = p.im.value
+	}
+	if p.birthday != nil {
+		body["birthday"] = *p.birthday
+	}
+	if p.jobTitle != nil {
+		body["job_title"] = *p.jobTitle
 	}
 	if p.labelIDs.set {
 		body["label_ids"] = p.labelIDs.value
