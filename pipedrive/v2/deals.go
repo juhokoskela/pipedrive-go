@@ -573,6 +573,7 @@ type dealPayload struct {
 	closeTime         nullableValue[string]
 	lostTime          *string
 	wonTime           *string
+	channelID         *string
 }
 
 type dealProductPayload struct {
@@ -1309,6 +1310,20 @@ func WithDealWonTime(value string) DealOption {
 			return
 		}
 		payload.wonTime = &value
+	})
+}
+
+// WithDealChannelID labels which integration or channel created the deal using
+// free text. Pipedrive accepts channel_id when creating and updating v2 deals,
+// although its v2 OpenAPI spec omits the field from both request schemas.
+// Pipedrive support confirmed this behavior in August 2026. Deal origin and
+// origin_id are system-generated in v2 and cannot be set by API clients.
+func WithDealChannelID(channelID string) DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		if channelID == "" {
+			return
+		}
+		payload.channelID = &channelID
 	})
 }
 
@@ -3154,6 +3169,9 @@ func (p dealPayload) toMap() map[string]interface{} {
 	}
 	if p.wonTime != nil {
 		body["won_time"] = *p.wonTime
+	}
+	if p.channelID != nil {
+		body["channel_id"] = *p.channelID
 	}
 	return body
 }
