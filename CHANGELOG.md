@@ -7,6 +7,22 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-08-20
+
+### Added
+
+- Add `FilesService.Upload` so v1 multipart file uploads from non-seekable
+  readers can be replayed after retryable responses. Typed options preserve
+  deal, person, organization, product, activity, lead and project associations;
+  `FilesService.Add` remains available for caller-built multipart bodies.
+- Add `File.ProjectID` to expose project associations returned by the API.
+
+### Changed
+
+- Bump `github.com/oapi-codegen/runtime` from v1.6.0 to v1.7.0.
+- Bump `github/codeql-action` from v4.37.6 to v4.37.7, keeping the `init`
+  and `analyze` steps on the same pinned revision.
+
 ## [1.11.0] - 2026-08-18
 
 ### Added
