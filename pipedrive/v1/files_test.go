@@ -4,10 +4,13 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
+	"sync/atomic"
 	"testing"
+	"time"
 
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
@@ -290,5 +293,199 @@ func TestFilesService_DownloadTo_DisablesResponseLimit(t *testing.T) {
 	}
 	if got := dst.String(); got != "payload" {
 		t.Fatalf("unexpected payload: %q", got)
+	}
+}
+
+func TestFilesService_Upload(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			t.Fatalf("unexpected method: %s", r.Method)
+		}
+		if r.URL.Path != "/files" {
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+		if got := r.Header.Get("X-Test"); got != "upload" {
+			t.Fatalf("unexpected header X-Test: %q", got)
+		}
+		mr, err := r.MultipartReader()
+		if err != nil {
+			t.Fatalf("multipart reader: %v", err)
+		}
+		part, err := mr.NextPart()
+		if err != nil {
+			t.Fatalf("next part: %v", err)
+		}
+		if part.FormName() != "file" {
+			t.Fatalf("unexpected form name: %q", part.FormName())
+		}
+		if part.FileName() != "report.pdf" {
+			t.Fatalf("unexpected file name: %q", part.FileName())
+		}
+		data, err := io.ReadAll(part)
+		if err != nil {
+			t.Fatalf("read part: %v", err)
+		}
+		if string(data) != "pdf-bytes" {
+			t.Fatalf("unexpected content: %q", data)
+		}
+
+		wantFields := map[string]string{
+			"deal_id":     "1",
+			"person_id":   "2",
+			"org_id":      "3",
+			"product_id":  "4",
+			"activity_id": "5",
+			"lead_id":     "adf21080-0e10-11eb-879b-05d71fb426ec",
+			"project_id":  "6",
+		}
+		for len(wantFields) > 0 {
+			part, err := mr.NextPart()
+			if err != nil {
+				t.Fatalf("next field: %v", err)
+			}
+			value, err := io.ReadAll(part)
+			if err != nil {
+				t.Fatalf("read %s: %v", part.FormName(), err)
+			}
+			want, ok := wantFields[part.FormName()]
+			if !ok {
+				t.Fatalf("unexpected multipart field: %q", part.FormName())
+			}
+			if string(value) != want {
+				t.Fatalf("unexpected %s: %q", part.FormName(), value)
+			}
+			delete(wantFields, part.FormName())
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"success":true,"data":{"id":31,"name":"report.pdf","project_id":6}}`))
+	})
+
+	file, err := client.Files.Upload(
+		context.Background(),
+		"report.pdf",
+		strings.NewReader("pdf-bytes"),
+		WithFileDealID(DealID(1)),
+		WithFilePersonID(PersonID(2)),
+		WithFileOrganizationID(OrganizationID(3)),
+		WithFileProductID(ProductID(4)),
+		WithFileActivityID(ActivityID(5)),
+		WithFileLeadID(LeadID("adf21080-0e10-11eb-879b-05d71fb426ec")),
+		WithFileProjectID(ProjectID(6)),
+		WithUploadFileRequestOptions(pipedrive.WithHeader("X-Test", "upload")),
+	)
+	if err != nil {
+		t.Fatalf("Upload error: %v", err)
+	}
+	if file.ID != 31 || file.Name != "report.pdf" || file.ProjectID == nil || *file.ProjectID != ProjectID(6) {
+		t.Fatalf("unexpected file: %#v", file)
+	}
+}
+
+func TestFilesService_Upload_RetriesStreamedContent(t *testing.T) {
+	t.Parallel()
+
+	var attempts atomic.Int32
+	client := newTestClientWithConfig(t, pipedrive.Config{
+		RetryPolicy: &pipedrive.RetryPolicy{
+			MaxAttempts:     2,
+			BaseDelay:       time.Millisecond,
+			MaxDelay:        2 * time.Millisecond,
+			RetryAllMethods: true,
+		},
+	}, func(w http.ResponseWriter, r *http.Request) {
+		if attempts.Add(1) == 1 {
+			w.WriteHeader(http.StatusTooManyRequests)
+			return
+		}
+		mr, err := r.MultipartReader()
+		if err != nil {
+			t.Fatalf("multipart reader: %v", err)
+		}
+		part, err := mr.NextPart()
+		if err != nil {
+			t.Fatalf("next part: %v", err)
+		}
+		data, err := io.ReadAll(part)
+		if err != nil {
+			t.Fatalf("read part: %v", err)
+		}
+		if string(data) != "streamed" {
+			t.Fatalf("retried request lost content: %q", data)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"success":true,"data":{"id":7,"name":"s.bin"}}`))
+	})
+
+	content := io.MultiReader(strings.NewReader("streamed"))
+	file, err := client.Files.Upload(context.Background(), "s.bin", content)
+	if err != nil {
+		t.Fatalf("Upload error: %v", err)
+	}
+	if attempts.Load() != 2 {
+		t.Fatalf("expected retry, got %d attempts", attempts.Load())
+	}
+	if file.ID != 7 {
+		t.Fatalf("unexpected file: %#v", file)
+	}
+}
+
+func TestFilesService_Upload_ValidatesInput(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		t.Fatal("request should not be sent")
+	})
+
+	if _, err := client.Files.Upload(context.Background(), "", strings.NewReader("x")); err == nil {
+		t.Fatal("expected error for empty file name")
+	}
+	if _, err := client.Files.Upload(context.Background(), "a.txt", nil); err == nil {
+		t.Fatal("expected error for nil content")
+	}
+}
+
+func TestFilesService_Upload_ValidatesAssociations(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		t.Fatal("request should not be sent")
+	})
+
+	tests := []struct {
+		name string
+		opt  UploadFileOption
+	}{
+		{name: "deal", opt: WithFileDealID(DealID(0))},
+		{name: "person", opt: WithFilePersonID(PersonID(0))},
+		{name: "organization", opt: WithFileOrganizationID(OrganizationID(0))},
+		{name: "product", opt: WithFileProductID(ProductID(0))},
+		{name: "activity", opt: WithFileActivityID(ActivityID(0))},
+		{name: "lead", opt: WithFileLeadID(LeadID("not-a-uuid"))},
+		{name: "project", opt: WithFileProjectID(ProjectID(0))},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			if _, err := client.Files.Upload(context.Background(), "a.txt", strings.NewReader("x"), tt.opt); err == nil {
+				t.Fatal("expected association validation error")
+			}
+		})
+	}
+}
+
+func TestFilesService_Upload_SourceReadError(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		t.Fatal("request should not be sent")
+	})
+
+	_, err := client.Files.Upload(context.Background(), "a.txt", &errReader{err: errors.New("boom")})
+	if err == nil || !strings.Contains(err.Error(), "boom") {
+		t.Fatalf("expected source read error, got %v", err)
 	}
 }

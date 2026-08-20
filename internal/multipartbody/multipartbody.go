@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"mime/multipart"
+	"net/url"
 )
 
 // NewFile encodes src as a multipart/form-data body with a single file part.
@@ -14,6 +15,11 @@ import (
 // the resulting request automatically gets a working GetBody, which
 // makes retries (e.g. on 429 / 5xx) safe without any extra wiring.
 func NewFile(fieldName, fileName string, src io.Reader) (string, *bytes.Reader, error) {
+	return NewFileWithFields(fieldName, fileName, src, nil)
+}
+
+// NewFileWithFields encodes src and the supplied form fields as multipart/form-data.
+func NewFileWithFields(fieldName, fileName string, src io.Reader, fields url.Values) (string, *bytes.Reader, error) {
 	if fieldName == "" {
 		return "", nil, fmt.Errorf("multipart field name is required")
 	}
@@ -33,6 +39,13 @@ func NewFile(fieldName, fileName string, src io.Reader) (string, *bytes.Reader, 
 	}
 	if _, err := io.Copy(part, src); err != nil {
 		return "", nil, fmt.Errorf("write multipart file: %w", err)
+	}
+	for name, values := range fields {
+		for _, value := range values {
+			if err := writer.WriteField(name, value); err != nil {
+				return "", nil, fmt.Errorf("write multipart field %q: %w", name, err)
+			}
+		}
 	}
 	if err := writer.Close(); err != nil {
 		return "", nil, fmt.Errorf("close multipart writer: %w", err)
