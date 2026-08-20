@@ -370,6 +370,9 @@ func TestDealsService_Create(t *testing.T) {
 		if payload["won_time"] != "2024-06-14T10:00:00Z" {
 			t.Fatalf("unexpected won_time: %#v", payload["won_time"])
 		}
+		if payload["channel_id"] != "my-integration" {
+			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":7,"title":"New Deal"}}`))
@@ -407,6 +410,7 @@ func TestDealsService_Create(t *testing.T) {
 		WithDealCloseTime("2024-06-12T10:00:00Z"),
 		WithDealLostTime("2024-06-13T10:00:00Z"),
 		WithDealWonTime("2024-06-14T10:00:00Z"),
+		WithDealChannelID("my-integration"),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
@@ -438,6 +442,9 @@ func TestDealsService_Update(t *testing.T) {
 		if payload["title"] != "Updated Deal" {
 			t.Fatalf("unexpected title: %#v", payload["title"])
 		}
+		if payload["channel_id"] != "my-integration-updated" {
+			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":7,"title":"Updated Deal"}}`))
@@ -456,6 +463,7 @@ func TestDealsService_Update(t *testing.T) {
 		context.Background(),
 		DealID(7),
 		WithDealTitle("Updated Deal"),
+		WithDealChannelID("my-integration-updated"),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {

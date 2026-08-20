@@ -220,6 +220,14 @@ err := client.Raw.Do(context.Background(), http.MethodGet, "/pipelines", nil, ni
   responses return a string label. The v2 SDK tolerates both; string labels are
   exposed via `Product.CategoryName`, while numeric IDs remain in
   `Product.Category`.
+- Deal `origin` and `origin_id` are system-generated in API v2 and cannot be
+  set by clients: `POST /api/v2/deals` silently discards `origin_id` and
+  `PATCH /api/v2/deals/{id}` rejects it (confirmed by Pipedrive support,
+  August 2026). The v1 endpoint that accepted `origin_id` is out of support
+  since 2026-08-01. To attribute deals to your integration, use the free-text
+  `channel_id` field via `WithDealChannelID` instead. Pipedrive accepts it when
+  creating and updating v2 deals, although the v2 OpenAPI spec omits it from
+  both request schemas. Leads are unaffected (`WithLeadOriginID` still works).
 
 ## Integration checks
 
