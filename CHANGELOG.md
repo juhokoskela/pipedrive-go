@@ -7,15 +7,15 @@ Semantic Versioning.
 
 ## [Unreleased]
 
-## [1.11.1] - 2026-08-20
+## [1.12.0] - 2026-08-20
 
-### Fixed
+### Added
 
 - Add `FilesService.Upload` so v1 multipart file uploads from non-seekable
   readers can be replayed after retryable responses. Typed options preserve
   deal, person, organization, product, activity, lead and project associations;
   `FilesService.Add` remains available for caller-built multipart bodies.
-- Expose project associations through `File.ProjectID`.
+- Add `File.ProjectID` to expose project associations returned by the API.
 
 ### Changed
 
