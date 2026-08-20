@@ -7,6 +7,14 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-08-20
+
+### Added
+
+- Add `WithDealChannelID` to label which integration or channel created a v2
+  deal. The option works for both create and update requests, despite
+  `channel_id` being omitted from Pipedrive's v2 OpenAPI request schemas.
+
 ## [1.12.0] - 2026-08-20
 
 ### Added
