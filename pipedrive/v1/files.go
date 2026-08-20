@@ -6,8 +6,10 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
+	"github.com/juhokoskela/pipedrive-go/internal/multipartbody"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
@@ -26,6 +28,7 @@ type File struct {
 	ProductID   *ProductID      `json:"product_id,omitempty"`
 	ActivityID  *ActivityID     `json:"activity_id,omitempty"`
 	LeadID      *LeadID         `json:"lead_id,omitempty"`
+	ProjectID   *ProjectID      `json:"project_id,omitempty"`
 	Active      bool            `json:"active_flag,omitempty"`
 	Inline      bool            `json:"inline_flag,omitempty"`
 	AddTime     *DateTime       `json:"add_time,omitempty"`
@@ -40,14 +43,39 @@ type FilesOption interface {
 	applyFiles(*filesOptions)
 }
 
+type UploadFileOption interface {
+	applyUploadFile(*uploadFileOptions)
+}
+
 type filesOptions struct {
 	query          url.Values
 	requestOptions []pipedrive.RequestOption
 }
 
+type uploadFileOptions struct {
+	payload        uploadFilePayload
+	requestOptions []pipedrive.RequestOption
+}
+
+type uploadFilePayload struct {
+	dealID     *DealID
+	personID   *PersonID
+	orgID      *OrganizationID
+	productID  *ProductID
+	activityID *ActivityID
+	leadID     *LeadID
+	projectID  *ProjectID
+}
+
 type filesOptionFunc func(*filesOptions)
 
 func (f filesOptionFunc) applyFiles(cfg *filesOptions) {
+	f(cfg)
+}
+
+type uploadFileOptionFunc func(*uploadFileOptions)
+
+func (f uploadFileOptionFunc) applyUploadFile(cfg *uploadFileOptions) {
 	f(cfg)
 }
 
@@ -63,6 +91,54 @@ func WithFilesRequestOptions(opts ...pipedrive.RequestOption) FilesOption {
 	})
 }
 
+func WithUploadFileRequestOptions(opts ...pipedrive.RequestOption) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.requestOptions = append(cfg.requestOptions, opts...)
+	})
+}
+
+func WithFileDealID(id DealID) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.payload.dealID = &id
+	})
+}
+
+func WithFilePersonID(id PersonID) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.payload.personID = &id
+	})
+}
+
+func WithFileOrganizationID(id OrganizationID) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.payload.orgID = &id
+	})
+}
+
+func WithFileProductID(id ProductID) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.payload.productID = &id
+	})
+}
+
+func WithFileActivityID(id ActivityID) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.payload.activityID = &id
+	})
+}
+
+func WithFileLeadID(id LeadID) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.payload.leadID = &id
+	})
+}
+
+func WithFileProjectID(id ProjectID) UploadFileOption {
+	return uploadFileOptionFunc(func(cfg *uploadFileOptions) {
+		cfg.payload.projectID = &id
+	})
+}
+
 func newFilesOptions(opts []FilesOption) filesOptions {
 	var cfg filesOptions
 	for _, opt := range opts {
@@ -70,6 +146,17 @@ func newFilesOptions(opts []FilesOption) filesOptions {
 			continue
 		}
 		opt.applyFiles(&cfg)
+	}
+	return cfg
+}
+
+func newUploadFileOptions(opts []UploadFileOption) uploadFileOptions {
+	var cfg uploadFileOptions
+	for _, opt := range opts {
+		if opt == nil {
+			continue
+		}
+		opt.applyUploadFile(&cfg)
 	}
 	return cfg
 }
@@ -134,6 +221,86 @@ func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType stri
 		return nil, fmt.Errorf("missing file data in response")
 	}
 	return payload.Data, nil
+}
+
+// Upload adds a file by encoding content as a multipart/form-data body.
+// Unlike Add, the encoded body is replayable, so uploads participate in
+// retries even when content itself is not seekable.
+func (s *FilesService) Upload(ctx context.Context, fileName string, content io.Reader, opts ...UploadFileOption) (*File, error) {
+	if fileName == "" || content == nil {
+		return nil, fmt.Errorf("file name and content are required")
+	}
+	cfg := newUploadFileOptions(opts)
+	fields, err := cfg.payload.toMultipartFields()
+	if err != nil {
+		return nil, err
+	}
+
+	contentType, body, err := multipartbody.NewFileWithFields("file", fileName, content, fields)
+	if err != nil {
+		return nil, err
+	}
+
+	reqOpts := append([]pipedrive.RequestOption{}, cfg.requestOptions...)
+	reqOpts = append(reqOpts, pipedrive.WithHeader("Content-Type", contentType))
+
+	var payload struct {
+		Data *File `json:"data"`
+	}
+	if err := s.client.Raw.Do(ctx, http.MethodPost, "/files", nil, body, &payload, reqOpts...); err != nil {
+		return nil, err
+	}
+	if payload.Data == nil {
+		return nil, fmt.Errorf("missing file data in response")
+	}
+	return payload.Data, nil
+}
+
+func (p uploadFilePayload) toMultipartFields() (url.Values, error) {
+	fields := make(url.Values)
+	if p.dealID != nil {
+		if err := validateID(*p.dealID, "deal id"); err != nil {
+			return nil, err
+		}
+		fields.Set("deal_id", strconv.FormatInt(int64(*p.dealID), 10))
+	}
+	if p.personID != nil {
+		if err := validateID(*p.personID, "person id"); err != nil {
+			return nil, err
+		}
+		fields.Set("person_id", strconv.FormatInt(int64(*p.personID), 10))
+	}
+	if p.orgID != nil {
+		if err := validateID(*p.orgID, "organization id"); err != nil {
+			return nil, err
+		}
+		fields.Set("org_id", strconv.FormatInt(int64(*p.orgID), 10))
+	}
+	if p.productID != nil {
+		if err := validateID(*p.productID, "product id"); err != nil {
+			return nil, err
+		}
+		fields.Set("product_id", strconv.FormatInt(int64(*p.productID), 10))
+	}
+	if p.activityID != nil {
+		if err := validateID(*p.activityID, "activity id"); err != nil {
+			return nil, err
+		}
+		fields.Set("activity_id", strconv.FormatInt(int64(*p.activityID), 10))
+	}
+	if p.leadID != nil {
+		if _, err := parseUUID(string(*p.leadID), "lead id"); err != nil {
+			return nil, err
+		}
+		fields.Set("lead_id", string(*p.leadID))
+	}
+	if p.projectID != nil {
+		if err := validateID(*p.projectID, "project id"); err != nil {
+			return nil, err
+		}
+		fields.Set("project_id", strconv.FormatInt(int64(*p.projectID), 10))
+	}
+	return fields, nil
 }
 
 func (s *FilesService) AddRemoteFile(ctx context.Context, form url.Values, opts ...FilesOption) (*File, error) {
