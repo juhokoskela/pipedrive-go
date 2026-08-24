@@ -7,6 +7,15 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.13.1] - 2026-08-24
+
+### Changed
+
+- Simplify `FilesService.Upload` by sharing request handling with
+  `FilesService.Add`, while preserving replayable multipart uploads and typed
+  file associations.
+- Return distinct validation errors for missing file names and content.
+
 ## [1.13.0] - 2026-08-20
 
 ### Added
