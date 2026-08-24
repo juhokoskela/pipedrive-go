@@ -306,6 +306,9 @@ func TestFilesService_Upload(t *testing.T) {
 		if r.URL.Path != "/files" {
 			t.Fatalf("unexpected path: %s", r.URL.Path)
 		}
+		if r.URL.RawQuery != "" {
+			t.Fatalf("unexpected query: %q", r.URL.RawQuery)
+		}
 		if got := r.Header.Get("X-Test"); got != "upload" {
 			t.Fatalf("unexpected header X-Test: %q", got)
 		}
@@ -439,11 +442,11 @@ func TestFilesService_Upload_ValidatesInput(t *testing.T) {
 		t.Fatal("request should not be sent")
 	})
 
-	if _, err := client.Files.Upload(context.Background(), "", strings.NewReader("x")); err == nil {
-		t.Fatal("expected error for empty file name")
+	if _, err := client.Files.Upload(context.Background(), "", strings.NewReader("x")); err == nil || !strings.Contains(err.Error(), "file name is required") {
+		t.Fatalf("unexpected error for empty file name: %v", err)
 	}
-	if _, err := client.Files.Upload(context.Background(), "a.txt", nil); err == nil {
-		t.Fatal("expected error for nil content")
+	if _, err := client.Files.Upload(context.Background(), "a.txt", nil); err == nil || !strings.Contains(err.Error(), "file content is required") {
+		t.Fatalf("unexpected error for nil content: %v", err)
 	}
 }
 

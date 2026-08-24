@@ -227,9 +227,13 @@ func (s *FilesService) Add(ctx context.Context, body io.Reader, contentType stri
 // Unlike Add, the encoded body is replayable, so uploads participate in
 // retries even when content itself is not seekable.
 func (s *FilesService) Upload(ctx context.Context, fileName string, content io.Reader, opts ...UploadFileOption) (*File, error) {
-	if fileName == "" || content == nil {
-		return nil, fmt.Errorf("file name and content are required")
+	if fileName == "" {
+		return nil, fmt.Errorf("file name is required")
 	}
+	if content == nil {
+		return nil, fmt.Errorf("file content is required")
+	}
+
 	cfg := newUploadFileOptions(opts)
 	fields, err := cfg.payload.toMultipartFields()
 	if err != nil {
@@ -241,19 +245,7 @@ func (s *FilesService) Upload(ctx context.Context, fileName string, content io.R
 		return nil, err
 	}
 
-	reqOpts := append([]pipedrive.RequestOption{}, cfg.requestOptions...)
-	reqOpts = append(reqOpts, pipedrive.WithHeader("Content-Type", contentType))
-
-	var payload struct {
-		Data *File `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodPost, "/files", nil, body, &payload, reqOpts...); err != nil {
-		return nil, err
-	}
-	if payload.Data == nil {
-		return nil, fmt.Errorf("missing file data in response")
-	}
-	return payload.Data, nil
+	return s.Add(ctx, body, contentType, WithFilesRequestOptions(cfg.requestOptions...))
 }
 
 func (p uploadFilePayload) toMultipartFields() (url.Values, error) {
