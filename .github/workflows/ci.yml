@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: yieldd
     strategy:
       fail-fast: false
       matrix:
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: ${{ matrix.go }}
-          cache: true
+          cache: false
 
       - name: Pin toolchain to installed version
         run: echo "GOTOOLCHAIN=local" >> "$GITHUB_ENV"
@@ -60,7 +60,7 @@ jobs:
           coverage-reporter-version: v0.6.17
 
   security:
-    runs-on: ubuntu-latest
+    runs-on: yieldd
     needs: test
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: "1.26.6"
-          cache: true
+          cache: false
 
       - name: Security
         run: make security
