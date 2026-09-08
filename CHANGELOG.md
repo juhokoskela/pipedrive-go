@@ -23,6 +23,8 @@ Semantic Versioning.
 
 ### Changed
 
+- Decode v2 service responses directly into public payloads and share response
+  body reading and cleanup across services.
 - Refresh upstream OpenAPI specifications and internal clients for nullable
   fields, structured product prices, and activity outcomes.
 

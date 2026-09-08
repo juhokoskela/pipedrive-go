@@ -87,7 +87,7 @@ func (c *closeErrorReadCloser) Close() error {
 	return errors.New("close failed")
 }
 
-func TestStagesAndActivities_ResponseHandling(t *testing.T) {
+func TestV2Services_ResponseHandling(t *testing.T) {
 	t.Parallel()
 	calls := []struct {
 		name string
@@ -113,8 +113,30 @@ func TestStagesAndActivities_ResponseHandling(t *testing.T) {
 		}},
 		{name: "activity delete", call: func(c *Client) error { _, err := c.Activities.Delete(t.Context(), 1); return err }},
 		{name: "activity list", list: true, call: func(c *Client) error { _, _, err := c.Activities.List(t.Context()); return err }},
+		{name: "deal get", call: func(c *Client) error { _, err := c.Deals.Get(t.Context(), 1); return err }},
+		{name: "product get", call: func(c *Client) error { _, err := c.Products.Get(t.Context(), 1); return err }},
+		{name: "product variation", list: true, call: func(c *Client) error { _, _, err := c.Products.ListVariations(t.Context(), 1); return err }},
+		{name: "person get", call: func(c *Client) error { _, err := c.Persons.Get(t.Context(), 1); return err }},
+		{name: "organization get", call: func(c *Client) error { _, err := c.Organizations.Get(t.Context(), 1); return err }},
+		{name: "lead search", call: func(c *Client) error { _, _, err := c.Leads.Search(t.Context(), "term"); return err }},
+		{name: "user followers", list: true, call: func(c *Client) error { _, _, err := c.Users.ListFollowers(t.Context(), 1); return err }},
+		{name: "item search", call: func(c *Client) error { _, _, err := c.ItemSearch.Search(t.Context(), "term"); return err }},
+		{name: "pipeline get", call: func(c *Client) error { _, err := c.Pipelines.Get(t.Context(), 1); return err }},
+		{name: "project get", call: func(c *Client) error { _, err := c.Projects.Get(t.Context(), 1); return err }},
+		{name: "project list", list: true, call: func(c *Client) error { _, _, err := c.Projects.List(t.Context()); return err }},
+		{name: "project board", call: func(c *Client) error { _, err := c.ProjectBoards.Get(t.Context(), 1); return err }},
+		{name: "project phase", call: func(c *Client) error { _, err := c.ProjectPhases.Get(t.Context(), 1); return err }},
+		{name: "project template", call: func(c *Client) error { _, err := c.ProjectTemplates.Get(t.Context(), 1); return err }},
+		{name: "task get", call: func(c *Client) error { _, err := c.Tasks.Get(t.Context(), 1); return err }},
+		{name: "deal field delete", call: func(c *Client) error { _, err := c.DealFields.Delete(t.Context(), "field"); return err }},
+		{name: "organization field delete", call: func(c *Client) error { _, err := c.OrganizationFields.Delete(t.Context(), "field"); return err }},
+		{name: "person field delete", call: func(c *Client) error { _, err := c.PersonFields.Delete(t.Context(), "field"); return err }},
+		{name: "product field delete", call: func(c *Client) error { _, err := c.ProductFields.Delete(t.Context(), "field"); return err }},
+		{name: "activity field get", call: func(c *Client) error { _, err := c.ActivityFields.Get(t.Context(), "field"); return err }},
+		{name: "project field get", call: func(c *Client) error { _, err := c.ProjectFields.Get(t.Context(), "field"); return err }},
 	}
 	readErr := errors.New("read failed")
+	closeErr := errors.New("close failed")
 	for _, call := range calls {
 		t.Run(call.name, func(t *testing.T) {
 			for _, tt := range []struct {
@@ -122,12 +144,14 @@ func TestStagesAndActivities_ResponseHandling(t *testing.T) {
 				status  int
 				payload string
 				readErr error
+				limit   int64
 			}{
 				{name: "success", status: http.StatusOK},
 				{name: "malformed JSON", status: http.StatusOK, payload: `{"data":`},
 				{name: "API error", status: http.StatusBadRequest, payload: `{"code":"invalid_request","message":"bad request"}`},
 				{name: "rate limit", status: http.StatusTooManyRequests, payload: `{"code":"rate_limit","message":"slow down"}`},
 				{name: "read failure", status: http.StatusOK, readErr: readErr},
+				{name: "response limit", status: http.StatusOK, limit: 8},
 			} {
 				t.Run(tt.name, func(t *testing.T) {
 					payload := tt.payload
@@ -138,10 +162,11 @@ func TestStagesAndActivities_ResponseHandling(t *testing.T) {
 							payload = `{"data":{"id":1}}`
 						}
 					}
-					body := &trackedResponseBody{Reader: strings.NewReader(payload), readErr: tt.readErr}
+					body := &trackedResponseBody{Reader: strings.NewReader(payload), readErr: tt.readErr, closeErr: closeErr}
 					client, err := NewClient(pipedrive.Config{
-						BaseURL:     "https://example.test",
-						RetryPolicy: &pipedrive.RetryPolicy{MaxAttempts: 1},
+						BaseURL:         "https://example.test",
+						MaxResponseSize: tt.limit,
+						RetryPolicy:     &pipedrive.RetryPolicy{MaxAttempts: 1},
 						HTTPClient: &http.Client{Transport: responseRoundTripperFunc(func(req *http.Request) (*http.Response, error) {
 							return &http.Response{StatusCode: tt.status, Header: http.Header{
 								"Content-Type": []string{"application/json"},
@@ -159,8 +184,13 @@ func TestStagesAndActivities_ResponseHandling(t *testing.T) {
 					}
 					switch {
 					case tt.readErr != nil:
-						if !errors.Is(err, tt.readErr) {
+						if !errors.Is(err, tt.readErr) || !errors.Is(err, closeErr) {
 							t.Errorf("error = %v, want read error", err)
+						}
+					case tt.limit > 0:
+						var limitErr *pipedrive.ResponseTooLargeError
+						if !errors.As(err, &limitErr) || limitErr.Limit != tt.limit {
+							t.Errorf("error = %v, want size limit error", err)
 						}
 					case tt.status >= 400:
 						var apiErr *pipedrive.APIError
@@ -197,8 +227,9 @@ func TestStagesAndActivities_ResponseHandling(t *testing.T) {
 
 type trackedResponseBody struct {
 	io.Reader
-	readErr error
-	closes  int
+	readErr  error
+	closeErr error
+	closes   int
 }
 
 func (b *trackedResponseBody) Read(p []byte) (int, error) {
@@ -210,5 +241,5 @@ func (b *trackedResponseBody) Read(p []byte) (int, error) {
 
 func (b *trackedResponseBody) Close() error {
 	b.closes++
-	return errors.New("close failed")
+	return b.closeErr
 }
