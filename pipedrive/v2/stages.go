@@ -1,6 +1,7 @@
 package v2
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -99,7 +100,7 @@ type stagePayload struct {
 	pipelineID      *PipelineID
 	dealProbability *int
 	dealRotEnabled  *bool
-	daysToRotten    *int
+	daysToRotten    nullableValue[int]
 }
 
 type stageRequestOptions struct {
@@ -211,7 +212,14 @@ func WithStageDealRotEnabled(enabled bool) StageOption {
 
 func WithStageDaysToRotten(days int) StageOption {
 	return stageFieldOption(func(payload *stagePayload) {
-		payload.daysToRotten = &days
+		payload.daysToRotten.assign(days)
+	})
+}
+
+// ClearStageDaysToRotten sends an explicit JSON null day count.
+func ClearStageDaysToRotten() StageOption {
+	return stageFieldOption(func(payload *stagePayload) {
+		payload.daysToRotten.clear()
 	})
 }
 
@@ -326,24 +334,18 @@ func (s *StagesService) Create(ctx context.Context, opts ...CreateStageOption) (
 	cfg := newCreateStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	body := genv2.AddStageJSONRequestBody{}
-	if cfg.payload.name != nil {
-		body.Name = *cfg.payload.name
+	requestBody := cfg.payload.toMap()
+	if cfg.payload.name == nil {
+		requestBody["name"] = ""
 	}
-	if cfg.payload.pipelineID != nil {
-		body.PipelineId = int(*cfg.payload.pipelineID)
+	if cfg.payload.pipelineID == nil {
+		requestBody["pipeline_id"] = 0
 	}
-	if cfg.payload.dealProbability != nil {
-		body.DealProbability = cfg.payload.dealProbability
+	body, err := json.Marshal(requestBody)
+	if err != nil {
+		return nil, fmt.Errorf("encode request: %w", err)
 	}
-	if cfg.payload.dealRotEnabled != nil {
-		body.IsDealRotEnabled = cfg.payload.dealRotEnabled
-	}
-	if cfg.payload.daysToRotten != nil {
-		body.DaysToRotten = cfg.payload.daysToRotten
-	}
-
-	resp, err := s.client.gen.AddStageWithResponse(ctx, body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddStageWithBodyWithResponse(ctx, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
@@ -370,25 +372,11 @@ func (s *StagesService) Update(ctx context.Context, id StageID, opts ...UpdateSt
 	cfg := newUpdateStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	body := genv2.UpdateStageJSONRequestBody{}
-	if cfg.payload.name != nil {
-		body.Name = cfg.payload.name
+	body, err := json.Marshal(cfg.payload.toMap())
+	if err != nil {
+		return nil, fmt.Errorf("encode request: %w", err)
 	}
-	if cfg.payload.pipelineID != nil {
-		id := int(*cfg.payload.pipelineID)
-		body.PipelineId = &id
-	}
-	if cfg.payload.dealProbability != nil {
-		body.DealProbability = cfg.payload.dealProbability
-	}
-	if cfg.payload.dealRotEnabled != nil {
-		body.IsDealRotEnabled = cfg.payload.dealRotEnabled
-	}
-	if cfg.payload.daysToRotten != nil {
-		body.DaysToRotten = cfg.payload.daysToRotten
-	}
-
-	resp, err := s.client.gen.UpdateStageWithResponse(ctx, int(id), body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateStageWithBodyWithResponse(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
@@ -465,4 +453,24 @@ func (s *StagesService) list(ctx context.Context, params genv2.GetStagesParams, 
 		next = payload.AdditionalData.NextCursor
 	}
 	return payload.Data, next, nil
+}
+
+func (p stagePayload) toMap() map[string]interface{} {
+	body := map[string]interface{}{}
+	if p.name != nil {
+		body["name"] = *p.name
+	}
+	if p.pipelineID != nil {
+		body["pipeline_id"] = int(*p.pipelineID)
+	}
+	if p.dealProbability != nil {
+		body["deal_probability"] = *p.dealProbability
+	}
+	if p.dealRotEnabled != nil {
+		body["is_deal_rot_enabled"] = *p.dealRotEnabled
+	}
+	if p.daysToRotten.set {
+		body["days_to_rotten"] = p.daysToRotten.value
+	}
+	return body
 }

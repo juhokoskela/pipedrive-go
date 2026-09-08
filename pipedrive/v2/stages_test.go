@@ -315,3 +315,60 @@ func TestStagesService_Delete(t *testing.T) {
 		t.Fatalf("unexpected result: %#v", result)
 	}
 }
+
+func TestStagesService_DaysToRottenPresence(t *testing.T) {
+	t.Parallel()
+	for _, method := range []string{http.MethodPost, http.MethodPatch} {
+		t.Run(method, func(t *testing.T) {
+			for _, tt := range []struct {
+				name string
+				opts []StageOption
+				want string
+			}{
+				{name: "omitted"},
+				{name: "zero", opts: []StageOption{WithStageDaysToRotten(0)}, want: "0"},
+				{name: "value", opts: []StageOption{WithStageDaysToRotten(14)}, want: "14"},
+				{name: "clear", opts: []StageOption{ClearStageDaysToRotten()}, want: "null"},
+				{name: "clear after value", opts: []StageOption{WithStageDaysToRotten(14), ClearStageDaysToRotten()}, want: "null"},
+				{name: "value after clear", opts: []StageOption{ClearStageDaysToRotten(), WithStageDaysToRotten(14)}, want: "14"},
+			} {
+				t.Run(tt.name, func(t *testing.T) {
+					client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+						if r.Method != method {
+							t.Errorf("method = %s, want %s", r.Method, method)
+						}
+						var body map[string]json.RawMessage
+						if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+							t.Error(err)
+						}
+						if got := string(body["days_to_rotten"]); got != tt.want {
+							t.Errorf("days_to_rotten = %q, want %q", got, tt.want)
+						}
+						if string(body["name"]) != `"Renamed"` {
+							t.Errorf("name = %s", body["name"])
+						}
+						w.Header().Set("Content-Type", "application/json")
+						_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+					})
+					var err error
+					if method == http.MethodPost {
+						opts := []CreateStageOption{WithStageName("Renamed"), WithStagePipelineID(1)}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						_, err = client.Stages.Create(t.Context(), opts...)
+					} else {
+						opts := []UpdateStageOption{WithStageName("Renamed")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						_, err = client.Stages.Update(t.Context(), 1, opts...)
+					}
+					if err != nil {
+						t.Fatal(err)
+					}
+				})
+			}
+		})
+	}
+}
