@@ -443,3 +443,111 @@ func TestActivitiesService_ForEach(t *testing.T) {
 		t.Fatalf("unexpected ids: %v", ids)
 	}
 }
+
+func TestActivitiesService_OutcomeRequests(t *testing.T) {
+	t.Parallel()
+	for _, method := range []string{http.MethodPost, http.MethodPatch} {
+		t.Run(method, func(t *testing.T) {
+			for _, tt := range []struct {
+				name string
+				opts []ActivityOption
+				want string
+			}{
+				{name: "omitted"},
+				{name: "value", opts: []ActivityOption{WithActivityOutcomeID(7)}, want: "7"},
+				{name: "clear", opts: []ActivityOption{ClearActivityOutcomeID()}, want: "null"},
+				{name: "clear after value", opts: []ActivityOption{WithActivityOutcomeID(7), ClearActivityOutcomeID()}, want: "null"},
+				{name: "value after clear", opts: []ActivityOption{ClearActivityOutcomeID(), WithActivityOutcomeID(7)}, want: "7"},
+			} {
+				t.Run(tt.name, func(t *testing.T) {
+					client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+						if r.Method != method {
+							t.Errorf("method = %s, want %s", r.Method, method)
+						}
+						var body map[string]json.RawMessage
+						if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+							t.Error(err)
+						}
+						if got := string(body["outcome"]); got != tt.want {
+							t.Errorf("outcome = %q, want %q", got, tt.want)
+						}
+						w.Header().Set("Content-Type", "application/json")
+						_, _ = w.Write([]byte(`{"data":{"id":1,"outcome":7}}`))
+					})
+					var activity *Activity
+					var err error
+					if method == http.MethodPost {
+						opts := []CreateActivityOption{WithActivitySubject("Call")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						activity, err = client.Activities.Create(t.Context(), opts...)
+					} else {
+						opts := []UpdateActivityOption{WithActivitySubject("Call")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						activity, err = client.Activities.Update(t.Context(), 1, opts...)
+					}
+					if err != nil {
+						t.Fatal(err)
+					}
+					if activity.OutcomeID == nil || *activity.OutcomeID != 7 {
+						t.Errorf("outcome ID = %v", activity.OutcomeID)
+					}
+				})
+			}
+		})
+	}
+}
+
+func TestActivitiesService_OutcomeResponses(t *testing.T) {
+	t.Parallel()
+	outcomeID := ActivityOutcomeID(7)
+	for _, operation := range []string{"get", "list"} {
+		for _, tt := range []struct {
+			name string
+			data string
+			want *ActivityOutcomeID
+		}{
+			{name: "omitted", data: `{"id":1}`},
+			{name: "null", data: `{"id":1,"outcome":null}`},
+			{name: "value", data: `{"id":1,"outcome":7}`, want: &outcomeID},
+		} {
+			t.Run(operation+"/"+tt.name, func(t *testing.T) {
+				client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+					data := tt.data
+					if operation == "list" {
+						data = "[" + data + "]"
+					}
+					w.Header().Set("Content-Type", "application/json")
+					_, _ = w.Write([]byte(`{"data":` + data + `}`))
+				})
+				var activity *Activity
+				if operation == "list" {
+					activities, _, err := client.Activities.List(t.Context())
+					if err != nil {
+						t.Fatal(err)
+					}
+					if len(activities) != 1 {
+						t.Fatalf("activities = %v", activities)
+					}
+					activity = &activities[0]
+				} else {
+					var err error
+					activity, err = client.Activities.Get(t.Context(), 1)
+					if err != nil {
+						t.Fatal(err)
+					}
+				}
+				if tt.want != nil {
+					if activity.OutcomeID == nil || *activity.OutcomeID != *tt.want {
+						t.Errorf("outcome ID = %v", activity.OutcomeID)
+					}
+				} else if activity.OutcomeID != nil {
+					t.Errorf("outcome ID = %v, want nil", activity.OutcomeID)
+				}
+			})
+		}
+	}
+}

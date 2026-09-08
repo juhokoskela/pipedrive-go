@@ -105,6 +105,31 @@ if err != nil {
 }
 ```
 
+## Optional fields and explicit nulls
+
+Omitting a field option leaves that field out of the request. Use a clear
+option to send an explicit JSON `null`:
+
+| Field | Set a value | Send null |
+| --- | --- | --- |
+| Activity outcome | `WithActivityOutcomeID(id)` | `ClearActivityOutcomeID()` |
+| Stage rotten day count | `WithStageDaysToRotten(days)` | `ClearStageDaysToRotten()` |
+| Deal person | `WithDealPersonID(id)` | `ClearDealPersonID()` |
+| Deal organization | `WithDealOrganizationID(id)` | `ClearDealOrganizationID()` |
+| Deal archive time | `WithDealArchiveTime(value)` | `ClearDealArchiveTime()` |
+
+These v2 options work with both create and update calls. Setting or clearing a
+field replaces any earlier setting for that field in the same call.
+`WithDealArchiveTime("")` remains a no-op; use the clear option to send null.
+
+Activity responses expose `OutcomeID` as `*ActivityOutcomeID` in both v2 and
+v1 project activity listings. Available outcome IDs depend on the activity
+type and can be retrieved through the Activity Fields API.
+
+Product and variation price entries always serialize `currency` and `price`,
+including a zero price. Omit `WithProductPrices` or `WithProductVariationPrices`
+to leave the price array out of a request.
+
 ## OAuth2
 
 Use the v1 OAuth helper to build the authorize URL and exchange tokens, then
@@ -228,6 +253,12 @@ err := client.Raw.Do(context.Background(), http.MethodGet, "/pipelines", nil, ni
   `channel_id` field via `WithDealChannelID` instead. Pipedrive accepts it when
   creating and updating v2 deals, although the v2 OpenAPI spec omits it from
   both request schemas. Leads are unaffected (`WithLeadOriginID` still works).
+
+The September 2026 [upstream OpenAPI specification](https://developers.pipedrive.com/docs/api/v1/openapi-v2.yaml)
+no longer marks deal `probability`, `lost_reason`, or `close_time` as nullable.
+`ClearDealProbability`, `ClearDealLostReason`, and `ClearDealCloseTime` retain
+their existing explicit-null serialization for compatibility. Server acceptance
+of these operations has not been verified against the updated specification.
 
 ## Integration checks
 

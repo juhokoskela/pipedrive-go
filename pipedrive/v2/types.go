@@ -20,6 +20,8 @@ type ProductImageID int64
 
 type ActivityID int64
 
+type ActivityOutcomeID int64
+
 type ProjectID int64
 
 type ProjectBoardID int64

@@ -190,6 +190,13 @@ func (o *nullableValue[T]) clear() {
 	o.set = true
 }
 
+func (o nullableValue[T]) mapValue() interface{} {
+	if o.value == nil {
+		return nil
+	}
+	return *o.value
+}
+
 type FieldOptionUpdate struct {
 	ID    int
 	Label string

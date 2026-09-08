@@ -16910,13 +16910,13 @@ type GetDealsTimelineResponse struct {
 				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// FilesCount The number of files associated with the deal
 				FilesCount *int `json:"files_count,omitempty"`
 
 				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
+				FirstWonTime *string `json:"first_won_time"`
 
 				// FollowersCount The number of followers associated with the deal
 				FollowersCount *int `json:"followers_count,omitempty"`
@@ -16934,7 +16934,7 @@ type GetDealsTimelineResponse struct {
 				IsArchived *bool `json:"is_archived,omitempty"`
 
 				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
+				Label *string `json:"label"`
 
 				// LastActivityDate The date of the last activity associated with the deal
 				LastActivityDate *string `json:"last_activity_date"`
@@ -16943,16 +16943,16 @@ type GetDealsTimelineResponse struct {
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostReason The reason for losing the deal
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -16969,25 +16969,25 @@ type GetDealsTimelineResponse struct {
 				MrrCurrency *string `json:"mrr_currency"`
 
 				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
+				NextActivityDate *string `json:"next_activity_date"`
 
 				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+				NextActivityDuration *string `json:"next_activity_duration"`
 
 				// NextActivityId The ID of the next activity associated with the deal
 				NextActivityId *int `json:"next_activity_id"`
 
 				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
+				NextActivityNote *string `json:"next_activity_note"`
 
 				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+				NextActivitySubject *string `json:"next_activity_subject"`
 
 				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
+				NextActivityTime *string `json:"next_activity_time"`
 
 				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
+				NextActivityType *string `json:"next_activity_type"`
 
 				// NotesCount The number of notes associated with the deal
 				NotesCount *int `json:"notes_count,omitempty"`
@@ -16996,10 +16996,10 @@ type GetDealsTimelineResponse struct {
 				OrgHidden *bool `json:"org_hidden,omitempty"`
 
 				// OrgId The ID of the organization associated with the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -17017,10 +17017,10 @@ type GetDealsTimelineResponse struct {
 				PersonHidden *bool `json:"person_hidden,omitempty"`
 
 				// PersonId The ID of the person associated with the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
+				PersonName *string `json:"person_name"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -17035,7 +17035,7 @@ type GetDealsTimelineResponse struct {
 				RottenTime *string `json:"rotten_time"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -17053,7 +17053,7 @@ type GetDealsTimelineResponse struct {
 				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The ID of the user
 				UserId *int `json:"user_id,omitempty"`
@@ -17071,7 +17071,7 @@ type GetDealsTimelineResponse struct {
 				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"deals,omitempty"`
 
 			// PeriodEnd The end date and time of the period
@@ -17201,13 +17201,13 @@ type GetArchivedDealsTimelineResponse struct {
 				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// FilesCount The number of files associated with the deal
 				FilesCount *int `json:"files_count,omitempty"`
 
 				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
+				FirstWonTime *string `json:"first_won_time"`
 
 				// FollowersCount The number of followers associated with the deal
 				FollowersCount *int `json:"followers_count,omitempty"`
@@ -17225,7 +17225,7 @@ type GetArchivedDealsTimelineResponse struct {
 				IsArchived *bool `json:"is_archived,omitempty"`
 
 				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
+				Label *string `json:"label"`
 
 				// LastActivityDate The date of the last activity associated with the deal
 				LastActivityDate *string `json:"last_activity_date"`
@@ -17234,16 +17234,16 @@ type GetArchivedDealsTimelineResponse struct {
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostReason The reason for losing the deal
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -17260,25 +17260,25 @@ type GetArchivedDealsTimelineResponse struct {
 				MrrCurrency *string `json:"mrr_currency"`
 
 				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
+				NextActivityDate *string `json:"next_activity_date"`
 
 				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+				NextActivityDuration *string `json:"next_activity_duration"`
 
 				// NextActivityId The ID of the next activity associated with the deal
 				NextActivityId *int `json:"next_activity_id"`
 
 				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
+				NextActivityNote *string `json:"next_activity_note"`
 
 				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+				NextActivitySubject *string `json:"next_activity_subject"`
 
 				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
+				NextActivityTime *string `json:"next_activity_time"`
 
 				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
+				NextActivityType *string `json:"next_activity_type"`
 
 				// NotesCount The number of notes associated with the deal
 				NotesCount *int `json:"notes_count,omitempty"`
@@ -17287,10 +17287,10 @@ type GetArchivedDealsTimelineResponse struct {
 				OrgHidden *bool `json:"org_hidden,omitempty"`
 
 				// OrgId The ID of the organization associated with the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -17308,10 +17308,10 @@ type GetArchivedDealsTimelineResponse struct {
 				PersonHidden *bool `json:"person_hidden,omitempty"`
 
 				// PersonId The ID of the person associated with the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
+				PersonName *string `json:"person_name"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -17326,7 +17326,7 @@ type GetArchivedDealsTimelineResponse struct {
 				RottenTime *string `json:"rotten_time"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -17344,7 +17344,7 @@ type GetArchivedDealsTimelineResponse struct {
 				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The ID of the user
 				UserId *int `json:"user_id,omitempty"`
@@ -17362,7 +17362,7 @@ type GetArchivedDealsTimelineResponse struct {
 				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"deals,omitempty"`
 
 			// PeriodEnd The end date and time of the period
@@ -17546,13 +17546,13 @@ type DuplicateDealResponse struct {
 			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// FilesCount The number of files associated with the deal
 			FilesCount *int `json:"files_count,omitempty"`
 
 			// FirstWonTime The date and time of the first time changing the deal status as won
-			FirstWonTime *string `json:"first_won_time,omitempty"`
+			FirstWonTime *string `json:"first_won_time"`
 
 			// FollowersCount The number of followers associated with the deal
 			FollowersCount *int `json:"followers_count,omitempty"`
@@ -17570,7 +17570,7 @@ type DuplicateDealResponse struct {
 			IsArchived *bool `json:"is_archived,omitempty"`
 
 			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
+			Label *string `json:"label"`
 
 			// LastActivityDate The date of the last activity associated with the deal
 			LastActivityDate *string `json:"last_activity_date"`
@@ -17579,16 +17579,16 @@ type DuplicateDealResponse struct {
 			LastActivityId *int `json:"last_activity_id"`
 
 			// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+			LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 			// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+			LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 			// LostReason The reason for losing the deal
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -17605,25 +17605,25 @@ type DuplicateDealResponse struct {
 			MrrCurrency *string `json:"mrr_currency"`
 
 			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date,omitempty"`
+			NextActivityDate *string `json:"next_activity_date"`
 
 			// NextActivityDuration The duration of the next activity associated with the deal
-			NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+			NextActivityDuration *string `json:"next_activity_duration"`
 
 			// NextActivityId The ID of the next activity associated with the deal
 			NextActivityId *int `json:"next_activity_id"`
 
 			// NextActivityNote The note of the next activity associated with the deal
-			NextActivityNote *string `json:"next_activity_note,omitempty"`
+			NextActivityNote *string `json:"next_activity_note"`
 
 			// NextActivitySubject The subject of the next activity associated with the deal
-			NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+			NextActivitySubject *string `json:"next_activity_subject"`
 
 			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time,omitempty"`
+			NextActivityTime *string `json:"next_activity_time"`
 
 			// NextActivityType The type of the next activity associated with the deal
-			NextActivityType *string `json:"next_activity_type,omitempty"`
+			NextActivityType *string `json:"next_activity_type"`
 
 			// NotesCount The number of notes associated with the deal
 			NotesCount *int `json:"notes_count,omitempty"`
@@ -17632,10 +17632,10 @@ type DuplicateDealResponse struct {
 			OrgHidden *bool `json:"org_hidden,omitempty"`
 
 			// OrgId The ID of the organization associated with the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// OrgName The name of the organization associated with the deal
-			OrgName *string `json:"org_name,omitempty"`
+			OrgName *string `json:"org_name"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -17653,10 +17653,10 @@ type DuplicateDealResponse struct {
 			PersonHidden *bool `json:"person_hidden,omitempty"`
 
 			// PersonId The ID of the person associated with the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PersonName The name of the person associated with the deal
-			PersonName *string `json:"person_name,omitempty"`
+			PersonName *string `json:"person_name"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -17671,7 +17671,7 @@ type DuplicateDealResponse struct {
 			RottenTime *string `json:"rotten_time"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -17689,7 +17689,7 @@ type DuplicateDealResponse struct {
 			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// UserId The ID of the user
 			UserId *int `json:"user_id,omitempty"`
@@ -17707,7 +17707,7 @@ type DuplicateDealResponse struct {
 			WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -18329,13 +18329,13 @@ type MergeDealsResponse struct {
 			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// FilesCount The number of files associated with the deal
 			FilesCount *int `json:"files_count,omitempty"`
 
 			// FirstWonTime The date and time of the first time changing the deal status as won
-			FirstWonTime *string `json:"first_won_time,omitempty"`
+			FirstWonTime *string `json:"first_won_time"`
 
 			// FollowersCount The number of followers associated with the deal
 			FollowersCount *int `json:"followers_count,omitempty"`
@@ -18353,7 +18353,7 @@ type MergeDealsResponse struct {
 			IsArchived *bool `json:"is_archived,omitempty"`
 
 			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
+			Label *string `json:"label"`
 
 			// LastActivityDate The date of the last activity associated with the deal
 			LastActivityDate *string `json:"last_activity_date"`
@@ -18362,16 +18362,16 @@ type MergeDealsResponse struct {
 			LastActivityId *int `json:"last_activity_id"`
 
 			// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+			LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 			// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+			LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 			// LostReason The reason for losing the deal
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// MergeWhatId The deal ID of the deal which the original deal was merged with
 			MergeWhatId *int `json:"merge_what_id,omitempty"`
@@ -18391,25 +18391,25 @@ type MergeDealsResponse struct {
 			MrrCurrency *string `json:"mrr_currency"`
 
 			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date,omitempty"`
+			NextActivityDate *string `json:"next_activity_date"`
 
 			// NextActivityDuration The duration of the next activity associated with the deal
-			NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+			NextActivityDuration *string `json:"next_activity_duration"`
 
 			// NextActivityId The ID of the next activity associated with the deal
 			NextActivityId *int `json:"next_activity_id"`
 
 			// NextActivityNote The note of the next activity associated with the deal
-			NextActivityNote *string `json:"next_activity_note,omitempty"`
+			NextActivityNote *string `json:"next_activity_note"`
 
 			// NextActivitySubject The subject of the next activity associated with the deal
-			NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+			NextActivitySubject *string `json:"next_activity_subject"`
 
 			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time,omitempty"`
+			NextActivityTime *string `json:"next_activity_time"`
 
 			// NextActivityType The type of the next activity associated with the deal
-			NextActivityType *string `json:"next_activity_type,omitempty"`
+			NextActivityType *string `json:"next_activity_type"`
 
 			// NotesCount The number of notes associated with the deal
 			NotesCount *int `json:"notes_count,omitempty"`
@@ -18418,10 +18418,10 @@ type MergeDealsResponse struct {
 			OrgHidden *bool `json:"org_hidden,omitempty"`
 
 			// OrgId The ID of the organization associated with the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// OrgName The name of the organization associated with the deal
-			OrgName *string `json:"org_name,omitempty"`
+			OrgName *string `json:"org_name"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -18439,10 +18439,10 @@ type MergeDealsResponse struct {
 			PersonHidden *bool `json:"person_hidden,omitempty"`
 
 			// PersonId The ID of the person associated with the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PersonName The name of the person associated with the deal
-			PersonName *string `json:"person_name,omitempty"`
+			PersonName *string `json:"person_name"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -18457,7 +18457,7 @@ type MergeDealsResponse struct {
 			RottenTime *string `json:"rotten_time"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -18475,7 +18475,7 @@ type MergeDealsResponse struct {
 			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// UserId The ID of the user
 			UserId *int `json:"user_id,omitempty"`
@@ -18493,7 +18493,7 @@ type MergeDealsResponse struct {
 			WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -23782,42 +23782,40 @@ type GetNotesResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-
-			// Deal The deal this note is attached to
-			Deal *struct {
+			Deal    *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"deal,omitempty"`
+			} `json:"deal"`
 
 			// DealId The ID of the deal the note is attached to
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Id The ID of the note
 			Id *int `json:"id,omitempty"`
 
 			// LastUpdateUserId The ID of the user who last updated the note
-			LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+			LastUpdateUserId *int `json:"last_update_user_id"`
 
 			// LeadId The ID of the lead the note is attached to
-			LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+			LeadId *openapi_types.UUID `json:"lead_id"`
 
 			// OrgId The ID of the organization the note is attached to
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Organization The organization the note is attached to
 			Organization *struct {
 				// Name The name of the organization the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"organization,omitempty"`
+			} `json:"organization"`
 
 			// Person The person the note is attached to
 			Person *struct {
 				// Name The name of the person the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"person,omitempty"`
+			} `json:"person"`
 
 			// PersonId The ID of the person the note is attached to
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 			PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -23838,19 +23836,19 @@ type GetNotesResponse struct {
 			Project *struct {
 				// Title The title of the project the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"project,omitempty"`
+			} `json:"project"`
 
 			// ProjectId The ID of the project the note is attached to
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// Task The task the note is attached to
 			Task *struct {
 				// Title The title of the task the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"task,omitempty"`
+			} `json:"task"`
 
 			// TaskId The ID of the task the note is attached to
-			TaskId *int `json:"task_id,omitempty"`
+			TaskId *int `json:"task_id"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -23861,7 +23859,7 @@ type GetNotesResponse struct {
 				Email *string `json:"email,omitempty"`
 
 				// IconUrl The URL of the note creator avatar picture
-				IconUrl *string `json:"icon_url,omitempty"`
+				IconUrl *string `json:"icon_url"`
 
 				// IsYou Whether the note is created by you or not
 				IsYou *bool `json:"is_you,omitempty"`
@@ -23908,42 +23906,40 @@ type AddNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-
-			// Deal The deal this note is attached to
-			Deal *struct {
+			Deal    *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"deal,omitempty"`
+			} `json:"deal"`
 
 			// DealId The ID of the deal the note is attached to
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Id The ID of the note
 			Id *int `json:"id,omitempty"`
 
 			// LastUpdateUserId The ID of the user who last updated the note
-			LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+			LastUpdateUserId *int `json:"last_update_user_id"`
 
 			// LeadId The ID of the lead the note is attached to
-			LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+			LeadId *openapi_types.UUID `json:"lead_id"`
 
 			// OrgId The ID of the organization the note is attached to
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Organization The organization the note is attached to
 			Organization *struct {
 				// Name The name of the organization the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"organization,omitempty"`
+			} `json:"organization"`
 
 			// Person The person the note is attached to
 			Person *struct {
 				// Name The name of the person the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"person,omitempty"`
+			} `json:"person"`
 
 			// PersonId The ID of the person the note is attached to
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 			PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -23964,19 +23960,19 @@ type AddNoteResponse struct {
 			Project *struct {
 				// Title The title of the project the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"project,omitempty"`
+			} `json:"project"`
 
 			// ProjectId The ID of the project the note is attached to
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// Task The task the note is attached to
 			Task *struct {
 				// Title The title of the task the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"task,omitempty"`
+			} `json:"task"`
 
 			// TaskId The ID of the task the note is attached to
-			TaskId *int `json:"task_id,omitempty"`
+			TaskId *int `json:"task_id"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -23987,7 +23983,7 @@ type AddNoteResponse struct {
 				Email *string `json:"email,omitempty"`
 
 				// IconUrl The URL of the note creator avatar picture
-				IconUrl *string `json:"icon_url,omitempty"`
+				IconUrl *string `json:"icon_url"`
 
 				// IsYou Whether the note is created by you or not
 				IsYou *bool `json:"is_you,omitempty"`
@@ -24062,42 +24058,40 @@ type GetNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-
-			// Deal The deal this note is attached to
-			Deal *struct {
+			Deal    *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"deal,omitempty"`
+			} `json:"deal"`
 
 			// DealId The ID of the deal the note is attached to
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Id The ID of the note
 			Id *int `json:"id,omitempty"`
 
 			// LastUpdateUserId The ID of the user who last updated the note
-			LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+			LastUpdateUserId *int `json:"last_update_user_id"`
 
 			// LeadId The ID of the lead the note is attached to
-			LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+			LeadId *openapi_types.UUID `json:"lead_id"`
 
 			// OrgId The ID of the organization the note is attached to
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Organization The organization the note is attached to
 			Organization *struct {
 				// Name The name of the organization the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"organization,omitempty"`
+			} `json:"organization"`
 
 			// Person The person the note is attached to
 			Person *struct {
 				// Name The name of the person the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"person,omitempty"`
+			} `json:"person"`
 
 			// PersonId The ID of the person the note is attached to
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 			PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -24118,19 +24112,19 @@ type GetNoteResponse struct {
 			Project *struct {
 				// Title The title of the project the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"project,omitempty"`
+			} `json:"project"`
 
 			// ProjectId The ID of the project the note is attached to
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// Task The task the note is attached to
 			Task *struct {
 				// Title The title of the task the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"task,omitempty"`
+			} `json:"task"`
 
 			// TaskId The ID of the task the note is attached to
-			TaskId *int `json:"task_id,omitempty"`
+			TaskId *int `json:"task_id"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -24141,7 +24135,7 @@ type GetNoteResponse struct {
 				Email *string `json:"email,omitempty"`
 
 				// IconUrl The URL of the note creator avatar picture
-				IconUrl *string `json:"icon_url,omitempty"`
+				IconUrl *string `json:"icon_url"`
 
 				// IsYou Whether the note is created by you or not
 				IsYou *bool `json:"is_you,omitempty"`
@@ -24188,42 +24182,40 @@ type UpdateNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-
-			// Deal The deal this note is attached to
-			Deal *struct {
+			Deal    *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"deal,omitempty"`
+			} `json:"deal"`
 
 			// DealId The ID of the deal the note is attached to
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Id The ID of the note
 			Id *int `json:"id,omitempty"`
 
 			// LastUpdateUserId The ID of the user who last updated the note
-			LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+			LastUpdateUserId *int `json:"last_update_user_id"`
 
 			// LeadId The ID of the lead the note is attached to
-			LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+			LeadId *openapi_types.UUID `json:"lead_id"`
 
 			// OrgId The ID of the organization the note is attached to
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Organization The organization the note is attached to
 			Organization *struct {
 				// Name The name of the organization the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"organization,omitempty"`
+			} `json:"organization"`
 
 			// Person The person the note is attached to
 			Person *struct {
 				// Name The name of the person the note is attached to
 				Name *string `json:"name,omitempty"`
-			} `json:"person,omitempty"`
+			} `json:"person"`
 
 			// PersonId The ID of the person the note is attached to
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 			PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -24244,19 +24236,19 @@ type UpdateNoteResponse struct {
 			Project *struct {
 				// Title The title of the project the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"project,omitempty"`
+			} `json:"project"`
 
 			// ProjectId The ID of the project the note is attached to
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// Task The task the note is attached to
 			Task *struct {
 				// Title The title of the task the note is attached to
 				Title *string `json:"title,omitempty"`
-			} `json:"task,omitempty"`
+			} `json:"task"`
 
 			// TaskId The ID of the task the note is attached to
-			TaskId *int `json:"task_id,omitempty"`
+			TaskId *int `json:"task_id"`
 
 			// UpdateTime The last updated date and time of the note
 			UpdateTime *string `json:"update_time,omitempty"`
@@ -24267,7 +24259,7 @@ type UpdateNoteResponse struct {
 				Email *string `json:"email,omitempty"`
 
 				// IconUrl The URL of the note creator avatar picture
-				IconUrl *string `json:"icon_url,omitempty"`
+				IconUrl *string `json:"icon_url"`
 
 				// IsYou Whether the note is created by you or not
 				IsYou *bool `json:"is_you,omitempty"`
@@ -26882,7 +26874,7 @@ type GetPersonProductsResponse struct {
 					EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 					// ExpectedCloseDate The expected close date of the deal
-					ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+					ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 					// FilesCount The number of files associated with the deal
 					FilesCount *int `json:"files_count,omitempty"`
@@ -26891,7 +26883,7 @@ type GetPersonProductsResponse struct {
 					FirstAddTime *string `json:"first_add_time,omitempty"`
 
 					// FirstWonTime The date and time of the first time changing the deal status as won
-					FirstWonTime *string `json:"first_won_time,omitempty"`
+					FirstWonTime *string `json:"first_won_time"`
 
 					// FollowersCount The number of followers associated with the deal
 					FollowersCount *int `json:"followers_count,omitempty"`
@@ -26900,7 +26892,7 @@ type GetPersonProductsResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// Label The label or multiple labels assigned to the deal
-					Label *string `json:"label,omitempty"`
+					Label *string `json:"label"`
 
 					// LastActivityDate The date of the last activity associated with the deal
 					LastActivityDate *string `json:"last_activity_date"`
@@ -26909,37 +26901,37 @@ type GetPersonProductsResponse struct {
 					LastActivityId *int `json:"last_activity_id"`
 
 					// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-					LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+					LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 					// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-					LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+					LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 					// LostReason The reason for losing the deal
 					LostReason *string `json:"lost_reason"`
 
 					// LostTime The date and time of changing the deal status as lost
-					LostTime *string `json:"lost_time,omitempty"`
+					LostTime *string `json:"lost_time"`
 
 					// NextActivityDate The date of the next activity associated with the deal
-					NextActivityDate *string `json:"next_activity_date,omitempty"`
+					NextActivityDate *string `json:"next_activity_date"`
 
 					// NextActivityId The ID of the next activity associated with the deal
 					NextActivityId *int `json:"next_activity_id"`
 
 					// NextActivityTime The time of the next activity associated with the deal
-					NextActivityTime *string `json:"next_activity_time,omitempty"`
+					NextActivityTime *string `json:"next_activity_time"`
 
 					// NotesCount The number of notes associated with the deal
 					NotesCount *int `json:"notes_count,omitempty"`
 
 					// OrgId The ID of the organization associated with the deal
-					OrgId *int `json:"org_id,omitempty"`
+					OrgId *int `json:"org_id"`
 
 					// ParticipantsCount The number of participants associated with the deal
 					ParticipantsCount *int `json:"participants_count,omitempty"`
 
 					// PersonId The ID of the person associated with the deal
-					PersonId *int `json:"person_id,omitempty"`
+					PersonId *int `json:"person_id"`
 
 					// PipelineId The ID of the pipeline associated with the deal
 					PipelineId *int `json:"pipeline_id,omitempty"`
@@ -26951,7 +26943,7 @@ type GetPersonProductsResponse struct {
 					ProductsCount *int `json:"products_count,omitempty"`
 
 					// StageChangeTime The last updated date and time of the deal stage
-					StageChangeTime *string `json:"stage_change_time,omitempty"`
+					StageChangeTime *string `json:"stage_change_time"`
 
 					// StageId The ID of the deal stage
 					StageId *int `json:"stage_id,omitempty"`
@@ -26966,7 +26958,7 @@ type GetPersonProductsResponse struct {
 					UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 					// UpdateTime The last updated date and time of the deal
-					UpdateTime *string `json:"update_time,omitempty"`
+					UpdateTime *string `json:"update_time"`
 
 					// UserId The ID of the user
 					UserId *int `json:"user_id,omitempty"`
@@ -26978,7 +26970,7 @@ type GetPersonProductsResponse struct {
 					VisibleTo *string `json:"visible_to,omitempty"`
 
 					// WonTime The date and time of changing the deal status as won
-					WonTime *string `json:"won_time,omitempty"`
+					WonTime *string `json:"won_time"`
 				} `json:"deal,omitempty"`
 				Product *struct {
 					// ActiveFlag Whether this product will be made active or not
@@ -27186,13 +27178,13 @@ type GetPipelineDealsResponse struct {
 			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// FilesCount The number of files associated with the deal
 			FilesCount *int `json:"files_count,omitempty"`
 
 			// FirstWonTime The date and time of the first time changing the deal status as won
-			FirstWonTime *string `json:"first_won_time,omitempty"`
+			FirstWonTime *string `json:"first_won_time"`
 
 			// FollowersCount The number of followers associated with the deal
 			FollowersCount *int `json:"followers_count,omitempty"`
@@ -27210,7 +27202,7 @@ type GetPipelineDealsResponse struct {
 			IsArchived *bool `json:"is_archived,omitempty"`
 
 			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
+			Label *string `json:"label"`
 
 			// LastActivityDate The date of the last activity associated with the deal
 			LastActivityDate *string `json:"last_activity_date"`
@@ -27219,16 +27211,16 @@ type GetPipelineDealsResponse struct {
 			LastActivityId *int `json:"last_activity_id"`
 
 			// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+			LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 			// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+			LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 			// LostReason The reason for losing the deal
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -27245,25 +27237,25 @@ type GetPipelineDealsResponse struct {
 			MrrCurrency *string `json:"mrr_currency"`
 
 			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date,omitempty"`
+			NextActivityDate *string `json:"next_activity_date"`
 
 			// NextActivityDuration The duration of the next activity associated with the deal
-			NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+			NextActivityDuration *string `json:"next_activity_duration"`
 
 			// NextActivityId The ID of the next activity associated with the deal
 			NextActivityId *int `json:"next_activity_id"`
 
 			// NextActivityNote The note of the next activity associated with the deal
-			NextActivityNote *string `json:"next_activity_note,omitempty"`
+			NextActivityNote *string `json:"next_activity_note"`
 
 			// NextActivitySubject The subject of the next activity associated with the deal
-			NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+			NextActivitySubject *string `json:"next_activity_subject"`
 
 			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time,omitempty"`
+			NextActivityTime *string `json:"next_activity_time"`
 
 			// NextActivityType The type of the next activity associated with the deal
-			NextActivityType *string `json:"next_activity_type,omitempty"`
+			NextActivityType *string `json:"next_activity_type"`
 
 			// NotesCount The number of notes associated with the deal
 			NotesCount *int `json:"notes_count,omitempty"`
@@ -27272,10 +27264,10 @@ type GetPipelineDealsResponse struct {
 			OrgHidden *bool `json:"org_hidden,omitempty"`
 
 			// OrgId The ID of the organization associated with the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// OrgName The name of the organization associated with the deal
-			OrgName *string `json:"org_name,omitempty"`
+			OrgName *string `json:"org_name"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -27293,10 +27285,10 @@ type GetPipelineDealsResponse struct {
 			PersonHidden *bool `json:"person_hidden,omitempty"`
 
 			// PersonId The ID of the person associated with the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PersonName The name of the person associated with the deal
-			PersonName *string `json:"person_name,omitempty"`
+			PersonName *string `json:"person_name"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -27311,7 +27303,7 @@ type GetPipelineDealsResponse struct {
 			RottenTime *string `json:"rotten_time"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -27329,7 +27321,7 @@ type GetPipelineDealsResponse struct {
 			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// UserId The ID of the user
 			UserId *int `json:"user_id,omitempty"`
@@ -27347,7 +27339,7 @@ type GetPipelineDealsResponse struct {
 			WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the request was successful or not
@@ -27638,13 +27630,13 @@ type GetProductDealsResponse struct {
 			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// FilesCount The number of files associated with the deal
 			FilesCount *int `json:"files_count,omitempty"`
 
 			// FirstWonTime The date and time of the first time changing the deal status as won
-			FirstWonTime *string `json:"first_won_time,omitempty"`
+			FirstWonTime *string `json:"first_won_time"`
 
 			// FollowersCount The number of followers associated with the deal
 			FollowersCount *int `json:"followers_count,omitempty"`
@@ -27662,7 +27654,7 @@ type GetProductDealsResponse struct {
 			IsArchived *bool `json:"is_archived,omitempty"`
 
 			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
+			Label *string `json:"label"`
 
 			// LastActivityDate The date of the last activity associated with the deal
 			LastActivityDate *string `json:"last_activity_date"`
@@ -27671,16 +27663,16 @@ type GetProductDealsResponse struct {
 			LastActivityId *int `json:"last_activity_id"`
 
 			// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+			LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 			// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+			LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 			// LostReason The reason for losing the deal
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -27697,25 +27689,25 @@ type GetProductDealsResponse struct {
 			MrrCurrency *string `json:"mrr_currency"`
 
 			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date,omitempty"`
+			NextActivityDate *string `json:"next_activity_date"`
 
 			// NextActivityDuration The duration of the next activity associated with the deal
-			NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+			NextActivityDuration *string `json:"next_activity_duration"`
 
 			// NextActivityId The ID of the next activity associated with the deal
 			NextActivityId *int `json:"next_activity_id"`
 
 			// NextActivityNote The note of the next activity associated with the deal
-			NextActivityNote *string `json:"next_activity_note,omitempty"`
+			NextActivityNote *string `json:"next_activity_note"`
 
 			// NextActivitySubject The subject of the next activity associated with the deal
-			NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+			NextActivitySubject *string `json:"next_activity_subject"`
 
 			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time,omitempty"`
+			NextActivityTime *string `json:"next_activity_time"`
 
 			// NextActivityType The type of the next activity associated with the deal
-			NextActivityType *string `json:"next_activity_type,omitempty"`
+			NextActivityType *string `json:"next_activity_type"`
 
 			// NotesCount The number of notes associated with the deal
 			NotesCount *int `json:"notes_count,omitempty"`
@@ -27743,10 +27735,10 @@ type GetProductDealsResponse struct {
 
 				// Value The ID of the organization associated with the deal
 				Value *int `json:"value,omitempty"`
-			} `json:"org_id,omitempty"`
+			} `json:"org_id"`
 
 			// OrgName The name of the organization associated with the deal
-			OrgName *string `json:"org_name,omitempty"`
+			OrgName *string `json:"org_name"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -27798,10 +27790,10 @@ type GetProductDealsResponse struct {
 
 				// Value The ID of the person associated with the deal
 				Value *int `json:"value,omitempty"`
-			} `json:"person_id,omitempty"`
+			} `json:"person_id"`
 
 			// PersonName The name of the person associated with the deal
-			PersonName *string `json:"person_name,omitempty"`
+			PersonName *string `json:"person_name"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -27816,7 +27808,7 @@ type GetProductDealsResponse struct {
 			RottenTime *string `json:"rotten_time"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -27834,7 +27826,7 @@ type GetProductDealsResponse struct {
 			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 			UserId     *struct {
 				// ActiveFlag Whether the user is active or not
 				ActiveFlag *bool `json:"active_flag,omitempty"`
@@ -27871,7 +27863,7 @@ type GetProductDealsResponse struct {
 			WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 		RelatedObjects *struct {
 			Organization *struct {
@@ -27987,7 +27979,7 @@ type GetProductDealsResponse struct {
 				PipelineId *int `json:"pipeline_id,omitempty"`
 
 				// RottenDays The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
-				RottenDays *int `json:"rotten_days,omitempty"`
+				RottenDays *int `json:"rotten_days"`
 
 				// RottenFlag Whether deals in this stage can become rotten
 				RottenFlag *bool `json:"rotten_flag,omitempty"`
@@ -28242,6 +28234,9 @@ type GetProjectActivitiesResponse struct {
 
 			// OrgId The ID of the organization this activity is associated with
 			OrgId *int `json:"org_id,omitempty"`
+
+			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
+			Outcome *int `json:"outcome"`
 
 			// PersonId The ID of the person this activity is associated with
 			PersonId *int `json:"person_id,omitempty"`
@@ -28666,6 +28661,9 @@ type GetRecents200Data0 struct {
 		// OrgName The name of the organization this activity is associated with
 		OrgName *string `json:"org_name,omitempty"`
 
+		// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
+		Outcome *int `json:"outcome"`
+
 		// OwnerName The name of the user this activity is owned by
 		OwnerName *string `json:"owner_name,omitempty"`
 
@@ -28831,13 +28829,13 @@ type GetRecents200Data2 struct {
 		EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 		// ExpectedCloseDate The expected close date of the deal
-		ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+		ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 		// FilesCount The number of files associated with the deal
 		FilesCount *int `json:"files_count,omitempty"`
 
 		// FirstWonTime The date and time of the first time changing the deal status as won
-		FirstWonTime *string `json:"first_won_time,omitempty"`
+		FirstWonTime *string `json:"first_won_time"`
 
 		// FollowersCount The number of followers associated with the deal
 		FollowersCount *int `json:"followers_count,omitempty"`
@@ -28855,7 +28853,7 @@ type GetRecents200Data2 struct {
 		IsArchived *bool `json:"is_archived,omitempty"`
 
 		// Label The label or multiple labels assigned to the deal
-		Label *string `json:"label,omitempty"`
+		Label *string `json:"label"`
 
 		// LastActivityDate The date of the last activity associated with the deal
 		LastActivityDate *string `json:"last_activity_date"`
@@ -28864,16 +28862,16 @@ type GetRecents200Data2 struct {
 		LastActivityId *int `json:"last_activity_id"`
 
 		// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-		LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+		LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 		// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-		LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+		LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 		// LostReason The reason for losing the deal
 		LostReason *string `json:"lost_reason"`
 
 		// LostTime The date and time of changing the deal status as lost
-		LostTime *string `json:"lost_time,omitempty"`
+		LostTime *string `json:"lost_time"`
 
 		// Mrr Only available in Growth and above plans
 		//
@@ -28890,25 +28888,25 @@ type GetRecents200Data2 struct {
 		MrrCurrency *string `json:"mrr_currency"`
 
 		// NextActivityDate The date of the next activity associated with the deal
-		NextActivityDate *string `json:"next_activity_date,omitempty"`
+		NextActivityDate *string `json:"next_activity_date"`
 
 		// NextActivityDuration The duration of the next activity associated with the deal
-		NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+		NextActivityDuration *string `json:"next_activity_duration"`
 
 		// NextActivityId The ID of the next activity associated with the deal
 		NextActivityId *int `json:"next_activity_id"`
 
 		// NextActivityNote The note of the next activity associated with the deal
-		NextActivityNote *string `json:"next_activity_note,omitempty"`
+		NextActivityNote *string `json:"next_activity_note"`
 
 		// NextActivitySubject The subject of the next activity associated with the deal
-		NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+		NextActivitySubject *string `json:"next_activity_subject"`
 
 		// NextActivityTime The time of the next activity associated with the deal
-		NextActivityTime *string `json:"next_activity_time,omitempty"`
+		NextActivityTime *string `json:"next_activity_time"`
 
 		// NextActivityType The type of the next activity associated with the deal
-		NextActivityType *string `json:"next_activity_type,omitempty"`
+		NextActivityType *string `json:"next_activity_type"`
 
 		// NotesCount The number of notes associated with the deal
 		NotesCount *int `json:"notes_count,omitempty"`
@@ -28917,10 +28915,10 @@ type GetRecents200Data2 struct {
 		OrgHidden *bool `json:"org_hidden,omitempty"`
 
 		// OrgId The ID of the organization associated with the deal
-		OrgId *int `json:"org_id,omitempty"`
+		OrgId *int `json:"org_id"`
 
 		// OrgName The name of the organization associated with the deal
-		OrgName *string `json:"org_name,omitempty"`
+		OrgName *string `json:"org_name"`
 
 		// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 		Origin *string `json:"origin,omitempty"`
@@ -28938,10 +28936,10 @@ type GetRecents200Data2 struct {
 		PersonHidden *bool `json:"person_hidden,omitempty"`
 
 		// PersonId The ID of the person associated with the deal
-		PersonId *int `json:"person_id,omitempty"`
+		PersonId *int `json:"person_id"`
 
 		// PersonName The name of the person associated with the deal
-		PersonName *string `json:"person_name,omitempty"`
+		PersonName *string `json:"person_name"`
 
 		// PipelineId The ID of the pipeline associated with the deal
 		PipelineId *int `json:"pipeline_id,omitempty"`
@@ -28956,7 +28954,7 @@ type GetRecents200Data2 struct {
 		RottenTime *string `json:"rotten_time"`
 
 		// StageChangeTime The last updated date and time of the deal stage
-		StageChangeTime *string `json:"stage_change_time,omitempty"`
+		StageChangeTime *string `json:"stage_change_time"`
 
 		// StageId The ID of the deal stage
 		StageId *int `json:"stage_id,omitempty"`
@@ -28974,7 +28972,7 @@ type GetRecents200Data2 struct {
 		UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 		// UpdateTime The last updated date and time of the deal
-		UpdateTime *string `json:"update_time,omitempty"`
+		UpdateTime *string `json:"update_time"`
 
 		// UserId The ID of the user
 		UserId *int `json:"user_id,omitempty"`
@@ -28992,7 +28990,7 @@ type GetRecents200Data2 struct {
 		WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 		// WonTime The date and time of changing the deal status as won
-		WonTime *string `json:"won_time,omitempty"`
+		WonTime *string `json:"won_time"`
 	} `json:"data,omitempty"`
 	Id   *int                    `json:"id,omitempty"`
 	Item *GetRecents200Data2Item `json:"item,omitempty"`
@@ -29145,42 +29143,40 @@ type GetRecents200Data5 struct {
 
 		// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 		Content *string `json:"content,omitempty"`
-
-		// Deal The deal this note is attached to
-		Deal *struct {
+		Deal    *struct {
 			// Title The title of the deal this note is attached to
 			Title *string `json:"title,omitempty"`
-		} `json:"deal,omitempty"`
+		} `json:"deal"`
 
 		// DealId The ID of the deal the note is attached to
-		DealId *int `json:"deal_id,omitempty"`
+		DealId *int `json:"deal_id"`
 
 		// Id The ID of the note
 		Id *int `json:"id,omitempty"`
 
 		// LastUpdateUserId The ID of the user who last updated the note
-		LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+		LastUpdateUserId *int `json:"last_update_user_id"`
 
 		// LeadId The ID of the lead the note is attached to
-		LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+		LeadId *openapi_types.UUID `json:"lead_id"`
 
 		// OrgId The ID of the organization the note is attached to
-		OrgId *int `json:"org_id,omitempty"`
+		OrgId *int `json:"org_id"`
 
 		// Organization The organization the note is attached to
 		Organization *struct {
 			// Name The name of the organization the note is attached to
 			Name *string `json:"name,omitempty"`
-		} `json:"organization,omitempty"`
+		} `json:"organization"`
 
 		// Person The person the note is attached to
 		Person *struct {
 			// Name The name of the person the note is attached to
 			Name *string `json:"name,omitempty"`
-		} `json:"person,omitempty"`
+		} `json:"person"`
 
 		// PersonId The ID of the person the note is attached to
-		PersonId *int `json:"person_id,omitempty"`
+		PersonId *int `json:"person_id"`
 
 		// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 		PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -29201,19 +29197,19 @@ type GetRecents200Data5 struct {
 		Project *struct {
 			// Title The title of the project the note is attached to
 			Title *string `json:"title,omitempty"`
-		} `json:"project,omitempty"`
+		} `json:"project"`
 
 		// ProjectId The ID of the project the note is attached to
-		ProjectId *int `json:"project_id,omitempty"`
+		ProjectId *int `json:"project_id"`
 
 		// Task The task the note is attached to
 		Task *struct {
 			// Title The title of the task the note is attached to
 			Title *string `json:"title,omitempty"`
-		} `json:"task,omitempty"`
+		} `json:"task"`
 
 		// TaskId The ID of the task the note is attached to
-		TaskId *int `json:"task_id,omitempty"`
+		TaskId *int `json:"task_id"`
 
 		// UpdateTime The last updated date and time of the note
 		UpdateTime *string `json:"update_time,omitempty"`
@@ -29224,7 +29220,7 @@ type GetRecents200Data5 struct {
 			Email *string `json:"email,omitempty"`
 
 			// IconUrl The URL of the note creator avatar picture
-			IconUrl *string `json:"icon_url,omitempty"`
+			IconUrl *string `json:"icon_url"`
 
 			// IsYou Whether the note is created by you or not
 			IsYou *bool `json:"is_you,omitempty"`
@@ -29725,7 +29721,7 @@ type GetRecents200Data10 struct {
 		PipelineId *int `json:"pipeline_id,omitempty"`
 
 		// RottenDays The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
-		RottenDays *int `json:"rotten_days,omitempty"`
+		RottenDays *int `json:"rotten_days"`
 
 		// RottenFlag Whether deals in this stage can become rotten
 		RottenFlag *bool `json:"rotten_flag,omitempty"`
@@ -30435,13 +30431,13 @@ type GetStageDealsResponse struct {
 			EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// FilesCount The number of files associated with the deal
 			FilesCount *int `json:"files_count,omitempty"`
 
 			// FirstWonTime The date and time of the first time changing the deal status as won
-			FirstWonTime *string `json:"first_won_time,omitempty"`
+			FirstWonTime *string `json:"first_won_time"`
 
 			// FollowersCount The number of followers associated with the deal
 			FollowersCount *int `json:"followers_count,omitempty"`
@@ -30459,7 +30455,7 @@ type GetStageDealsResponse struct {
 			IsArchived *bool `json:"is_archived,omitempty"`
 
 			// Label The label or multiple labels assigned to the deal
-			Label *string `json:"label,omitempty"`
+			Label *string `json:"label"`
 
 			// LastActivityDate The date of the last activity associated with the deal
 			LastActivityDate *string `json:"last_activity_date"`
@@ -30468,16 +30464,16 @@ type GetStageDealsResponse struct {
 			LastActivityId *int `json:"last_activity_id"`
 
 			// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-			LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+			LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 			// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-			LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+			LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 			// LostReason The reason for losing the deal
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -30494,25 +30490,25 @@ type GetStageDealsResponse struct {
 			MrrCurrency *string `json:"mrr_currency"`
 
 			// NextActivityDate The date of the next activity associated with the deal
-			NextActivityDate *string `json:"next_activity_date,omitempty"`
+			NextActivityDate *string `json:"next_activity_date"`
 
 			// NextActivityDuration The duration of the next activity associated with the deal
-			NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+			NextActivityDuration *string `json:"next_activity_duration"`
 
 			// NextActivityId The ID of the next activity associated with the deal
 			NextActivityId *int `json:"next_activity_id"`
 
 			// NextActivityNote The note of the next activity associated with the deal
-			NextActivityNote *string `json:"next_activity_note,omitempty"`
+			NextActivityNote *string `json:"next_activity_note"`
 
 			// NextActivitySubject The subject of the next activity associated with the deal
-			NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+			NextActivitySubject *string `json:"next_activity_subject"`
 
 			// NextActivityTime The time of the next activity associated with the deal
-			NextActivityTime *string `json:"next_activity_time,omitempty"`
+			NextActivityTime *string `json:"next_activity_time"`
 
 			// NextActivityType The type of the next activity associated with the deal
-			NextActivityType *string `json:"next_activity_type,omitempty"`
+			NextActivityType *string `json:"next_activity_type"`
 
 			// NotesCount The number of notes associated with the deal
 			NotesCount *int `json:"notes_count,omitempty"`
@@ -30521,10 +30517,10 @@ type GetStageDealsResponse struct {
 			OrgHidden *bool `json:"org_hidden,omitempty"`
 
 			// OrgId The ID of the organization associated with the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// OrgName The name of the organization associated with the deal
-			OrgName *string `json:"org_name,omitempty"`
+			OrgName *string `json:"org_name"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -30542,10 +30538,10 @@ type GetStageDealsResponse struct {
 			PersonHidden *bool `json:"person_hidden,omitempty"`
 
 			// PersonId The ID of the person associated with the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PersonName The name of the person associated with the deal
-			PersonName *string `json:"person_name,omitempty"`
+			PersonName *string `json:"person_name"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -30560,7 +30556,7 @@ type GetStageDealsResponse struct {
 			RottenTime *string `json:"rotten_time"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -30578,7 +30574,7 @@ type GetStageDealsResponse struct {
 			UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// UserId The ID of the user
 			UserId *int `json:"user_id,omitempty"`
@@ -30596,7 +30592,7 @@ type GetStageDealsResponse struct {
 			WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the request was successful or not
@@ -35082,13 +35078,13 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 					// ExpectedCloseDate The expected close date of the deal
-					ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+					ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 					// FilesCount The number of files associated with the deal
 					FilesCount *int `json:"files_count,omitempty"`
 
 					// FirstWonTime The date and time of the first time changing the deal status as won
-					FirstWonTime *string `json:"first_won_time,omitempty"`
+					FirstWonTime *string `json:"first_won_time"`
 
 					// FollowersCount The number of followers associated with the deal
 					FollowersCount *int `json:"followers_count,omitempty"`
@@ -35106,7 +35102,7 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					IsArchived *bool `json:"is_archived,omitempty"`
 
 					// Label The label or multiple labels assigned to the deal
-					Label *string `json:"label,omitempty"`
+					Label *string `json:"label"`
 
 					// LastActivityDate The date of the last activity associated with the deal
 					LastActivityDate *string `json:"last_activity_date"`
@@ -35115,16 +35111,16 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					LastActivityId *int `json:"last_activity_id"`
 
 					// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-					LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+					LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 					// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-					LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+					LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 					// LostReason The reason for losing the deal
 					LostReason *string `json:"lost_reason"`
 
 					// LostTime The date and time of changing the deal status as lost
-					LostTime *string `json:"lost_time,omitempty"`
+					LostTime *string `json:"lost_time"`
 
 					// Mrr Only available in Growth and above plans
 					//
@@ -35141,25 +35137,25 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					MrrCurrency *string `json:"mrr_currency"`
 
 					// NextActivityDate The date of the next activity associated with the deal
-					NextActivityDate *string `json:"next_activity_date,omitempty"`
+					NextActivityDate *string `json:"next_activity_date"`
 
 					// NextActivityDuration The duration of the next activity associated with the deal
-					NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+					NextActivityDuration *string `json:"next_activity_duration"`
 
 					// NextActivityId The ID of the next activity associated with the deal
 					NextActivityId *int `json:"next_activity_id"`
 
 					// NextActivityNote The note of the next activity associated with the deal
-					NextActivityNote *string `json:"next_activity_note,omitempty"`
+					NextActivityNote *string `json:"next_activity_note"`
 
 					// NextActivitySubject The subject of the next activity associated with the deal
-					NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+					NextActivitySubject *string `json:"next_activity_subject"`
 
 					// NextActivityTime The time of the next activity associated with the deal
-					NextActivityTime *string `json:"next_activity_time,omitempty"`
+					NextActivityTime *string `json:"next_activity_time"`
 
 					// NextActivityType The type of the next activity associated with the deal
-					NextActivityType *string `json:"next_activity_type,omitempty"`
+					NextActivityType *string `json:"next_activity_type"`
 
 					// NotesCount The number of notes associated with the deal
 					NotesCount *int `json:"notes_count,omitempty"`
@@ -35168,10 +35164,10 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					OrgHidden *bool `json:"org_hidden,omitempty"`
 
 					// OrgId The ID of the organization associated with the deal
-					OrgId *int `json:"org_id,omitempty"`
+					OrgId *int `json:"org_id"`
 
 					// OrgName The name of the organization associated with the deal
-					OrgName *string `json:"org_name,omitempty"`
+					OrgName *string `json:"org_name"`
 
 					// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 					Origin *string `json:"origin,omitempty"`
@@ -35189,10 +35185,10 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					PersonHidden *bool `json:"person_hidden,omitempty"`
 
 					// PersonId The ID of the person associated with the deal
-					PersonId *int `json:"person_id,omitempty"`
+					PersonId *int `json:"person_id"`
 
 					// PersonName The name of the person associated with the deal
-					PersonName *string `json:"person_name,omitempty"`
+					PersonName *string `json:"person_name"`
 
 					// PipelineId The ID of the pipeline associated with the deal
 					PipelineId *int `json:"pipeline_id,omitempty"`
@@ -35207,7 +35203,7 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					RottenTime *string `json:"rotten_time"`
 
 					// StageChangeTime The last updated date and time of the deal stage
-					StageChangeTime *string `json:"stage_change_time,omitempty"`
+					StageChangeTime *string `json:"stage_change_time"`
 
 					// StageId The ID of the deal stage
 					StageId *int `json:"stage_id,omitempty"`
@@ -35225,7 +35221,7 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 					// UpdateTime The last updated date and time of the deal
-					UpdateTime *string `json:"update_time,omitempty"`
+					UpdateTime *string `json:"update_time"`
 
 					// UserId The ID of the user
 					UserId *int `json:"user_id,omitempty"`
@@ -35243,7 +35239,7 @@ func ParseGetDealsTimelineResponse(rsp *http.Response) (*GetDealsTimelineRespons
 					WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 					// WonTime The date and time of changing the deal status as won
-					WonTime *string `json:"won_time,omitempty"`
+					WonTime *string `json:"won_time"`
 				} `json:"deals,omitempty"`
 
 				// PeriodEnd The end date and time of the period
@@ -35377,13 +35373,13 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 					// ExpectedCloseDate The expected close date of the deal
-					ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+					ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 					// FilesCount The number of files associated with the deal
 					FilesCount *int `json:"files_count,omitempty"`
 
 					// FirstWonTime The date and time of the first time changing the deal status as won
-					FirstWonTime *string `json:"first_won_time,omitempty"`
+					FirstWonTime *string `json:"first_won_time"`
 
 					// FollowersCount The number of followers associated with the deal
 					FollowersCount *int `json:"followers_count,omitempty"`
@@ -35401,7 +35397,7 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					IsArchived *bool `json:"is_archived,omitempty"`
 
 					// Label The label or multiple labels assigned to the deal
-					Label *string `json:"label,omitempty"`
+					Label *string `json:"label"`
 
 					// LastActivityDate The date of the last activity associated with the deal
 					LastActivityDate *string `json:"last_activity_date"`
@@ -35410,16 +35406,16 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					LastActivityId *int `json:"last_activity_id"`
 
 					// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-					LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+					LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 					// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-					LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+					LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 					// LostReason The reason for losing the deal
 					LostReason *string `json:"lost_reason"`
 
 					// LostTime The date and time of changing the deal status as lost
-					LostTime *string `json:"lost_time,omitempty"`
+					LostTime *string `json:"lost_time"`
 
 					// Mrr Only available in Growth and above plans
 					//
@@ -35436,25 +35432,25 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					MrrCurrency *string `json:"mrr_currency"`
 
 					// NextActivityDate The date of the next activity associated with the deal
-					NextActivityDate *string `json:"next_activity_date,omitempty"`
+					NextActivityDate *string `json:"next_activity_date"`
 
 					// NextActivityDuration The duration of the next activity associated with the deal
-					NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+					NextActivityDuration *string `json:"next_activity_duration"`
 
 					// NextActivityId The ID of the next activity associated with the deal
 					NextActivityId *int `json:"next_activity_id"`
 
 					// NextActivityNote The note of the next activity associated with the deal
-					NextActivityNote *string `json:"next_activity_note,omitempty"`
+					NextActivityNote *string `json:"next_activity_note"`
 
 					// NextActivitySubject The subject of the next activity associated with the deal
-					NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+					NextActivitySubject *string `json:"next_activity_subject"`
 
 					// NextActivityTime The time of the next activity associated with the deal
-					NextActivityTime *string `json:"next_activity_time,omitempty"`
+					NextActivityTime *string `json:"next_activity_time"`
 
 					// NextActivityType The type of the next activity associated with the deal
-					NextActivityType *string `json:"next_activity_type,omitempty"`
+					NextActivityType *string `json:"next_activity_type"`
 
 					// NotesCount The number of notes associated with the deal
 					NotesCount *int `json:"notes_count,omitempty"`
@@ -35463,10 +35459,10 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					OrgHidden *bool `json:"org_hidden,omitempty"`
 
 					// OrgId The ID of the organization associated with the deal
-					OrgId *int `json:"org_id,omitempty"`
+					OrgId *int `json:"org_id"`
 
 					// OrgName The name of the organization associated with the deal
-					OrgName *string `json:"org_name,omitempty"`
+					OrgName *string `json:"org_name"`
 
 					// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 					Origin *string `json:"origin,omitempty"`
@@ -35484,10 +35480,10 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					PersonHidden *bool `json:"person_hidden,omitempty"`
 
 					// PersonId The ID of the person associated with the deal
-					PersonId *int `json:"person_id,omitempty"`
+					PersonId *int `json:"person_id"`
 
 					// PersonName The name of the person associated with the deal
-					PersonName *string `json:"person_name,omitempty"`
+					PersonName *string `json:"person_name"`
 
 					// PipelineId The ID of the pipeline associated with the deal
 					PipelineId *int `json:"pipeline_id,omitempty"`
@@ -35502,7 +35498,7 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					RottenTime *string `json:"rotten_time"`
 
 					// StageChangeTime The last updated date and time of the deal stage
-					StageChangeTime *string `json:"stage_change_time,omitempty"`
+					StageChangeTime *string `json:"stage_change_time"`
 
 					// StageId The ID of the deal stage
 					StageId *int `json:"stage_id,omitempty"`
@@ -35520,7 +35516,7 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 					// UpdateTime The last updated date and time of the deal
-					UpdateTime *string `json:"update_time,omitempty"`
+					UpdateTime *string `json:"update_time"`
 
 					// UserId The ID of the user
 					UserId *int `json:"user_id,omitempty"`
@@ -35538,7 +35534,7 @@ func ParseGetArchivedDealsTimelineResponse(rsp *http.Response) (*GetArchivedDeal
 					WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 					// WonTime The date and time of changing the deal status as won
-					WonTime *string `json:"won_time,omitempty"`
+					WonTime *string `json:"won_time"`
 				} `json:"deals,omitempty"`
 
 				// PeriodEnd The end date and time of the period
@@ -35730,13 +35726,13 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// FilesCount The number of files associated with the deal
 				FilesCount *int `json:"files_count,omitempty"`
 
 				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
+				FirstWonTime *string `json:"first_won_time"`
 
 				// FollowersCount The number of followers associated with the deal
 				FollowersCount *int `json:"followers_count,omitempty"`
@@ -35754,7 +35750,7 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				IsArchived *bool `json:"is_archived,omitempty"`
 
 				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
+				Label *string `json:"label"`
 
 				// LastActivityDate The date of the last activity associated with the deal
 				LastActivityDate *string `json:"last_activity_date"`
@@ -35763,16 +35759,16 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostReason The reason for losing the deal
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -35789,25 +35785,25 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				MrrCurrency *string `json:"mrr_currency"`
 
 				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
+				NextActivityDate *string `json:"next_activity_date"`
 
 				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+				NextActivityDuration *string `json:"next_activity_duration"`
 
 				// NextActivityId The ID of the next activity associated with the deal
 				NextActivityId *int `json:"next_activity_id"`
 
 				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
+				NextActivityNote *string `json:"next_activity_note"`
 
 				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+				NextActivitySubject *string `json:"next_activity_subject"`
 
 				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
+				NextActivityTime *string `json:"next_activity_time"`
 
 				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
+				NextActivityType *string `json:"next_activity_type"`
 
 				// NotesCount The number of notes associated with the deal
 				NotesCount *int `json:"notes_count,omitempty"`
@@ -35816,10 +35812,10 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				OrgHidden *bool `json:"org_hidden,omitempty"`
 
 				// OrgId The ID of the organization associated with the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -35837,10 +35833,10 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				PersonHidden *bool `json:"person_hidden,omitempty"`
 
 				// PersonId The ID of the person associated with the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
+				PersonName *string `json:"person_name"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -35855,7 +35851,7 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				RottenTime *string `json:"rotten_time"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -35873,7 +35869,7 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The ID of the user
 				UserId *int `json:"user_id,omitempty"`
@@ -35891,7 +35887,7 @@ func ParseDuplicateDealResponse(rsp *http.Response) (*DuplicateDealResponse, err
 				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -36516,13 +36512,13 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// FilesCount The number of files associated with the deal
 				FilesCount *int `json:"files_count,omitempty"`
 
 				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
+				FirstWonTime *string `json:"first_won_time"`
 
 				// FollowersCount The number of followers associated with the deal
 				FollowersCount *int `json:"followers_count,omitempty"`
@@ -36540,7 +36536,7 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				IsArchived *bool `json:"is_archived,omitempty"`
 
 				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
+				Label *string `json:"label"`
 
 				// LastActivityDate The date of the last activity associated with the deal
 				LastActivityDate *string `json:"last_activity_date"`
@@ -36549,16 +36545,16 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostReason The reason for losing the deal
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// MergeWhatId The deal ID of the deal which the original deal was merged with
 				MergeWhatId *int `json:"merge_what_id,omitempty"`
@@ -36578,25 +36574,25 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				MrrCurrency *string `json:"mrr_currency"`
 
 				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
+				NextActivityDate *string `json:"next_activity_date"`
 
 				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+				NextActivityDuration *string `json:"next_activity_duration"`
 
 				// NextActivityId The ID of the next activity associated with the deal
 				NextActivityId *int `json:"next_activity_id"`
 
 				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
+				NextActivityNote *string `json:"next_activity_note"`
 
 				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+				NextActivitySubject *string `json:"next_activity_subject"`
 
 				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
+				NextActivityTime *string `json:"next_activity_time"`
 
 				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
+				NextActivityType *string `json:"next_activity_type"`
 
 				// NotesCount The number of notes associated with the deal
 				NotesCount *int `json:"notes_count,omitempty"`
@@ -36605,10 +36601,10 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				OrgHidden *bool `json:"org_hidden,omitempty"`
 
 				// OrgId The ID of the organization associated with the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -36626,10 +36622,10 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				PersonHidden *bool `json:"person_hidden,omitempty"`
 
 				// PersonId The ID of the person associated with the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
+				PersonName *string `json:"person_name"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -36644,7 +36640,7 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				RottenTime *string `json:"rotten_time"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -36662,7 +36658,7 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The ID of the user
 				UserId *int `json:"user_id,omitempty"`
@@ -36680,7 +36676,7 @@ func ParseMergeDealsResponse(rsp *http.Response) (*MergeDealsResponse, error) {
 				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -42181,42 +42177,40 @@ func ParseGetNotesResponse(rsp *http.Response) (*GetNotesResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-
-				// Deal The deal this note is attached to
-				Deal *struct {
+				Deal    *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"deal,omitempty"`
+				} `json:"deal"`
 
 				// DealId The ID of the deal the note is attached to
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Id The ID of the note
 				Id *int `json:"id,omitempty"`
 
 				// LastUpdateUserId The ID of the user who last updated the note
-				LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+				LastUpdateUserId *int `json:"last_update_user_id"`
 
 				// LeadId The ID of the lead the note is attached to
-				LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+				LeadId *openapi_types.UUID `json:"lead_id"`
 
 				// OrgId The ID of the organization the note is attached to
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Organization The organization the note is attached to
 				Organization *struct {
 					// Name The name of the organization the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"organization,omitempty"`
+				} `json:"organization"`
 
 				// Person The person the note is attached to
 				Person *struct {
 					// Name The name of the person the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"person,omitempty"`
+				} `json:"person"`
 
 				// PersonId The ID of the person the note is attached to
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 				PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -42237,19 +42231,19 @@ func ParseGetNotesResponse(rsp *http.Response) (*GetNotesResponse, error) {
 				Project *struct {
 					// Title The title of the project the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"project,omitempty"`
+				} `json:"project"`
 
 				// ProjectId The ID of the project the note is attached to
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// Task The task the note is attached to
 				Task *struct {
 					// Title The title of the task the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"task,omitempty"`
+				} `json:"task"`
 
 				// TaskId The ID of the task the note is attached to
-				TaskId *int `json:"task_id,omitempty"`
+				TaskId *int `json:"task_id"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -42260,7 +42254,7 @@ func ParseGetNotesResponse(rsp *http.Response) (*GetNotesResponse, error) {
 					Email *string `json:"email,omitempty"`
 
 					// IconUrl The URL of the note creator avatar picture
-					IconUrl *string `json:"icon_url,omitempty"`
+					IconUrl *string `json:"icon_url"`
 
 					// IsYou Whether the note is created by you or not
 					IsYou *bool `json:"is_you,omitempty"`
@@ -42311,42 +42305,40 @@ func ParseAddNoteResponse(rsp *http.Response) (*AddNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-
-				// Deal The deal this note is attached to
-				Deal *struct {
+				Deal    *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"deal,omitempty"`
+				} `json:"deal"`
 
 				// DealId The ID of the deal the note is attached to
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Id The ID of the note
 				Id *int `json:"id,omitempty"`
 
 				// LastUpdateUserId The ID of the user who last updated the note
-				LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+				LastUpdateUserId *int `json:"last_update_user_id"`
 
 				// LeadId The ID of the lead the note is attached to
-				LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+				LeadId *openapi_types.UUID `json:"lead_id"`
 
 				// OrgId The ID of the organization the note is attached to
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Organization The organization the note is attached to
 				Organization *struct {
 					// Name The name of the organization the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"organization,omitempty"`
+				} `json:"organization"`
 
 				// Person The person the note is attached to
 				Person *struct {
 					// Name The name of the person the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"person,omitempty"`
+				} `json:"person"`
 
 				// PersonId The ID of the person the note is attached to
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 				PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -42367,19 +42359,19 @@ func ParseAddNoteResponse(rsp *http.Response) (*AddNoteResponse, error) {
 				Project *struct {
 					// Title The title of the project the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"project,omitempty"`
+				} `json:"project"`
 
 				// ProjectId The ID of the project the note is attached to
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// Task The task the note is attached to
 				Task *struct {
 					// Title The title of the task the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"task,omitempty"`
+				} `json:"task"`
 
 				// TaskId The ID of the task the note is attached to
-				TaskId *int `json:"task_id,omitempty"`
+				TaskId *int `json:"task_id"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -42390,7 +42382,7 @@ func ParseAddNoteResponse(rsp *http.Response) (*AddNoteResponse, error) {
 					Email *string `json:"email,omitempty"`
 
 					// IconUrl The URL of the note creator avatar picture
-					IconUrl *string `json:"icon_url,omitempty"`
+					IconUrl *string `json:"icon_url"`
 
 					// IsYou Whether the note is created by you or not
 					IsYou *bool `json:"is_you,omitempty"`
@@ -42473,42 +42465,40 @@ func ParseGetNoteResponse(rsp *http.Response) (*GetNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-
-				// Deal The deal this note is attached to
-				Deal *struct {
+				Deal    *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"deal,omitempty"`
+				} `json:"deal"`
 
 				// DealId The ID of the deal the note is attached to
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Id The ID of the note
 				Id *int `json:"id,omitempty"`
 
 				// LastUpdateUserId The ID of the user who last updated the note
-				LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+				LastUpdateUserId *int `json:"last_update_user_id"`
 
 				// LeadId The ID of the lead the note is attached to
-				LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+				LeadId *openapi_types.UUID `json:"lead_id"`
 
 				// OrgId The ID of the organization the note is attached to
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Organization The organization the note is attached to
 				Organization *struct {
 					// Name The name of the organization the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"organization,omitempty"`
+				} `json:"organization"`
 
 				// Person The person the note is attached to
 				Person *struct {
 					// Name The name of the person the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"person,omitempty"`
+				} `json:"person"`
 
 				// PersonId The ID of the person the note is attached to
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 				PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -42529,19 +42519,19 @@ func ParseGetNoteResponse(rsp *http.Response) (*GetNoteResponse, error) {
 				Project *struct {
 					// Title The title of the project the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"project,omitempty"`
+				} `json:"project"`
 
 				// ProjectId The ID of the project the note is attached to
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// Task The task the note is attached to
 				Task *struct {
 					// Title The title of the task the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"task,omitempty"`
+				} `json:"task"`
 
 				// TaskId The ID of the task the note is attached to
-				TaskId *int `json:"task_id,omitempty"`
+				TaskId *int `json:"task_id"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -42552,7 +42542,7 @@ func ParseGetNoteResponse(rsp *http.Response) (*GetNoteResponse, error) {
 					Email *string `json:"email,omitempty"`
 
 					// IconUrl The URL of the note creator avatar picture
-					IconUrl *string `json:"icon_url,omitempty"`
+					IconUrl *string `json:"icon_url"`
 
 					// IsYou Whether the note is created by you or not
 					IsYou *bool `json:"is_you,omitempty"`
@@ -42603,42 +42593,40 @@ func ParseUpdateNoteResponse(rsp *http.Response) (*UpdateNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-
-				// Deal The deal this note is attached to
-				Deal *struct {
+				Deal    *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"deal,omitempty"`
+				} `json:"deal"`
 
 				// DealId The ID of the deal the note is attached to
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Id The ID of the note
 				Id *int `json:"id,omitempty"`
 
 				// LastUpdateUserId The ID of the user who last updated the note
-				LastUpdateUserId *int `json:"last_update_user_id,omitempty"`
+				LastUpdateUserId *int `json:"last_update_user_id"`
 
 				// LeadId The ID of the lead the note is attached to
-				LeadId *openapi_types.UUID `json:"lead_id,omitempty"`
+				LeadId *openapi_types.UUID `json:"lead_id"`
 
 				// OrgId The ID of the organization the note is attached to
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Organization The organization the note is attached to
 				Organization *struct {
 					// Name The name of the organization the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"organization,omitempty"`
+				} `json:"organization"`
 
 				// Person The person the note is attached to
 				Person *struct {
 					// Name The name of the person the note is attached to
 					Name *string `json:"name,omitempty"`
-				} `json:"person,omitempty"`
+				} `json:"person"`
 
 				// PersonId The ID of the person the note is attached to
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PinnedToDealFlag If true, the results are filtered by note to deal pinning state
 				PinnedToDealFlag *bool `json:"pinned_to_deal_flag,omitempty"`
@@ -42659,19 +42647,19 @@ func ParseUpdateNoteResponse(rsp *http.Response) (*UpdateNoteResponse, error) {
 				Project *struct {
 					// Title The title of the project the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"project,omitempty"`
+				} `json:"project"`
 
 				// ProjectId The ID of the project the note is attached to
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// Task The task the note is attached to
 				Task *struct {
 					// Title The title of the task the note is attached to
 					Title *string `json:"title,omitempty"`
-				} `json:"task,omitempty"`
+				} `json:"task"`
 
 				// TaskId The ID of the task the note is attached to
-				TaskId *int `json:"task_id,omitempty"`
+				TaskId *int `json:"task_id"`
 
 				// UpdateTime The last updated date and time of the note
 				UpdateTime *string `json:"update_time,omitempty"`
@@ -42682,7 +42670,7 @@ func ParseUpdateNoteResponse(rsp *http.Response) (*UpdateNoteResponse, error) {
 					Email *string `json:"email,omitempty"`
 
 					// IconUrl The URL of the note creator avatar picture
-					IconUrl *string `json:"icon_url,omitempty"`
+					IconUrl *string `json:"icon_url"`
 
 					// IsYou Whether the note is created by you or not
 					IsYou *bool `json:"is_you,omitempty"`
@@ -45402,7 +45390,7 @@ func ParseGetPersonProductsResponse(rsp *http.Response) (*GetPersonProductsRespo
 						EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 						// ExpectedCloseDate The expected close date of the deal
-						ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+						ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 						// FilesCount The number of files associated with the deal
 						FilesCount *int `json:"files_count,omitempty"`
@@ -45411,7 +45399,7 @@ func ParseGetPersonProductsResponse(rsp *http.Response) (*GetPersonProductsRespo
 						FirstAddTime *string `json:"first_add_time,omitempty"`
 
 						// FirstWonTime The date and time of the first time changing the deal status as won
-						FirstWonTime *string `json:"first_won_time,omitempty"`
+						FirstWonTime *string `json:"first_won_time"`
 
 						// FollowersCount The number of followers associated with the deal
 						FollowersCount *int `json:"followers_count,omitempty"`
@@ -45420,7 +45408,7 @@ func ParseGetPersonProductsResponse(rsp *http.Response) (*GetPersonProductsRespo
 						Id *int `json:"id,omitempty"`
 
 						// Label The label or multiple labels assigned to the deal
-						Label *string `json:"label,omitempty"`
+						Label *string `json:"label"`
 
 						// LastActivityDate The date of the last activity associated with the deal
 						LastActivityDate *string `json:"last_activity_date"`
@@ -45429,37 +45417,37 @@ func ParseGetPersonProductsResponse(rsp *http.Response) (*GetPersonProductsRespo
 						LastActivityId *int `json:"last_activity_id"`
 
 						// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-						LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+						LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 						// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-						LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+						LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 						// LostReason The reason for losing the deal
 						LostReason *string `json:"lost_reason"`
 
 						// LostTime The date and time of changing the deal status as lost
-						LostTime *string `json:"lost_time,omitempty"`
+						LostTime *string `json:"lost_time"`
 
 						// NextActivityDate The date of the next activity associated with the deal
-						NextActivityDate *string `json:"next_activity_date,omitempty"`
+						NextActivityDate *string `json:"next_activity_date"`
 
 						// NextActivityId The ID of the next activity associated with the deal
 						NextActivityId *int `json:"next_activity_id"`
 
 						// NextActivityTime The time of the next activity associated with the deal
-						NextActivityTime *string `json:"next_activity_time,omitempty"`
+						NextActivityTime *string `json:"next_activity_time"`
 
 						// NotesCount The number of notes associated with the deal
 						NotesCount *int `json:"notes_count,omitempty"`
 
 						// OrgId The ID of the organization associated with the deal
-						OrgId *int `json:"org_id,omitempty"`
+						OrgId *int `json:"org_id"`
 
 						// ParticipantsCount The number of participants associated with the deal
 						ParticipantsCount *int `json:"participants_count,omitempty"`
 
 						// PersonId The ID of the person associated with the deal
-						PersonId *int `json:"person_id,omitempty"`
+						PersonId *int `json:"person_id"`
 
 						// PipelineId The ID of the pipeline associated with the deal
 						PipelineId *int `json:"pipeline_id,omitempty"`
@@ -45471,7 +45459,7 @@ func ParseGetPersonProductsResponse(rsp *http.Response) (*GetPersonProductsRespo
 						ProductsCount *int `json:"products_count,omitempty"`
 
 						// StageChangeTime The last updated date and time of the deal stage
-						StageChangeTime *string `json:"stage_change_time,omitempty"`
+						StageChangeTime *string `json:"stage_change_time"`
 
 						// StageId The ID of the deal stage
 						StageId *int `json:"stage_id,omitempty"`
@@ -45486,7 +45474,7 @@ func ParseGetPersonProductsResponse(rsp *http.Response) (*GetPersonProductsRespo
 						UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 						// UpdateTime The last updated date and time of the deal
-						UpdateTime *string `json:"update_time,omitempty"`
+						UpdateTime *string `json:"update_time"`
 
 						// UserId The ID of the user
 						UserId *int `json:"user_id,omitempty"`
@@ -45498,7 +45486,7 @@ func ParseGetPersonProductsResponse(rsp *http.Response) (*GetPersonProductsRespo
 						VisibleTo *string `json:"visible_to,omitempty"`
 
 						// WonTime The date and time of changing the deal status as won
-						WonTime *string `json:"won_time,omitempty"`
+						WonTime *string `json:"won_time"`
 					} `json:"deal,omitempty"`
 					Product *struct {
 						// ActiveFlag Whether this product will be made active or not
@@ -45713,13 +45701,13 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// FilesCount The number of files associated with the deal
 				FilesCount *int `json:"files_count,omitempty"`
 
 				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
+				FirstWonTime *string `json:"first_won_time"`
 
 				// FollowersCount The number of followers associated with the deal
 				FollowersCount *int `json:"followers_count,omitempty"`
@@ -45737,7 +45725,7 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				IsArchived *bool `json:"is_archived,omitempty"`
 
 				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
+				Label *string `json:"label"`
 
 				// LastActivityDate The date of the last activity associated with the deal
 				LastActivityDate *string `json:"last_activity_date"`
@@ -45746,16 +45734,16 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostReason The reason for losing the deal
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -45772,25 +45760,25 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				MrrCurrency *string `json:"mrr_currency"`
 
 				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
+				NextActivityDate *string `json:"next_activity_date"`
 
 				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+				NextActivityDuration *string `json:"next_activity_duration"`
 
 				// NextActivityId The ID of the next activity associated with the deal
 				NextActivityId *int `json:"next_activity_id"`
 
 				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
+				NextActivityNote *string `json:"next_activity_note"`
 
 				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+				NextActivitySubject *string `json:"next_activity_subject"`
 
 				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
+				NextActivityTime *string `json:"next_activity_time"`
 
 				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
+				NextActivityType *string `json:"next_activity_type"`
 
 				// NotesCount The number of notes associated with the deal
 				NotesCount *int `json:"notes_count,omitempty"`
@@ -45799,10 +45787,10 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				OrgHidden *bool `json:"org_hidden,omitempty"`
 
 				// OrgId The ID of the organization associated with the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -45820,10 +45808,10 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				PersonHidden *bool `json:"person_hidden,omitempty"`
 
 				// PersonId The ID of the person associated with the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
+				PersonName *string `json:"person_name"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -45838,7 +45826,7 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				RottenTime *string `json:"rotten_time"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -45856,7 +45844,7 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The ID of the user
 				UserId *int `json:"user_id,omitempty"`
@@ -45874,7 +45862,7 @@ func ParseGetPipelineDealsResponse(rsp *http.Response) (*GetPipelineDealsRespons
 				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the request was successful or not
@@ -46177,13 +46165,13 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// FilesCount The number of files associated with the deal
 				FilesCount *int `json:"files_count,omitempty"`
 
 				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
+				FirstWonTime *string `json:"first_won_time"`
 
 				// FollowersCount The number of followers associated with the deal
 				FollowersCount *int `json:"followers_count,omitempty"`
@@ -46201,7 +46189,7 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 				IsArchived *bool `json:"is_archived,omitempty"`
 
 				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
+				Label *string `json:"label"`
 
 				// LastActivityDate The date of the last activity associated with the deal
 				LastActivityDate *string `json:"last_activity_date"`
@@ -46210,16 +46198,16 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostReason The reason for losing the deal
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -46236,25 +46224,25 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 				MrrCurrency *string `json:"mrr_currency"`
 
 				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
+				NextActivityDate *string `json:"next_activity_date"`
 
 				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+				NextActivityDuration *string `json:"next_activity_duration"`
 
 				// NextActivityId The ID of the next activity associated with the deal
 				NextActivityId *int `json:"next_activity_id"`
 
 				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
+				NextActivityNote *string `json:"next_activity_note"`
 
 				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+				NextActivitySubject *string `json:"next_activity_subject"`
 
 				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
+				NextActivityTime *string `json:"next_activity_time"`
 
 				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
+				NextActivityType *string `json:"next_activity_type"`
 
 				// NotesCount The number of notes associated with the deal
 				NotesCount *int `json:"notes_count,omitempty"`
@@ -46282,10 +46270,10 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 
 					// Value The ID of the organization associated with the deal
 					Value *int `json:"value,omitempty"`
-				} `json:"org_id,omitempty"`
+				} `json:"org_id"`
 
 				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -46337,10 +46325,10 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 
 					// Value The ID of the person associated with the deal
 					Value *int `json:"value,omitempty"`
-				} `json:"person_id,omitempty"`
+				} `json:"person_id"`
 
 				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
+				PersonName *string `json:"person_name"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -46355,7 +46343,7 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 				RottenTime *string `json:"rotten_time"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -46373,7 +46361,7 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 				UserId     *struct {
 					// ActiveFlag Whether the user is active or not
 					ActiveFlag *bool `json:"active_flag,omitempty"`
@@ -46410,7 +46398,7 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 			RelatedObjects *struct {
 				Organization *struct {
@@ -46526,7 +46514,7 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 					PipelineId *int `json:"pipeline_id,omitempty"`
 
 					// RottenDays The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
-					RottenDays *int `json:"rotten_days,omitempty"`
+					RottenDays *int `json:"rotten_days"`
 
 					// RottenFlag Whether deals in this stage can become rotten
 					RottenFlag *bool `json:"rotten_flag,omitempty"`
@@ -46793,6 +46781,9 @@ func ParseGetProjectActivitiesResponse(rsp *http.Response) (*GetProjectActivitie
 
 				// OrgId The ID of the organization this activity is associated with
 				OrgId *int `json:"org_id,omitempty"`
+
+				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
+				Outcome *int `json:"outcome"`
 
 				// PersonId The ID of the person this activity is associated with
 				PersonId *int `json:"person_id,omitempty"`
@@ -47783,13 +47774,13 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				EmailMessagesCount *int `json:"email_messages_count,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// FilesCount The number of files associated with the deal
 				FilesCount *int `json:"files_count,omitempty"`
 
 				// FirstWonTime The date and time of the first time changing the deal status as won
-				FirstWonTime *string `json:"first_won_time,omitempty"`
+				FirstWonTime *string `json:"first_won_time"`
 
 				// FollowersCount The number of followers associated with the deal
 				FollowersCount *int `json:"followers_count,omitempty"`
@@ -47807,7 +47798,7 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				IsArchived *bool `json:"is_archived,omitempty"`
 
 				// Label The label or multiple labels assigned to the deal
-				Label *string `json:"label,omitempty"`
+				Label *string `json:"label"`
 
 				// LastActivityDate The date of the last activity associated with the deal
 				LastActivityDate *string `json:"last_activity_date"`
@@ -47816,16 +47807,16 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				LastActivityId *int `json:"last_activity_id"`
 
 				// LastIncomingMailTime The date and time of the last incoming email associated with the deal
-				LastIncomingMailTime *string `json:"last_incoming_mail_time,omitempty"`
+				LastIncomingMailTime *string `json:"last_incoming_mail_time"`
 
 				// LastOutgoingMailTime The date and time of the last outgoing email associated with the deal
-				LastOutgoingMailTime *string `json:"last_outgoing_mail_time,omitempty"`
+				LastOutgoingMailTime *string `json:"last_outgoing_mail_time"`
 
 				// LostReason The reason for losing the deal
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -47842,25 +47833,25 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				MrrCurrency *string `json:"mrr_currency"`
 
 				// NextActivityDate The date of the next activity associated with the deal
-				NextActivityDate *string `json:"next_activity_date,omitempty"`
+				NextActivityDate *string `json:"next_activity_date"`
 
 				// NextActivityDuration The duration of the next activity associated with the deal
-				NextActivityDuration *string `json:"next_activity_duration,omitempty"`
+				NextActivityDuration *string `json:"next_activity_duration"`
 
 				// NextActivityId The ID of the next activity associated with the deal
 				NextActivityId *int `json:"next_activity_id"`
 
 				// NextActivityNote The note of the next activity associated with the deal
-				NextActivityNote *string `json:"next_activity_note,omitempty"`
+				NextActivityNote *string `json:"next_activity_note"`
 
 				// NextActivitySubject The subject of the next activity associated with the deal
-				NextActivitySubject *string `json:"next_activity_subject,omitempty"`
+				NextActivitySubject *string `json:"next_activity_subject"`
 
 				// NextActivityTime The time of the next activity associated with the deal
-				NextActivityTime *string `json:"next_activity_time,omitempty"`
+				NextActivityTime *string `json:"next_activity_time"`
 
 				// NextActivityType The type of the next activity associated with the deal
-				NextActivityType *string `json:"next_activity_type,omitempty"`
+				NextActivityType *string `json:"next_activity_type"`
 
 				// NotesCount The number of notes associated with the deal
 				NotesCount *int `json:"notes_count,omitempty"`
@@ -47869,10 +47860,10 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				OrgHidden *bool `json:"org_hidden,omitempty"`
 
 				// OrgId The ID of the organization associated with the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// OrgName The name of the organization associated with the deal
-				OrgName *string `json:"org_name,omitempty"`
+				OrgName *string `json:"org_name"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -47890,10 +47881,10 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				PersonHidden *bool `json:"person_hidden,omitempty"`
 
 				// PersonId The ID of the person associated with the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PersonName The name of the person associated with the deal
-				PersonName *string `json:"person_name,omitempty"`
+				PersonName *string `json:"person_name"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -47908,7 +47899,7 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				RottenTime *string `json:"rotten_time"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -47926,7 +47917,7 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				UndoneActivitiesCount *int `json:"undone_activities_count,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// UserId The ID of the user
 				UserId *int `json:"user_id,omitempty"`
@@ -47944,7 +47935,7 @@ func ParseGetStageDealsResponse(rsp *http.Response) (*GetStageDealsResponse, err
 				WeightedValueCurrency *string `json:"weighted_value_currency,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the request was successful or not

@@ -46,8 +46,8 @@ const (
 type ProductPrice struct {
 	ProductID          *ProductID          `json:"product_id,omitempty"`
 	ProductVariationID *ProductVariationID `json:"product_variation_id,omitempty"`
-	Currency           string              `json:"currency,omitempty"`
-	Price              float64             `json:"price,omitempty"`
+	Currency           string              `json:"currency"`
+	Price              float64             `json:"price"`
 	Cost               *float64            `json:"cost,omitempty"`
 	DirectCost         *float64            `json:"direct_cost,omitempty"`
 	Notes              string              `json:"notes,omitempty"`
@@ -1763,11 +1763,7 @@ func (p productPayload) toMap() map[string]interface{} {
 		body["billing_frequency"] = *p.billingFrequency
 	}
 	if p.billingFrequencyCycles.set {
-		if p.billingFrequencyCycles.value == nil {
-			body["billing_frequency_cycles"] = nil
-		} else {
-			body["billing_frequency_cycles"] = *p.billingFrequencyCycles.value
-		}
+		body["billing_frequency_cycles"] = p.billingFrequencyCycles.mapValue()
 	}
 	return body
 }

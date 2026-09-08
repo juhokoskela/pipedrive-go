@@ -556,8 +556,8 @@ type dealPayload struct {
 	value             *float64
 	currency          *string
 	ownerID           *UserID
-	personID          *PersonID
-	orgID             *OrganizationID
+	personID          nullableValue[PersonID]
+	orgID             nullableValue[OrganizationID]
 	stageID           *StageID
 	pipelineID        *PipelineID
 	status            *DealStatus
@@ -569,7 +569,7 @@ type dealPayload struct {
 	customFields      map[string]interface{}
 	isArchived        *bool
 	isDeleted         *bool
-	archiveTime       *string
+	archiveTime       nullableValue[string]
 	closeTime         nullableValue[string]
 	lostTime          *string
 	wonTime           *string
@@ -1171,13 +1171,27 @@ func WithDealOwnerID(id UserID) DealOption {
 
 func WithDealPersonID(id PersonID) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
-		payload.personID = &id
+		payload.personID.assign(id)
+	})
+}
+
+// ClearDealPersonID sends an explicit JSON null person ID.
+func ClearDealPersonID() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.personID.clear()
 	})
 }
 
 func WithDealOrganizationID(id OrganizationID) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
-		payload.orgID = &id
+		payload.orgID.assign(id)
+	})
+}
+
+// ClearDealOrganizationID sends an explicit JSON null organization ID.
+func ClearDealOrganizationID() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.orgID.clear()
 	})
 }
 
@@ -1275,7 +1289,14 @@ func WithDealArchiveTime(value string) DealOption {
 		if value == "" {
 			return
 		}
-		payload.archiveTime = &value
+		payload.archiveTime.assign(value)
+	})
+}
+
+// ClearDealArchiveTime sends an explicit JSON null archive time.
+func ClearDealArchiveTime() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.archiveTime.clear()
 	})
 }
 
@@ -3107,11 +3128,11 @@ func (p dealPayload) toMap() map[string]interface{} {
 	if p.ownerID != nil {
 		body["owner_id"] = int(*p.ownerID)
 	}
-	if p.personID != nil {
-		body["person_id"] = int(*p.personID)
+	if p.personID.set {
+		body["person_id"] = p.personID.mapValue()
 	}
-	if p.orgID != nil {
-		body["org_id"] = int(*p.orgID)
+	if p.orgID.set {
+		body["org_id"] = p.orgID.mapValue()
 	}
 	if p.stageID != nil {
 		body["stage_id"] = int(*p.stageID)
@@ -3126,18 +3147,10 @@ func (p dealPayload) toMap() map[string]interface{} {
 		body["expected_close_date"] = *p.expectedCloseDate
 	}
 	if p.probability.set {
-		if p.probability.value == nil {
-			body["probability"] = nil
-		} else {
-			body["probability"] = *p.probability.value
-		}
+		body["probability"] = p.probability.mapValue()
 	}
 	if p.lostReason.set {
-		if p.lostReason.value == nil {
-			body["lost_reason"] = nil
-		} else {
-			body["lost_reason"] = *p.lostReason.value
-		}
+		body["lost_reason"] = p.lostReason.mapValue()
 	}
 	if p.visibleTo != nil {
 		body["visible_to"] = *p.visibleTo
@@ -3154,15 +3167,11 @@ func (p dealPayload) toMap() map[string]interface{} {
 	if p.isDeleted != nil {
 		body["is_deleted"] = *p.isDeleted
 	}
-	if p.archiveTime != nil {
-		body["archive_time"] = *p.archiveTime
+	if p.archiveTime.set {
+		body["archive_time"] = p.archiveTime.mapValue()
 	}
 	if p.closeTime.set {
-		if p.closeTime.value == nil {
-			body["close_time"] = nil
-		} else {
-			body["close_time"] = *p.closeTime.value
-		}
+		body["close_time"] = p.closeTime.mapValue()
 	}
 	if p.lostTime != nil {
 		body["lost_time"] = *p.lostTime

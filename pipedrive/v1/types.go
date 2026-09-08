@@ -2,6 +2,8 @@ package v1
 
 type ActivityID int64
 
+type ActivityOutcomeID int64
+
 type ActivityTypeID int64
 
 type CallLogID string

@@ -2701,84 +2701,90 @@ paths:
                                       type: integer
                                       description: The ID of the user
                             person_id:
-                              title: dealPersonDataWithId
+                              type: object
+                              nullable: true
                               allOf:
-                                - type: object
-                                  description: The person who is associated with the deal
-                                  properties:
-                                    active_flag:
-                                      type: boolean
-                                      description: Whether the associated person is active or not
-                                    name:
-                                      type: string
-                                      description: The name of the person associated with the deal
-                                    email:
-                                      type: array
-                                      description: The emails of the person associated with the deal
-                                      items:
-                                        type: object
-                                        properties:
-                                          label:
-                                            type: string
-                                            description: The type of the email
-                                          value:
-                                            type: string
-                                            description: The email of the associated person
-                                          primary:
-                                            type: boolean
-                                            description: If this is the primary email or not
-                                    phone:
-                                      type: array
-                                      description: The phone numbers of the person associated with the deal
-                                      items:
-                                        type: object
-                                        properties:
-                                          label:
-                                            type: string
-                                            description: The type of the phone number
-                                          value:
-                                            type: string
-                                            description: The phone number of the person associated with the deal
-                                          primary:
-                                            type: boolean
-                                            description: If this is the primary phone number or not
-                                    owner_id:
-                                      type: integer
-                                      description: The ID of the owner of the person that is associated with the deal
-                                - type: object
-                                  properties:
-                                    value:
-                                      type: integer
-                                      description: The ID of the person associated with the deal
+                                - title: dealPersonDataWithId
+                                  allOf:
+                                    - type: object
+                                      description: The person who is associated with the deal
+                                      properties:
+                                        active_flag:
+                                          type: boolean
+                                          description: Whether the associated person is active or not
+                                        name:
+                                          type: string
+                                          description: The name of the person associated with the deal
+                                        email:
+                                          type: array
+                                          description: The emails of the person associated with the deal
+                                          items:
+                                            type: object
+                                            properties:
+                                              label:
+                                                type: string
+                                                description: The type of the email
+                                              value:
+                                                type: string
+                                                description: The email of the associated person
+                                              primary:
+                                                type: boolean
+                                                description: If this is the primary email or not
+                                        phone:
+                                          type: array
+                                          description: The phone numbers of the person associated with the deal
+                                          items:
+                                            type: object
+                                            properties:
+                                              label:
+                                                type: string
+                                                description: The type of the phone number
+                                              value:
+                                                type: string
+                                                description: The phone number of the person associated with the deal
+                                              primary:
+                                                type: boolean
+                                                description: If this is the primary phone number or not
+                                        owner_id:
+                                          type: integer
+                                          description: The ID of the owner of the person that is associated with the deal
+                                    - type: object
+                                      properties:
+                                        value:
+                                          type: integer
+                                          description: The ID of the person associated with the deal
                             org_id:
-                              title: DealOrganizationDataWithId
+                              type: object
+                              nullable: true
                               allOf:
-                                - type: object
-                                  description: The organization which is associated with the deal
-                                  properties:
-                                    name:
-                                      type: string
-                                      description: The name of the organization associated with the deal
-                                    people_count:
-                                      type: integer
-                                      description: The number of people connected with the organization that is associated with the deal
-                                    owner_id:
-                                      type: integer
-                                      description: The ID of the owner of the organization that is associated with the deal
-                                    address:
-                                      type: string
-                                      description: The address of the organization that is associated with the deal
-                                    active_flag:
-                                      type: boolean
-                                      description: Whether the associated organization is active or not
-                                    cc_email:
-                                      type: string
-                                      description: The BCC email of the organization associated with the deal
-                                - type: object
-                                  properties:
-                                    value:
-                                      type: integer
-                                      description: The ID of the organization associated with the deal
+                                - title: DealOrganizationDataWithId
+                                  allOf:
+                                    - type: object
+                                      description: The organization which is associated with the deal
+                                      properties:
+                                        name:
+                                          type: string
+                                          description: The name of the organization associated with the deal
+                                        people_count:
+                                          type: integer
+                                          description: The number of people connected with the organization that is associated with the deal
+                                        owner_id:
+                                          type: integer
+                                          description: The ID of the owner of the organization that is associated with the deal
+                                        address:
+                                          type: string
+                                          description: The address of the organization that is associated with the deal
+                                        active_flag:
+                                          type: boolean
+                                          description: Whether the associated organization is active or not
+                                        cc_email:
+                                          type: string
+                                          description: The BCC email of the organization associated with the deal
+                                    - type: object
+                                      properties:
+                                        value:
+                                          type: integer
+                                          description: The ID of the organization associated with the deal
                         - title: baseDeal
                           type: object
                           properties:
@@ -2799,9 +2805,11 @@ paths:
                               description: The creation date and time of the deal
                             update_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal
                             stage_change_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal stage
                             active:
                               type: boolean
@@ -2821,9 +2829,11 @@ paths:
                               description: The success probability percentage of the deal
                             next_activity_date:
                               type: string
+                              nullable: true
                               description: The date of the next activity associated with the deal
                             next_activity_time:
                               type: string
+                              nullable: true
                               description: The time of the next activity associated with the deal
                             next_activity_id:
                               type: integer
@@ -2853,12 +2863,15 @@ paths:
                               description: The ID of the pipeline associated with the deal
                             won_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as won
                             first_won_time:
                               type: string
+                              nullable: true
                               description: The date and time of the first time changing the deal status as won
                             lost_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as lost
                             products_count:
                               type: integer
@@ -2890,36 +2903,46 @@ paths:
                             expected_close_date:
                               type: string
                               format: date
+                              nullable: true
                               description: The expected close date of the deal
                             last_incoming_mail_time:
                               type: string
+                              nullable: true
                               description: The date and time of the last incoming email associated with the deal
                             last_outgoing_mail_time:
                               type: string
+                              nullable: true
                               description: The date and time of the last outgoing email associated with the deal
                             label:
                               type: string
+                              nullable: true
                               description: The label or multiple labels assigned to the deal
                             stage_order_nr:
                               type: integer
                               description: The order number of the deal stage associated with the deal
                             person_name:
                               type: string
+                              nullable: true
                               description: The name of the person associated with the deal
                             org_name:
                               type: string
+                              nullable: true
                               description: The name of the organization associated with the deal
                             next_activity_subject:
                               type: string
+                              nullable: true
                               description: The subject of the next activity associated with the deal
                             next_activity_type:
                               type: string
+                              nullable: true
                               description: The type of the next activity associated with the deal
                             next_activity_duration:
                               type: string
+                              nullable: true
                               description: The duration of the next activity associated with the deal
                             next_activity_note:
                               type: string
+                              nullable: true
                               description: The note of the next activity associated with the deal
                             formatted_value:
                               type: string
@@ -3715,9 +3738,11 @@ paths:
                                   description: The ID of the user
                                 person_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the person associated with the deal
                                 org_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the organization associated with the deal
                             - title: baseDeal
                               type: object
@@ -3739,9 +3764,11 @@ paths:
                                   description: The creation date and time of the deal
                                 update_time:
                                   type: string
+                                  nullable: true
                                   description: The last updated date and time of the deal
                                 stage_change_time:
                                   type: string
+                                  nullable: true
                                   description: The last updated date and time of the deal stage
                                 active:
                                   type: boolean
@@ -3761,9 +3788,11 @@ paths:
                                   description: The success probability percentage of the deal
                                 next_activity_date:
                                   type: string
+                                  nullable: true
                                   description: The date of the next activity associated with the deal
                                 next_activity_time:
                                   type: string
+                                  nullable: true
                                   description: The time of the next activity associated with the deal
                                 next_activity_id:
                                   type: integer
@@ -3793,12 +3822,15 @@ paths:
                                   description: The ID of the pipeline associated with the deal
                                 won_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of changing the deal status as won
                                 first_won_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the first time changing the deal status as won
                                 lost_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of changing the deal status as lost
                                 products_count:
                                   type: integer
@@ -3830,36 +3862,46 @@ paths:
                                 expected_close_date:
                                   type: string
                                   format: date
+                                  nullable: true
                                   description: The expected close date of the deal
                                 last_incoming_mail_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the last incoming email associated with the deal
                                 last_outgoing_mail_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the last outgoing email associated with the deal
                                 label:
                                   type: string
+                                  nullable: true
                                   description: The label or multiple labels assigned to the deal
                                 stage_order_nr:
                                   type: integer
                                   description: The order number of the deal stage associated with the deal
                                 person_name:
                                   type: string
+                                  nullable: true
                                   description: The name of the person associated with the deal
                                 org_name:
                                   type: string
+                                  nullable: true
                                   description: The name of the organization associated with the deal
                                 next_activity_subject:
                                   type: string
+                                  nullable: true
                                   description: The subject of the next activity associated with the deal
                                 next_activity_type:
                                   type: string
+                                  nullable: true
                                   description: The type of the next activity associated with the deal
                                 next_activity_duration:
                                   type: string
+                                  nullable: true
                                   description: The duration of the next activity associated with the deal
                                 next_activity_note:
                                   type: string
+                                  nullable: true
                                   description: The note of the next activity associated with the deal
                                 formatted_value:
                                   type: string
@@ -4187,9 +4229,11 @@ paths:
                                   description: The ID of the user
                                 person_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the person associated with the deal
                                 org_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the organization associated with the deal
                             - title: baseDeal
                               type: object
@@ -4211,9 +4255,11 @@ paths:
                                   description: The creation date and time of the deal
                                 update_time:
                                   type: string
+                                  nullable: true
                                   description: The last updated date and time of the deal
                                 stage_change_time:
                                   type: string
+                                  nullable: true
                                   description: The last updated date and time of the deal stage
                                 active:
                                   type: boolean
@@ -4233,9 +4279,11 @@ paths:
                                   description: The success probability percentage of the deal
                                 next_activity_date:
                                   type: string
+                                  nullable: true
                                   description: The date of the next activity associated with the deal
                                 next_activity_time:
                                   type: string
+                                  nullable: true
                                   description: The time of the next activity associated with the deal
                                 next_activity_id:
                                   type: integer
@@ -4265,12 +4313,15 @@ paths:
                                   description: The ID of the pipeline associated with the deal
                                 won_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of changing the deal status as won
                                 first_won_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the first time changing the deal status as won
                                 lost_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of changing the deal status as lost
                                 products_count:
                                   type: integer
@@ -4302,36 +4353,46 @@ paths:
                                 expected_close_date:
                                   type: string
                                   format: date
+                                  nullable: true
                                   description: The expected close date of the deal
                                 last_incoming_mail_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the last incoming email associated with the deal
                                 last_outgoing_mail_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the last outgoing email associated with the deal
                                 label:
                                   type: string
+                                  nullable: true
                                   description: The label or multiple labels assigned to the deal
                                 stage_order_nr:
                                   type: integer
                                   description: The order number of the deal stage associated with the deal
                                 person_name:
                                   type: string
+                                  nullable: true
                                   description: The name of the person associated with the deal
                                 org_name:
                                   type: string
+                                  nullable: true
                                   description: The name of the organization associated with the deal
                                 next_activity_subject:
                                   type: string
+                                  nullable: true
                                   description: The subject of the next activity associated with the deal
                                 next_activity_type:
                                   type: string
+                                  nullable: true
                                   description: The type of the next activity associated with the deal
                                 next_activity_duration:
                                   type: string
+                                  nullable: true
                                   description: The duration of the next activity associated with the deal
                                 next_activity_note:
                                   type: string
+                                  nullable: true
                                   description: The note of the next activity associated with the deal
                                 formatted_value:
                                   type: string
@@ -4698,9 +4759,11 @@ paths:
                             description: The ID of the user
                           person_id:
                             type: integer
+                            nullable: true
                             description: The ID of the person associated with the deal
                           org_id:
                             type: integer
+                            nullable: true
                             description: The ID of the organization associated with the deal
                       - title: baseDeal
                         type: object
@@ -4722,9 +4785,11 @@ paths:
                             description: The creation date and time of the deal
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal
                           stage_change_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal stage
                           active:
                             type: boolean
@@ -4744,9 +4809,11 @@ paths:
                             description: The success probability percentage of the deal
                           next_activity_date:
                             type: string
+                            nullable: true
                             description: The date of the next activity associated with the deal
                           next_activity_time:
                             type: string
+                            nullable: true
                             description: The time of the next activity associated with the deal
                           next_activity_id:
                             type: integer
@@ -4776,12 +4843,15 @@ paths:
                             description: The ID of the pipeline associated with the deal
                           won_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as won
                           first_won_time:
                             type: string
+                            nullable: true
                             description: The date and time of the first time changing the deal status as won
                           lost_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as lost
                           products_count:
                             type: integer
@@ -4813,36 +4883,46 @@ paths:
                           expected_close_date:
                             type: string
                             format: date
+                            nullable: true
                             description: The expected close date of the deal
                           last_incoming_mail_time:
                             type: string
+                            nullable: true
                             description: The date and time of the last incoming email associated with the deal
                           last_outgoing_mail_time:
                             type: string
+                            nullable: true
                             description: The date and time of the last outgoing email associated with the deal
                           label:
                             type: string
+                            nullable: true
                             description: The label or multiple labels assigned to the deal
                           stage_order_nr:
                             type: integer
                             description: The order number of the deal stage associated with the deal
                           person_name:
                             type: string
+                            nullable: true
                             description: The name of the person associated with the deal
                           org_name:
                             type: string
+                            nullable: true
                             description: The name of the organization associated with the deal
                           next_activity_subject:
                             type: string
+                            nullable: true
                             description: The subject of the next activity associated with the deal
                           next_activity_type:
                             type: string
+                            nullable: true
                             description: The type of the next activity associated with the deal
                           next_activity_duration:
                             type: string
+                            nullable: true
                             description: The duration of the next activity associated with the deal
                           next_activity_note:
                             type: string
+                            nullable: true
                             description: The note of the next activity associated with the deal
                           formatted_value:
                             type: string
@@ -5493,6 +5573,7 @@ paths:
                       active_flag: true
                       update_time: '2020-08-08 12:37:56'
                       update_user_id: 5596
+                      outcome: 101
                       gcal_event_id: ''
                       google_calendar_id: ''
                       google_calendar_etag: ''
@@ -6456,9 +6537,11 @@ paths:
                                 description: The ID of the user
                               person_id:
                                 type: integer
+                                nullable: true
                                 description: The ID of the person associated with the deal
                               org_id:
                                 type: integer
+                                nullable: true
                                 description: The ID of the organization associated with the deal
                           - title: baseDeal
                             type: object
@@ -6480,9 +6563,11 @@ paths:
                                 description: The creation date and time of the deal
                               update_time:
                                 type: string
+                                nullable: true
                                 description: The last updated date and time of the deal
                               stage_change_time:
                                 type: string
+                                nullable: true
                                 description: The last updated date and time of the deal stage
                               active:
                                 type: boolean
@@ -6502,9 +6587,11 @@ paths:
                                 description: The success probability percentage of the deal
                               next_activity_date:
                                 type: string
+                                nullable: true
                                 description: The date of the next activity associated with the deal
                               next_activity_time:
                                 type: string
+                                nullable: true
                                 description: The time of the next activity associated with the deal
                               next_activity_id:
                                 type: integer
@@ -6534,12 +6621,15 @@ paths:
                                 description: The ID of the pipeline associated with the deal
                               won_time:
                                 type: string
+                                nullable: true
                                 description: The date and time of changing the deal status as won
                               first_won_time:
                                 type: string
+                                nullable: true
                                 description: The date and time of the first time changing the deal status as won
                               lost_time:
                                 type: string
+                                nullable: true
                                 description: The date and time of changing the deal status as lost
                               products_count:
                                 type: integer
@@ -6571,36 +6661,46 @@ paths:
                               expected_close_date:
                                 type: string
                                 format: date
+                                nullable: true
                                 description: The expected close date of the deal
                               last_incoming_mail_time:
                                 type: string
+                                nullable: true
                                 description: The date and time of the last incoming email associated with the deal
                               last_outgoing_mail_time:
                                 type: string
+                                nullable: true
                                 description: The date and time of the last outgoing email associated with the deal
                               label:
                                 type: string
+                                nullable: true
                                 description: The label or multiple labels assigned to the deal
                               stage_order_nr:
                                 type: integer
                                 description: The order number of the deal stage associated with the deal
                               person_name:
                                 type: string
+                                nullable: true
                                 description: The name of the person associated with the deal
                               org_name:
                                 type: string
+                                nullable: true
                                 description: The name of the organization associated with the deal
                               next_activity_subject:
                                 type: string
+                                nullable: true
                                 description: The subject of the next activity associated with the deal
                               next_activity_type:
                                 type: string
+                                nullable: true
                                 description: The type of the next activity associated with the deal
                               next_activity_duration:
                                 type: string
+                                nullable: true
                                 description: The duration of the next activity associated with the deal
                               next_activity_note:
                                 type: string
+                                nullable: true
                                 description: The note of the next activity associated with the deal
                               formatted_value:
                                 type: string
@@ -17935,26 +18035,34 @@ paths:
                           description: The content of the note in HTML format. Subject to sanitization on the back-end.
                         deal:
                           type: object
-                          description: The deal this note is attached to
-                          properties:
-                            title:
-                              type: string
-                              description: The title of the deal this note is attached to
+                          nullable: true
+                          allOf:
+                            - type: object
+                              description: The deal this note is attached to
+                              properties:
+                                title:
+                                  type: string
+                                  description: The title of the deal this note is attached to
                         lead_id:
                           type: string
                           format: uuid
+                          nullable: true
                           description: The ID of the lead the note is attached to
                         deal_id:
                           type: integer
+                          nullable: true
                           description: The ID of the deal the note is attached to
                         last_update_user_id:
                           type: integer
+                          nullable: true
                           description: The ID of the user who last updated the note
                         org_id:
                           type: integer
+                          nullable: true
                           description: The ID of the organization the note is attached to
                         organization:
                           type: object
+                          nullable: true
                           description: The organization the note is attached to
                           properties:
                             name:
@@ -17962,6 +18070,7 @@ paths:
                               description: The name of the organization the note is attached to
                         person:
                           type: object
+                          nullable: true
                           description: The person the note is attached to
                           properties:
                             name:
@@ -17969,12 +18078,15 @@ paths:
                               description: The name of the person the note is attached to
                         person_id:
                           type: integer
+                          nullable: true
                           description: The ID of the person the note is attached to
                         project_id:
                           type: integer
+                          nullable: true
                           description: The ID of the project the note is attached to
                         project:
                           type: object
+                          nullable: true
                           description: The project the note is attached to
                           properties:
                             title:
@@ -17982,9 +18094,11 @@ paths:
                               description: The title of the project the note is attached to
                         task_id:
                           type: integer
+                          nullable: true
                           description: The ID of the task the note is attached to
                         task:
                           type: object
+                          nullable: true
                           description: The task the note is attached to
                           properties:
                             title:
@@ -18017,6 +18131,7 @@ paths:
                               description: The email of the note creator
                             icon_url:
                               type: string
+                              nullable: true
                               description: The URL of the note creator avatar picture
                             is_you:
                               type: boolean
@@ -18216,26 +18331,34 @@ paths:
                         description: The content of the note in HTML format. Subject to sanitization on the back-end.
                       deal:
                         type: object
-                        description: The deal this note is attached to
-                        properties:
-                          title:
-                            type: string
-                            description: The title of the deal this note is attached to
+                        nullable: true
+                        allOf:
+                          - type: object
+                            description: The deal this note is attached to
+                            properties:
+                              title:
+                                type: string
+                                description: The title of the deal this note is attached to
                       lead_id:
                         type: string
                         format: uuid
+                        nullable: true
                         description: The ID of the lead the note is attached to
                       deal_id:
                         type: integer
+                        nullable: true
                         description: The ID of the deal the note is attached to
                       last_update_user_id:
                         type: integer
+                        nullable: true
                         description: The ID of the user who last updated the note
                       org_id:
                         type: integer
+                        nullable: true
                         description: The ID of the organization the note is attached to
                       organization:
                         type: object
+                        nullable: true
                         description: The organization the note is attached to
                         properties:
                           name:
@@ -18243,6 +18366,7 @@ paths:
                             description: The name of the organization the note is attached to
                       person:
                         type: object
+                        nullable: true
                         description: The person the note is attached to
                         properties:
                           name:
@@ -18250,12 +18374,15 @@ paths:
                             description: The name of the person the note is attached to
                       person_id:
                         type: integer
+                        nullable: true
                         description: The ID of the person the note is attached to
                       project_id:
                         type: integer
+                        nullable: true
                         description: The ID of the project the note is attached to
                       project:
                         type: object
+                        nullable: true
                         description: The project the note is attached to
                         properties:
                           title:
@@ -18263,9 +18390,11 @@ paths:
                             description: The title of the project the note is attached to
                       task_id:
                         type: integer
+                        nullable: true
                         description: The ID of the task the note is attached to
                       task:
                         type: object
+                        nullable: true
                         description: The task the note is attached to
                         properties:
                           title:
@@ -18298,6 +18427,7 @@ paths:
                             description: The email of the note creator
                           icon_url:
                             type: string
+                            nullable: true
                             description: The URL of the note creator avatar picture
                           is_you:
                             type: boolean
@@ -18430,26 +18560,34 @@ paths:
                         description: The content of the note in HTML format. Subject to sanitization on the back-end.
                       deal:
                         type: object
-                        description: The deal this note is attached to
-                        properties:
-                          title:
-                            type: string
-                            description: The title of the deal this note is attached to
+                        nullable: true
+                        allOf:
+                          - type: object
+                            description: The deal this note is attached to
+                            properties:
+                              title:
+                                type: string
+                                description: The title of the deal this note is attached to
                       lead_id:
                         type: string
                         format: uuid
+                        nullable: true
                         description: The ID of the lead the note is attached to
                       deal_id:
                         type: integer
+                        nullable: true
                         description: The ID of the deal the note is attached to
                       last_update_user_id:
                         type: integer
+                        nullable: true
                         description: The ID of the user who last updated the note
                       org_id:
                         type: integer
+                        nullable: true
                         description: The ID of the organization the note is attached to
                       organization:
                         type: object
+                        nullable: true
                         description: The organization the note is attached to
                         properties:
                           name:
@@ -18457,6 +18595,7 @@ paths:
                             description: The name of the organization the note is attached to
                       person:
                         type: object
+                        nullable: true
                         description: The person the note is attached to
                         properties:
                           name:
@@ -18464,12 +18603,15 @@ paths:
                             description: The name of the person the note is attached to
                       person_id:
                         type: integer
+                        nullable: true
                         description: The ID of the person the note is attached to
                       project_id:
                         type: integer
+                        nullable: true
                         description: The ID of the project the note is attached to
                       project:
                         type: object
+                        nullable: true
                         description: The project the note is attached to
                         properties:
                           title:
@@ -18477,9 +18619,11 @@ paths:
                             description: The title of the project the note is attached to
                       task_id:
                         type: integer
+                        nullable: true
                         description: The ID of the task the note is attached to
                       task:
                         type: object
+                        nullable: true
                         description: The task the note is attached to
                         properties:
                           title:
@@ -18512,6 +18656,7 @@ paths:
                             description: The email of the note creator
                           icon_url:
                             type: string
+                            nullable: true
                             description: The URL of the note creator avatar picture
                           is_you:
                             type: boolean
@@ -18693,26 +18838,34 @@ paths:
                         description: The content of the note in HTML format. Subject to sanitization on the back-end.
                       deal:
                         type: object
-                        description: The deal this note is attached to
-                        properties:
-                          title:
-                            type: string
-                            description: The title of the deal this note is attached to
+                        nullable: true
+                        allOf:
+                          - type: object
+                            description: The deal this note is attached to
+                            properties:
+                              title:
+                                type: string
+                                description: The title of the deal this note is attached to
                       lead_id:
                         type: string
                         format: uuid
+                        nullable: true
                         description: The ID of the lead the note is attached to
                       deal_id:
                         type: integer
+                        nullable: true
                         description: The ID of the deal the note is attached to
                       last_update_user_id:
                         type: integer
+                        nullable: true
                         description: The ID of the user who last updated the note
                       org_id:
                         type: integer
+                        nullable: true
                         description: The ID of the organization the note is attached to
                       organization:
                         type: object
+                        nullable: true
                         description: The organization the note is attached to
                         properties:
                           name:
@@ -18720,6 +18873,7 @@ paths:
                             description: The name of the organization the note is attached to
                       person:
                         type: object
+                        nullable: true
                         description: The person the note is attached to
                         properties:
                           name:
@@ -18727,12 +18881,15 @@ paths:
                             description: The name of the person the note is attached to
                       person_id:
                         type: integer
+                        nullable: true
                         description: The ID of the person the note is attached to
                       project_id:
                         type: integer
+                        nullable: true
                         description: The ID of the project the note is attached to
                       project:
                         type: object
+                        nullable: true
                         description: The project the note is attached to
                         properties:
                           title:
@@ -18740,9 +18897,11 @@ paths:
                             description: The title of the project the note is attached to
                       task_id:
                         type: integer
+                        nullable: true
                         description: The ID of the task the note is attached to
                       task:
                         type: object
+                        nullable: true
                         description: The task the note is attached to
                         properties:
                           title:
@@ -18775,6 +18934,7 @@ paths:
                             description: The email of the note creator
                           icon_url:
                             type: string
+                            nullable: true
                             description: The URL of the note creator avatar picture
                           is_you:
                             type: boolean
@@ -20119,6 +20279,7 @@ paths:
                       active_flag: true
                       update_time: '2020-08-08 12:37:56'
                       update_user_id: 5596
+                      outcome: 101
                       gcal_event_id: ''
                       google_calendar_id: ''
                       google_calendar_etag: ''
@@ -23753,6 +23914,7 @@ paths:
                       active_flag: true
                       update_time: '2020-08-08 12:37:56'
                       update_user_id: 5596
+                      outcome: 101
                       gcal_event_id: ''
                       google_calendar_id: ''
                       google_calendar_etag: ''
@@ -25109,9 +25271,11 @@ paths:
                                       description: The ID of the user
                                     person_id:
                                       type: integer
+                                      nullable: true
                                       description: The ID of the person associated with the deal
                                     org_id:
                                       type: integer
+                                      nullable: true
                                       description: The ID of the organization associated with the deal
                                     stage_id:
                                       type: integer
@@ -25133,9 +25297,11 @@ paths:
                                       description: The first creation date and time of the deal
                                     update_time:
                                       type: string
+                                      nullable: true
                                       description: The last updated date and time of the deal
                                     stage_change_time:
                                       type: string
+                                      nullable: true
                                       description: The last updated date and time of the deal stage
                                     active:
                                       type: boolean
@@ -25152,9 +25318,11 @@ paths:
                                       description: The success probability percentage of the deal
                                     next_activity_date:
                                       type: string
+                                      nullable: true
                                       description: The date of the next activity associated with the deal
                                     next_activity_time:
                                       type: string
+                                      nullable: true
                                       description: The time of the next activity associated with the deal
                                     next_activity_id:
                                       type: integer
@@ -25184,12 +25352,15 @@ paths:
                                       description: The ID of the pipeline associated with the deal
                                     won_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of changing the deal status as won
                                     first_won_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of the first time changing the deal status as won
                                     lost_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of changing the deal status as lost
                                     products_count:
                                       type: integer
@@ -25221,15 +25392,19 @@ paths:
                                     expected_close_date:
                                       type: string
                                       format: date
+                                      nullable: true
                                       description: The expected close date of the deal
                                     last_incoming_mail_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of the last incoming email associated with the deal
                                     last_outgoing_mail_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of the last outgoing email associated with the deal
                                     label:
                                       type: string
+                                      nullable: true
                                       description: The label or multiple labels assigned to the deal
                                 product:
                                   type: object
@@ -26643,9 +26818,11 @@ paths:
                               description: The ID of the user
                             person_id:
                               type: integer
+                              nullable: true
                               description: The ID of the person associated with the deal
                             org_id:
                               type: integer
+                              nullable: true
                               description: The ID of the organization associated with the deal
                         - title: baseDeal
                           type: object
@@ -26667,9 +26844,11 @@ paths:
                               description: The creation date and time of the deal
                             update_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal
                             stage_change_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal stage
                             active:
                               type: boolean
@@ -26689,9 +26868,11 @@ paths:
                               description: The success probability percentage of the deal
                             next_activity_date:
                               type: string
+                              nullable: true
                               description: The date of the next activity associated with the deal
                             next_activity_time:
                               type: string
+                              nullable: true
                               description: The time of the next activity associated with the deal
                             next_activity_id:
                               type: integer
@@ -26721,12 +26902,15 @@ paths:
                               description: The ID of the pipeline associated with the deal
                             won_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as won
                             first_won_time:
                               type: string
+                              nullable: true
                               description: The date and time of the first time changing the deal status as won
                             lost_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as lost
                             products_count:
                               type: integer
@@ -26758,36 +26942,46 @@ paths:
                             expected_close_date:
                               type: string
                               format: date
+                              nullable: true
                               description: The expected close date of the deal
                             last_incoming_mail_time:
                               type: string
+                              nullable: true
                               description: The date and time of the last incoming email associated with the deal
                             last_outgoing_mail_time:
                               type: string
+                              nullable: true
                               description: The date and time of the last outgoing email associated with the deal
                             label:
                               type: string
+                              nullable: true
                               description: The label or multiple labels assigned to the deal
                             stage_order_nr:
                               type: integer
                               description: The order number of the deal stage associated with the deal
                             person_name:
                               type: string
+                              nullable: true
                               description: The name of the person associated with the deal
                             org_name:
                               type: string
+                              nullable: true
                               description: The name of the organization associated with the deal
                             next_activity_subject:
                               type: string
+                              nullable: true
                               description: The subject of the next activity associated with the deal
                             next_activity_type:
                               type: string
+                              nullable: true
                               description: The type of the next activity associated with the deal
                             next_activity_duration:
                               type: string
+                              nullable: true
                               description: The duration of the next activity associated with the deal
                             next_activity_note:
                               type: string
+                              nullable: true
                               description: The note of the next activity associated with the deal
                             formatted_value:
                               type: string
@@ -27328,84 +27522,90 @@ paths:
                                           type: integer
                                           description: The ID of the user
                                 person_id:
-                                  title: dealPersonDataWithId
+                                  type: object
+                                  nullable: true
                                   allOf:
-                                    - type: object
-                                      description: The person who is associated with the deal
-                                      properties:
-                                        active_flag:
-                                          type: boolean
-                                          description: Whether the associated person is active or not
-                                        name:
-                                          type: string
-                                          description: The name of the person associated with the deal
-                                        email:
-                                          type: array
-                                          description: The emails of the person associated with the deal
-                                          items:
-                                            type: object
-                                            properties:
-                                              label:
-                                                type: string
-                                                description: The type of the email
-                                              value:
-                                                type: string
-                                                description: The email of the associated person
-                                              primary:
-                                                type: boolean
-                                                description: If this is the primary email or not
-                                        phone:
-                                          type: array
-                                          description: The phone numbers of the person associated with the deal
-                                          items:
-                                            type: object
-                                            properties:
-                                              label:
-                                                type: string
-                                                description: The type of the phone number
-                                              value:
-                                                type: string
-                                                description: The phone number of the person associated with the deal
-                                              primary:
-                                                type: boolean
-                                                description: If this is the primary phone number or not
-                                        owner_id:
-                                          type: integer
-                                          description: The ID of the owner of the person that is associated with the deal
-                                    - type: object
-                                      properties:
-                                        value:
-                                          type: integer
-                                          description: The ID of the person associated with the deal
+                                    - title: dealPersonDataWithId
+                                      allOf:
+                                        - type: object
+                                          description: The person who is associated with the deal
+                                          properties:
+                                            active_flag:
+                                              type: boolean
+                                              description: Whether the associated person is active or not
+                                            name:
+                                              type: string
+                                              description: The name of the person associated with the deal
+                                            email:
+                                              type: array
+                                              description: The emails of the person associated with the deal
+                                              items:
+                                                type: object
+                                                properties:
+                                                  label:
+                                                    type: string
+                                                    description: The type of the email
+                                                  value:
+                                                    type: string
+                                                    description: The email of the associated person
+                                                  primary:
+                                                    type: boolean
+                                                    description: If this is the primary email or not
+                                            phone:
+                                              type: array
+                                              description: The phone numbers of the person associated with the deal
+                                              items:
+                                                type: object
+                                                properties:
+                                                  label:
+                                                    type: string
+                                                    description: The type of the phone number
+                                                  value:
+                                                    type: string
+                                                    description: The phone number of the person associated with the deal
+                                                  primary:
+                                                    type: boolean
+                                                    description: If this is the primary phone number or not
+                                            owner_id:
+                                              type: integer
+                                              description: The ID of the owner of the person that is associated with the deal
+                                        - type: object
+                                          properties:
+                                            value:
+                                              type: integer
+                                              description: The ID of the person associated with the deal
                                 org_id:
-                                  title: DealOrganizationDataWithId
+                                  type: object
+                                  nullable: true
                                   allOf:
-                                    - type: object
-                                      description: The organization which is associated with the deal
-                                      properties:
-                                        name:
-                                          type: string
-                                          description: The name of the organization associated with the deal
-                                        people_count:
-                                          type: integer
-                                          description: The number of people connected with the organization that is associated with the deal
-                                        owner_id:
-                                          type: integer
-                                          description: The ID of the owner of the organization that is associated with the deal
-                                        address:
-                                          type: string
-                                          description: The address of the organization that is associated with the deal
-                                        active_flag:
-                                          type: boolean
-                                          description: Whether the associated organization is active or not
-                                        cc_email:
-                                          type: string
-                                          description: The BCC email of the organization associated with the deal
-                                    - type: object
-                                      properties:
-                                        value:
-                                          type: integer
-                                          description: The ID of the organization associated with the deal
+                                    - title: DealOrganizationDataWithId
+                                      allOf:
+                                        - type: object
+                                          description: The organization which is associated with the deal
+                                          properties:
+                                            name:
+                                              type: string
+                                              description: The name of the organization associated with the deal
+                                            people_count:
+                                              type: integer
+                                              description: The number of people connected with the organization that is associated with the deal
+                                            owner_id:
+                                              type: integer
+                                              description: The ID of the owner of the organization that is associated with the deal
+                                            address:
+                                              type: string
+                                              description: The address of the organization that is associated with the deal
+                                            active_flag:
+                                              type: boolean
+                                              description: Whether the associated organization is active or not
+                                            cc_email:
+                                              type: string
+                                              description: The BCC email of the organization associated with the deal
+                                        - type: object
+                                          properties:
+                                            value:
+                                              type: integer
+                                              description: The ID of the organization associated with the deal
                             - title: baseDeal
                               type: object
                               properties:
@@ -27426,9 +27626,11 @@ paths:
                                   description: The creation date and time of the deal
                                 update_time:
                                   type: string
+                                  nullable: true
                                   description: The last updated date and time of the deal
                                 stage_change_time:
                                   type: string
+                                  nullable: true
                                   description: The last updated date and time of the deal stage
                                 active:
                                   type: boolean
@@ -27448,9 +27650,11 @@ paths:
                                   description: The success probability percentage of the deal
                                 next_activity_date:
                                   type: string
+                                  nullable: true
                                   description: The date of the next activity associated with the deal
                                 next_activity_time:
                                   type: string
+                                  nullable: true
                                   description: The time of the next activity associated with the deal
                                 next_activity_id:
                                   type: integer
@@ -27480,12 +27684,15 @@ paths:
                                   description: The ID of the pipeline associated with the deal
                                 won_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of changing the deal status as won
                                 first_won_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the first time changing the deal status as won
                                 lost_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of changing the deal status as lost
                                 products_count:
                                   type: integer
@@ -27517,36 +27724,46 @@ paths:
                                 expected_close_date:
                                   type: string
                                   format: date
+                                  nullable: true
                                   description: The expected close date of the deal
                                 last_incoming_mail_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the last incoming email associated with the deal
                                 last_outgoing_mail_time:
                                   type: string
+                                  nullable: true
                                   description: The date and time of the last outgoing email associated with the deal
                                 label:
                                   type: string
+                                  nullable: true
                                   description: The label or multiple labels assigned to the deal
                                 stage_order_nr:
                                   type: integer
                                   description: The order number of the deal stage associated with the deal
                                 person_name:
                                   type: string
+                                  nullable: true
                                   description: The name of the person associated with the deal
                                 org_name:
                                   type: string
+                                  nullable: true
                                   description: The name of the organization associated with the deal
                                 next_activity_subject:
                                   type: string
+                                  nullable: true
                                   description: The subject of the next activity associated with the deal
                                 next_activity_type:
                                   type: string
+                                  nullable: true
                                   description: The type of the next activity associated with the deal
                                 next_activity_duration:
                                   type: string
+                                  nullable: true
                                   description: The duration of the next activity associated with the deal
                                 next_activity_note:
                                   type: string
+                                  nullable: true
                                   description: The note of the next activity associated with the deal
                                 formatted_value:
                                   type: string
@@ -27816,6 +28033,7 @@ paths:
                                 description: Whether deals in this stage can become rotten
                               rotten_days:
                                 type: integer
+                                nullable: true
                                 description: The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
                               add_time:
                                 type: string
@@ -30588,6 +30806,10 @@ paths:
                             public_description:
                               description: 'Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.'
                               type: string
+                            outcome:
+                              description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
+                              type: integer
+                              nullable: true
                         - type: object
                           properties:
                             id:
@@ -30703,6 +30925,7 @@ paths:
                     active_flag: true
                     update_time: '2020-08-08 12:37:56'
                     update_user_id: 5596
+                    outcome: 101
                     source_timezone: ''
                     location_subpremise: ''
                     location_street_number: '3'
@@ -31241,6 +31464,10 @@ paths:
                                     public_description:
                                       description: 'Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.'
                                       type: string
+                                    outcome:
+                                      description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
+                                      type: integer
+                                      nullable: true
                                 - type: object
                                   properties:
                                     id:
@@ -31513,9 +31740,11 @@ paths:
                                       description: The ID of the user
                                     person_id:
                                       type: integer
+                                      nullable: true
                                       description: The ID of the person associated with the deal
                                     org_id:
                                       type: integer
+                                      nullable: true
                                       description: The ID of the organization associated with the deal
                                 - title: baseDeal
                                   type: object
@@ -31537,9 +31766,11 @@ paths:
                                       description: The creation date and time of the deal
                                     update_time:
                                       type: string
+                                      nullable: true
                                       description: The last updated date and time of the deal
                                     stage_change_time:
                                       type: string
+                                      nullable: true
                                       description: The last updated date and time of the deal stage
                                     active:
                                       type: boolean
@@ -31559,9 +31790,11 @@ paths:
                                       description: The success probability percentage of the deal
                                     next_activity_date:
                                       type: string
+                                      nullable: true
                                       description: The date of the next activity associated with the deal
                                     next_activity_time:
                                       type: string
+                                      nullable: true
                                       description: The time of the next activity associated with the deal
                                     next_activity_id:
                                       type: integer
@@ -31591,12 +31824,15 @@ paths:
                                       description: The ID of the pipeline associated with the deal
                                     won_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of changing the deal status as won
                                     first_won_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of the first time changing the deal status as won
                                     lost_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of changing the deal status as lost
                                     products_count:
                                       type: integer
@@ -31628,36 +31864,46 @@ paths:
                                     expected_close_date:
                                       type: string
                                       format: date
+                                      nullable: true
                                       description: The expected close date of the deal
                                     last_incoming_mail_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of the last incoming email associated with the deal
                                     last_outgoing_mail_time:
                                       type: string
+                                      nullable: true
                                       description: The date and time of the last outgoing email associated with the deal
                                     label:
                                       type: string
+                                      nullable: true
                                       description: The label or multiple labels assigned to the deal
                                     stage_order_nr:
                                       type: integer
                                       description: The order number of the deal stage associated with the deal
                                     person_name:
                                       type: string
+                                      nullable: true
                                       description: The name of the person associated with the deal
                                     org_name:
                                       type: string
+                                      nullable: true
                                       description: The name of the organization associated with the deal
                                     next_activity_subject:
                                       type: string
+                                      nullable: true
                                       description: The subject of the next activity associated with the deal
                                     next_activity_type:
                                       type: string
+                                      nullable: true
                                       description: The type of the next activity associated with the deal
                                     next_activity_duration:
                                       type: string
+                                      nullable: true
                                       description: The duration of the next activity associated with the deal
                                     next_activity_note:
                                       type: string
+                                      nullable: true
                                       description: The note of the next activity associated with the deal
                                     formatted_value:
                                       type: string
@@ -31948,26 +32194,34 @@ paths:
                                   description: The content of the note in HTML format. Subject to sanitization on the back-end.
                                 deal:
                                   type: object
-                                  description: The deal this note is attached to
-                                  properties:
-                                    title:
-                                      type: string
-                                      description: The title of the deal this note is attached to
+                                  nullable: true
+                                  allOf:
+                                    - type: object
+                                      description: The deal this note is attached to
+                                      properties:
+                                        title:
+                                          type: string
+                                          description: The title of the deal this note is attached to
                                 lead_id:
                                   type: string
                                   format: uuid
+                                  nullable: true
                                   description: The ID of the lead the note is attached to
                                 deal_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the deal the note is attached to
                                 last_update_user_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the user who last updated the note
                                 org_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the organization the note is attached to
                                 organization:
                                   type: object
+                                  nullable: true
                                   description: The organization the note is attached to
                                   properties:
                                     name:
@@ -31975,6 +32229,7 @@ paths:
                                       description: The name of the organization the note is attached to
                                 person:
                                   type: object
+                                  nullable: true
                                   description: The person the note is attached to
                                   properties:
                                     name:
@@ -31982,12 +32237,15 @@ paths:
                                       description: The name of the person the note is attached to
                                 person_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the person the note is attached to
                                 project_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the project the note is attached to
                                 project:
                                   type: object
+                                  nullable: true
                                   description: The project the note is attached to
                                   properties:
                                     title:
@@ -31995,9 +32253,11 @@ paths:
                                       description: The title of the project the note is attached to
                                 task_id:
                                   type: integer
+                                  nullable: true
                                   description: The ID of the task the note is attached to
                                 task:
                                   type: object
+                                  nullable: true
                                   description: The task the note is attached to
                                   properties:
                                     title:
@@ -32030,6 +32290,7 @@ paths:
                                       description: The email of the note creator
                                     icon_url:
                                       type: string
+                                      nullable: true
                                       description: The URL of the note creator avatar picture
                                     is_you:
                                       type: boolean
@@ -32664,6 +32925,7 @@ paths:
                                   description: Whether deals in this stage can become rotten
                                 rotten_days:
                                   type: integer
+                                  nullable: true
                                   description: The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
                                 add_time:
                                   type: string
@@ -32825,6 +33087,7 @@ paths:
                       active_flag: true
                       update_time: '2020-08-08 12:37:56'
                       update_user_id: 5596
+                      outcome: 101
                       gcal_event_id: ''
                       google_calendar_id: ''
                       google_calendar_etag: ''
@@ -33941,9 +34204,11 @@ paths:
                               description: The ID of the user
                             person_id:
                               type: integer
+                              nullable: true
                               description: The ID of the person associated with the deal
                             org_id:
                               type: integer
+                              nullable: true
                               description: The ID of the organization associated with the deal
                         - title: baseDeal
                           type: object
@@ -33965,9 +34230,11 @@ paths:
                               description: The creation date and time of the deal
                             update_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal
                             stage_change_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal stage
                             active:
                               type: boolean
@@ -33987,9 +34254,11 @@ paths:
                               description: The success probability percentage of the deal
                             next_activity_date:
                               type: string
+                              nullable: true
                               description: The date of the next activity associated with the deal
                             next_activity_time:
                               type: string
+                              nullable: true
                               description: The time of the next activity associated with the deal
                             next_activity_id:
                               type: integer
@@ -34019,12 +34288,15 @@ paths:
                               description: The ID of the pipeline associated with the deal
                             won_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as won
                             first_won_time:
                               type: string
+                              nullable: true
                               description: The date and time of the first time changing the deal status as won
                             lost_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as lost
                             products_count:
                               type: integer
@@ -34056,36 +34328,46 @@ paths:
                             expected_close_date:
                               type: string
                               format: date
+                              nullable: true
                               description: The expected close date of the deal
                             last_incoming_mail_time:
                               type: string
+                              nullable: true
                               description: The date and time of the last incoming email associated with the deal
                             last_outgoing_mail_time:
                               type: string
+                              nullable: true
                               description: The date and time of the last outgoing email associated with the deal
                             label:
                               type: string
+                              nullable: true
                               description: The label or multiple labels assigned to the deal
                             stage_order_nr:
                               type: integer
                               description: The order number of the deal stage associated with the deal
                             person_name:
                               type: string
+                              nullable: true
                               description: The name of the person associated with the deal
                             org_name:
                               type: string
+                              nullable: true
                               description: The name of the organization associated with the deal
                             next_activity_subject:
                               type: string
+                              nullable: true
                               description: The subject of the next activity associated with the deal
                             next_activity_type:
                               type: string
+                              nullable: true
                               description: The type of the next activity associated with the deal
                             next_activity_duration:
                               type: string
+                              nullable: true
                               description: The duration of the next activity associated with the deal
                             next_activity_note:
                               type: string
+                              nullable: true
                               description: The note of the next activity associated with the deal
                             formatted_value:
                               type: string

@@ -57,6 +57,7 @@ type Activity struct {
 	ID                      ActivityID            `json:"id"`
 	Subject                 string                `json:"subject,omitempty"`
 	Type                    string                `json:"type,omitempty"`
+	OutcomeID               *ActivityOutcomeID    `json:"outcome,omitempty"`
 	Done                    bool                  `json:"done,omitempty"`
 	Busy                    bool                  `json:"busy,omitempty"`
 	DueDate                 string                `json:"due_date,omitempty"`
@@ -150,6 +151,7 @@ type deleteActivityOptions struct {
 }
 
 type activityPayload struct {
+	outcome           nullableValue[ActivityOutcomeID]
 	subject           *string
 	activityType      *string
 	ownerID           *UserID
@@ -229,6 +231,21 @@ func WithActivityIncludeFields(fields ...ActivityIncludeField) GetActivityOption
 		}
 		value := genv2.GetActivityParamsIncludeFields(csv)
 		cfg.params.IncludeFields = &value
+	})
+}
+
+// WithActivityOutcomeID sets the activity outcome. Available IDs depend on the
+// activity type and can be retrieved through the Activity Fields API.
+func WithActivityOutcomeID(id ActivityOutcomeID) ActivityOption {
+	return activityFieldOption(func(payload *activityPayload) {
+		payload.outcome.assign(id)
+	})
+}
+
+// ClearActivityOutcomeID sends an explicit JSON null outcome.
+func ClearActivityOutcomeID() ActivityOption {
+	return activityFieldOption(func(payload *activityPayload) {
+		payload.outcome.clear()
 	})
 }
 
@@ -684,6 +701,9 @@ func (s *ActivitiesService) list(ctx context.Context, params genv2.GetActivities
 
 func (p activityPayload) toMap() map[string]interface{} {
 	body := map[string]interface{}{}
+	if p.outcome.set {
+		body["outcome"] = p.outcome.mapValue()
+	}
 	if p.subject != nil {
 		body["subject"] = *p.subject
 	}

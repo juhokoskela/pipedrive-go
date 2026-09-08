@@ -3,6 +3,7 @@ package v2
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -313,5 +314,131 @@ func TestStagesService_Delete(t *testing.T) {
 	}
 	if result.ID != 11 {
 		t.Fatalf("unexpected result: %#v", result)
+	}
+}
+
+func TestStagesService_DaysToRottenPresence(t *testing.T) {
+	t.Parallel()
+	for _, method := range []string{http.MethodPost, http.MethodPatch} {
+		t.Run(method, func(t *testing.T) {
+			for _, tt := range []struct {
+				name string
+				opts []StageOption
+				want string
+			}{
+				{name: "omitted"},
+				{name: "zero", opts: []StageOption{WithStageDaysToRotten(0)}, want: "0"},
+				{name: "value", opts: []StageOption{WithStageDaysToRotten(14)}, want: "14"},
+				{name: "clear", opts: []StageOption{ClearStageDaysToRotten()}, want: "null"},
+				{name: "clear after value", opts: []StageOption{WithStageDaysToRotten(14), ClearStageDaysToRotten()}, want: "null"},
+				{name: "value after clear", opts: []StageOption{ClearStageDaysToRotten(), WithStageDaysToRotten(14)}, want: "14"},
+			} {
+				t.Run(tt.name, func(t *testing.T) {
+					client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+						if r.Method != method {
+							t.Errorf("method = %s, want %s", r.Method, method)
+						}
+						var body map[string]json.RawMessage
+						if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+							t.Error(err)
+						}
+						if got := string(body["days_to_rotten"]); got != tt.want {
+							t.Errorf("days_to_rotten = %q, want %q", got, tt.want)
+						}
+						if string(body["name"]) != `"Renamed"` {
+							t.Errorf("name = %s", body["name"])
+						}
+						w.Header().Set("Content-Type", "application/json")
+						_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+					})
+					var err error
+					if method == http.MethodPost {
+						opts := []CreateStageOption{WithStageName("Renamed"), WithStagePipelineID(1)}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						_, err = client.Stages.Create(t.Context(), opts...)
+					} else {
+						opts := []UpdateStageOption{WithStageName("Renamed")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						_, err = client.Stages.Update(t.Context(), 1, opts...)
+					}
+					if err != nil {
+						t.Fatal(err)
+					}
+				})
+			}
+		})
+	}
+}
+
+func TestStagesService_CreateOmitsUnsetFields(t *testing.T) {
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		var body map[string]json.RawMessage
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			t.Error(err)
+		}
+		if len(body) != 0 {
+			t.Errorf("body = %v, want no fields", body)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+	})
+	if _, err := client.Stages.Create(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestStagesService_WriteResponseErrors(t *testing.T) {
+	t.Parallel()
+	for _, operation := range []string{"create", "update"} {
+		for _, tt := range []struct {
+			name   string
+			status int
+			body   string
+		}{
+			{name: "API error", status: http.StatusBadRequest, body: `{"error":"invalid stage"}`},
+			{name: "malformed JSON", status: http.StatusOK, body: `{"data":`},
+			{name: "missing data", status: http.StatusOK, body: `{"data":null}`},
+		} {
+			t.Run(operation+"/"+tt.name, func(t *testing.T) {
+				client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+					w.Header().Set("Content-Type", "application/json")
+					w.Header().Set("X-Request-Id", "stage-error")
+					w.WriteHeader(tt.status)
+					_, _ = w.Write([]byte(tt.body))
+				})
+				var err error
+				if operation == "create" {
+					_, err = client.Stages.Create(t.Context(), WithStageName("Stage"), WithStagePipelineID(1))
+				} else {
+					_, err = client.Stages.Update(t.Context(), 1, WithStageName("Stage"))
+				}
+				if err == nil {
+					t.Fatal("expected an error")
+				}
+				switch tt.name {
+				case "API error":
+					var apiErr *pipedrive.APIError
+					if !errors.As(err, &apiErr) {
+						t.Fatalf("error = %T %v, want APIError", err, err)
+					}
+					if apiErr.Status != tt.status || apiErr.RequestID != "stage-error" || string(apiErr.Body) != tt.body {
+						t.Errorf("APIError = %#v", apiErr)
+					}
+				case "malformed JSON":
+					var syntaxErr *json.SyntaxError
+					if !errors.As(err, &syntaxErr) {
+						t.Errorf("error = %T %v, want SyntaxError", err, err)
+					}
+				case "missing data":
+					if err.Error() != "missing stage data in response" {
+						t.Errorf("error = %v", err)
+					}
+				}
+			})
+		}
 	}
 }
