@@ -242,8 +242,8 @@ func WithActivityOutcomeID(id ActivityOutcomeID) ActivityOption {
 	})
 }
 
-// ClearActivityOutcome sends an explicit JSON null outcome.
-func ClearActivityOutcome() ActivityOption {
+// ClearActivityOutcomeID sends an explicit JSON null outcome.
+func ClearActivityOutcomeID() ActivityOption {
 	return activityFieldOption(func(payload *activityPayload) {
 		payload.outcome.clear()
 	})

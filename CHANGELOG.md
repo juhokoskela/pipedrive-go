@@ -7,6 +7,25 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+### Added
+
+- Expose typed activity outcome IDs in v2 and v1 project activity responses,
+  with `WithActivityOutcomeID` and `ClearActivityOutcomeID` for v2 writes.
+- Add explicit-null options for stage rotten-day counts and deal person,
+  organization, and archive-time fields.
+
+### Fixed
+
+- Preserve omitted stage fields when creating or updating stages, independently
+  of generated request schemas.
+- Include required currency and price fields in product and variation price
+  entries, including zero prices.
+
+### Changed
+
+- Refresh upstream OpenAPI specifications and internal clients for nullable
+  fields, structured product prices, and activity outcomes.
+
 ## [1.13.1] - 2026-08-24
 
 ### Changed

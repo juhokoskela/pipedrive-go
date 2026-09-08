@@ -112,7 +112,7 @@ option to send an explicit JSON `null`:
 
 | Field | Set a value | Send null |
 | --- | --- | --- |
-| Activity outcome | `WithActivityOutcomeID(id)` | `ClearActivityOutcome()` |
+| Activity outcome | `WithActivityOutcomeID(id)` | `ClearActivityOutcomeID()` |
 | Stage rotten day count | `WithStageDaysToRotten(days)` | `ClearStageDaysToRotten()` |
 | Deal person | `WithDealPersonID(id)` | `ClearDealPersonID()` |
 | Deal organization | `WithDealOrganizationID(id)` | `ClearDealOrganizationID()` |

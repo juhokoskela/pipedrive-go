@@ -204,7 +204,7 @@ func TestDocumentedResponseFieldsAreRepresented(t *testing.T) {
 				"deal_id", "lead_id", "person_id", "org_id", "project_id", "due_date", "due_time", "duration",
 				"busy", "done", "marked_as_done_time", "location", "participants", "attendees",
 				"conference_meeting_client", "conference_meeting_url", "conference_meeting_id",
-				"public_description", "priority", "note",
+				"public_description", "priority", "note", "outcome",
 			},
 		},
 		{
@@ -279,14 +279,27 @@ func TestNullableOptionsSerializeExplicitNull(t *testing.T) {
 	ClearDealProbability().applyUpdateDeal(&dealCfg)
 	ClearDealLostReason().applyUpdateDeal(&dealCfg)
 	ClearDealCloseTime().applyUpdateDeal(&dealCfg)
+	ClearDealPersonID().applyUpdateDeal(&dealCfg)
+	ClearDealOrganizationID().applyUpdateDeal(&dealCfg)
+	ClearDealArchiveTime().applyUpdateDeal(&dealCfg)
 	dealBody := dealCfg.payload.toMap()
 	assertNullValue(t, dealBody, "probability")
 	assertNullValue(t, dealBody, "lost_reason")
 	assertNullValue(t, dealBody, "close_time")
+	assertNullValue(t, dealBody, "person_id")
+	assertNullValue(t, dealBody, "org_id")
+	assertNullValue(t, dealBody, "archive_time")
 
 	productCfg := updateProductOptions{}
 	ClearProductBillingFrequencyCycles().applyUpdateProduct(&productCfg)
 	assertNullValue(t, productCfg.payload.toMap(), "billing_frequency_cycles")
+	activityCfg := updateActivityOptions{}
+	ClearActivityOutcomeID().applyUpdateActivity(&activityCfg)
+	assertNullValue(t, activityCfg.payload.toMap(), "outcome")
+
+	stageCfg := updateStageOptions{}
+	ClearStageDaysToRotten().applyUpdateStage(&stageCfg)
+	assertNullValue(t, stageCfg.payload.toMap(), "days_to_rotten")
 }
 
 func TestLegacyEmptyDealOptionsRemainOmitted(t *testing.T) {
