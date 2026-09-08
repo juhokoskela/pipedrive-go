@@ -3,10 +3,7 @@ package v2
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
-	"net/http"
 	"time"
 )
 
@@ -249,25 +246,4 @@ func (p fieldPayload) toMap() map[string]interface{} {
 		body["required_fields"] = p.requiredFields
 	}
 	return body
-}
-
-func readFieldResponseBody(resp *http.Response) ([]byte, error) {
-	if resp == nil || resp.Body == nil {
-		return nil, fmt.Errorf("read field response: missing HTTP response body")
-	}
-
-	body, readErr := io.ReadAll(resp.Body)
-	closeErr := resp.Body.Close()
-	switch {
-	case readErr != nil && closeErr != nil:
-		return nil, errors.Join(
-			fmt.Errorf("read field response body: %w", readErr),
-			fmt.Errorf("close field response body: %w", closeErr),
-		)
-	case readErr != nil:
-		return nil, fmt.Errorf("read field response body: %w", readErr)
-	default:
-		// A successful read preserves the payload needed for status-derived errors.
-		return body, nil
-	}
 }

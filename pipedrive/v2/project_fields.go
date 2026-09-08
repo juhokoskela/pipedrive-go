@@ -218,7 +218,7 @@ func (s *ProjectFieldsService) Get(ctx context.Context, fieldCode string, opts .
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (s *ProjectFieldsService) Create(ctx context.Context, opts ...CreateProject
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func (s *ProjectFieldsService) Update(ctx context.Context, fieldCode string, opt
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -270,7 +270,7 @@ func (s *ProjectFieldsService) Delete(ctx context.Context, fieldCode string, opt
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -295,7 +295,7 @@ func (s *ProjectFieldsService) AddOptions(ctx context.Context, fieldCode string,
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +318,7 @@ func (s *ProjectFieldsService) UpdateOptions(ctx context.Context, fieldCode stri
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +344,7 @@ func (s *ProjectFieldsService) DeleteOptions(ctx context.Context, fieldCode stri
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -356,7 +356,7 @@ func (s *ProjectFieldsService) list(ctx context.Context, params genv2.GetProject
 	if err != nil {
 		return nil, nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, nil, err
 	}
