@@ -3,6 +3,7 @@ package v2
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -441,5 +442,104 @@ func TestActivitiesService_ForEach(t *testing.T) {
 	}
 	if len(ids) != 2 || ids[0] != 1 || ids[1] != 2 {
 		t.Fatalf("unexpected ids: %v", ids)
+	}
+}
+
+func TestActivitiesService_OutcomeRequests(t *testing.T) {
+	t.Parallel()
+	for _, method := range []string{http.MethodPost, http.MethodPatch} {
+		t.Run(method, func(t *testing.T) {
+			for _, tt := range []struct {
+				name string
+				opts []ActivityOption
+				want string
+			}{
+				{name: "omitted"},
+				{name: "value", opts: []ActivityOption{WithActivityOutcomeID(7)}, want: "7"},
+				{name: "clear", opts: []ActivityOption{ClearActivityOutcome()}, want: "null"},
+				{name: "clear after value", opts: []ActivityOption{WithActivityOutcomeID(7), ClearActivityOutcome()}, want: "null"},
+				{name: "value after clear", opts: []ActivityOption{ClearActivityOutcome(), WithActivityOutcomeID(7)}, want: "7"},
+			} {
+				t.Run(tt.name, func(t *testing.T) {
+					client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+						if r.Method != method {
+							t.Errorf("method = %s, want %s", r.Method, method)
+						}
+						var body map[string]json.RawMessage
+						if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+							t.Error(err)
+						}
+						if got := string(body["outcome"]); got != tt.want {
+							t.Errorf("outcome = %q, want %q", got, tt.want)
+						}
+						w.Header().Set("Content-Type", "application/json")
+						_, _ = w.Write([]byte(`{"data":{"id":1,"outcome":7}}`))
+					})
+					var activity *Activity
+					var err error
+					if method == http.MethodPost {
+						opts := []CreateActivityOption{WithActivitySubject("Call")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						activity, err = client.Activities.Create(t.Context(), opts...)
+					} else {
+						opts := []UpdateActivityOption{WithActivitySubject("Call")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						activity, err = client.Activities.Update(t.Context(), 1, opts...)
+					}
+					if err != nil {
+						t.Fatal(err)
+					}
+					if activity.OutcomeID == nil || *activity.OutcomeID != 7 {
+						t.Errorf("outcome ID = %v", activity.OutcomeID)
+					}
+				})
+			}
+		})
+	}
+}
+
+func TestActivitiesService_OutcomeResponses(t *testing.T) {
+	t.Parallel()
+	for _, list := range []bool{false, true} {
+		for _, outcome := range []string{"", `,"outcome":null`, `,"outcome":7`} {
+			t.Run(fmt.Sprintf("list=%t/%s", list, outcome), func(t *testing.T) {
+				client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+					data := `{"id":1` + outcome + `}`
+					if list {
+						data = "[" + data + "]"
+					}
+					w.Header().Set("Content-Type", "application/json")
+					_, _ = w.Write([]byte(`{"data":` + data + `}`))
+				})
+				var activity *Activity
+				if list {
+					activities, _, err := client.Activities.List(t.Context())
+					if err != nil {
+						t.Fatal(err)
+					}
+					if len(activities) != 1 {
+						t.Fatalf("activities = %v", activities)
+					}
+					activity = &activities[0]
+				} else {
+					var err error
+					activity, err = client.Activities.Get(t.Context(), 1)
+					if err != nil {
+						t.Fatal(err)
+					}
+				}
+				if outcome == `,"outcome":7` {
+					if activity.OutcomeID == nil || *activity.OutcomeID != 7 {
+						t.Errorf("outcome ID = %v", activity.OutcomeID)
+					}
+				} else if activity.OutcomeID != nil {
+					t.Errorf("outcome ID = %v, want nil", activity.OutcomeID)
+				}
+			})
+		}
 	}
 }

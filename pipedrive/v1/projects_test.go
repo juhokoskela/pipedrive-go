@@ -504,3 +504,36 @@ func TestProjectsService_ListTasks(t *testing.T) {
 		t.Fatalf("unexpected tasks: %#v", tasks)
 	}
 }
+
+func TestProjectsService_ActivityOutcome(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		name, outcome string
+		want          bool
+	}{
+		{name: "omitted"},
+		{name: "null", outcome: `,"outcome":null`},
+		{name: "value", outcome: `,"outcome":7`, want: true},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":[{"id":1` + tt.outcome + `}]}`))
+			})
+			activities, _, err := client.Projects.ListActivities(t.Context(), 1)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(activities) != 1 {
+				t.Fatalf("activities = %v", activities)
+			}
+			if tt.want {
+				if activities[0].OutcomeID == nil || *activities[0].OutcomeID != 7 {
+					t.Errorf("outcome ID = %v", activities[0].OutcomeID)
+				}
+			} else if activities[0].OutcomeID != nil {
+				t.Errorf("outcome ID = %v, want nil", activities[0].OutcomeID)
+			}
+		})
+	}
+}
