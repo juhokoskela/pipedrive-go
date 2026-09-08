@@ -4,10 +4,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
-	"net/http"
 	"time"
 
 	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
@@ -1013,7 +1011,7 @@ func (s *ProductsService) Get(ctx context.Context, id ProductID, opts ...GetProd
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readProductResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -1077,7 +1075,7 @@ func (s *ProductsService) Create(ctx context.Context, opts ...CreateProductOptio
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readProductResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -1113,7 +1111,7 @@ func (s *ProductsService) Update(ctx context.Context, id ProductID, opts ...Upda
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readProductResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -1140,18 +1138,22 @@ func (s *ProductsService) Delete(ctx context.Context, id ProductID, opts ...Dele
 	cfg := newDeleteProductOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteProductWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteProduct(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductDeleteResult `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1165,12 +1167,16 @@ func (s *ProductsService) Search(ctx context.Context, term string, opts ...Searc
 	cfg.params.Term = term
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.SearchProductsWithResponse(ctx, &cfg.params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.SearchProducts(ctx, &cfg.params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
@@ -1179,7 +1185,7 @@ func (s *ProductsService) Search(ctx context.Context, term string, opts ...Searc
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1204,7 +1210,7 @@ func (s *ProductsService) Duplicate(ctx context.Context, id ProductID, opts ...D
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readProductResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -1261,18 +1267,22 @@ func (s *ProductsService) CreateVariation(ctx context.Context, id ProductID, opt
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.AddProductVariationWithBodyWithResponse(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddProductVariationWithBody(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductVariation `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1296,18 +1306,22 @@ func (s *ProductsService) UpdateVariation(ctx context.Context, id ProductID, var
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.UpdateProductVariationWithBodyWithResponse(ctx, int(id), int(variationID), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateProductVariationWithBody(ctx, int(id), int(variationID), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductVariation `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1326,18 +1340,22 @@ func (s *ProductsService) DeleteVariation(ctx context.Context, id ProductID, var
 	cfg := newDeleteProductVariationOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteProductVariationWithResponse(ctx, int(id), int(variationID), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteProductVariation(ctx, int(id), int(variationID), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductVariationDeleteResult `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1353,18 +1371,22 @@ func (s *ProductsService) GetImage(ctx context.Context, id ProductID, opts ...Ge
 	cfg := newGetProductImageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.GetProductImageWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProductImage(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductImage `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1385,18 +1407,22 @@ func (s *ProductsService) UploadImage(ctx context.Context, id ProductID, opts ..
 		return nil, err
 	}
 
-	resp, err := s.client.gen.UploadProductImageWithBodyWithResponse(ctx, int(id), contentType, body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.UploadProductImageWithBody(ctx, int(id), contentType, body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductImage `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1417,18 +1443,22 @@ func (s *ProductsService) UpdateImage(ctx context.Context, id ProductID, opts ..
 		return nil, err
 	}
 
-	resp, err := s.client.gen.UpdateProductImageWithBodyWithResponse(ctx, int(id), contentType, body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateProductImageWithBody(ctx, int(id), contentType, body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductImage `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1444,18 +1474,22 @@ func (s *ProductsService) DeleteImage(ctx context.Context, id ProductID, opts ..
 	cfg := newDeleteProductImageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteProductImageWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteProductImage(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ProductImageDeleteResult `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1506,18 +1540,22 @@ func (s *ProductsService) AddFollower(ctx context.Context, id ProductID, userID 
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.AddProductFollowerWithBodyWithResponse(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddProductFollowerWithBody(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Follower `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1536,18 +1574,22 @@ func (s *ProductsService) DeleteFollower(ctx context.Context, id ProductID, foll
 	cfg := newDeleteProductFollowerOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteProductFollowerWithResponse(ctx, int(id), int(followerID), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteProductFollower(ctx, int(id), int(followerID), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *FollowerDeleteResult `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -1588,7 +1630,7 @@ func (s *ProductsService) list(ctx context.Context, params genv2.GetProductsPara
 	if err != nil {
 		return nil, nil, err
 	}
-	responseBody, err := readProductResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1613,39 +1655,22 @@ func (s *ProductsService) list(ctx context.Context, params genv2.GetProductsPara
 	return payload.Data, next, nil
 }
 
-func readProductResponseBody(resp *http.Response) ([]byte, error) {
-	if resp == nil || resp.Body == nil {
-		return nil, fmt.Errorf("read product response: missing HTTP response body")
-	}
-
-	body, readErr := io.ReadAll(resp.Body)
-	closeErr := resp.Body.Close()
-	switch {
-	case readErr != nil && closeErr != nil:
-		return nil, errors.Join(
-			fmt.Errorf("read product response body: %w", readErr),
-			fmt.Errorf("close product response body: %w", closeErr),
-		)
-	case readErr != nil:
-		return nil, fmt.Errorf("read product response body: %w", readErr)
-	default:
-		// A successful read preserves the payload needed for status-derived errors.
-		return body, nil
-	}
-}
-
 func (s *ProductsService) listVariations(ctx context.Context, id ProductID, params genv2.GetProductVariationsParams, requestOptions []pipedrive.RequestOption) ([]ProductVariation, *string, error) {
 	if err := validateID(id, "product id"); err != nil {
 		return nil, nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
-	resp, err := s.client.gen.GetProductVariationsWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProductVariations(ctx, int(id), &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
@@ -1654,7 +1679,7 @@ func (s *ProductsService) listVariations(ctx context.Context, id ProductID, para
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 
@@ -1671,12 +1696,16 @@ func (s *ProductsService) listFollowers(ctx context.Context, id ProductID, param
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
-	resp, err := s.client.gen.GetProductFollowersWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProductFollowers(ctx, int(id), &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
@@ -1685,7 +1714,7 @@ func (s *ProductsService) listFollowers(ctx context.Context, id ProductID, param
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 
@@ -1702,12 +1731,16 @@ func (s *ProductsService) followersChangelog(ctx context.Context, id ProductID, 
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
-	resp, err := s.client.gen.GetProductFollowersChangelogWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProductFollowersChangelog(ctx, int(id), &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
@@ -1716,7 +1749,7 @@ func (s *ProductsService) followersChangelog(ctx context.Context, id ProductID, 
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 
