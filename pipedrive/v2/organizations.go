@@ -1165,39 +1165,19 @@ func (p organizationPayload) toMap() map[string]interface{} {
 		body["visible_to"] = *p.visibleTo
 	}
 	if p.website.set {
-		if p.website.value == nil {
-			body["website"] = nil
-		} else {
-			body["website"] = *p.website.value
-		}
+		body["website"] = p.website.mapValue()
 	}
 	if p.linkedIn.set {
-		if p.linkedIn.value == nil {
-			body["linkedin"] = nil
-		} else {
-			body["linkedin"] = *p.linkedIn.value
-		}
+		body["linkedin"] = p.linkedIn.mapValue()
 	}
 	if p.industry.set {
-		if p.industry.value == nil {
-			body["industry"] = nil
-		} else {
-			body["industry"] = *p.industry.value
-		}
+		body["industry"] = p.industry.mapValue()
 	}
 	if p.annualRevenue.set {
-		if p.annualRevenue.value == nil {
-			body["annual_revenue"] = nil
-		} else {
-			body["annual_revenue"] = *p.annualRevenue.value
-		}
+		body["annual_revenue"] = p.annualRevenue.mapValue()
 	}
 	if p.employeeCount.set {
-		if p.employeeCount.value == nil {
-			body["employee_count"] = nil
-		} else {
-			body["employee_count"] = *p.employeeCount.value
-		}
+		body["employee_count"] = p.employeeCount.mapValue()
 	}
 	if p.customFields != nil {
 		body["custom_fields"] = p.customFields

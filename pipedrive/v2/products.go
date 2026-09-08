@@ -1763,11 +1763,7 @@ func (p productPayload) toMap() map[string]interface{} {
 		body["billing_frequency"] = *p.billingFrequency
 	}
 	if p.billingFrequencyCycles.set {
-		if p.billingFrequencyCycles.value == nil {
-			body["billing_frequency_cycles"] = nil
-		} else {
-			body["billing_frequency_cycles"] = *p.billingFrequencyCycles.value
-		}
+		body["billing_frequency_cycles"] = p.billingFrequencyCycles.mapValue()
 	}
 	return body
 }

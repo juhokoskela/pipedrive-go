@@ -463,7 +463,7 @@ func (p stagePayload) toMap() map[string]interface{} {
 		body["is_deal_rot_enabled"] = *p.dealRotEnabled
 	}
 	if p.daysToRotten.set {
-		body["days_to_rotten"] = p.daysToRotten.value
+		body["days_to_rotten"] = p.daysToRotten.mapValue()
 	}
 	return body
 }

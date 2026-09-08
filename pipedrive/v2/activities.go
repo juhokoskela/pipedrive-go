@@ -702,7 +702,7 @@ func (s *ActivitiesService) list(ctx context.Context, params genv2.GetActivities
 func (p activityPayload) toMap() map[string]interface{} {
 	body := map[string]interface{}{}
 	if p.outcome.set {
-		body["outcome"] = p.outcome.value
+		body["outcome"] = p.outcome.mapValue()
 	}
 	if p.subject != nil {
 		body["subject"] = *p.subject

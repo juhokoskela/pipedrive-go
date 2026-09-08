@@ -3129,18 +3129,10 @@ func (p dealPayload) toMap() map[string]interface{} {
 		body["owner_id"] = int(*p.ownerID)
 	}
 	if p.personID.set {
-		if p.personID.value == nil {
-			body["person_id"] = nil
-		} else {
-			body["person_id"] = int(*p.personID.value)
-		}
+		body["person_id"] = p.personID.mapValue()
 	}
 	if p.orgID.set {
-		if p.orgID.value == nil {
-			body["org_id"] = nil
-		} else {
-			body["org_id"] = int(*p.orgID.value)
-		}
+		body["org_id"] = p.orgID.mapValue()
 	}
 	if p.stageID != nil {
 		body["stage_id"] = int(*p.stageID)
@@ -3155,18 +3147,10 @@ func (p dealPayload) toMap() map[string]interface{} {
 		body["expected_close_date"] = *p.expectedCloseDate
 	}
 	if p.probability.set {
-		if p.probability.value == nil {
-			body["probability"] = nil
-		} else {
-			body["probability"] = *p.probability.value
-		}
+		body["probability"] = p.probability.mapValue()
 	}
 	if p.lostReason.set {
-		if p.lostReason.value == nil {
-			body["lost_reason"] = nil
-		} else {
-			body["lost_reason"] = *p.lostReason.value
-		}
+		body["lost_reason"] = p.lostReason.mapValue()
 	}
 	if p.visibleTo != nil {
 		body["visible_to"] = *p.visibleTo
@@ -3184,18 +3168,10 @@ func (p dealPayload) toMap() map[string]interface{} {
 		body["is_deleted"] = *p.isDeleted
 	}
 	if p.archiveTime.set {
-		if p.archiveTime.value == nil {
-			body["archive_time"] = nil
-		} else {
-			body["archive_time"] = *p.archiveTime.value
-		}
+		body["archive_time"] = p.archiveTime.mapValue()
 	}
 	if p.closeTime.set {
-		if p.closeTime.value == nil {
-			body["close_time"] = nil
-		} else {
-			body["close_time"] = *p.closeTime.value
-		}
+		body["close_time"] = p.closeTime.mapValue()
 	}
 	if p.lostTime != nil {
 		body["lost_time"] = *p.lostTime
