@@ -556,8 +556,8 @@ type dealPayload struct {
 	value             *float64
 	currency          *string
 	ownerID           *UserID
-	personID          *PersonID
-	orgID             *OrganizationID
+	personID          nullableValue[PersonID]
+	orgID             nullableValue[OrganizationID]
 	stageID           *StageID
 	pipelineID        *PipelineID
 	status            *DealStatus
@@ -569,7 +569,7 @@ type dealPayload struct {
 	customFields      map[string]interface{}
 	isArchived        *bool
 	isDeleted         *bool
-	archiveTime       *string
+	archiveTime       nullableValue[string]
 	closeTime         nullableValue[string]
 	lostTime          *string
 	wonTime           *string
@@ -1171,13 +1171,27 @@ func WithDealOwnerID(id UserID) DealOption {
 
 func WithDealPersonID(id PersonID) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
-		payload.personID = &id
+		payload.personID.assign(id)
+	})
+}
+
+// ClearDealPersonID sends an explicit JSON null person ID.
+func ClearDealPersonID() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.personID.clear()
 	})
 }
 
 func WithDealOrganizationID(id OrganizationID) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
-		payload.orgID = &id
+		payload.orgID.assign(id)
+	})
+}
+
+// ClearDealOrganizationID sends an explicit JSON null organization ID.
+func ClearDealOrganizationID() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.orgID.clear()
 	})
 }
 
@@ -1275,7 +1289,14 @@ func WithDealArchiveTime(value string) DealOption {
 		if value == "" {
 			return
 		}
-		payload.archiveTime = &value
+		payload.archiveTime.assign(value)
+	})
+}
+
+// ClearDealArchiveTime sends an explicit JSON null archive time.
+func ClearDealArchiveTime() DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.archiveTime.clear()
 	})
 }
 
@@ -3107,11 +3128,19 @@ func (p dealPayload) toMap() map[string]interface{} {
 	if p.ownerID != nil {
 		body["owner_id"] = int(*p.ownerID)
 	}
-	if p.personID != nil {
-		body["person_id"] = int(*p.personID)
+	if p.personID.set {
+		if p.personID.value == nil {
+			body["person_id"] = nil
+		} else {
+			body["person_id"] = int(*p.personID.value)
+		}
 	}
-	if p.orgID != nil {
-		body["org_id"] = int(*p.orgID)
+	if p.orgID.set {
+		if p.orgID.value == nil {
+			body["org_id"] = nil
+		} else {
+			body["org_id"] = int(*p.orgID.value)
+		}
 	}
 	if p.stageID != nil {
 		body["stage_id"] = int(*p.stageID)
@@ -3154,8 +3183,12 @@ func (p dealPayload) toMap() map[string]interface{} {
 	if p.isDeleted != nil {
 		body["is_deleted"] = *p.isDeleted
 	}
-	if p.archiveTime != nil {
-		body["archive_time"] = *p.archiveTime
+	if p.archiveTime.set {
+		if p.archiveTime.value == nil {
+			body["archive_time"] = nil
+		} else {
+			body["archive_time"] = *p.archiveTime.value
+		}
 	}
 	if p.closeTime.set {
 		if p.closeTime.value == nil {

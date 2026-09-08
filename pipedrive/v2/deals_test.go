@@ -2195,3 +2195,59 @@ func TestDealsService_DeleteInstallment(t *testing.T) {
 		t.Fatalf("unexpected result: %#v", result)
 	}
 }
+
+func TestDealsService_NullableRequestFields(t *testing.T) {
+	t.Parallel()
+	for _, method := range []string{http.MethodPost, http.MethodPatch} {
+		t.Run(method, func(t *testing.T) {
+			for _, tt := range []struct {
+				name                          string
+				opts                          []DealOption
+				person, organization, archive string
+			}{
+				{name: "omitted"},
+				{name: "values", opts: []DealOption{WithDealPersonID(2), WithDealOrganizationID(3), WithDealArchiveTime("2026-09-08 12:00:00")}, person: "2", organization: "3", archive: `"2026-09-08 12:00:00"`},
+				{name: "clear", opts: []DealOption{ClearDealPersonID(), ClearDealOrganizationID(), ClearDealArchiveTime()}, person: "null", organization: "null", archive: "null"},
+				{name: "clear after value", opts: []DealOption{WithDealPersonID(2), WithDealOrganizationID(3), WithDealArchiveTime("2026-09-08 12:00:00"), ClearDealPersonID(), ClearDealOrganizationID(), ClearDealArchiveTime()}, person: "null", organization: "null", archive: "null"},
+				{name: "value after clear", opts: []DealOption{ClearDealPersonID(), ClearDealOrganizationID(), ClearDealArchiveTime(), WithDealPersonID(2), WithDealOrganizationID(3), WithDealArchiveTime("2026-09-08 12:00:00")}, person: "2", organization: "3", archive: `"2026-09-08 12:00:00"`},
+				{name: "empty archive remains omitted", opts: []DealOption{WithDealArchiveTime("")}},
+			} {
+				t.Run(tt.name, func(t *testing.T) {
+					client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+						if r.Method != method {
+							t.Errorf("method = %s, want %s", r.Method, method)
+						}
+						var body map[string]json.RawMessage
+						if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+							t.Error(err)
+						}
+						for key, want := range map[string]string{"person_id": tt.person, "org_id": tt.organization, "archive_time": tt.archive} {
+							if got := string(body[key]); got != want {
+								t.Errorf("%s = %q, want %q", key, got, want)
+							}
+						}
+						w.Header().Set("Content-Type", "application/json")
+						_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+					})
+					var err error
+					if method == http.MethodPost {
+						opts := []CreateDealOption{WithDealTitle("Deal")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						_, err = client.Deals.Create(t.Context(), opts...)
+					} else {
+						opts := []UpdateDealOption{WithDealTitle("Deal")}
+						for _, opt := range tt.opts {
+							opts = append(opts, opt)
+						}
+						_, err = client.Deals.Update(t.Context(), 1, opts...)
+					}
+					if err != nil {
+						t.Fatal(err)
+					}
+				})
+			}
+		})
+	}
+}
