@@ -334,14 +334,7 @@ func (s *StagesService) Create(ctx context.Context, opts ...CreateStageOption) (
 	cfg := newCreateStageOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	requestBody := cfg.payload.toMap()
-	if cfg.payload.name == nil {
-		requestBody["name"] = ""
-	}
-	if cfg.payload.pipelineID == nil {
-		requestBody["pipeline_id"] = 0
-	}
-	body, err := json.Marshal(requestBody)
+	body, err := json.Marshal(cfg.payload.toMap())
 	if err != nil {
 		return nil, fmt.Errorf("encode request: %w", err)
 	}

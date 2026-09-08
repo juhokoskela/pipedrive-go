@@ -372,3 +372,20 @@ func TestStagesService_DaysToRottenPresence(t *testing.T) {
 		})
 	}
 }
+
+func TestStagesService_CreateOmitsUnsetFields(t *testing.T) {
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		var body map[string]json.RawMessage
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			t.Error(err)
+		}
+		if len(body) != 0 {
+			t.Errorf("body = %v, want no fields", body)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+	})
+	if _, err := client.Stages.Create(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+}
