@@ -305,11 +305,15 @@ func (s *TasksService) Get(ctx context.Context, id TaskID, opts ...TaskRequestOp
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, taskRequestOptionValues(opts)...)
-	resp, err := s.client.gen.GetTaskWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetTask(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[Task](resp.HTTPResponse, resp.Body, "task")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[Task](resp, responseBody, "task")
 }
 
 func (s *TasksService) Create(ctx context.Context, opts ...CreateTaskOption) (*Task, error) {
@@ -319,11 +323,15 @@ func (s *TasksService) Create(ctx context.Context, opts ...CreateTaskOption) (*T
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.AddTaskWithBodyWithResponse(ctx, "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddTaskWithBody(ctx, "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[Task](resp.HTTPResponse, resp.Body, "task")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[Task](resp, responseBody, "task")
 }
 
 func (s *TasksService) Update(ctx context.Context, id TaskID, opts ...UpdateTaskOption) (*Task, error) {
@@ -336,11 +344,15 @@ func (s *TasksService) Update(ctx context.Context, id TaskID, opts ...UpdateTask
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.UpdateTaskWithBodyWithResponse(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateTaskWithBody(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[Task](resp.HTTPResponse, resp.Body, "task")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[Task](resp, responseBody, "task")
 }
 
 func (s *TasksService) Delete(ctx context.Context, id TaskID, opts ...TaskRequestOption) (*TaskDeleteResult, error) {
@@ -348,18 +360,26 @@ func (s *TasksService) Delete(ctx context.Context, id TaskID, opts ...TaskReques
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, taskRequestOptionValues(opts)...)
-	resp, err := s.client.gen.DeleteTaskWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteTask(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[TaskDeleteResult](resp.HTTPResponse, resp.Body, "task delete")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[TaskDeleteResult](resp, responseBody, "task delete")
 }
 
 func (s *TasksService) list(ctx context.Context, params genv2.GetTasksParams, requestOptions []pipedrive.RequestOption) ([]Task, *string, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
-	resp, err := s.client.gen.GetTasksWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetTasks(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	return decodeV2List[Task](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	return decodeV2List[Task](resp, responseBody)
 }

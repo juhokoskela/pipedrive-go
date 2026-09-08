@@ -643,11 +643,15 @@ func (s *ProjectsService) Get(ctx context.Context, id ProjectID, opts ...Project
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
-	resp, err := s.client.gen.GetProjectWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProject(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[Project](resp.HTTPResponse, resp.Body, "project")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[Project](resp, responseBody, "project")
 }
 
 func (s *ProjectsService) Create(ctx context.Context, opts ...CreateProjectOption) (*Project, error) {
@@ -657,11 +661,15 @@ func (s *ProjectsService) Create(ctx context.Context, opts ...CreateProjectOptio
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.AddProjectWithBodyWithResponse(ctx, "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddProjectWithBody(ctx, "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[Project](resp.HTTPResponse, resp.Body, "project")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[Project](resp, responseBody, "project")
 }
 
 func (s *ProjectsService) Update(ctx context.Context, id ProjectID, opts ...UpdateProjectOption) (*Project, error) {
@@ -674,11 +682,15 @@ func (s *ProjectsService) Update(ctx context.Context, id ProjectID, opts ...Upda
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.UpdateProjectWithBodyWithResponse(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateProjectWithBody(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[Project](resp.HTTPResponse, resp.Body, "project")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[Project](resp, responseBody, "project")
 }
 
 func (s *ProjectsService) Delete(ctx context.Context, id ProjectID, opts ...ProjectRequestOption) (*ProjectDeleteResult, error) {
@@ -686,11 +698,15 @@ func (s *ProjectsService) Delete(ctx context.Context, id ProjectID, opts ...Proj
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
-	resp, err := s.client.gen.DeleteProjectWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteProject(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectDeleteResult](resp.HTTPResponse, resp.Body, "project delete")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectDeleteResult](resp, responseBody, "project delete")
 }
 
 func (s *ProjectsService) Archive(ctx context.Context, id ProjectID, opts ...ProjectRequestOption) (*Project, error) {
@@ -698,11 +714,15 @@ func (s *ProjectsService) Archive(ctx context.Context, id ProjectID, opts ...Pro
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
-	resp, err := s.client.gen.ArchiveProjectWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.ArchiveProject(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[Project](resp.HTTPResponse, resp.Body, "archived project")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[Project](resp, responseBody, "archived project")
 }
 
 func (s *ProjectsService) ListChangelog(ctx context.Context, id ProjectID, opts ...ListProjectChangelogOption) ([]ProjectChangelogEntry, *string, error) {
@@ -734,39 +754,55 @@ func (s *ProjectsService) ListPermittedUsers(ctx context.Context, id ProjectID, 
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectRequestOptionValues(opts)...)
-	resp, err := s.client.gen.GetProjectUsersWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectUsers(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2ListNoCursor[UserID](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2ListNoCursor[UserID](resp, responseBody)
 }
 
 func (s *ProjectsService) list(ctx context.Context, params genv2.GetProjectsParams, requestOptions []pipedrive.RequestOption) ([]Project, *string, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
-	resp, err := s.client.gen.GetProjectsWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjects(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	return decodeV2List[Project](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	return decodeV2List[Project](resp, responseBody)
 }
 
 func (s *ProjectsService) listArchived(ctx context.Context, params genv2.GetArchivedProjectsParams, requestOptions []pipedrive.RequestOption) ([]Project, *string, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
-	resp, err := s.client.gen.GetArchivedProjectsWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetArchivedProjects(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	return decodeV2List[Project](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	return decodeV2List[Project](resp, responseBody)
 }
 
 func (s *ProjectsService) search(ctx context.Context, params genv2.SearchProjectsParams, requestOptions []pipedrive.RequestOption) ([]ProjectSearchResult, *string, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
-	resp, err := s.client.gen.SearchProjectsWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.SearchProjects(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 	var payload struct {
 		Data struct {
@@ -776,7 +812,7 @@ func (s *ProjectsService) search(ctx context.Context, params genv2.SearchProject
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 	var next *string
@@ -791,11 +827,15 @@ func (s *ProjectsService) listChangelog(ctx context.Context, id ProjectID, param
 		return nil, nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
-	resp, err := s.client.gen.GetProjectChangelogWithResponse(ctx, int(id), &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectChangelog(ctx, int(id), &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	return decodeV2List[ProjectChangelogEntry](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	return decodeV2List[ProjectChangelogEntry](resp, responseBody)
 }
 
 func encodeV2Body(body map[string]interface{}) (*bytes.Reader, error) {
