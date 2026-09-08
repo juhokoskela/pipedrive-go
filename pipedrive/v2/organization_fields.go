@@ -344,7 +344,7 @@ func (s *OrganizationFieldsService) Get(ctx context.Context, fieldCode string, o
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -402,7 +402,7 @@ func (s *OrganizationFieldsService) Create(ctx context.Context, opts ...CreateOr
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -438,7 +438,7 @@ func (s *OrganizationFieldsService) Update(ctx context.Context, fieldCode string
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -465,18 +465,22 @@ func (s *OrganizationFieldsService) Delete(ctx context.Context, fieldCode string
 	cfg := newDeleteOrganizationFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteOrganizationFieldWithResponse(ctx, fieldCode, toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteOrganizationField(ctx, fieldCode, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Field `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -505,18 +509,22 @@ func (s *OrganizationFieldsService) AddOptions(ctx context.Context, fieldCode st
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.AddOrganizationFieldOptionsWithBodyWithResponse(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddOrganizationFieldOptionsWithBody(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data []FieldOption `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	return payloadResp.Data, nil
@@ -548,18 +556,22 @@ func (s *OrganizationFieldsService) UpdateOptions(ctx context.Context, fieldCode
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.UpdateOrganizationFieldOptionsWithBodyWithResponse(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateOrganizationFieldOptionsWithBody(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data []FieldOption `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	return payloadResp.Data, nil
@@ -591,18 +603,22 @@ func (s *OrganizationFieldsService) DeleteOptions(ctx context.Context, fieldCode
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.DeleteOrganizationFieldOptionsWithBodyWithResponse(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteOrganizationFieldOptionsWithBody(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data []FieldOption `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	return payloadResp.Data, nil
@@ -615,7 +631,7 @@ func (s *OrganizationFieldsService) list(ctx context.Context, params genv2.GetOr
 	if err != nil {
 		return nil, nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, nil, err
 	}
