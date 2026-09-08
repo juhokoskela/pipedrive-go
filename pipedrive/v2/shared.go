@@ -1,7 +1,9 @@
 package v2
 
 import (
+	"errors"
 	"fmt"
+	"io"
 	"math"
 	"net/http"
 	"strconv"
@@ -11,6 +13,27 @@ import (
 	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
+
+func readResponseBody(resp *http.Response) ([]byte, error) {
+	if resp == nil || resp.Body == nil {
+		return nil, fmt.Errorf("read response: missing HTTP response body")
+	}
+
+	body, readErr := io.ReadAll(resp.Body)
+	closeErr := resp.Body.Close()
+	switch {
+	case readErr != nil && closeErr != nil:
+		return nil, errors.Join(
+			fmt.Errorf("read response body: %w", readErr),
+			fmt.Errorf("close response body: %w", closeErr),
+		)
+	case readErr != nil:
+		return nil, fmt.Errorf("read response body: %w", readErr)
+	default:
+		// A successful read preserves the payload needed for status-derived errors.
+		return body, nil
+	}
+}
 
 func errorFromResponse(httpResp *http.Response, body []byte) error {
 	if httpResp.StatusCode == http.StatusTooManyRequests {

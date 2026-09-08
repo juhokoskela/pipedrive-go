@@ -538,18 +538,22 @@ func (s *ActivitiesService) Get(ctx context.Context, id ActivityID, opts ...GetA
 	cfg := newGetActivityOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.GetActivityWithResponse(ctx, int(id), &cfg.params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetActivity(ctx, int(id), &cfg.params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Activity `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -592,18 +596,22 @@ func (s *ActivitiesService) Create(ctx context.Context, opts ...CreateActivityOp
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.AddActivityWithBodyWithResponse(ctx, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddActivityWithBody(ctx, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Activity `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -624,18 +632,22 @@ func (s *ActivitiesService) Update(ctx context.Context, id ActivityID, opts ...U
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.UpdateActivityWithBodyWithResponse(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateActivityWithBody(ctx, int(id), "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Activity `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -651,18 +663,22 @@ func (s *ActivitiesService) Delete(ctx context.Context, id ActivityID, opts ...D
 	cfg := newDeleteActivityOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteActivityWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteActivity(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *ActivityDeleteResult `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -674,12 +690,16 @@ func (s *ActivitiesService) Delete(ctx context.Context, id ActivityID, opts ...D
 func (s *ActivitiesService) list(ctx context.Context, params genv2.GetActivitiesParams, requestOptions []pipedrive.RequestOption) ([]Activity, *string, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
 
-	resp, err := s.client.gen.GetActivitiesWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetActivities(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
@@ -688,7 +708,7 @@ func (s *ActivitiesService) list(ctx context.Context, params genv2.GetActivities
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 
