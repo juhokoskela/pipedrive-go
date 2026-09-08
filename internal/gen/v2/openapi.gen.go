@@ -977,6 +977,9 @@ type AddActivityJSONBody struct {
 	// OrgId The ID of the organization linked to the activity
 	OrgId *int `json:"org_id,omitempty"`
 
+	// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
+	Outcome *int `json:"outcome"`
+
 	// OwnerId The ID of the user who owns the activity
 	OwnerId *int `json:"owner_id,omitempty"`
 
@@ -1099,6 +1102,9 @@ type UpdateActivityJSONBody struct {
 
 	// OrgId The ID of the organization linked to the activity
 	OrgId *int `json:"org_id,omitempty"`
+
+	// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
+	Outcome *int `json:"outcome"`
 
 	// OwnerId The ID of the user who owns the activity
 	OwnerId *int `json:"owner_id,omitempty"`
@@ -1434,10 +1440,10 @@ type GetDealsParamsIncludeFields string
 // AddDealJSONBody defines parameters for AddDeal.
 type AddDealJSONBody struct {
 	// ArchiveTime The optional date and time of archiving the deal in UTC. Format: YYYY-MM-DD HH:MM:SS. If omitted and `is_archived` is true, it will be set to the current date and time.
-	ArchiveTime *string `json:"archive_time,omitempty"`
+	ArchiveTime *string `json:"archive_time"`
 
 	// CloseTime The date and time of closing the deal. Can only be set if deal status is won or lost.
-	CloseTime *string `json:"close_time"`
+	CloseTime *string `json:"close_time,omitempty"`
 
 	// Currency The currency associated with the deal
 	Currency *string `json:"currency,omitempty"`
@@ -1458,25 +1464,25 @@ type AddDealJSONBody struct {
 	LabelIds *[]int `json:"label_ids,omitempty"`
 
 	// LostReason The reason for losing the deal. Can only be set if deal status is lost.
-	LostReason *string `json:"lost_reason"`
+	LostReason *string `json:"lost_reason,omitempty"`
 
 	// LostTime The date and time of changing the deal status as lost. Can only be set if deal status is lost.
 	LostTime *string `json:"lost_time,omitempty"`
 
 	// OrgId The ID of the organization linked to the deal
-	OrgId *int `json:"org_id,omitempty"`
+	OrgId *int `json:"org_id"`
 
 	// OwnerId The ID of the user who owns the deal
 	OwnerId *int `json:"owner_id,omitempty"`
 
 	// PersonId The ID of the person linked to the deal
-	PersonId *int `json:"person_id,omitempty"`
+	PersonId *int `json:"person_id"`
 
 	// PipelineId The ID of the pipeline associated with the deal
 	PipelineId *int `json:"pipeline_id,omitempty"`
 
 	// Probability The success probability percentage of the deal
-	Probability *float32 `json:"probability"`
+	Probability *float32 `json:"probability,omitempty"`
 
 	// StageId The ID of the deal stage
 	StageId *int `json:"stage_id,omitempty"`
@@ -1668,10 +1674,10 @@ type GetDealParamsIncludeFields string
 // UpdateDealJSONBody defines parameters for UpdateDeal.
 type UpdateDealJSONBody struct {
 	// ArchiveTime The optional date and time of archiving the deal in UTC. Format: YYYY-MM-DD HH:MM:SS. If omitted and `is_archived` is true, it will be set to the current date and time.
-	ArchiveTime *string `json:"archive_time,omitempty"`
+	ArchiveTime *string `json:"archive_time"`
 
 	// CloseTime The date and time of closing the deal. Can only be set if deal status is won or lost.
-	CloseTime *string `json:"close_time"`
+	CloseTime *string `json:"close_time,omitempty"`
 
 	// Currency The currency associated with the deal
 	Currency *string `json:"currency,omitempty"`
@@ -1692,25 +1698,25 @@ type UpdateDealJSONBody struct {
 	LabelIds *[]int `json:"label_ids,omitempty"`
 
 	// LostReason The reason for losing the deal. Can only be set if deal status is lost.
-	LostReason *string `json:"lost_reason"`
+	LostReason *string `json:"lost_reason,omitempty"`
 
 	// LostTime The date and time of changing the deal status as lost. Can only be set if deal status is lost.
 	LostTime *string `json:"lost_time,omitempty"`
 
 	// OrgId The ID of the organization linked to the deal
-	OrgId *int `json:"org_id,omitempty"`
+	OrgId *int `json:"org_id"`
 
 	// OwnerId The ID of the user who owns the deal
 	OwnerId *int `json:"owner_id,omitempty"`
 
 	// PersonId The ID of the person linked to the deal
-	PersonId *int `json:"person_id,omitempty"`
+	PersonId *int `json:"person_id"`
 
 	// PipelineId The ID of the pipeline associated with the deal
 	PipelineId *int `json:"pipeline_id,omitempty"`
 
 	// Probability The success probability percentage of the deal
-	Probability *float32 `json:"probability"`
+	Probability *float32 `json:"probability,omitempty"`
 
 	// StageId The ID of the deal stage
 	StageId *int `json:"stage_id,omitempty"`
@@ -3331,8 +3337,23 @@ type AddProductJSONBody struct {
 	// OwnerId The ID of the user who will be marked as the owner of this product. When omitted, the authorized user ID will be used
 	OwnerId *int `json:"owner_id,omitempty"`
 
-	// Prices An array of objects, each containing: `currency` (string), `price` (number), `cost` (number, optional), `direct_cost` (number, optional). Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user's default currency will be assigned.
-	Prices *[]map[string]interface{} `json:"prices,omitempty"`
+	// Prices The prices of the product in different currencies. Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user's default currency will be assigned.
+	Prices *[]struct {
+		// Cost The cost of the product
+		Cost *float32 `json:"cost,omitempty"`
+
+		// Currency The currency of the price
+		Currency string `json:"currency"`
+
+		// DirectCost The direct cost of the product
+		DirectCost *float32 `json:"direct_cost,omitempty"`
+
+		// Notes The notes about the price
+		Notes *string `json:"notes,omitempty"`
+
+		// Price The price of the product
+		Price float32 `json:"price"`
+	} `json:"prices,omitempty"`
 
 	// Tax The tax percentage
 	Tax *float32 `json:"tax,omitempty"`
@@ -3418,8 +3439,23 @@ type UpdateProductJSONBody struct {
 	// OwnerId The ID of the user who will be marked as the owner of this product. When omitted, the authorized user ID will be used
 	OwnerId *int `json:"owner_id,omitempty"`
 
-	// Prices An array of objects, each containing: `currency` (string), `price` (number), `cost` (number, optional), `direct_cost` (number, optional). Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user's default currency will be assigned.
-	Prices *[]map[string]interface{} `json:"prices,omitempty"`
+	// Prices The prices of the product in different currencies. Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user's default currency will be assigned.
+	Prices *[]struct {
+		// Cost The cost of the product
+		Cost *float32 `json:"cost,omitempty"`
+
+		// Currency The currency of the price
+		Currency string `json:"currency"`
+
+		// DirectCost The direct cost of the product
+		DirectCost *float32 `json:"direct_cost,omitempty"`
+
+		// Notes The notes about the price
+		Notes *string `json:"notes,omitempty"`
+
+		// Price The price of the product
+		Price float32 `json:"price"`
+	} `json:"prices,omitempty"`
 
 	// Tax The tax percentage
 	Tax *float32 `json:"tax,omitempty"`
@@ -3839,7 +3875,7 @@ type GetStagesParamsSortDirection string
 // AddStageJSONBody defines parameters for AddStage.
 type AddStageJSONBody struct {
 	// DaysToRotten The number of days the deals not updated in this stage would become rotten. Applies only if the `is_deal_rot_enabled` is set.
-	DaysToRotten *int `json:"days_to_rotten,omitempty"`
+	DaysToRotten *int `json:"days_to_rotten"`
 
 	// DealProbability The success probability percentage of the deal. Used/shown when deal weighted values are used.
 	DealProbability *int `json:"deal_probability,omitempty"`
@@ -3857,7 +3893,7 @@ type AddStageJSONBody struct {
 // UpdateStageJSONBody defines parameters for UpdateStage.
 type UpdateStageJSONBody struct {
 	// DaysToRotten The number of days the deals not updated in this stage would become rotten. Applies only if the `is_deal_rot_enabled` is set.
-	DaysToRotten *int `json:"days_to_rotten,omitempty"`
+	DaysToRotten *int `json:"days_to_rotten"`
 
 	// DealProbability The success probability percentage of the deal. Used/shown when deal weighted values are used.
 	DealProbability *int `json:"deal_probability,omitempty"`
@@ -20616,6 +20652,9 @@ type GetActivitiesResponse struct {
 			// OrgId The ID of the organization linked to the activity
 			OrgId *int `json:"org_id,omitempty"`
 
+			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+			Outcome *int `json:"outcome"`
+
 			// OwnerId The ID of the user who owns the activity
 			OwnerId *int `json:"owner_id,omitempty"`
 
@@ -20780,6 +20819,9 @@ type AddActivityResponse struct {
 
 			// OrgId The ID of the organization linked to the activity
 			OrgId *int `json:"org_id,omitempty"`
+
+			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+			Outcome *int `json:"outcome"`
 
 			// OwnerId The ID of the user who owns the activity
 			OwnerId *int `json:"owner_id,omitempty"`
@@ -20976,6 +21018,9 @@ type GetActivityResponse struct {
 			// OrgId The ID of the organization linked to the activity
 			OrgId *int `json:"org_id,omitempty"`
 
+			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+			Outcome *int `json:"outcome"`
+
 			// OwnerId The ID of the user who owns the activity
 			OwnerId *int `json:"owner_id,omitempty"`
 
@@ -21140,6 +21185,9 @@ type UpdateActivityResponse struct {
 
 			// OrgId The ID of the organization linked to the activity
 			OrgId *int `json:"org_id,omitempty"`
+
+			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+			Outcome *int `json:"outcome"`
 
 			// OwnerId The ID of the user who owns the activity
 			OwnerId *int `json:"owner_id,omitempty"`
@@ -22267,7 +22315,7 @@ type GetDealsResponse struct {
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// Id The ID of the deal
 			Id *int `json:"id,omitempty"`
@@ -22285,7 +22333,7 @@ type GetDealsResponse struct {
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -22295,7 +22343,7 @@ type GetDealsResponse struct {
 			Mrr *float32 `json:"mrr"`
 
 			// OrgId The ID of the organization linked to the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -22307,7 +22355,7 @@ type GetDealsResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// PersonId The ID of the person linked to the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -22319,7 +22367,7 @@ type GetDealsResponse struct {
 			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -22340,7 +22388,7 @@ type GetDealsResponse struct {
 			VisibleTo *int `json:"visible_to,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -22402,7 +22450,7 @@ type AddDealResponse struct {
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// Id The ID of the deal
 			Id *int `json:"id,omitempty"`
@@ -22420,7 +22468,7 @@ type AddDealResponse struct {
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -22430,7 +22478,7 @@ type AddDealResponse struct {
 			Mrr *float32 `json:"mrr"`
 
 			// OrgId The ID of the organization linked to the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -22442,7 +22490,7 @@ type AddDealResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// PersonId The ID of the person linked to the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -22454,7 +22502,7 @@ type AddDealResponse struct {
 			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -22475,7 +22523,7 @@ type AddDealResponse struct {
 			VisibleTo *int `json:"visible_to,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -22544,7 +22592,7 @@ type GetArchivedDealsResponse struct {
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// Id The ID of the deal
 			Id *int `json:"id,omitempty"`
@@ -22562,7 +22610,7 @@ type GetArchivedDealsResponse struct {
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -22572,7 +22620,7 @@ type GetArchivedDealsResponse struct {
 			Mrr *float32 `json:"mrr"`
 
 			// OrgId The ID of the organization linked to the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -22584,7 +22632,7 @@ type GetArchivedDealsResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// PersonId The ID of the person linked to the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -22596,7 +22644,7 @@ type GetArchivedDealsResponse struct {
 			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -22617,7 +22665,7 @@ type GetArchivedDealsResponse struct {
 			VisibleTo *int `json:"visible_to,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -22965,7 +23013,7 @@ type GetDealResponse struct {
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// Id The ID of the deal
 			Id *int `json:"id,omitempty"`
@@ -22983,7 +23031,7 @@ type GetDealResponse struct {
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -22993,7 +23041,7 @@ type GetDealResponse struct {
 			Mrr *float32 `json:"mrr"`
 
 			// OrgId The ID of the organization linked to the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -23005,7 +23053,7 @@ type GetDealResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// PersonId The ID of the person linked to the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -23017,7 +23065,7 @@ type GetDealResponse struct {
 			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -23038,7 +23086,7 @@ type GetDealResponse struct {
 			VisibleTo *int `json:"visible_to,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -23100,7 +23148,7 @@ type UpdateDealResponse struct {
 			CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 			// ExpectedCloseDate The expected close date of the deal
-			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+			ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 			// Id The ID of the deal
 			Id *int `json:"id,omitempty"`
@@ -23118,7 +23166,7 @@ type UpdateDealResponse struct {
 			LostReason *string `json:"lost_reason"`
 
 			// LostTime The date and time of changing the deal status as lost
-			LostTime *string `json:"lost_time,omitempty"`
+			LostTime *string `json:"lost_time"`
 
 			// Mrr Only available in Growth and above plans
 			//
@@ -23128,7 +23176,7 @@ type UpdateDealResponse struct {
 			Mrr *float32 `json:"mrr"`
 
 			// OrgId The ID of the organization linked to the deal
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 			Origin *string `json:"origin,omitempty"`
@@ -23140,7 +23188,7 @@ type UpdateDealResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// PersonId The ID of the person linked to the deal
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// PipelineId The ID of the pipeline associated with the deal
 			PipelineId *int `json:"pipeline_id,omitempty"`
@@ -23152,7 +23200,7 @@ type UpdateDealResponse struct {
 			SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 			// StageChangeTime The last updated date and time of the deal stage
-			StageChangeTime *string `json:"stage_change_time,omitempty"`
+			StageChangeTime *string `json:"stage_change_time"`
 
 			// StageId The ID of the deal stage
 			StageId *int `json:"stage_id,omitempty"`
@@ -23173,7 +23221,7 @@ type UpdateDealResponse struct {
 			VisibleTo *int `json:"visible_to,omitempty"`
 
 			// WonTime The date and time of changing the deal status as won
-			WonTime *string `json:"won_time,omitempty"`
+			WonTime *string `json:"won_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -28350,7 +28398,7 @@ type GetProductsResponse struct {
 				Cost *float32 `json:"cost,omitempty"`
 
 				// Currency The currency of the price
-				Currency *string `json:"currency,omitempty"`
+				Currency *string `json:"currency"`
 
 				// DirectCost The direct cost of the product
 				DirectCost *float32 `json:"direct_cost"`
@@ -28362,7 +28410,7 @@ type GetProductsResponse struct {
 				Price *float32 `json:"price,omitempty"`
 
 				// ProductId The ID of the product
-				ProductId *int `json:"product_id,omitempty"`
+				ProductId *int `json:"product_id"`
 			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
@@ -28460,7 +28508,7 @@ type AddProductResponse struct {
 				Cost *float32 `json:"cost,omitempty"`
 
 				// Currency The currency of the price
-				Currency *string `json:"currency,omitempty"`
+				Currency *string `json:"currency"`
 
 				// DirectCost The direct cost of the product
 				DirectCost *float32 `json:"direct_cost"`
@@ -28472,7 +28520,7 @@ type AddProductResponse struct {
 				Price *float32 `json:"price,omitempty"`
 
 				// ProductId The ID of the product
-				ProductId *int `json:"product_id,omitempty"`
+				ProductId *int `json:"product_id"`
 			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
@@ -28662,7 +28710,7 @@ type GetProductResponse struct {
 				Cost *float32 `json:"cost,omitempty"`
 
 				// Currency The currency of the price
-				Currency *string `json:"currency,omitempty"`
+				Currency *string `json:"currency"`
 
 				// DirectCost The direct cost of the product
 				DirectCost *float32 `json:"direct_cost"`
@@ -28674,7 +28722,7 @@ type GetProductResponse struct {
 				Price *float32 `json:"price,omitempty"`
 
 				// ProductId The ID of the product
-				ProductId *int `json:"product_id,omitempty"`
+				ProductId *int `json:"product_id"`
 			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
@@ -28772,7 +28820,7 @@ type UpdateProductResponse struct {
 				Cost *float32 `json:"cost,omitempty"`
 
 				// Currency The currency of the price
-				Currency *string `json:"currency,omitempty"`
+				Currency *string `json:"currency"`
 
 				// DirectCost The direct cost of the product
 				DirectCost *float32 `json:"direct_cost"`
@@ -28784,7 +28832,7 @@ type UpdateProductResponse struct {
 				Price *float32 `json:"price,omitempty"`
 
 				// ProductId The ID of the product
-				ProductId *int `json:"product_id,omitempty"`
+				ProductId *int `json:"product_id"`
 			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
@@ -28882,7 +28930,7 @@ type DuplicateProductResponse struct {
 				Cost *float32 `json:"cost,omitempty"`
 
 				// Currency The currency of the price
-				Currency *string `json:"currency,omitempty"`
+				Currency *string `json:"currency"`
 
 				// DirectCost The direct cost of the product
 				DirectCost *float32 `json:"direct_cost"`
@@ -28894,7 +28942,7 @@ type DuplicateProductResponse struct {
 				Price *float32 `json:"price,omitempty"`
 
 				// ProductId The ID of the product
-				ProductId *int `json:"product_id,omitempty"`
+				ProductId *int `json:"product_id"`
 			} `json:"prices,omitempty"`
 
 			// Tax The tax percentage
@@ -33454,6 +33502,9 @@ func ParseGetActivitiesResponse(rsp *http.Response) (*GetActivitiesResponse, err
 				// OrgId The ID of the organization linked to the activity
 				OrgId *int `json:"org_id,omitempty"`
 
+				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+				Outcome *int `json:"outcome"`
+
 				// OwnerId The ID of the user who owns the activity
 				OwnerId *int `json:"owner_id,omitempty"`
 
@@ -33622,6 +33673,9 @@ func ParseAddActivityResponse(rsp *http.Response) (*AddActivityResponse, error) 
 
 				// OrgId The ID of the organization linked to the activity
 				OrgId *int `json:"org_id,omitempty"`
+
+				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+				Outcome *int `json:"outcome"`
 
 				// OwnerId The ID of the user who owns the activity
 				OwnerId *int `json:"owner_id,omitempty"`
@@ -33826,6 +33880,9 @@ func ParseGetActivityResponse(rsp *http.Response) (*GetActivityResponse, error) 
 				// OrgId The ID of the organization linked to the activity
 				OrgId *int `json:"org_id,omitempty"`
 
+				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+				Outcome *int `json:"outcome"`
+
 				// OwnerId The ID of the user who owns the activity
 				OwnerId *int `json:"owner_id,omitempty"`
 
@@ -33994,6 +34051,9 @@ func ParseUpdateActivityResponse(rsp *http.Response) (*UpdateActivityResponse, e
 
 				// OrgId The ID of the organization linked to the activity
 				OrgId *int `json:"org_id,omitempty"`
+
+				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
+				Outcome *int `json:"outcome"`
 
 				// OwnerId The ID of the user who owns the activity
 				OwnerId *int `json:"owner_id,omitempty"`
@@ -35145,7 +35205,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// Id The ID of the deal
 				Id *int `json:"id,omitempty"`
@@ -35163,7 +35223,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -35173,7 +35233,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				Mrr *float32 `json:"mrr"`
 
 				// OrgId The ID of the organization linked to the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -35185,7 +35245,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// PersonId The ID of the person linked to the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -35197,7 +35257,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -35218,7 +35278,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				VisibleTo *int `json:"visible_to,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -35284,7 +35344,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// Id The ID of the deal
 				Id *int `json:"id,omitempty"`
@@ -35302,7 +35362,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -35312,7 +35372,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				Mrr *float32 `json:"mrr"`
 
 				// OrgId The ID of the organization linked to the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -35324,7 +35384,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// PersonId The ID of the person linked to the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -35336,7 +35396,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -35357,7 +35417,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				VisibleTo *int `json:"visible_to,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -35430,7 +35490,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// Id The ID of the deal
 				Id *int `json:"id,omitempty"`
@@ -35448,7 +35508,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -35458,7 +35518,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				Mrr *float32 `json:"mrr"`
 
 				// OrgId The ID of the organization linked to the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -35470,7 +35530,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// PersonId The ID of the person linked to the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -35482,7 +35542,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -35503,7 +35563,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				VisibleTo *int `json:"visible_to,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -35868,7 +35928,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// Id The ID of the deal
 				Id *int `json:"id,omitempty"`
@@ -35886,7 +35946,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -35896,7 +35956,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				Mrr *float32 `json:"mrr"`
 
 				// OrgId The ID of the organization linked to the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -35908,7 +35968,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// PersonId The ID of the person linked to the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -35920,7 +35980,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -35941,7 +36001,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				VisibleTo *int `json:"visible_to,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -36007,7 +36067,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				CustomFields *map[string]interface{} `json:"custom_fields,omitempty"`
 
 				// ExpectedCloseDate The expected close date of the deal
-				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date,omitempty"`
+				ExpectedCloseDate *openapi_types.Date `json:"expected_close_date"`
 
 				// Id The ID of the deal
 				Id *int `json:"id,omitempty"`
@@ -36025,7 +36085,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				LostReason *string `json:"lost_reason"`
 
 				// LostTime The date and time of changing the deal status as lost
-				LostTime *string `json:"lost_time,omitempty"`
+				LostTime *string `json:"lost_time"`
 
 				// Mrr Only available in Growth and above plans
 				//
@@ -36035,7 +36095,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				Mrr *float32 `json:"mrr"`
 
 				// OrgId The ID of the organization linked to the deal
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Origin The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
 				Origin *string `json:"origin,omitempty"`
@@ -36047,7 +36107,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// PersonId The ID of the person linked to the deal
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// PipelineId The ID of the pipeline associated with the deal
 				PipelineId *int `json:"pipeline_id,omitempty"`
@@ -36059,7 +36119,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				SourceLeadId *openapi_types.UUID `json:"source_lead_id"`
 
 				// StageChangeTime The last updated date and time of the deal stage
-				StageChangeTime *string `json:"stage_change_time,omitempty"`
+				StageChangeTime *string `json:"stage_change_time"`
 
 				// StageId The ID of the deal stage
 				StageId *int `json:"stage_id,omitempty"`
@@ -36080,7 +36140,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				VisibleTo *int `json:"visible_to,omitempty"`
 
 				// WonTime The date and time of changing the deal status as won
-				WonTime *string `json:"won_time,omitempty"`
+				WonTime *string `json:"won_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -41512,7 +41572,7 @@ func ParseGetProductsResponse(rsp *http.Response) (*GetProductsResponse, error) 
 					Cost *float32 `json:"cost,omitempty"`
 
 					// Currency The currency of the price
-					Currency *string `json:"currency,omitempty"`
+					Currency *string `json:"currency"`
 
 					// DirectCost The direct cost of the product
 					DirectCost *float32 `json:"direct_cost"`
@@ -41524,7 +41584,7 @@ func ParseGetProductsResponse(rsp *http.Response) (*GetProductsResponse, error) 
 					Price *float32 `json:"price,omitempty"`
 
 					// ProductId The ID of the product
-					ProductId *int `json:"product_id,omitempty"`
+					ProductId *int `json:"product_id"`
 				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
@@ -41624,7 +41684,7 @@ func ParseAddProductResponse(rsp *http.Response) (*AddProductResponse, error) {
 					Cost *float32 `json:"cost,omitempty"`
 
 					// Currency The currency of the price
-					Currency *string `json:"currency,omitempty"`
+					Currency *string `json:"currency"`
 
 					// DirectCost The direct cost of the product
 					DirectCost *float32 `json:"direct_cost"`
@@ -41636,7 +41696,7 @@ func ParseAddProductResponse(rsp *http.Response) (*AddProductResponse, error) {
 					Price *float32 `json:"price,omitempty"`
 
 					// ProductId The ID of the product
-					ProductId *int `json:"product_id,omitempty"`
+					ProductId *int `json:"product_id"`
 				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
@@ -41836,7 +41896,7 @@ func ParseGetProductResponse(rsp *http.Response) (*GetProductResponse, error) {
 					Cost *float32 `json:"cost,omitempty"`
 
 					// Currency The currency of the price
-					Currency *string `json:"currency,omitempty"`
+					Currency *string `json:"currency"`
 
 					// DirectCost The direct cost of the product
 					DirectCost *float32 `json:"direct_cost"`
@@ -41848,7 +41908,7 @@ func ParseGetProductResponse(rsp *http.Response) (*GetProductResponse, error) {
 					Price *float32 `json:"price,omitempty"`
 
 					// ProductId The ID of the product
-					ProductId *int `json:"product_id,omitempty"`
+					ProductId *int `json:"product_id"`
 				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
@@ -41948,7 +42008,7 @@ func ParseUpdateProductResponse(rsp *http.Response) (*UpdateProductResponse, err
 					Cost *float32 `json:"cost,omitempty"`
 
 					// Currency The currency of the price
-					Currency *string `json:"currency,omitempty"`
+					Currency *string `json:"currency"`
 
 					// DirectCost The direct cost of the product
 					DirectCost *float32 `json:"direct_cost"`
@@ -41960,7 +42020,7 @@ func ParseUpdateProductResponse(rsp *http.Response) (*UpdateProductResponse, err
 					Price *float32 `json:"price,omitempty"`
 
 					// ProductId The ID of the product
-					ProductId *int `json:"product_id,omitempty"`
+					ProductId *int `json:"product_id"`
 				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage
@@ -42060,7 +42120,7 @@ func ParseDuplicateProductResponse(rsp *http.Response) (*DuplicateProductRespons
 					Cost *float32 `json:"cost,omitempty"`
 
 					// Currency The currency of the price
-					Currency *string `json:"currency,omitempty"`
+					Currency *string `json:"currency"`
 
 					// DirectCost The direct cost of the product
 					DirectCost *float32 `json:"direct_cost"`
@@ -42072,7 +42132,7 @@ func ParseDuplicateProductResponse(rsp *http.Response) (*DuplicateProductRespons
 					Price *float32 `json:"price,omitempty"`
 
 					// ProductId The ID of the product
-					ProductId *int `json:"product_id,omitempty"`
+					ProductId *int `json:"product_id"`
 				} `json:"prices,omitempty"`
 
 				// Tax The tax percentage

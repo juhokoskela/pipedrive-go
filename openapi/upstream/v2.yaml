@@ -346,6 +346,10 @@ paths:
                             priority:
                               type: integer
                               description: The priority of the activity. Mappable to a specific string using activityFields API.
+                            outcome:
+                              type: integer
+                              nullable: true
+                              description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
                             note:
                               type: string
                               description: The note of the activity
@@ -404,6 +408,7 @@ paths:
                     conference_meeting_id: abc-xyz
                     public_description: Public Description
                     priority: 263
+                    outcome: 101
                     note: Note
                 additional_data:
                   next_cursor: eyJmaWVsZCI6ImlkIiwiZmllbGRWYWx1ZSI6Nywic29ydERpcmVjdGlvbiI6ImFzYyIsImlkIjo3fQ
@@ -539,6 +544,10 @@ paths:
                 priority:
                   type: integer
                   description: The priority of the activity. Mappable to a specific string using activityFields API.
+                outcome:
+                  type: integer
+                  nullable: true
+                  description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
                 note:
                   type: string
                   description: The note of the activity
@@ -705,6 +714,10 @@ paths:
                           priority:
                             type: integer
                             description: The priority of the activity. Mappable to a specific string using activityFields API.
+                          outcome:
+                            type: integer
+                            nullable: true
+                            description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
                           note:
                             type: string
                             description: The note of the activity
@@ -756,6 +769,7 @@ paths:
                   conference_meeting_id: abc-xyz
                   public_description: Public Description
                   priority: 263
+                  outcome: 101
                   note: Note
   '/activities/{id}':
     delete:
@@ -987,6 +1001,10 @@ paths:
                           priority:
                             type: integer
                             description: The priority of the activity. Mappable to a specific string using activityFields API.
+                          outcome:
+                            type: integer
+                            nullable: true
+                            description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
                           note:
                             type: string
                             description: The note of the activity
@@ -1038,6 +1056,7 @@ paths:
                   conference_meeting_id: abc-xyz
                   public_description: Public Description
                   priority: 263
+                  outcome: 101
                   note: Note
     patch:
       summary: Update an activity
@@ -1178,6 +1197,10 @@ paths:
                 priority:
                   type: integer
                   description: The priority of the activity. Mappable to a specific string using activityFields API.
+                outcome:
+                  type: integer
+                  nullable: true
+                  description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API. Set to `null` to clear the Outcome.
                 note:
                   type: string
                   description: The note of the activity
@@ -1344,6 +1367,10 @@ paths:
                           priority:
                             type: integer
                             description: The priority of the activity. Mappable to a specific string using activityFields API.
+                          outcome:
+                            type: integer
+                            nullable: true
+                            description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
                           note:
                             type: string
                             description: The note of the activity
@@ -1395,6 +1422,7 @@ paths:
                   conference_meeting_id: abc-xyz
                   public_description: Public Description
                   priority: 263
+                  outcome: 101
                   note: Note
   /activityFields:
     get:
@@ -1971,9 +1999,11 @@ paths:
                               description: The ID of the user who owns the deal
                             person_id:
                               type: integer
+                              nullable: true
                               description: The ID of the person linked to the deal
                             org_id:
                               type: integer
+                              nullable: true
                               description: The ID of the organization linked to the deal
                             pipeline_id:
                               type: integer
@@ -1995,6 +2025,7 @@ paths:
                               description: The last updated date and time of the deal
                             stage_change_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal stage
                             is_deleted:
                               type: boolean
@@ -2022,13 +2053,16 @@ paths:
                               description: The date and time of closing the deal
                             won_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as won
                             lost_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as lost
                             expected_close_date:
                               type: string
                               format: date
+                              nullable: true
                               description: The expected close date of the deal
                             label_ids:
                               type: array
@@ -2166,9 +2200,11 @@ paths:
                   description: The ID of the user who owns the deal
                 person_id:
                   type: integer
+                  nullable: true
                   description: The ID of the person linked to the deal
                 org_id:
                   type: integer
+                  nullable: true
                   description: The ID of the organization linked to the deal
                 pipeline_id:
                   type: integer
@@ -2190,24 +2226,22 @@ paths:
                   description: Whether the deal is archived or not
                 archive_time:
                   type: string
+                  nullable: true
                   description: 'The optional date and time of archiving the deal in UTC. Format: YYYY-MM-DD HH:MM:SS. If omitted and `is_archived` is true, it will be set to the current date and time.'
                 status:
                   type: string
                   description: The status of the deal
                 probability:
                   type: number
-                  nullable: true
                   description: The success probability percentage of the deal
                 lost_reason:
                   type: string
-                  nullable: true
                   description: The reason for losing the deal. Can only be set if deal status is lost.
                 visible_to:
                   type: integer
                   description: The visibility of the deal
                 close_time:
                   type: string
-                  nullable: true
                   description: The date and time of closing the deal. Can only be set if deal status is won or lost.
                 won_time:
                   type: string
@@ -2260,9 +2294,11 @@ paths:
                             description: The ID of the user who owns the deal
                           person_id:
                             type: integer
+                            nullable: true
                             description: The ID of the person linked to the deal
                           org_id:
                             type: integer
+                            nullable: true
                             description: The ID of the organization linked to the deal
                           pipeline_id:
                             type: integer
@@ -2284,6 +2320,7 @@ paths:
                             description: The last updated date and time of the deal
                           stage_change_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal stage
                           is_deleted:
                             type: boolean
@@ -2311,13 +2348,16 @@ paths:
                             description: The date and time of closing the deal
                           won_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as won
                           lost_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as lost
                           expected_close_date:
                             type: string
                             format: date
+                            nullable: true
                             description: The expected close date of the deal
                           label_ids:
                             type: array
@@ -2580,9 +2620,11 @@ paths:
                               description: The ID of the user who owns the deal
                             person_id:
                               type: integer
+                              nullable: true
                               description: The ID of the person linked to the deal
                             org_id:
                               type: integer
+                              nullable: true
                               description: The ID of the organization linked to the deal
                             pipeline_id:
                               type: integer
@@ -2604,6 +2646,7 @@ paths:
                               description: The last updated date and time of the deal
                             stage_change_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal stage
                             is_deleted:
                               type: boolean
@@ -2631,13 +2674,16 @@ paths:
                               description: The date and time of closing the deal
                             won_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as won
                             lost_time:
                               type: string
+                              nullable: true
                               description: The date and time of changing the deal status as lost
                             expected_close_date:
                               type: string
                               format: date
+                              nullable: true
                               description: The expected close date of the deal
                             label_ids:
                               type: array
@@ -2878,9 +2924,11 @@ paths:
                             description: The ID of the user who owns the deal
                           person_id:
                             type: integer
+                            nullable: true
                             description: The ID of the person linked to the deal
                           org_id:
                             type: integer
+                            nullable: true
                             description: The ID of the organization linked to the deal
                           pipeline_id:
                             type: integer
@@ -2902,6 +2950,7 @@ paths:
                             description: The last updated date and time of the deal
                           stage_change_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal stage
                           is_deleted:
                             type: boolean
@@ -2929,13 +2978,16 @@ paths:
                             description: The date and time of closing the deal
                           won_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as won
                           lost_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as lost
                           expected_close_date:
                             type: string
                             format: date
+                            nullable: true
                             description: The expected close date of the deal
                           label_ids:
                             type: array
@@ -3069,9 +3121,11 @@ paths:
                   description: The ID of the user who owns the deal
                 person_id:
                   type: integer
+                  nullable: true
                   description: The ID of the person linked to the deal
                 org_id:
                   type: integer
+                  nullable: true
                   description: The ID of the organization linked to the deal
                 pipeline_id:
                   type: integer
@@ -3093,24 +3147,22 @@ paths:
                   description: Whether the deal is archived or not
                 archive_time:
                   type: string
+                  nullable: true
                   description: 'The optional date and time of archiving the deal in UTC. Format: YYYY-MM-DD HH:MM:SS. If omitted and `is_archived` is true, it will be set to the current date and time.'
                 status:
                   type: string
                   description: The status of the deal
                 probability:
                   type: number
-                  nullable: true
                   description: The success probability percentage of the deal
                 lost_reason:
                   type: string
-                  nullable: true
                   description: The reason for losing the deal. Can only be set if deal status is lost.
                 visible_to:
                   type: integer
                   description: The visibility of the deal
                 close_time:
                   type: string
-                  nullable: true
                   description: The date and time of closing the deal. Can only be set if deal status is won or lost.
                 won_time:
                   type: string
@@ -3163,9 +3215,11 @@ paths:
                             description: The ID of the user who owns the deal
                           person_id:
                             type: integer
+                            nullable: true
                             description: The ID of the person linked to the deal
                           org_id:
                             type: integer
+                            nullable: true
                             description: The ID of the organization linked to the deal
                           pipeline_id:
                             type: integer
@@ -3187,6 +3241,7 @@ paths:
                             description: The last updated date and time of the deal
                           stage_change_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal stage
                           is_deleted:
                             type: boolean
@@ -3214,13 +3269,16 @@ paths:
                             description: The date and time of closing the deal
                           won_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as won
                           lost_time:
                             type: string
+                            nullable: true
                             description: The date and time of changing the deal status as lost
                           expected_close_date:
                             type: string
                             format: date
+                            nullable: true
                             description: The expected close date of the deal
                           label_ids:
                             type: array
@@ -13536,27 +13594,33 @@ paths:
                               type: array
                               description: The prices of the product in different currencies
                               items:
-                                type: object
-                                properties:
-                                  product_id:
-                                    type: integer
-                                    description: The ID of the product
-                                  price:
-                                    type: number
-                                    description: The price of the product
-                                  currency:
-                                    type: string
-                                    description: The currency of the price
-                                  cost:
-                                    type: number
-                                    description: The cost of the product
-                                  direct_cost:
-                                    type: number
-                                    nullable: true
-                                    description: The direct cost of the product
-                                  notes:
-                                    type: string
-                                    description: The notes about the price
+                                allOf:
+                                  - type: object
+                                    title: ProductPriceBase
+                                    properties:
+                                      price:
+                                        type: number
+                                        description: The price of the product
+                                      cost:
+                                        type: number
+                                        description: The cost of the product
+                                  - type: object
+                                    properties:
+                                      product_id:
+                                        type: integer
+                                        nullable: true
+                                        description: The ID of the product
+                                      currency:
+                                        type: string
+                                        nullable: true
+                                        description: The currency of the price
+                                      direct_cost:
+                                        type: number
+                                        nullable: true
+                                        description: The direct cost of the product
+                                      notes:
+                                        type: string
+                                        description: The notes about the price
                   additional_data:
                     type: object
                     description: Pagination related data
@@ -13662,9 +13726,32 @@ paths:
                       description: 'The visibility of the product. If omitted, the visibility will be set to the default visibility setting of this item type for the authorized user. Read more about visibility groups <a href="https://support.pipedrive.com/en/article/visibility-groups" target="_blank" rel="noopener noreferrer">here</a>.<h4>Light / Growth and Professional plans</h4><table><tr><th style="width: 40px">Value</th><th>Description</th></tr><tr><td>`1`</td><td>Owner &amp; followers</td><tr><td>`3`</td><td>Entire company</td></tr></table><h4>Premium / Ultimate plan</h4><table><tr><th style="width: 40px">Value</th><th>Description</th></tr><tr><td>`1`</td><td>Owner only</td><tr><td>`3`</td><td>Owner''s visibility group</td></tr><tr><td>`5`</td><td>Owner''s visibility group and sub-groups</td></tr><tr><td>`7`</td><td>Entire company</td></tr></table>'
                     prices:
                       type: array
+                      description: 'The prices of the product in different currencies. Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
                       items:
-                        type: object
-                      description: 'An array of objects, each containing: `currency` (string), `price` (number), `cost` (number, optional), `direct_cost` (number, optional). Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
+                        allOf:
+                          - type: object
+                            title: ProductPriceBase
+                            properties:
+                              price:
+                                type: number
+                                description: The price of the product
+                              cost:
+                                type: number
+                                description: The cost of the product
+                          - type: object
+                            required:
+                              - price
+                              - currency
+                            properties:
+                              currency:
+                                type: string
+                                description: The currency of the price
+                              direct_cost:
+                                type: number
+                                description: The direct cost of the product
+                              notes:
+                                type: string
+                                description: The notes about the price
                     custom_fields:
                       type: object
                       additionalProperties: true
@@ -13815,27 +13902,33 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              type: object
-                              properties:
-                                product_id:
-                                  type: integer
-                                  description: The ID of the product
-                                price:
-                                  type: number
-                                  description: The price of the product
-                                currency:
-                                  type: string
-                                  description: The currency of the price
-                                cost:
-                                  type: number
-                                  description: The cost of the product
-                                direct_cost:
-                                  type: number
-                                  nullable: true
-                                  description: The direct cost of the product
-                                notes:
-                                  type: string
-                                  description: The notes about the price
+                              allOf:
+                                - type: object
+                                  title: ProductPriceBase
+                                  properties:
+                                    price:
+                                      type: number
+                                      description: The price of the product
+                                    cost:
+                                      type: number
+                                      description: The cost of the product
+                                - type: object
+                                  properties:
+                                    product_id:
+                                      type: integer
+                                      nullable: true
+                                      description: The ID of the product
+                                    currency:
+                                      type: string
+                                      nullable: true
+                                      description: The currency of the price
+                                    direct_cost:
+                                      type: number
+                                      nullable: true
+                                      description: The direct cost of the product
+                                    notes:
+                                      type: string
+                                      description: The notes about the price
               example:
                 success: true
                 data:
@@ -14442,27 +14535,33 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              type: object
-                              properties:
-                                product_id:
-                                  type: integer
-                                  description: The ID of the product
-                                price:
-                                  type: number
-                                  description: The price of the product
-                                currency:
-                                  type: string
-                                  description: The currency of the price
-                                cost:
-                                  type: number
-                                  description: The cost of the product
-                                direct_cost:
-                                  type: number
-                                  nullable: true
-                                  description: The direct cost of the product
-                                notes:
-                                  type: string
-                                  description: The notes about the price
+                              allOf:
+                                - type: object
+                                  title: ProductPriceBase
+                                  properties:
+                                    price:
+                                      type: number
+                                      description: The price of the product
+                                    cost:
+                                      type: number
+                                      description: The cost of the product
+                                - type: object
+                                  properties:
+                                    product_id:
+                                      type: integer
+                                      nullable: true
+                                      description: The ID of the product
+                                    currency:
+                                      type: string
+                                      nullable: true
+                                      description: The currency of the price
+                                    direct_cost:
+                                      type: number
+                                      nullable: true
+                                      description: The direct cost of the product
+                                    notes:
+                                      type: string
+                                      description: The notes about the price
               example:
                 success: true
                 data:
@@ -14564,9 +14663,32 @@ paths:
                       description: 'The visibility of the product. If omitted, the visibility will be set to the default visibility setting of this item type for the authorized user. Read more about visibility groups <a href="https://support.pipedrive.com/en/article/visibility-groups" target="_blank" rel="noopener noreferrer">here</a>.<h4>Light / Growth and Professional plans</h4><table><tr><th style="width: 40px">Value</th><th>Description</th></tr><tr><td>`1`</td><td>Owner &amp; followers</td><tr><td>`3`</td><td>Entire company</td></tr></table><h4>Premium / Ultimate plan</h4><table><tr><th style="width: 40px">Value</th><th>Description</th></tr><tr><td>`1`</td><td>Owner only</td><tr><td>`3`</td><td>Owner''s visibility group</td></tr><tr><td>`5`</td><td>Owner''s visibility group and sub-groups</td></tr><tr><td>`7`</td><td>Entire company</td></tr></table>'
                     prices:
                       type: array
+                      description: 'The prices of the product in different currencies. Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
                       items:
-                        type: object
-                      description: 'An array of objects, each containing: `currency` (string), `price` (number), `cost` (number, optional), `direct_cost` (number, optional). Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
+                        allOf:
+                          - type: object
+                            title: ProductPriceBase
+                            properties:
+                              price:
+                                type: number
+                                description: The price of the product
+                              cost:
+                                type: number
+                                description: The cost of the product
+                          - type: object
+                            required:
+                              - price
+                              - currency
+                            properties:
+                              currency:
+                                type: string
+                                description: The currency of the price
+                              direct_cost:
+                                type: number
+                                description: The direct cost of the product
+                              notes:
+                                type: string
+                                description: The notes about the price
                     custom_fields:
                       type: object
                       additionalProperties: true
@@ -14715,27 +14837,33 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              type: object
-                              properties:
-                                product_id:
-                                  type: integer
-                                  description: The ID of the product
-                                price:
-                                  type: number
-                                  description: The price of the product
-                                currency:
-                                  type: string
-                                  description: The currency of the price
-                                cost:
-                                  type: number
-                                  description: The cost of the product
-                                direct_cost:
-                                  type: number
-                                  nullable: true
-                                  description: The direct cost of the product
-                                notes:
-                                  type: string
-                                  description: The notes about the price
+                              allOf:
+                                - type: object
+                                  title: ProductPriceBase
+                                  properties:
+                                    price:
+                                      type: number
+                                      description: The price of the product
+                                    cost:
+                                      type: number
+                                      description: The cost of the product
+                                - type: object
+                                  properties:
+                                    product_id:
+                                      type: integer
+                                      nullable: true
+                                      description: The ID of the product
+                                    currency:
+                                      type: string
+                                      nullable: true
+                                      description: The currency of the price
+                                    direct_cost:
+                                      type: number
+                                      nullable: true
+                                      description: The direct cost of the product
+                                    notes:
+                                      type: string
+                                      description: The notes about the price
               example:
                 success: true
                 data:
@@ -14901,27 +15029,33 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              type: object
-                              properties:
-                                product_id:
-                                  type: integer
-                                  description: The ID of the product
-                                price:
-                                  type: number
-                                  description: The price of the product
-                                currency:
-                                  type: string
-                                  description: The currency of the price
-                                cost:
-                                  type: number
-                                  description: The cost of the product
-                                direct_cost:
-                                  type: number
-                                  nullable: true
-                                  description: The direct cost of the product
-                                notes:
-                                  type: string
-                                  description: The notes about the price
+                              allOf:
+                                - type: object
+                                  title: ProductPriceBase
+                                  properties:
+                                    price:
+                                      type: number
+                                      description: The price of the product
+                                    cost:
+                                      type: number
+                                      description: The cost of the product
+                                - type: object
+                                  properties:
+                                    product_id:
+                                      type: integer
+                                      nullable: true
+                                      description: The ID of the product
+                                    currency:
+                                      type: string
+                                      nullable: true
+                                      description: The currency of the price
+                                    direct_cost:
+                                      type: number
+                                      nullable: true
+                                      description: The direct cost of the product
+                                    notes:
+                                      type: string
+                                      description: The notes about the price
               example:
                 success: true
                 data:
@@ -17768,6 +17902,7 @@ paths:
                   description: Whether deals in this stage can become rotten
                 days_to_rotten:
                   type: integer
+                  nullable: true
                   description: The number of days the deals not updated in this stage would become rotten. Applies only if the `is_deal_rot_enabled` is set.
       responses:
         '200':
@@ -17991,6 +18126,7 @@ paths:
                   description: Whether deals in this stage can become rotten
                 days_to_rotten:
                   type: integer
+                  nullable: true
                   description: The number of days the deals not updated in this stage would become rotten. Applies only if the `is_deal_rot_enabled` is set.
       responses:
         '200':
@@ -22725,6 +22861,10 @@ components:
         priority:
           type: integer
           description: The priority of the activity. Mappable to a specific string using activityFields API.
+        outcome:
+          type: integer
+          nullable: true
+          description: The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
         note:
           type: string
           description: The note of the activity
@@ -22742,9 +22882,11 @@ components:
           description: The ID of the user who owns the deal
         person_id:
           type: integer
+          nullable: true
           description: The ID of the person linked to the deal
         org_id:
           type: integer
+          nullable: true
           description: The ID of the organization linked to the deal
         pipeline_id:
           type: integer
@@ -22766,6 +22908,7 @@ components:
           description: The last updated date and time of the deal
         stage_change_time:
           type: string
+          nullable: true
           description: The last updated date and time of the deal stage
         is_deleted:
           type: boolean
@@ -22793,13 +22936,16 @@ components:
           description: The date and time of closing the deal
         won_time:
           type: string
+          nullable: true
           description: The date and time of changing the deal status as won
         lost_time:
           type: string
+          nullable: true
           description: The date and time of changing the deal status as lost
         expected_close_date:
           type: string
           format: date
+          nullable: true
           description: The expected close date of the deal
         label_ids:
           type: array
