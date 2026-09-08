@@ -1279,3 +1279,67 @@ type errReader struct {
 func (r *errReader) Read(p []byte) (int, error) {
 	return 0, r.err
 }
+
+func TestProductsService_PriceSerialization(t *testing.T) {
+	t.Parallel()
+	for _, operation := range []string{"create", "update", "create variation", "update variation"} {
+		t.Run(operation, func(t *testing.T) {
+			for _, tt := range []struct {
+				name   string
+				set    bool
+				prices []ProductPrice
+				want   string
+			}{
+				{name: "omitted"},
+				{name: "empty", set: true, want: "[]"},
+				{name: "zero", set: true, prices: []ProductPrice{{Currency: "EUR", Price: 0}}, want: `[{"currency":"EUR","price":0}]`},
+				{name: "nonzero", set: true, prices: []ProductPrice{{Currency: "EUR", Price: 12.5}}, want: `[{"currency":"EUR","price":12.5}]`},
+				{name: "required fields", set: true, prices: []ProductPrice{{}}, want: `[{"currency":"","price":0}]`},
+			} {
+				t.Run(tt.name, func(t *testing.T) {
+					client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+						var body map[string]json.RawMessage
+						if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+							t.Error(err)
+						}
+						if got := string(body["prices"]); got != tt.want {
+							t.Errorf("prices = %s, want %s", got, tt.want)
+						}
+						w.Header().Set("Content-Type", "application/json")
+						_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+					})
+					var err error
+					switch operation {
+					case "create":
+						opts := []CreateProductOption{WithProductName("Product")}
+						if tt.set {
+							opts = append(opts, WithProductPrices(tt.prices...))
+						}
+						_, err = client.Products.Create(t.Context(), opts...)
+					case "update":
+						opts := []UpdateProductOption{WithProductName("Product")}
+						if tt.set {
+							opts = append(opts, WithProductPrices(tt.prices...))
+						}
+						_, err = client.Products.Update(t.Context(), 1, opts...)
+					case "create variation":
+						opts := []CreateProductVariationOption{WithProductVariationName("Variation")}
+						if tt.set {
+							opts = append(opts, WithProductVariationPrices(tt.prices...))
+						}
+						_, err = client.Products.CreateVariation(t.Context(), 1, opts...)
+					case "update variation":
+						opts := []UpdateProductVariationOption{WithProductVariationName("Variation")}
+						if tt.set {
+							opts = append(opts, WithProductVariationPrices(tt.prices...))
+						}
+						_, err = client.Products.UpdateVariation(t.Context(), 1, 1, opts...)
+					}
+					if err != nil {
+						t.Fatal(err)
+					}
+				})
+			}
+		})
+	}
+}

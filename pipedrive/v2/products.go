@@ -46,8 +46,8 @@ const (
 type ProductPrice struct {
 	ProductID          *ProductID          `json:"product_id,omitempty"`
 	ProductVariationID *ProductVariationID `json:"product_variation_id,omitempty"`
-	Currency           string              `json:"currency,omitempty"`
-	Price              float64             `json:"price,omitempty"`
+	Currency           string              `json:"currency"`
+	Price              float64             `json:"price"`
 	Cost               *float64            `json:"cost,omitempty"`
 	DirectCost         *float64            `json:"direct_cost,omitempty"`
 	Notes              string              `json:"notes,omitempty"`
