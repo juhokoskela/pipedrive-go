@@ -3,6 +3,7 @@ package v2
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -387,5 +388,57 @@ func TestStagesService_CreateOmitsUnsetFields(t *testing.T) {
 	})
 	if _, err := client.Stages.Create(t.Context()); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestStagesService_WriteResponseErrors(t *testing.T) {
+	t.Parallel()
+	for _, operation := range []string{"create", "update"} {
+		for _, tt := range []struct {
+			name   string
+			status int
+			body   string
+		}{
+			{name: "API error", status: http.StatusBadRequest, body: `{"error":"invalid stage"}`},
+			{name: "malformed JSON", status: http.StatusOK, body: `{"data":`},
+			{name: "missing data", status: http.StatusOK, body: `{"data":null}`},
+		} {
+			t.Run(operation+"/"+tt.name, func(t *testing.T) {
+				client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+					w.Header().Set("Content-Type", "application/json")
+					w.Header().Set("X-Request-Id", "stage-error")
+					w.WriteHeader(tt.status)
+					_, _ = w.Write([]byte(tt.body))
+				})
+				var err error
+				if operation == "create" {
+					_, err = client.Stages.Create(t.Context(), WithStageName("Stage"), WithStagePipelineID(1))
+				} else {
+					_, err = client.Stages.Update(t.Context(), 1, WithStageName("Stage"))
+				}
+				if err == nil {
+					t.Fatal("expected an error")
+				}
+				switch tt.name {
+				case "API error":
+					var apiErr *pipedrive.APIError
+					if !errors.As(err, &apiErr) {
+						t.Fatalf("error = %T %v, want APIError", err, err)
+					}
+					if apiErr.Status != tt.status || apiErr.RequestID != "stage-error" || string(apiErr.Body) != tt.body {
+						t.Errorf("APIError = %#v", apiErr)
+					}
+				case "malformed JSON":
+					var syntaxErr *json.SyntaxError
+					if !errors.As(err, &syntaxErr) {
+						t.Errorf("error = %T %v, want SyntaxError", err, err)
+					}
+				case "missing data":
+					if err.Error() != "missing stage data in response" {
+						t.Errorf("error = %v", err)
+					}
+				}
+			})
+		}
 	}
 }
