@@ -341,7 +341,7 @@ func (s *DealFieldsService) Get(ctx context.Context, fieldCode string, opts ...G
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -399,7 +399,7 @@ func (s *DealFieldsService) Create(ctx context.Context, opts ...CreateDealFieldO
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -435,7 +435,7 @@ func (s *DealFieldsService) Update(ctx context.Context, fieldCode string, opts .
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -462,18 +462,22 @@ func (s *DealFieldsService) Delete(ctx context.Context, fieldCode string, opts .
 	cfg := newDeleteDealFieldOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteDealFieldWithResponse(ctx, fieldCode, toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteDealField(ctx, fieldCode, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
 		Data *Field `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -502,18 +506,22 @@ func (s *DealFieldsService) AddOptions(ctx context.Context, fieldCode string, la
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.AddDealFieldOptionsWithBodyWithResponse(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddDealFieldOptionsWithBody(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data []FieldOption `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	return payloadResp.Data, nil
@@ -545,18 +553,22 @@ func (s *DealFieldsService) UpdateOptions(ctx context.Context, fieldCode string,
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.UpdateDealFieldOptionsWithBodyWithResponse(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateDealFieldOptionsWithBody(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data []FieldOption `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	return payloadResp.Data, nil
@@ -588,18 +600,22 @@ func (s *DealFieldsService) DeleteOptions(ctx context.Context, fieldCode string,
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.DeleteDealFieldOptionsWithBodyWithResponse(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteDealFieldOptionsWithBody(ctx, fieldCode, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data []FieldOption `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	return payloadResp.Data, nil
@@ -612,7 +628,7 @@ func (s *DealFieldsService) list(ctx context.Context, params genv2.GetDealFields
 	if err != nil {
 		return nil, nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, nil, err
 	}

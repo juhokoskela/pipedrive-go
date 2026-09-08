@@ -229,12 +229,16 @@ func (s *LeadsService) Search(ctx context.Context, term string, opts ...SearchLe
 	cfg.params.Term = term
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.SearchLeadsWithResponse(ctx, &cfg.params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.SearchLeads(ctx, &cfg.params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payload struct {
@@ -243,7 +247,7 @@ func (s *LeadsService) Search(ctx context.Context, term string, opts ...SearchLe
 			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(responseBody, &payload); err != nil {
 		return nil, nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payload.Data == nil {
@@ -272,18 +276,22 @@ func (s *LeadsService) ConvertToDeal(ctx context.Context, id LeadID, opts ...Con
 		return nil, fmt.Errorf("encode request: %w", err)
 	}
 
-	resp, err := s.client.gen.ConvertLeadToDealWithBodyWithResponse(ctx, leadUUID, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
+	resp, err := s.client.gen.ConvertLeadToDealWithBody(ctx, leadUUID, "application/json", bytes.NewReader(body), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data *LeadConversionJob `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payloadResp.Data == nil {
@@ -305,18 +313,22 @@ func (s *LeadsService) ConversionStatus(ctx context.Context, id LeadID, conversi
 		return nil, err
 	}
 
-	resp, err := s.client.gen.GetLeadConversionStatusWithResponse(ctx, leadUUID, conversionUUID, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetLeadConversionStatus(ctx, leadUUID, conversionUUID, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, responseBody)
 	}
 
 	var payloadResp struct {
 		Data *LeadConversionStatus `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payloadResp); err != nil {
+	if err := json.Unmarshal(responseBody, &payloadResp); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	if payloadResp.Data == nil {

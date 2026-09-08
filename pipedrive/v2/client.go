@@ -10,7 +10,7 @@ const DefaultBaseURL = "https://api.pipedrive.com/api/v2"
 type Client struct {
 	Raw *pipedrive.RawClient
 
-	gen *genv2.ClientWithResponses
+	gen *genv2.Client
 
 	Deals              *DealsService
 	DealFields         *DealFieldsService
@@ -51,7 +51,7 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 		return nil, err
 	}
 
-	gen, err := genv2.NewClientWithResponses(baseURL, genv2.WithHTTPClient(httpClient))
+	gen, err := genv2.NewClient(baseURL, genv2.WithHTTPClient(httpClient))
 	if err != nil {
 		return nil, err
 	}

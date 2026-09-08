@@ -137,7 +137,7 @@ func (s *ActivityFieldsService) Get(ctx context.Context, fieldCode string, opts 
 	if err != nil {
 		return nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +189,7 @@ func (s *ActivityFieldsService) list(ctx context.Context, params genv2.GetActivi
 	if err != nil {
 		return nil, nil, err
 	}
-	responseBody, err := readFieldResponseBody(resp)
+	responseBody, err := readResponseBody(resp)
 	if err != nil {
 		return nil, nil, err
 	}

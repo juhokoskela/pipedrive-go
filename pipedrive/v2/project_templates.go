@@ -114,18 +114,26 @@ func (s *ProjectTemplatesService) Get(ctx context.Context, id ProjectTemplateID,
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectTemplateRequestOptionValues(opts)...)
-	resp, err := s.client.gen.GetProjectTemplateWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectTemplate(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectTemplate](resp.HTTPResponse, resp.Body, "project template")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectTemplate](resp, responseBody, "project template")
 }
 
 func (s *ProjectTemplatesService) list(ctx context.Context, params genv2.GetProjectTemplatesParams, requestOptions []pipedrive.RequestOption) ([]ProjectTemplate, *string, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, requestOptions...)
-	resp, err := s.client.gen.GetProjectTemplatesWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectTemplates(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
 	}
-	return decodeV2List[ProjectTemplate](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, nil, err
+	}
+	return decodeV2List[ProjectTemplate](resp, responseBody)
 }

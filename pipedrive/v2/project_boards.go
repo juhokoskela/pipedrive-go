@@ -130,11 +130,15 @@ func (p projectBoardPayload) body() map[string]interface{} {
 
 func (s *ProjectBoardsService) List(ctx context.Context, opts ...ProjectBoardRequestOption) ([]ProjectBoard, error) {
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectBoardRequestOptionValues(opts)...)
-	resp, err := s.client.gen.GetProjectsBoardsWithResponse(ctx, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectsBoards(ctx, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2ListNoCursor[ProjectBoard](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2ListNoCursor[ProjectBoard](resp, responseBody)
 }
 
 func (s *ProjectBoardsService) Get(ctx context.Context, id ProjectBoardID, opts ...ProjectBoardRequestOption) (*ProjectBoard, error) {
@@ -142,11 +146,15 @@ func (s *ProjectBoardsService) Get(ctx context.Context, id ProjectBoardID, opts 
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectBoardRequestOptionValues(opts)...)
-	resp, err := s.client.gen.GetProjectsBoardWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectsBoard(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectBoard](resp.HTTPResponse, resp.Body, "project board")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectBoard](resp, responseBody, "project board")
 }
 
 func (s *ProjectBoardsService) Create(ctx context.Context, opts ...CreateProjectBoardOption) (*ProjectBoard, error) {
@@ -156,11 +164,15 @@ func (s *ProjectBoardsService) Create(ctx context.Context, opts ...CreateProject
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.AddProjectBoardWithBodyWithResponse(ctx, "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddProjectBoardWithBody(ctx, "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectBoard](resp.HTTPResponse, resp.Body, "project board")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectBoard](resp, responseBody, "project board")
 }
 
 func (s *ProjectBoardsService) Update(ctx context.Context, id ProjectBoardID, opts ...UpdateProjectBoardOption) (*ProjectBoard, error) {
@@ -173,11 +185,15 @@ func (s *ProjectBoardsService) Update(ctx context.Context, id ProjectBoardID, op
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.UpdateProjectBoardWithBodyWithResponse(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateProjectBoardWithBody(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectBoard](resp.HTTPResponse, resp.Body, "project board")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectBoard](resp, responseBody, "project board")
 }
 
 func (s *ProjectBoardsService) Delete(ctx context.Context, id ProjectBoardID, opts ...ProjectBoardRequestOption) (*ProjectBoardDeleteResult, error) {
@@ -185,9 +201,13 @@ func (s *ProjectBoardsService) Delete(ctx context.Context, id ProjectBoardID, op
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectBoardRequestOptionValues(opts)...)
-	resp, err := s.client.gen.DeleteProjectBoardWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteProjectBoard(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectBoardDeleteResult](resp.HTTPResponse, resp.Body, "project board delete")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectBoardDeleteResult](resp, responseBody, "project board delete")
 }

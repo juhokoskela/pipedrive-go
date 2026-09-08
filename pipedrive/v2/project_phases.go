@@ -136,11 +136,15 @@ func (s *ProjectPhasesService) List(ctx context.Context, boardID ProjectBoardID,
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectPhaseRequestOptionValues(opts)...)
 	params := genv2.GetProjectsPhasesParams{BoardId: int(boardID)}
-	resp, err := s.client.gen.GetProjectsPhasesWithResponse(ctx, &params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectsPhases(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2ListNoCursor[ProjectPhase](resp.HTTPResponse, resp.Body)
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2ListNoCursor[ProjectPhase](resp, responseBody)
 }
 
 func (s *ProjectPhasesService) Get(ctx context.Context, id ProjectPhaseID, opts ...ProjectPhaseRequestOption) (*ProjectPhase, error) {
@@ -148,11 +152,15 @@ func (s *ProjectPhasesService) Get(ctx context.Context, id ProjectPhaseID, opts 
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectPhaseRequestOptionValues(opts)...)
-	resp, err := s.client.gen.GetProjectsPhaseWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetProjectsPhase(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectPhase](resp.HTTPResponse, resp.Body, "project phase")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectPhase](resp, responseBody, "project phase")
 }
 
 func (s *ProjectPhasesService) Create(ctx context.Context, opts ...CreateProjectPhaseOption) (*ProjectPhase, error) {
@@ -162,11 +170,15 @@ func (s *ProjectPhasesService) Create(ctx context.Context, opts ...CreateProject
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.AddProjectPhaseWithBodyWithResponse(ctx, "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.AddProjectPhaseWithBody(ctx, "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectPhase](resp.HTTPResponse, resp.Body, "project phase")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectPhase](resp, responseBody, "project phase")
 }
 
 func (s *ProjectPhasesService) Update(ctx context.Context, id ProjectPhaseID, opts ...UpdateProjectPhaseOption) (*ProjectPhase, error) {
@@ -179,11 +191,15 @@ func (s *ProjectPhasesService) Update(ctx context.Context, id ProjectPhaseID, op
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
-	resp, err := s.client.gen.UpdateProjectPhaseWithBodyWithResponse(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
+	resp, err := s.client.gen.UpdateProjectPhaseWithBody(ctx, int(id), "application/json", body, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectPhase](resp.HTTPResponse, resp.Body, "project phase")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectPhase](resp, responseBody, "project phase")
 }
 
 func (s *ProjectPhasesService) Delete(ctx context.Context, id ProjectPhaseID, opts ...ProjectPhaseRequestOption) (*ProjectPhaseDeleteResult, error) {
@@ -191,9 +207,13 @@ func (s *ProjectPhasesService) Delete(ctx context.Context, id ProjectPhaseID, op
 		return nil, err
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, projectPhaseRequestOptionValues(opts)...)
-	resp, err := s.client.gen.DeleteProjectPhaseWithResponse(ctx, int(id), toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteProjectPhase(ctx, int(id), toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	return decodeV2Data[ProjectPhaseDeleteResult](resp.HTTPResponse, resp.Body, "project phase delete")
+	responseBody, err := readResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+	return decodeV2Data[ProjectPhaseDeleteResult](resp, responseBody, "project phase delete")
 }
