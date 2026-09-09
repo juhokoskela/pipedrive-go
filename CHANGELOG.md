@@ -7,6 +7,8 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-09-09
+
 ### Added
 
 - Expose typed activity outcome IDs in v2 and v1 project activity responses,
@@ -27,6 +29,7 @@ Semantic Versioning.
   body reading and cleanup across services.
 - Refresh upstream OpenAPI specifications and internal clients for nullable
   fields, structured product prices, and activity outcomes.
+- Update the pinned CodeQL and GitHub release actions.
 
 ## [1.13.1] - 2026-08-24
 
