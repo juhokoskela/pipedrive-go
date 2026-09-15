@@ -329,12 +329,11 @@ func WithOrganizationRequestOptions(opts ...pipedrive.RequestOption) Organizatio
 
 func WithOrganizationIncludeFields(fields ...OrganizationIncludeField) GetOrganizationOption {
 	return getOrganizationOptionFunc(func(cfg *getOrganizationOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetOrganizationParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetOrganizationParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -358,11 +357,11 @@ func WithOrganizationCustomFields(fields ...string) GetOrganizationOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
@@ -519,12 +518,11 @@ func WithOrganizationsSortDirection(direction SortDirection) ListOrganizationsOp
 
 func WithOrganizationsIncludeFields(fields ...OrganizationIncludeField) ListOrganizationsOption {
 	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetOrganizationsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetOrganizationsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -548,21 +546,21 @@ func WithOrganizationsCustomFields(fields ...string) ListOrganizationsOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
 func WithOrganizationsIDs(ids ...OrganizationID) ListOrganizationsOption {
 	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 

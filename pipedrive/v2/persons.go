@@ -381,12 +381,11 @@ func WithPersonRequestOptions(opts ...pipedrive.RequestOption) PersonRequestOpti
 
 func WithPersonIncludeFields(fields ...PersonIncludeField) GetPersonOption {
 	return getPersonOptionFunc(func(cfg *getPersonOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetPersonParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetPersonParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -410,11 +409,11 @@ func WithPersonCustomFields(fields ...string) GetPersonOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
@@ -577,12 +576,11 @@ func WithPersonsSortDirection(direction SortDirection) ListPersonsOption {
 
 func WithPersonsIncludeFields(fields ...PersonIncludeField) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetPersonsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetPersonsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -606,21 +604,21 @@ func WithPersonsCustomFields(fields ...string) ListPersonsOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
 func WithPersonsIDs(ids ...PersonID) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 

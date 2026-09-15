@@ -418,13 +418,9 @@ const (
 
 // Defines values for GetOrganizationFieldsParamsIncludeFields.
 const (
-	GetOrganizationFieldsParamsIncludeFieldsImportantFields                           GetOrganizationFieldsParamsIncludeFields = "important_fields"
-	GetOrganizationFieldsParamsIncludeFieldsImportantFieldsrequiredFields             GetOrganizationFieldsParamsIncludeFields = "important_fields,required_fields"
-	GetOrganizationFieldsParamsIncludeFieldsRequiredFields                            GetOrganizationFieldsParamsIncludeFields = "required_fields"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibility                              GetOrganizationFieldsParamsIncludeFields = "ui_visibility"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibilityimportantFields               GetOrganizationFieldsParamsIncludeFields = "ui_visibility,important_fields"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetOrganizationFieldsParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibilityrequiredFields                GetOrganizationFieldsParamsIncludeFields = "ui_visibility,required_fields"
+	GetOrganizationFieldsParamsIncludeFieldsImportantFields GetOrganizationFieldsParamsIncludeFields = "important_fields"
+	GetOrganizationFieldsParamsIncludeFieldsRequiredFields  GetOrganizationFieldsParamsIncludeFields = "required_fields"
+	GetOrganizationFieldsParamsIncludeFieldsUiVisibility    GetOrganizationFieldsParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for AddOrganizationFieldJSONBodyFieldType.
@@ -449,13 +445,9 @@ const (
 
 // Defines values for GetOrganizationFieldParamsIncludeFields.
 const (
-	GetOrganizationFieldParamsIncludeFieldsImportantFields                           GetOrganizationFieldParamsIncludeFields = "important_fields"
-	GetOrganizationFieldParamsIncludeFieldsImportantFieldsrequiredFields             GetOrganizationFieldParamsIncludeFields = "important_fields,required_fields"
-	GetOrganizationFieldParamsIncludeFieldsRequiredFields                            GetOrganizationFieldParamsIncludeFields = "required_fields"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibility                              GetOrganizationFieldParamsIncludeFields = "ui_visibility"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibilityimportantFields               GetOrganizationFieldParamsIncludeFields = "ui_visibility,important_fields"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetOrganizationFieldParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibilityrequiredFields                GetOrganizationFieldParamsIncludeFields = "ui_visibility,required_fields"
+	GetOrganizationFieldParamsIncludeFieldsImportantFields GetOrganizationFieldParamsIncludeFields = "important_fields"
+	GetOrganizationFieldParamsIncludeFieldsRequiredFields  GetOrganizationFieldParamsIncludeFields = "required_fields"
+	GetOrganizationFieldParamsIncludeFieldsUiVisibility    GetOrganizationFieldParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for GetOrganizationsParamsSortBy.
@@ -527,13 +519,9 @@ const (
 
 // Defines values for GetPersonFieldsParamsIncludeFields.
 const (
-	GetPersonFieldsParamsIncludeFieldsImportantFields                           GetPersonFieldsParamsIncludeFields = "important_fields"
-	GetPersonFieldsParamsIncludeFieldsImportantFieldsrequiredFields             GetPersonFieldsParamsIncludeFields = "important_fields,required_fields"
-	GetPersonFieldsParamsIncludeFieldsRequiredFields                            GetPersonFieldsParamsIncludeFields = "required_fields"
-	GetPersonFieldsParamsIncludeFieldsUiVisibility                              GetPersonFieldsParamsIncludeFields = "ui_visibility"
-	GetPersonFieldsParamsIncludeFieldsUiVisibilityimportantFields               GetPersonFieldsParamsIncludeFields = "ui_visibility,important_fields"
-	GetPersonFieldsParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetPersonFieldsParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetPersonFieldsParamsIncludeFieldsUiVisibilityrequiredFields                GetPersonFieldsParamsIncludeFields = "ui_visibility,required_fields"
+	GetPersonFieldsParamsIncludeFieldsImportantFields GetPersonFieldsParamsIncludeFields = "important_fields"
+	GetPersonFieldsParamsIncludeFieldsRequiredFields  GetPersonFieldsParamsIncludeFields = "required_fields"
+	GetPersonFieldsParamsIncludeFieldsUiVisibility    GetPersonFieldsParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for AddPersonFieldJSONBodyFieldType.
@@ -558,13 +546,9 @@ const (
 
 // Defines values for GetPersonFieldParamsIncludeFields.
 const (
-	GetPersonFieldParamsIncludeFieldsImportantFields                           GetPersonFieldParamsIncludeFields = "important_fields"
-	GetPersonFieldParamsIncludeFieldsImportantFieldsrequiredFields             GetPersonFieldParamsIncludeFields = "important_fields,required_fields"
-	GetPersonFieldParamsIncludeFieldsRequiredFields                            GetPersonFieldParamsIncludeFields = "required_fields"
-	GetPersonFieldParamsIncludeFieldsUiVisibility                              GetPersonFieldParamsIncludeFields = "ui_visibility"
-	GetPersonFieldParamsIncludeFieldsUiVisibilityimportantFields               GetPersonFieldParamsIncludeFields = "ui_visibility,important_fields"
-	GetPersonFieldParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetPersonFieldParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetPersonFieldParamsIncludeFieldsUiVisibilityrequiredFields                GetPersonFieldParamsIncludeFields = "ui_visibility,required_fields"
+	GetPersonFieldParamsIncludeFieldsImportantFields GetPersonFieldParamsIncludeFields = "important_fields"
+	GetPersonFieldParamsIncludeFieldsRequiredFields  GetPersonFieldParamsIncludeFields = "required_fields"
+	GetPersonFieldParamsIncludeFieldsUiVisibility    GetPersonFieldParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for GetPersonsParamsSortBy.
@@ -2166,7 +2150,7 @@ type ConvertLeadToDealJSONBody struct {
 // GetOrganizationFieldsParams defines parameters for GetOrganizationFields.
 type GetOrganizationFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetOrganizationFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2253,7 +2237,7 @@ type AddOrganizationFieldJSONBody_UiVisibility struct {
 // GetOrganizationFieldParams defines parameters for GetOrganizationField.
 type GetOrganizationFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetOrganizationFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetOrganizationFieldParamsIncludeFields defines parameters for GetOrganizationField.
@@ -2346,7 +2330,7 @@ type GetOrganizationsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only organizations owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2364,10 +2348,10 @@ type GetOrganizationsParams struct {
 	SortDirection *GetOrganizationsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetOrganizationsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2484,10 +2468,10 @@ type SearchOrganizationParamsFields string
 // GetOrganizationParams defines parameters for GetOrganization.
 type GetOrganizationParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetOrganizationParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2592,7 +2576,7 @@ type GetOrganizationFollowersChangelogParams struct {
 // GetPersonFieldsParams defines parameters for GetPersonFields.
 type GetPersonFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetPersonFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2670,7 +2654,7 @@ type AddPersonFieldJSONBody_UiVisibility struct {
 // GetPersonFieldParams defines parameters for GetPersonField.
 type GetPersonFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetPersonFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetPersonFieldParamsIncludeFields defines parameters for GetPersonField.
@@ -2754,7 +2738,7 @@ type GetPersonsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only persons owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2778,10 +2762,10 @@ type GetPersonsParams struct {
 	SortDirection *GetPersonsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include. `marketing_status` and `doi_status` can only be included if the company has marketing app enabled.
-	IncludeFields *GetPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2946,10 +2930,10 @@ type SearchPersonsParamsIncludeFields string
 // GetPersonParams defines parameters for GetPerson.
 type GetPersonParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include. `marketing_status` and `doi_status` can only be included if the company has marketing app enabled.
-	IncludeFields *GetPersonParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -13665,7 +13649,7 @@ func NewGetOrganizationFieldsRequest(server string, params *GetOrganizationField
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13827,7 +13811,7 @@ func NewGetOrganizationFieldRequest(server string, fieldCode string, params *Get
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14080,7 +14064,7 @@ func NewGetOrganizationsRequest(server string, params *GetOrganizationsParams) (
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14176,7 +14160,7 @@ func NewGetOrganizationsRequest(server string, params *GetOrganizationsParams) (
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14192,7 +14176,7 @@ func NewGetOrganizationsRequest(server string, params *GetOrganizationsParams) (
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14495,7 +14479,7 @@ func NewGetOrganizationRequest(server string, id int, params *GetOrganizationPar
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14511,7 +14495,7 @@ func NewGetOrganizationRequest(server string, id int, params *GetOrganizationPar
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14871,7 +14855,7 @@ func NewGetPersonFieldsRequest(server string, params *GetPersonFieldsParams) (*h
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15033,7 +15017,7 @@ func NewGetPersonFieldRequest(server string, fieldCode string, params *GetPerson
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15286,7 +15270,7 @@ func NewGetPersonsRequest(server string, params *GetPersonsParams) (*http.Reques
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15414,7 +15398,7 @@ func NewGetPersonsRequest(server string, params *GetPersonsParams) (*http.Reques
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15430,7 +15414,7 @@ func NewGetPersonsRequest(server string, params *GetPersonsParams) (*http.Reques
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15765,7 +15749,7 @@ func NewGetPersonRequest(server string, id int, params *GetPersonParams) (*http.
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15781,7 +15765,7 @@ func NewGetPersonRequest(server string, id int, params *GetPersonParams) (*http.
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
