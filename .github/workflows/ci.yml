@@ -47,11 +47,12 @@ jobs:
         run: go test ./...
 
       - name: SDK coverage
-        if: matrix.go == '1.27.1'
+        # Keep line coverage comparable across preferred-toolchain upgrades.
+        if: matrix.go == '1.25.0'
         run: go test -coverprofile=/tmp/pipedrive-go.cover -covermode=count ./pipedrive ./pipedrive/v1 ./pipedrive/v2
 
       - name: Coveralls
-        if: matrix.go == '1.27.1'
+        if: matrix.go == '1.25.0'
         uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329 # v2.3.8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
