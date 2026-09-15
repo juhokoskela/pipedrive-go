@@ -154,8 +154,8 @@ func TestActivitiesService_Create(t *testing.T) {
 		if payload["lead_id"] != "lead-123" {
 			t.Fatalf("unexpected lead_id: %v", payload["lead_id"])
 		}
-		if payload["person_id"] != float64(7) {
-			t.Fatalf("unexpected person_id: %v", payload["person_id"])
+		if _, ok := payload["person_id"]; ok {
+			t.Fatalf("unexpected top-level person_id: %v", payload["person_id"])
 		}
 		if payload["org_id"] != float64(8) {
 			t.Fatalf("unexpected org_id: %v", payload["org_id"])
@@ -246,6 +246,71 @@ func TestActivitiesService_Create(t *testing.T) {
 	}
 	if activity.ID != 1 || activity.Subject != "Call" {
 		t.Fatalf("unexpected activity: %#v", activity)
+	}
+}
+
+func TestActivitiesService_PrimaryParticipant(t *testing.T) {
+	t.Parallel()
+	personID := PersonID(7)
+	otherID := PersonID(8)
+	participants := WithActivityParticipants(
+		ActivityParticipant{PersonID: &personID},
+		ActivityParticipant{PersonID: &otherID, Primary: true},
+	)
+	for _, method := range []string{http.MethodPost, http.MethodPatch} {
+		for _, tt := range []struct {
+			name string
+			opts []ActivityOption
+			want string
+		}{
+			{name: "omitted"},
+			{name: "explicit empty", opts: []ActivityOption{WithActivityParticipants()}, want: `[]`},
+			{name: "person only", opts: []ActivityOption{WithActivityPersonID(personID)}, want: `[{"person_id":7,"primary":true}]`},
+			{name: "participants only", opts: []ActivityOption{participants}, want: `[{"person_id":7},{"person_id":8,"primary":true}]`},
+			{name: "person before participants", opts: []ActivityOption{WithActivityPersonID(personID), participants}, want: `[{"person_id":7,"primary":true},{"person_id":8}]`},
+			{name: "person after participants", opts: []ActivityOption{participants, WithActivityPersonID(personID)}, want: `[{"person_id":7,"primary":true},{"person_id":8}]`},
+			{name: "person appended", opts: []ActivityOption{WithActivityParticipants(ActivityParticipant{PersonID: &otherID, Primary: true}), WithActivityPersonID(personID)}, want: `[{"person_id":8},{"person_id":7,"primary":true}]`},
+			{name: "last person wins", opts: []ActivityOption{WithActivityPersonID(personID), WithActivityPersonID(otherID)}, want: `[{"person_id":8,"primary":true}]`},
+			{name: "repeated person", opts: []ActivityOption{WithActivityPersonID(personID), WithActivityPersonID(personID)}, want: `[{"person_id":7,"primary":true}]`},
+			{name: "participant without person", opts: []ActivityOption{WithActivityParticipants(ActivityParticipant{}), WithActivityPersonID(personID)}, want: `[{},{"person_id":7,"primary":true}]`},
+		} {
+			t.Run(method+"/"+tt.name, func(t *testing.T) {
+				client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+					if r.Method != method {
+						t.Errorf("method = %s, want %s", r.Method, method)
+					}
+					var body map[string]json.RawMessage
+					if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+						t.Error(err)
+					}
+					if _, ok := body["person_id"]; ok {
+						t.Errorf("unexpected top-level person_id: %s", body["person_id"])
+					}
+					if got := string(body["participants"]); got != tt.want {
+						t.Errorf("participants = %s, want %s", got, tt.want)
+					}
+					w.Header().Set("Content-Type", "application/json")
+					_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+				})
+				var err error
+				if method == http.MethodPost {
+					opts := []CreateActivityOption{WithActivitySubject("Call")}
+					for _, opt := range tt.opts {
+						opts = append(opts, opt)
+					}
+					_, err = client.Activities.Create(t.Context(), opts...)
+				} else {
+					opts := []UpdateActivityOption{WithActivitySubject("Call")}
+					for _, opt := range tt.opts {
+						opts = append(opts, opt)
+					}
+					_, err = client.Activities.Update(t.Context(), 1, opts...)
+				}
+				if err != nil {
+					t.Fatal(err)
+				}
+			})
+		}
 	}
 }
 
