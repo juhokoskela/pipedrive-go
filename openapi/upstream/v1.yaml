@@ -58,7 +58,7 @@ tags:
       Leads are potential deals stored in Leads Inbox before they are archived or converted to a deal. Each lead needs to be named (using the `title` field) and be linked to a person or an organization. In addition to that, a lead can contain most of the fields a deal can (such as `value` or `expected_close_date`).
   - name: LegacyTeams
     description: |
-      Legacy teams allow you to form groups of users withing the organization for more efficient management. Previously Legacy Teams were called Teams and occupied the `v1/teams*` path. They're being deprecated because we are preparing for an upgraded version of the Teams API, which requires migrating the current functionality to a new path URL `v1/legacyTeams*`. The functionality and [OAuth scopes](https://pipedrive.readme.io/docs/marketplace-scopes-and-permissions-explanations) of all the Teams API endpoints will remain the same.
+      Legacy teams allow you to form groups of users within the organization for more efficient management. Previously Legacy Teams were called Teams and occupied the `v1/teams*` path. The current functionality is available at the `v1/legacyTeams*` path. The functionality and [OAuth scopes](https://pipedrive.readme.io/docs/marketplace-scopes-and-permissions-explanations) of all the Teams API endpoints remain the same.
   - name: Mailbox
     description: |
       Mailbox was designed to be the email control hub inside Pipedrive. Pipedrive supports all major providers (including Gmail, Outlook and also custom IMAP/SMTP). There are 2 options for syncing user emails: 2-way sync: Mail Connection is established with the mail provider (example Gmail). There can be only 1 active Mail Connection per user in company. 1-way sync: SmartBCC feature which stores the copies of email messages to Pipedrive by adding the SmartBCC specific address to mail recipients.
@@ -2658,7 +2658,7 @@ paths:
                                   type: string
                                   description: The email of the deal creator
                                 has_pic:
-                                  type: boolean
+                                  type: integer
                                   description: If the creator has a picture or not
                                 pic_hash:
                                   type: string
@@ -3193,7 +3193,7 @@ paths:
                       id: 8877
                       name: Creator
                       email: john.doe@pipedrive.com
-                      has_pic: false
+                      has_pic: 0
                       pic_hash: null
                       active_flag: true
                       value: 8877
@@ -14699,7 +14699,6 @@ paths:
       description: Returns data about teams within the company.
       x-token-cost: 20
       operationId: getTeams
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -14837,7 +14836,6 @@ paths:
       description: Adds a new team to the company and returns the created object.
       x-token-cost: 10
       operationId: addTeam
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -14984,7 +14982,6 @@ paths:
       description: Returns data about a specific team.
       x-token-cost: 2
       operationId: getTeam
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -15120,7 +15117,6 @@ paths:
       description: Updates an existing team and returns the updated object.
       x-token-cost: 10
       operationId: updateTeam
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -15308,7 +15304,6 @@ paths:
       description: Returns a list of all user IDs within a team.
       x-token-cost: 20
       operationId: getTeamUsers
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -15372,7 +15367,6 @@ paths:
       description: Adds users to an existing team.
       x-token-cost: 10
       operationId: addTeamUser
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -15470,7 +15464,6 @@ paths:
       description: Deletes users from an existing team.
       x-token-cost: 10
       operationId: deleteTeamUser
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -15569,7 +15562,6 @@ paths:
       description: Returns data about all teams which have the specified user as a member.
       x-token-cost: 20
       operationId: getUserTeams
-      deprecated: true
       tags:
         - LegacyTeams
       security:
@@ -27479,7 +27471,7 @@ paths:
                                       type: string
                                       description: The email of the deal creator
                                     has_pic:
-                                      type: boolean
+                                      type: integer
                                       description: If the creator has a picture or not
                                     pic_hash:
                                       type: string
@@ -28077,7 +28069,7 @@ paths:
                       id: 8877
                       name: Creator
                       email: john.doe@pipedrive.com
-                      has_pic: false
+                      has_pic: 0
                       pic_hash: null
                       active_flag: true
                       value: 8877
@@ -28278,6 +28270,7 @@ paths:
                     properties:
                       data:
                         type: array
+                        nullable: true
                         items:
                           type: object
                           description: The file data

@@ -230,27 +230,34 @@ paths:
                               description: The last updated date and time of the activity
                             deal_id:
                               type: integer
+                              nullable: true
                               description: The ID of the deal linked to the activity
                             lead_id:
                               type: string
+                              nullable: true
                               description: The ID of the lead linked to the activity
                             person_id:
                               type: integer
+                              nullable: true
                               description: The ID of the person linked to the activity
                             org_id:
                               type: integer
+                              nullable: true
                               description: The ID of the organization linked to the activity
                             project_id:
                               type: integer
+                              nullable: true
                               description: The ID of the project linked to the activity
                             due_date:
                               type: string
                               description: The due date of the activity
                             due_time:
                               type: string
+                              nullable: true
                               description: The due time of the activity
                             duration:
                               type: string
+                              nullable: true
                               description: The duration of the activity
                             busy:
                               type: boolean
@@ -260,9 +267,11 @@ paths:
                               description: Whether the activity is marked as done or not
                             marked_as_done_time:
                               type: string
+                              nullable: true
                               description: The date and time when the activity was marked as done
                             location:
                               type: object
+                              nullable: true
                               description: Location of the activity
                               properties:
                                 value:
@@ -270,30 +279,39 @@ paths:
                                   description: The full address of the activity
                                 country:
                                   type: string
+                                  nullable: true
                                   description: Country of the activity
                                 admin_area_level_1:
                                   type: string
+                                  nullable: true
                                   description: Admin area level 1 (e.g. state) of the activity
                                 admin_area_level_2:
                                   type: string
+                                  nullable: true
                                   description: Admin area level 2 (e.g. county) of the activity
                                 locality:
                                   type: string
+                                  nullable: true
                                   description: Locality (e.g. city) of the activity
                                 sublocality:
                                   type: string
+                                  nullable: true
                                   description: Sublocality (e.g. neighborhood) of the activity
                                 route:
                                   type: string
+                                  nullable: true
                                   description: Route (e.g. street) of the activity
                                 street_number:
                                   type: string
+                                  nullable: true
                                   description: Street number of the activity
                                 subpremise:
                                   type: string
+                                  nullable: true
                                   description: Subpremise (e.g. apartment/suite number) of the activity
                                 postal_code:
                                   type: string
+                                  nullable: true
                                   description: Postal code of the activity
                             participants:
                               type: array
@@ -359,6 +377,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -416,6 +435,7 @@ paths:
       summary: Add a new activity
       description: Adds a new activity.
       x-token-cost: 5
+      x-tool-description: 'Adds a new activity. person_id is not accepted directly — set a person by including them in participants, e.g. participants: [{"person_id": 123, "primary": true}].'
       operationId: addActivity
       tags:
         - Activities
@@ -444,9 +464,6 @@ paths:
                 lead_id:
                   type: string
                   description: The ID of the lead linked to the activity
-                person_id:
-                  type: integer
-                  description: The ID of the person linked to the activity
                 org_id:
                   type: integer
                   description: The ID of the organization linked to the activity
@@ -504,7 +521,7 @@ paths:
                       description: Postal code of the activity
                 participants:
                   type: array
-                  description: The participants of the activity
+                  description: 'The participants of the activity. Use this to set the activity''s person — a primary participant (`primary: true`) sets `person_id` on the activity.'
                   items:
                     type: object
                     properties:
@@ -598,27 +615,34 @@ paths:
                             description: The last updated date and time of the activity
                           deal_id:
                             type: integer
+                            nullable: true
                             description: The ID of the deal linked to the activity
                           lead_id:
                             type: string
+                            nullable: true
                             description: The ID of the lead linked to the activity
                           person_id:
                             type: integer
+                            nullable: true
                             description: The ID of the person linked to the activity
                           org_id:
                             type: integer
+                            nullable: true
                             description: The ID of the organization linked to the activity
                           project_id:
                             type: integer
+                            nullable: true
                             description: The ID of the project linked to the activity
                           due_date:
                             type: string
                             description: The due date of the activity
                           due_time:
                             type: string
+                            nullable: true
                             description: The due time of the activity
                           duration:
                             type: string
+                            nullable: true
                             description: The duration of the activity
                           busy:
                             type: boolean
@@ -628,9 +652,11 @@ paths:
                             description: Whether the activity is marked as done or not
                           marked_as_done_time:
                             type: string
+                            nullable: true
                             description: The date and time when the activity was marked as done
                           location:
                             type: object
+                            nullable: true
                             description: Location of the activity
                             properties:
                               value:
@@ -638,30 +664,39 @@ paths:
                                 description: The full address of the activity
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the activity
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the activity
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the activity
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the activity
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the activity
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the activity
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the activity
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the activity
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the activity
                           participants:
                             type: array
@@ -885,27 +920,34 @@ paths:
                             description: The last updated date and time of the activity
                           deal_id:
                             type: integer
+                            nullable: true
                             description: The ID of the deal linked to the activity
                           lead_id:
                             type: string
+                            nullable: true
                             description: The ID of the lead linked to the activity
                           person_id:
                             type: integer
+                            nullable: true
                             description: The ID of the person linked to the activity
                           org_id:
                             type: integer
+                            nullable: true
                             description: The ID of the organization linked to the activity
                           project_id:
                             type: integer
+                            nullable: true
                             description: The ID of the project linked to the activity
                           due_date:
                             type: string
                             description: The due date of the activity
                           due_time:
                             type: string
+                            nullable: true
                             description: The due time of the activity
                           duration:
                             type: string
+                            nullable: true
                             description: The duration of the activity
                           busy:
                             type: boolean
@@ -915,9 +957,11 @@ paths:
                             description: Whether the activity is marked as done or not
                           marked_as_done_time:
                             type: string
+                            nullable: true
                             description: The date and time when the activity was marked as done
                           location:
                             type: object
+                            nullable: true
                             description: Location of the activity
                             properties:
                               value:
@@ -925,30 +969,39 @@ paths:
                                 description: The full address of the activity
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the activity
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the activity
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the activity
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the activity
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the activity
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the activity
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the activity
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the activity
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the activity
                           participants:
                             type: array
@@ -1062,6 +1115,7 @@ paths:
       summary: Update an activity
       description: Updates the properties of an activity.
       x-token-cost: 5
+      x-tool-description: 'Updates the properties of an activity. person_id is not accepted directly — set a person by including them in participants, e.g. participants: [{"person_id": 123, "primary": true}].'
       operationId: updateActivity
       tags:
         - Activities
@@ -1097,9 +1151,6 @@ paths:
                 lead_id:
                   type: string
                   description: The ID of the lead linked to the activity
-                person_id:
-                  type: integer
-                  description: The ID of the person linked to the activity
                 org_id:
                   type: integer
                   description: The ID of the organization linked to the activity
@@ -1157,7 +1208,7 @@ paths:
                       description: Postal code of the activity
                 participants:
                   type: array
-                  description: The participants of the activity
+                  description: 'The participants of the activity. Use this to set the activity''s person — a primary participant (`primary: true`) sets `person_id` on the activity.'
                   items:
                     type: object
                     properties:
@@ -1251,27 +1302,34 @@ paths:
                             description: The last updated date and time of the activity
                           deal_id:
                             type: integer
+                            nullable: true
                             description: The ID of the deal linked to the activity
                           lead_id:
                             type: string
+                            nullable: true
                             description: The ID of the lead linked to the activity
                           person_id:
                             type: integer
+                            nullable: true
                             description: The ID of the person linked to the activity
                           org_id:
                             type: integer
+                            nullable: true
                             description: The ID of the organization linked to the activity
                           project_id:
                             type: integer
+                            nullable: true
                             description: The ID of the project linked to the activity
                           due_date:
                             type: string
                             description: The due date of the activity
                           due_time:
                             type: string
+                            nullable: true
                             description: The due time of the activity
                           duration:
                             type: string
+                            nullable: true
                             description: The duration of the activity
                           busy:
                             type: boolean
@@ -1281,9 +1339,11 @@ paths:
                             description: Whether the activity is marked as done or not
                           marked_as_done_time:
                             type: string
+                            nullable: true
                             description: The date and time when the activity was marked as done
                           location:
                             type: object
+                            nullable: true
                             description: Location of the activity
                             properties:
                               value:
@@ -1291,30 +1351,39 @@ paths:
                                 description: The full address of the activity
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the activity
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the activity
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the activity
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the activity
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the activity
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the activity
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the activity
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the activity
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the activity
                           participants:
                             type: array
@@ -2022,6 +2091,7 @@ paths:
                               description: The creation date and time of the deal
                             update_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal
                             stage_change_time:
                               type: string
@@ -2126,6 +2196,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -2317,6 +2388,7 @@ paths:
                             description: The creation date and time of the deal
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal
                           stage_change_time:
                             type: string
@@ -2643,6 +2715,7 @@ paths:
                               description: The creation date and time of the deal
                             update_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the deal
                             stage_change_time:
                               type: string
@@ -2747,6 +2820,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -2947,6 +3021,7 @@ paths:
                             description: The creation date and time of the deal
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal
                           stage_change_time:
                             type: string
@@ -3238,6 +3313,7 @@ paths:
                             description: The creation date and time of the deal
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the deal
                           stage_change_time:
                             type: string
@@ -3447,6 +3523,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -3591,6 +3668,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -3849,6 +3927,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -3991,7 +4070,8 @@ paths:
                                       type: string
                                       description: The title of the deal
                                     value:
-                                      type: integer
+                                      type: number
+                                      nullable: true
                                       description: The value of the deal
                                     currency:
                                       type: string
@@ -4056,6 +4136,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -4279,6 +4360,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -5404,7 +5486,6 @@ paths:
       security:
         - api_key: []
         - oauth2:
-            - 'deals:read'
             - 'deals:full'
       parameters:
         - in: path
@@ -5504,7 +5585,6 @@ paths:
       security:
         - api_key: []
         - oauth2:
-            - 'deals:read'
             - 'deals:full'
       parameters:
         - in: path
@@ -5606,7 +5686,6 @@ paths:
       security:
         - api_key: []
         - oauth2:
-            - 'deals:read'
             - 'deals:full'
       parameters:
         - in: path
@@ -5760,7 +5839,6 @@ paths:
       security:
         - api_key: []
         - oauth2:
-            - 'deals:read'
             - 'deals:full'
       parameters:
         - in: path
@@ -5841,7 +5919,6 @@ paths:
       security:
         - api_key: []
         - oauth2:
-            - 'deals:read'
             - 'deals:full'
       parameters:
         - in: path
@@ -5923,7 +6000,6 @@ paths:
       security:
         - api_key: []
         - oauth2:
-            - 'deals:read'
             - 'deals:full'
       parameters:
         - in: path
@@ -7833,6 +7909,7 @@ paths:
                               description: The creation date and time of the person
                             update_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the person
                             emails:
                               type: array
@@ -7879,9 +7956,11 @@ paths:
                                 type: integer
                             picture_id:
                               type: integer
+                              nullable: true
                               description: The ID of the picture associated with the person
                             postal_address:
                               type: object
+                              nullable: true
                               title: PersonItemAddress
                               description: 'Postal address of the person, included if contact sync is enabled for the company'
                               properties:
@@ -7890,30 +7969,39 @@ paths:
                                   description: The full address of the person
                                 country:
                                   type: string
+                                  nullable: true
                                   description: Country of the person
                                 admin_area_level_1:
                                   type: string
+                                  nullable: true
                                   description: Admin area level 1 (e.g. state) of the person
                                 admin_area_level_2:
                                   type: string
+                                  nullable: true
                                   description: Admin area level 2 (e.g. county) of the person
                                 locality:
                                   type: string
+                                  nullable: true
                                   description: Locality (e.g. city) of the person
                                 sublocality:
                                   type: string
+                                  nullable: true
                                   description: Sublocality (e.g. neighborhood) of the person
                                 route:
                                   type: string
+                                  nullable: true
                                   description: Route (e.g. street) of the person
                                 street_number:
                                   type: string
+                                  nullable: true
                                   description: Street number of the person
                                 subpremise:
                                   type: string
+                                  nullable: true
                                   description: Subpremise (e.g. apartment/suite number) of the person
                                 postal_code:
                                   type: string
+                                  nullable: true
                                   description: Postal code of the person
                             notes:
                               type: string
@@ -7950,6 +8038,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -8009,8 +8098,9 @@ paths:
                   next_cursor: eyJmaWVsZCI6ImlkIiwiZmllbGRWYWx1ZSI6Nywic29ydERpcmVjdGlvbiI6ImFzYyIsImlkIjo3fQ
     post:
       summary: Add a new person
-      description: 'Adds a new person. <br>If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field. <br>The `im`, `postal_address`, `notes`, `birthday` and `job_title` fields don’t exist by default in Pipedrive and are only created when you set up your contact sync.'
+      description: 'Adds a new person. <br>If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field. <br>The `im`, `postal_address`, `notes`, `birthday` and `job_title` fields don''t exist by default in Pipedrive and are only created when you set up your contact sync — attempting to set any of them without contact sync enabled returns a 403.'
       x-token-cost: 5
+      x-tool-description: 'Creates a new contact person, requiring only a name. The im, postal_address, notes, birthday, and job_title fields are only accepted when contact sync is enabled for the company; otherwise the request returns 403. If the company uses the Campaigns product, this endpoint also accepts and returns the marketing_status field.'
       operationId: addPerson
       tags:
         - Persons
@@ -8023,6 +8113,8 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - name
               properties:
                 name:
                   type: string
@@ -8078,6 +8170,7 @@ paths:
                     type: integer
                 postal_address:
                   type: object
+                  nullable: true
                   title: PersonItemAddress
                   description: 'Postal address of the person, included if contact sync is enabled for the company'
                   properties:
@@ -8086,37 +8179,46 @@ paths:
                       description: The full address of the person
                     country:
                       type: string
+                      nullable: true
                       description: Country of the person
                     admin_area_level_1:
                       type: string
+                      nullable: true
                       description: Admin area level 1 (e.g. state) of the person
                     admin_area_level_2:
                       type: string
+                      nullable: true
                       description: Admin area level 2 (e.g. county) of the person
                     locality:
                       type: string
+                      nullable: true
                       description: Locality (e.g. city) of the person
                     sublocality:
                       type: string
+                      nullable: true
                       description: Sublocality (e.g. neighborhood) of the person
                     route:
                       type: string
+                      nullable: true
                       description: Route (e.g. street) of the person
                     street_number:
                       type: string
+                      nullable: true
                       description: Street number of the person
                     subpremise:
                       type: string
+                      nullable: true
                       description: Subpremise (e.g. apartment/suite number) of the person
                     postal_code:
                       type: string
+                      nullable: true
                       description: Postal code of the person
                 notes:
                   type: string
-                  description: 'Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company'
+                  description: 'Contact sync notes of the person, maximum 10 000 characters. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.'
                 im:
                   type: array
-                  description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
+                  description: The instant messaging accounts of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
                   items:
                     type: object
                     title: PersonItemIm
@@ -8132,10 +8234,10 @@ paths:
                         description: The instant messaging account classification label
                 birthday:
                   type: string
-                  description: 'The birthday of the person, included if contact sync is enabled for the company'
+                  description: The birthday of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
                 job_title:
                   type: string
-                  description: 'The job title of the person, included if contact sync is enabled for the company'
+                  description: The job title of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
                 marketing_status:
                   type: string
                   description: 'If the person does not have a valid email address, then the marketing status is **not set** and `no_consent` is returned for the `marketing_status` value when the new person is created. If the change is forbidden, the status will remain unchanged for every call that tries to modify the marketing status. Please be aware that it is only allowed **once** to change the marketing status from an old status to a new one.<table><tr><th>Value</th><th>Description</th></tr><tr><td>`no_consent`</td><td>The customer has not given consent to receive any marketing communications</td></tr><tr><td>`unsubscribed`</td><td>The customers have unsubscribed from ALL marketing communications</td></tr><tr><td>`subscribed`</td><td>The customers are subscribed and are counted towards marketing caps</td></tr><tr><td>`archived`</td><td>The customers with `subscribed` status can be moved to `archived` to save consent, but they are not paid for</td></tr></table>'
@@ -8192,6 +8294,7 @@ paths:
                             description: The creation date and time of the person
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the person
                           emails:
                             type: array
@@ -8238,9 +8341,11 @@ paths:
                               type: integer
                           picture_id:
                             type: integer
+                            nullable: true
                             description: The ID of the picture associated with the person
                           postal_address:
                             type: object
+                            nullable: true
                             title: PersonItemAddress
                             description: 'Postal address of the person, included if contact sync is enabled for the company'
                             properties:
@@ -8249,30 +8354,39 @@ paths:
                                 description: The full address of the person
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the person
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the person
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the person
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the person
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the person
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the person
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the person
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the person
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the person
                           notes:
                             type: string
@@ -8506,6 +8620,7 @@ paths:
                             description: The creation date and time of the person
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the person
                           emails:
                             type: array
@@ -8552,9 +8667,11 @@ paths:
                               type: integer
                           picture_id:
                             type: integer
+                            nullable: true
                             description: The ID of the picture associated with the person
                           postal_address:
                             type: object
+                            nullable: true
                             title: PersonItemAddress
                             description: 'Postal address of the person, included if contact sync is enabled for the company'
                             properties:
@@ -8563,30 +8680,39 @@ paths:
                                 description: The full address of the person
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the person
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the person
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the person
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the person
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the person
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the person
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the person
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the person
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the person
                           notes:
                             type: string
@@ -8673,8 +8799,9 @@ paths:
                     postal_code: '94085'
     patch:
       summary: Update a person
-      description: 'Updates the properties of a person. <br>If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field. <br>The `im`, `postal_address`, `notes`, `birthday` and `job_title` fields don’t exist by default in Pipedrive and are only created when you set up your contact sync.'
+      description: 'Updates the properties of a person. <br>If the company uses the [Campaigns product](https://pipedrive.readme.io/docs/campaigns-in-pipedrive-api), then this endpoint will also accept and return the `marketing_status` field. <br>The `im`, `postal_address`, `notes`, `birthday` and `job_title` fields don''t exist by default in Pipedrive and are only created when you set up your contact sync — attempting to set any of them without contact sync enabled returns a 403.'
       x-token-cost: 5
+      x-tool-description: 'Updates a contact person. The im, postal_address, notes, birthday, and job_title fields are only accepted when contact sync is enabled for the company; otherwise the request returns 403. If the company uses the Campaigns product, this endpoint also accepts and returns the marketing_status field.'
       operationId: updatePerson
       tags:
         - Persons
@@ -8746,6 +8873,7 @@ paths:
                     type: integer
                 postal_address:
                   type: object
+                  nullable: true
                   title: PersonItemAddress
                   description: 'Postal address of the person, included if contact sync is enabled for the company'
                   properties:
@@ -8754,37 +8882,46 @@ paths:
                       description: The full address of the person
                     country:
                       type: string
+                      nullable: true
                       description: Country of the person
                     admin_area_level_1:
                       type: string
+                      nullable: true
                       description: Admin area level 1 (e.g. state) of the person
                     admin_area_level_2:
                       type: string
+                      nullable: true
                       description: Admin area level 2 (e.g. county) of the person
                     locality:
                       type: string
+                      nullable: true
                       description: Locality (e.g. city) of the person
                     sublocality:
                       type: string
+                      nullable: true
                       description: Sublocality (e.g. neighborhood) of the person
                     route:
                       type: string
+                      nullable: true
                       description: Route (e.g. street) of the person
                     street_number:
                       type: string
+                      nullable: true
                       description: Street number of the person
                     subpremise:
                       type: string
+                      nullable: true
                       description: Subpremise (e.g. apartment/suite number) of the person
                     postal_code:
                       type: string
+                      nullable: true
                       description: Postal code of the person
                 notes:
                   type: string
-                  description: 'Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company'
+                  description: 'Contact sync notes of the person, maximum 10 000 characters. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.'
                 im:
                   type: array
-                  description: 'The instant messaging accounts of the person, included if contact sync is enabled for the company'
+                  description: The instant messaging accounts of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
                   items:
                     type: object
                     title: PersonItemIm
@@ -8800,10 +8937,10 @@ paths:
                         description: The instant messaging account classification label
                 birthday:
                   type: string
-                  description: 'The birthday of the person, included if contact sync is enabled for the company'
+                  description: The birthday of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
                 job_title:
                   type: string
-                  description: 'The job title of the person, included if contact sync is enabled for the company'
+                  description: The job title of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
                 marketing_status:
                   type: string
                   description: 'If the person does not have a valid email address, then the marketing status is **not set** and `no_consent` is returned for the `marketing_status` value when the new person is created. If the change is forbidden, the status will remain unchanged for every call that tries to modify the marketing status. Please be aware that it is only allowed **once** to change the marketing status from an old status to a new one.<table><tr><th>Value</th><th>Description</th></tr><tr><td>`no_consent`</td><td>The customer has not given consent to receive any marketing communications</td></tr><tr><td>`unsubscribed`</td><td>The customers have unsubscribed from ALL marketing communications</td></tr><tr><td>`subscribed`</td><td>The customers are subscribed and are counted towards marketing caps</td></tr><tr><td>`archived`</td><td>The customers with `subscribed` status can be moved to `archived` to save consent, but they are not paid for</td></tr></table>'
@@ -8860,6 +8997,7 @@ paths:
                             description: The creation date and time of the person
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the person
                           emails:
                             type: array
@@ -8906,9 +9044,11 @@ paths:
                               type: integer
                           picture_id:
                             type: integer
+                            nullable: true
                             description: The ID of the picture associated with the person
                           postal_address:
                             type: object
+                            nullable: true
                             title: PersonItemAddress
                             description: 'Postal address of the person, included if contact sync is enabled for the company'
                             properties:
@@ -8917,30 +9057,39 @@ paths:
                                 description: The full address of the person
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the person
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the person
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the person
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the person
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the person
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the person
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the person
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the person
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the person
                           notes:
                             type: string
@@ -9092,6 +9241,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -9234,6 +9384,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -10835,6 +10986,7 @@ paths:
                               description: The creation date and time of the organization
                             update_time:
                               type: string
+                              nullable: true
                               description: The last updated date and time of the organization
                             is_deleted:
                               type: boolean
@@ -10844,6 +10996,7 @@ paths:
                               description: The visibility of the organization
                             address:
                               type: object
+                              nullable: true
                               title: OrganizationItemAddress
                               description: The address of the organization
                               properties:
@@ -10852,30 +11005,39 @@ paths:
                                   description: The full address of the organization
                                 country:
                                   type: string
+                                  nullable: true
                                   description: Country of the organization
                                 admin_area_level_1:
                                   type: string
+                                  nullable: true
                                   description: Admin area level 1 (e.g. state) of the organization
                                 admin_area_level_2:
                                   type: string
+                                  nullable: true
                                   description: Admin area level 2 (e.g. county) of the organization
                                 locality:
                                   type: string
+                                  nullable: true
                                   description: Locality (e.g. city) of the organization
                                 sublocality:
                                   type: string
+                                  nullable: true
                                   description: Sublocality (e.g. neighborhood) of the organization
                                 route:
                                   type: string
+                                  nullable: true
                                   description: Route (e.g. street) of the organization
                                 street_number:
                                   type: string
+                                  nullable: true
                                   description: Street number of the organization
                                 subpremise:
                                   type: string
+                                  nullable: true
                                   description: Subpremise (e.g. apartment/suite number) of the organization
                                 postal_code:
                                   type: string
+                                  nullable: true
                                   description: Postal code of the organization
                             label_ids:
                               type: array
@@ -10912,6 +11074,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -10985,6 +11148,7 @@ paths:
                     type: integer
                 address:
                   type: object
+                  nullable: true
                   title: OrganizationItemAddress
                   description: The address of the organization
                   properties:
@@ -10993,30 +11157,39 @@ paths:
                       description: The full address of the organization
                     country:
                       type: string
+                      nullable: true
                       description: Country of the organization
                     admin_area_level_1:
                       type: string
+                      nullable: true
                       description: Admin area level 1 (e.g. state) of the organization
                     admin_area_level_2:
                       type: string
+                      nullable: true
                       description: Admin area level 2 (e.g. county) of the organization
                     locality:
                       type: string
+                      nullable: true
                       description: Locality (e.g. city) of the organization
                     sublocality:
                       type: string
+                      nullable: true
                       description: Sublocality (e.g. neighborhood) of the organization
                     route:
                       type: string
+                      nullable: true
                       description: Route (e.g. street) of the organization
                     street_number:
                       type: string
+                      nullable: true
                       description: Street number of the organization
                     subpremise:
                       type: string
+                      nullable: true
                       description: Subpremise (e.g. apartment/suite number) of the organization
                     postal_code:
                       type: string
+                      nullable: true
                       description: Postal code of the organization
                 website:
                   type: string
@@ -11077,6 +11250,7 @@ paths:
                             description: The creation date and time of the organization
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the organization
                           is_deleted:
                             type: boolean
@@ -11086,6 +11260,7 @@ paths:
                             description: The visibility of the organization
                           address:
                             type: object
+                            nullable: true
                             title: OrganizationItemAddress
                             description: The address of the organization
                             properties:
@@ -11094,30 +11269,39 @@ paths:
                                 description: The full address of the organization
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the organization
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the organization
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the organization
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the organization
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the organization
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the organization
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the organization
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the organization
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the organization
                           label_ids:
                             type: array
@@ -11315,6 +11499,7 @@ paths:
                             description: The creation date and time of the organization
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the organization
                           is_deleted:
                             type: boolean
@@ -11324,6 +11509,7 @@ paths:
                             description: The visibility of the organization
                           address:
                             type: object
+                            nullable: true
                             title: OrganizationItemAddress
                             description: The address of the organization
                             properties:
@@ -11332,30 +11518,39 @@ paths:
                                 description: The full address of the organization
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the organization
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the organization
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the organization
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the organization
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the organization
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the organization
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the organization
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the organization
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the organization
                           label_ids:
                             type: array
@@ -11458,6 +11653,7 @@ paths:
                     type: integer
                 address:
                   type: object
+                  nullable: true
                   title: OrganizationItemAddress
                   description: The address of the organization
                   properties:
@@ -11466,30 +11662,39 @@ paths:
                       description: The full address of the organization
                     country:
                       type: string
+                      nullable: true
                       description: Country of the organization
                     admin_area_level_1:
                       type: string
+                      nullable: true
                       description: Admin area level 1 (e.g. state) of the organization
                     admin_area_level_2:
                       type: string
+                      nullable: true
                       description: Admin area level 2 (e.g. county) of the organization
                     locality:
                       type: string
+                      nullable: true
                       description: Locality (e.g. city) of the organization
                     sublocality:
                       type: string
+                      nullable: true
                       description: Sublocality (e.g. neighborhood) of the organization
                     route:
                       type: string
+                      nullable: true
                       description: Route (e.g. street) of the organization
                     street_number:
                       type: string
+                      nullable: true
                       description: Street number of the organization
                     subpremise:
                       type: string
+                      nullable: true
                       description: Subpremise (e.g. apartment/suite number) of the organization
                     postal_code:
                       type: string
+                      nullable: true
                       description: Postal code of the organization
                 website:
                   type: string
@@ -11550,6 +11755,7 @@ paths:
                             description: The creation date and time of the organization
                           update_time:
                             type: string
+                            nullable: true
                             description: The last updated date and time of the organization
                           is_deleted:
                             type: boolean
@@ -11559,6 +11765,7 @@ paths:
                             description: The visibility of the organization
                           address:
                             type: object
+                            nullable: true
                             title: OrganizationItemAddress
                             description: The address of the organization
                             properties:
@@ -11567,30 +11774,39 @@ paths:
                                 description: The full address of the organization
                               country:
                                 type: string
+                                nullable: true
                                 description: Country of the organization
                               admin_area_level_1:
                                 type: string
+                                nullable: true
                                 description: Admin area level 1 (e.g. state) of the organization
                               admin_area_level_2:
                                 type: string
+                                nullable: true
                                 description: Admin area level 2 (e.g. county) of the organization
                               locality:
                                 type: string
+                                nullable: true
                                 description: Locality (e.g. city) of the organization
                               sublocality:
                                 type: string
+                                nullable: true
                                 description: Sublocality (e.g. neighborhood) of the organization
                               route:
                                 type: string
+                                nullable: true
                                 description: Route (e.g. street) of the organization
                               street_number:
                                 type: string
+                                nullable: true
                                 description: Street number of the organization
                               subpremise:
                                 type: string
+                                nullable: true
                                 description: Subpremise (e.g. apartment/suite number) of the organization
                               postal_code:
                                 type: string
+                                nullable: true
                                 description: Postal code of the organization
                           label_ids:
                             type: array
@@ -11720,6 +11936,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -11862,6 +12079,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -13627,6 +13845,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -14030,6 +14249,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -14172,6 +14392,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -14324,7 +14545,8 @@ paths:
                                       type: string
                                       description: The name of the product
                                     code:
-                                      type: integer
+                                      type: string
+                                      nullable: true
                                       description: The code of the product
                                     visible_to:
                                       type: integer
@@ -14346,6 +14568,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -14356,7 +14579,7 @@ paths:
                         id: 1
                         type: product
                         name: Some product
-                        code: 123
+                        code: '123'
                         visible_to: 3
                         owner:
                           id: 1
@@ -15160,6 +15383,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -16799,6 +17023,7 @@ paths:
                                           description: The ID of the owner of the lead
                                     person:
                                       type: object
+                                      nullable: true
                                       properties:
                                         id:
                                           type: integer
@@ -16851,6 +17076,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -17175,6 +17401,7 @@ paths:
                                       description: The name of the organization
                                     address:
                                       type: string
+                                      nullable: true
                                       description: The address of the organization
                                     visible_to:
                                       type: integer
@@ -17201,6 +17428,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -17364,6 +17592,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -17520,6 +17749,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -17733,6 +17963,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -17844,6 +18075,7 @@ paths:
                           description: The stage creation time
                         update_time:
                           type: string
+                          nullable: true
                           description: The stage update time
                   additional_data:
                     type: object
@@ -17851,6 +18083,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -17950,6 +18183,7 @@ paths:
                         description: The stage creation time
                       update_time:
                         type: string
+                        nullable: true
                         description: The stage update time
                     description: The stage object
               example:
@@ -18072,6 +18306,7 @@ paths:
                         description: The stage creation time
                       update_time:
                         type: string
+                        nullable: true
                         description: The stage update time
                     description: The stage object
               example:
@@ -18174,6 +18409,7 @@ paths:
                         description: The stage creation time
                       update_time:
                         type: string
+                        nullable: true
                         description: The stage update time
                     description: The stage object
               example:
@@ -18285,6 +18521,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -19914,6 +20151,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -20278,6 +20516,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -20752,6 +20991,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -21025,6 +21265,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -21314,6 +21555,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -21476,6 +21718,7 @@ paths:
                     properties:
                       next_cursor:
                         type: string
+                        nullable: true
                         description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -22706,6 +22949,7 @@ paths:
                         properties:
                           next_cursor:
                             type: string
+                            nullable: true
                             description: The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
               example:
                 success: true
@@ -22745,27 +22989,34 @@ components:
           description: The last updated date and time of the activity
         deal_id:
           type: integer
+          nullable: true
           description: The ID of the deal linked to the activity
         lead_id:
           type: string
+          nullable: true
           description: The ID of the lead linked to the activity
         person_id:
           type: integer
+          nullable: true
           description: The ID of the person linked to the activity
         org_id:
           type: integer
+          nullable: true
           description: The ID of the organization linked to the activity
         project_id:
           type: integer
+          nullable: true
           description: The ID of the project linked to the activity
         due_date:
           type: string
           description: The due date of the activity
         due_time:
           type: string
+          nullable: true
           description: The due time of the activity
         duration:
           type: string
+          nullable: true
           description: The duration of the activity
         busy:
           type: boolean
@@ -22775,9 +23026,11 @@ components:
           description: Whether the activity is marked as done or not
         marked_as_done_time:
           type: string
+          nullable: true
           description: The date and time when the activity was marked as done
         location:
           type: object
+          nullable: true
           description: Location of the activity
           properties:
             value:
@@ -22785,30 +23038,39 @@ components:
               description: The full address of the activity
             country:
               type: string
+              nullable: true
               description: Country of the activity
             admin_area_level_1:
               type: string
+              nullable: true
               description: Admin area level 1 (e.g. state) of the activity
             admin_area_level_2:
               type: string
+              nullable: true
               description: Admin area level 2 (e.g. county) of the activity
             locality:
               type: string
+              nullable: true
               description: Locality (e.g. city) of the activity
             sublocality:
               type: string
+              nullable: true
               description: Sublocality (e.g. neighborhood) of the activity
             route:
               type: string
+              nullable: true
               description: Route (e.g. street) of the activity
             street_number:
               type: string
+              nullable: true
               description: Street number of the activity
             subpremise:
               type: string
+              nullable: true
               description: Subpremise (e.g. apartment/suite number) of the activity
             postal_code:
               type: string
+              nullable: true
               description: Postal code of the activity
         participants:
           type: array
@@ -22905,6 +23167,7 @@ components:
           description: The creation date and time of the deal
         update_time:
           type: string
+          nullable: true
           description: The last updated date and time of the deal
         stage_change_time:
           type: string
@@ -23029,6 +23292,7 @@ components:
           description: The creation date and time of the organization
         update_time:
           type: string
+          nullable: true
           description: The last updated date and time of the organization
         is_deleted:
           type: boolean
@@ -23038,6 +23302,7 @@ components:
           description: The visibility of the organization
         address:
           type: object
+          nullable: true
           title: OrganizationItemAddress
           description: The address of the organization
           properties:
@@ -23046,30 +23311,39 @@ components:
               description: The full address of the organization
             country:
               type: string
+              nullable: true
               description: Country of the organization
             admin_area_level_1:
               type: string
+              nullable: true
               description: Admin area level 1 (e.g. state) of the organization
             admin_area_level_2:
               type: string
+              nullable: true
               description: Admin area level 2 (e.g. county) of the organization
             locality:
               type: string
+              nullable: true
               description: Locality (e.g. city) of the organization
             sublocality:
               type: string
+              nullable: true
               description: Sublocality (e.g. neighborhood) of the organization
             route:
               type: string
+              nullable: true
               description: Route (e.g. street) of the organization
             street_number:
               type: string
+              nullable: true
               description: Street number of the organization
             subpremise:
               type: string
+              nullable: true
               description: Subpremise (e.g. apartment/suite number) of the organization
             postal_code:
               type: string
+              nullable: true
               description: Postal code of the organization
         label_ids:
           type: array
@@ -23126,6 +23400,7 @@ components:
           description: The creation date and time of the person
         update_time:
           type: string
+          nullable: true
           description: The last updated date and time of the person
         emails:
           type: array
@@ -23172,9 +23447,11 @@ components:
             type: integer
         picture_id:
           type: integer
+          nullable: true
           description: The ID of the picture associated with the person
         postal_address:
           type: object
+          nullable: true
           title: PersonItemAddress
           description: 'Postal address of the person, included if contact sync is enabled for the company'
           properties:
@@ -23183,30 +23460,39 @@ components:
               description: The full address of the person
             country:
               type: string
+              nullable: true
               description: Country of the person
             admin_area_level_1:
               type: string
+              nullable: true
               description: Admin area level 1 (e.g. state) of the person
             admin_area_level_2:
               type: string
+              nullable: true
               description: Admin area level 2 (e.g. county) of the person
             locality:
               type: string
+              nullable: true
               description: Locality (e.g. city) of the person
             sublocality:
               type: string
+              nullable: true
               description: Sublocality (e.g. neighborhood) of the person
             route:
               type: string
+              nullable: true
               description: Route (e.g. street) of the person
             street_number:
               type: string
+              nullable: true
               description: Street number of the person
             subpremise:
               type: string
+              nullable: true
               description: Subpremise (e.g. apartment/suite number) of the person
             postal_code:
               type: string
+              nullable: true
               description: Postal code of the person
         notes:
           type: string
