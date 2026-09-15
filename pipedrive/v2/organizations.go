@@ -228,7 +228,7 @@ type getOrganizationFollowersChangelogOptions struct {
 type organizationPayload struct {
 	name          *string
 	ownerID       *UserID
-	address       *OrganizationAddress
+	address       nullableValue[OrganizationAddress]
 	labelIDs      optionalSlice[int]
 	visibleTo     *int
 	website       nullableValue[string]
@@ -380,7 +380,14 @@ func WithOrganizationOwnerID(id UserID) OrganizationOption {
 
 func WithOrganizationAddress(address OrganizationAddress) OrganizationOption {
 	return organizationFieldOption(func(payload *organizationPayload) {
-		payload.address = &address
+		payload.address.assign(address)
+	})
+}
+
+// ClearOrganizationAddress sends an explicit JSON null address.
+func ClearOrganizationAddress() OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.address.clear()
 	})
 }
 
@@ -1195,8 +1202,8 @@ func (p organizationPayload) toMap() map[string]interface{} {
 	if p.ownerID != nil {
 		body["owner_id"] = int(*p.ownerID)
 	}
-	if p.address != nil {
-		body["address"] = p.address
+	if p.address.set {
+		body["address"] = p.address.mapValue()
 	}
 	if p.labelIDs.set {
 		body["label_ids"] = p.labelIDs.value

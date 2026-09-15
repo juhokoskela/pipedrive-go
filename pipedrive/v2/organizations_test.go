@@ -721,3 +721,56 @@ func TestOrganizationsService_Delete(t *testing.T) {
 		t.Fatalf("unexpected result: %#v", result)
 	}
 }
+
+func TestOrganizationsService_AddressRequests(t *testing.T) {
+	t.Parallel()
+	address := OrganizationAddress{Value: "Main Street 1", Country: "FI"}
+	for _, method := range []string{http.MethodPost, http.MethodPatch} {
+		for _, tt := range []struct {
+			name string
+			opts []OrganizationOption
+			want string
+		}{
+			{name: "omitted"},
+			{name: "empty object", opts: []OrganizationOption{WithOrganizationAddress(OrganizationAddress{})}, want: `{}`},
+			{name: "value", opts: []OrganizationOption{WithOrganizationAddress(address)}, want: `{"value":"Main Street 1","country":"FI"}`},
+			{name: "clear", opts: []OrganizationOption{ClearOrganizationAddress()}, want: `null`},
+			{name: "clear after value", opts: []OrganizationOption{WithOrganizationAddress(address), ClearOrganizationAddress()}, want: `null`},
+			{name: "value after clear", opts: []OrganizationOption{ClearOrganizationAddress(), WithOrganizationAddress(address)}, want: `{"value":"Main Street 1","country":"FI"}`},
+		} {
+			t.Run(method+"/"+tt.name, func(t *testing.T) {
+				client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+					if r.Method != method {
+						t.Errorf("method = %s, want %s", r.Method, method)
+					}
+					var body map[string]json.RawMessage
+					if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+						t.Error(err)
+					}
+					if got := string(body["address"]); got != tt.want {
+						t.Errorf("address = %s, want %s", got, tt.want)
+					}
+					w.Header().Set("Content-Type", "application/json")
+					_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+				})
+				var err error
+				if method == http.MethodPost {
+					opts := []CreateOrganizationOption{WithOrganizationName("Contact")}
+					for _, opt := range tt.opts {
+						opts = append(opts, opt)
+					}
+					_, err = client.Organizations.Create(t.Context(), opts...)
+				} else {
+					opts := []UpdateOrganizationOption{WithOrganizationName("Contact")}
+					for _, opt := range tt.opts {
+						opts = append(opts, opt)
+					}
+					_, err = client.Organizations.Update(t.Context(), 1, opts...)
+				}
+				if err != nil {
+					t.Fatal(err)
+				}
+			})
+		}
+	}
+}

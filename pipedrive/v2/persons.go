@@ -276,7 +276,7 @@ type personPayload struct {
 	orgID           *OrganizationID
 	emails          optionalSlice[LabeledValue]
 	phones          optionalSlice[LabeledValue]
-	postalAddress   *PersonAddress
+	postalAddress   nullableValue[PersonAddress]
 	notes           *string
 	im              optionalSlice[LabeledValue]
 	birthday        *string
@@ -418,6 +418,7 @@ func WithPersonCustomFields(fields ...string) GetPersonOption {
 	})
 }
 
+// WithPersonName sets the person's name. Required when creating a person.
 func WithPersonName(name string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.name = &name
@@ -448,30 +449,48 @@ func WithPersonPhones(phones ...LabeledValue) PersonOption {
 	})
 }
 
+// WithPersonPostalAddress sets the postal address. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonPostalAddress(address PersonAddress) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
-		payload.postalAddress = &address
+		payload.postalAddress.assign(address)
 	})
 }
 
+// ClearPersonPostalAddress sends an explicit JSON null postal address.
+// Requires contact sync; Pipedrive returns 403 when contact sync is disabled.
+func ClearPersonPostalAddress() PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.postalAddress.clear()
+	})
+}
+
+// WithPersonNotes sets contact sync notes. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonNotes(notes string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.notes = &notes
 	})
 }
 
+// WithPersonIM sets instant messaging accounts. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonIM(accounts ...LabeledValue) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.im.append(accounts...)
 	})
 }
 
+// WithPersonBirthday sets the birthday. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonBirthday(birthday string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.birthday = &birthday
 	})
 }
 
+// WithPersonJobTitle sets the job title. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonJobTitle(title string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.jobTitle = &title
@@ -1310,8 +1329,8 @@ func (p personPayload) toMap() map[string]interface{} {
 	if p.phones.set {
 		body["phones"] = p.phones.value
 	}
-	if p.postalAddress != nil {
-		body["postal_address"] = p.postalAddress
+	if p.postalAddress.set {
+		body["postal_address"] = p.postalAddress.mapValue()
 	}
 	if p.notes != nil {
 		body["notes"] = *p.notes
