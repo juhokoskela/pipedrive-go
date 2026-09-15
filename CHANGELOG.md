@@ -7,6 +7,23 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+### Added
+
+- Add `ClearOrganizationAddress` and `ClearPersonPostalAddress` to send explicit
+  JSON null addresses while preserving omission for unset fields.
+
+### Fixed
+
+- Make `WithActivityPersonID` select the primary participant in activity create
+  and update requests. It overrides supplied primary flags, preserves other
+  participants supplied in the request, and no longer sends top-level `person_id`.
+
+### Changed
+
+- Refresh upstream OpenAPI specifications and internal clients for the
+  September 14 drift, including nullable fields and corrected search result types.
+- Document the required person name and contact sync requirements for person fields.
+
 ## [1.14.0] - 2026-09-09
 
 ### Added
