@@ -843,7 +843,7 @@ type GetActivitiesParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only activities owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -876,7 +876,7 @@ type GetActivitiesParams struct {
 	SortDirection *GetActivitiesParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetActivitiesParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivitiesParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1011,7 +1011,7 @@ type AddActivityJSONBody struct {
 // GetActivityParams defines parameters for GetActivity.
 type GetActivityParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetActivityParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivityParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetActivityParamsIncludeFields defines parameters for GetActivity.
@@ -1134,7 +1134,7 @@ type UpdateActivityJSONBody struct {
 // GetActivityFieldsParams defines parameters for GetActivityFields.
 type GetActivityFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetActivityFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivityFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1149,7 +1149,7 @@ type GetActivityFieldsParamsIncludeFields string
 // GetActivityFieldParams defines parameters for GetActivityField.
 type GetActivityFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetActivityFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivityFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetActivityFieldParamsIncludeFields defines parameters for GetActivityField.
@@ -3162,7 +3162,7 @@ type UpdatePipelineJSONBody struct {
 // GetProductFieldsParams defines parameters for GetProductFields.
 type GetProductFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetProductFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetProductFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -3208,7 +3208,7 @@ type AddProductFieldJSONBody_UiVisibility struct {
 // GetProductFieldParams defines parameters for GetProductField.
 type GetProductFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetProductFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetProductFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetProductFieldParamsIncludeFields defines parameters for GetProductField.
@@ -3260,7 +3260,10 @@ type GetProductsParams struct {
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+
+	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// FilterId The ID of the filter to use
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
@@ -3279,9 +3282,6 @@ type GetProductsParams struct {
 
 	// UpdatedSince If set, only products with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.
 	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
-
-	// CustomFields Comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for a smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 }
 
 // GetProductsParamsSortBy defines parameters for GetProducts.
@@ -9794,7 +9794,7 @@ func NewGetActivitiesRequest(server string, params *GetActivitiesParams) (*http.
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -9970,7 +9970,7 @@ func NewGetActivitiesRequest(server string, params *GetActivitiesParams) (*http.
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10132,7 +10132,7 @@ func NewGetActivityRequest(server string, id int, params *GetActivityParams) (*h
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10228,7 +10228,7 @@ func NewGetActivityFieldsRequest(server string, params *GetActivityFieldsParams)
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10316,7 +10316,7 @@ func NewGetActivityFieldRequest(server string, fieldCode string, params *GetActi
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -16627,7 +16627,7 @@ func NewGetProductFieldsRequest(server string, params *GetProductFieldsParams) (
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -16789,7 +16789,7 @@ func NewGetProductFieldRequest(server string, fieldCode string, params *GetProdu
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -17042,7 +17042,23 @@ func NewGetProductsRequest(server string, params *GetProductsParams) (*http.Requ
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CustomFields != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -17139,22 +17155,6 @@ func NewGetProductsRequest(server string, params *GetProductsParams) (*http.Requ
 		if params.UpdatedSince != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_since", runtime.ParamLocationQuery, *params.UpdatedSince); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.CustomFields != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err

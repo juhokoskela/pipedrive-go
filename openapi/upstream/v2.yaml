@@ -101,7 +101,13 @@ paths:
           name: ids
           description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
-            type: string
+            type: array
+            uniqueItems: true
+            maxItems: 100
+            items:
+              type: string
+          style: form
+          explode: false
         - in: query
           name: owner_id
           schema:
@@ -166,9 +172,14 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional fields to include
           schema:
-            type: string
-            enum:
-              - attendees
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - attendees
+          style: form
+          explode: false
         - in: query
           name: limit
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
@@ -870,9 +881,14 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional fields to include
           schema:
-            type: string
-            enum:
-              - attendees
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - attendees
+          style: form
+          explode: false
       responses:
         '200':
           description: Get activity
@@ -1510,9 +1526,14 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional data namespaces to include in response
           schema:
-            type: string
-            enum:
-              - ui_visibility
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - ui_visibility
+          style: form
+          explode: false
         - in: query
           name: limit
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
@@ -1755,9 +1776,14 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional data namespaces to include in response
           schema:
-            type: string
-            enum:
-              - ui_visibility
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - ui_visibility
+          style: form
+          explode: false
       responses:
         '200':
           description: Get one activity field
@@ -13649,7 +13675,24 @@ paths:
           name: ids
           description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
-            type: string
+            type: array
+            uniqueItems: true
+            maxItems: 100
+            items:
+              type: string
+          style: form
+          explode: false
+        - in: query
+          name: custom_fields
+          description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
+          schema:
+            type: array
+            uniqueItems: true
+            maxItems: 15
+            items:
+              type: string
+          style: form
+          explode: false
         - in: query
           name: filter_id
           schema:
@@ -13692,11 +13735,6 @@ paths:
           schema:
             type: string
           description: 'If set, only products with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.'
-        - in: query
-          name: custom_fields
-          description: 'Comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for a smaller response.<br/>A maximum of 15 keys is allowed.'
-          schema:
-            type: string
       responses:
         '200':
           description: List of products
@@ -15861,9 +15899,14 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional data namespaces to include in response
           schema:
-            type: string
-            enum:
-              - ui_visibility
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - ui_visibility
+          style: form
+          explode: false
         - in: query
           name: limit
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
@@ -16301,9 +16344,14 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional data namespaces to include in response
           schema:
-            type: string
-            enum:
-              - ui_visibility
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - ui_visibility
+          style: form
+          explode: false
       responses:
         '200':
           description: Get one product field

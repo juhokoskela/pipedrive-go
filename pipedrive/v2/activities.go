@@ -226,12 +226,11 @@ func WithActivityRequestOptions(opts ...pipedrive.RequestOption) ActivityRequest
 
 func WithActivityIncludeFields(fields ...ActivityIncludeField) GetActivityOption {
 	return getActivityOptionFunc(func(cfg *getActivityOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetActivityParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetActivityParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -443,22 +442,21 @@ func WithActivitiesSortDirection(direction SortDirection) ListActivitiesOption {
 
 func WithActivitiesIncludeFields(fields ...ActivityIncludeField) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetActivitiesParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetActivitiesParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
 func WithActivitiesIDs(ids ...ActivityID) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 

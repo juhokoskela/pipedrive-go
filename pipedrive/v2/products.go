@@ -535,11 +535,11 @@ func WithProductsOwnerID(id UserID) ListProductsOption {
 
 func WithProductsIDs(ids ...ProductID) ListProductsOption {
 	return listProductsOptionFunc(func(cfg *listProductsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 
@@ -596,11 +596,11 @@ func WithProductsCustomFields(fields ...string) ListProductsOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 

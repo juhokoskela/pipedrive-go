@@ -66,23 +66,21 @@ func WithActivityFieldRequestOptions(opts ...pipedrive.RequestOption) ActivityFi
 
 func WithActivityFieldIncludeFields(fields ...FieldIncludeField) GetActivityFieldOption {
 	return getActivityFieldOptionFunc(func(cfg *getActivityFieldOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetActivityFieldParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetActivityFieldParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
 func WithActivityFieldsIncludeFields(fields ...FieldIncludeField) ListActivityFieldsOption {
 	return listActivityFieldsOptionFunc(func(cfg *listActivityFieldsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetActivityFieldsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetActivityFieldsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
