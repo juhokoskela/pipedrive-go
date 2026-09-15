@@ -58,17 +58,17 @@ func formatTime(t time.Time) string {
 }
 
 func joinCSV[T ~string](values []T) string {
-	if len(values) == 0 {
-		return ""
-	}
-	out := make([]string, 0, len(values))
-	for _, v := range values {
-		if v == "" {
-			continue
+	return strings.Join(queryValues[string](values), ",")
+}
+
+func queryValues[To, From ~string](values []From) []To {
+	out := make([]To, 0, len(values))
+	for _, value := range values {
+		if value != "" {
+			out = append(out, To(value))
 		}
-		out = append(out, string(v))
 	}
-	return strings.Join(out, ",")
+	return out
 }
 
 // validatePathParam rejects identifier values that URL resolution would
@@ -134,12 +134,13 @@ func validateCSVValues(values []string, label string) error {
 }
 
 func joinIDs[T ~int64](ids []T) string {
-	if len(ids) == 0 {
-		return ""
-	}
+	return strings.Join(stringIDs(ids), ",")
+}
+
+func stringIDs[T ~int64](ids []T) []string {
 	out := make([]string, 0, len(ids))
 	for _, id := range ids {
 		out = append(out, strconv.FormatInt(int64(id), 10))
 	}
-	return strings.Join(out, ",")
+	return out
 }
