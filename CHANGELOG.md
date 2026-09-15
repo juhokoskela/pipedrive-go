@@ -24,6 +24,8 @@ Semantic Versioning.
   fields, corrected search result types, and array query parameters. Existing
   public options retain comma-separated query encoding and omit empty inputs.
 - Document the required person name and contact sync requirements for person fields.
+- Bump the preferred Go toolchain, CI, and drift checks to Go 1.27.1 while
+  retaining Go 1.25 compatibility. Update golangci-lint and gosec for Go 1.27 support.
 
 ## [1.14.0] - 2026-09-09
 
