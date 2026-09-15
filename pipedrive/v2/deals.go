@@ -831,11 +831,11 @@ func WithDealsFilterID(id int) ListDealsOption {
 
 func WithDealsIDs(ids ...DealID) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 
@@ -915,12 +915,11 @@ func WithDealsSortDirection(direction SortDirection) ListDealsOption {
 
 func WithDealsIncludeFields(fields ...DealIncludeField) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetDealsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetDealsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -944,11 +943,11 @@ func WithDealsCustomFields(fields ...string) ListDealsOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
@@ -978,11 +977,11 @@ func WithArchivedDealsFilterID(id int) ListArchivedDealsOption {
 
 func WithArchivedDealsIDs(ids ...DealID) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 
@@ -1062,12 +1061,11 @@ func WithArchivedDealsSortDirection(direction SortDirection) ListArchivedDealsOp
 
 func WithArchivedDealsIncludeFields(fields ...DealIncludeField) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetArchivedDealsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetArchivedDealsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -1079,11 +1077,11 @@ func WithArchivedDealsCustomFields(fields ...string) ListArchivedDealsOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
@@ -1107,12 +1105,11 @@ func WithArchivedDealsCursor(cursor string) ListArchivedDealsOption {
 
 func WithDealIncludeFields(fields ...DealIncludeField) GetDealOption {
 	return getDealOptionFunc(func(cfg *getDealOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetDealParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetDealParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -1136,11 +1133,11 @@ func WithDealCustomFields(fields ...string) GetDealOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 

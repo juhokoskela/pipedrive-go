@@ -162,23 +162,21 @@ func WithDealFieldRequestOptions(opts ...pipedrive.RequestOption) DealFieldReque
 
 func WithDealFieldIncludeFields(fields ...FieldIncludeField) GetDealFieldOption {
 	return getDealFieldOptionFunc(func(cfg *getDealFieldOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetDealFieldParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetDealFieldParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
 func WithDealFieldsIncludeFields(fields ...FieldIncludeField) ListDealFieldsOption {
 	return listDealFieldsOptionFunc(func(cfg *listDealFieldsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetDealFieldsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetDealFieldsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 

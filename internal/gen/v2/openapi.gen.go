@@ -59,13 +59,9 @@ const (
 
 // Defines values for GetDealFieldsParamsIncludeFields.
 const (
-	GetDealFieldsParamsIncludeFieldsImportantFields                           GetDealFieldsParamsIncludeFields = "important_fields"
-	GetDealFieldsParamsIncludeFieldsImportantFieldsrequiredFields             GetDealFieldsParamsIncludeFields = "important_fields,required_fields"
-	GetDealFieldsParamsIncludeFieldsRequiredFields                            GetDealFieldsParamsIncludeFields = "required_fields"
-	GetDealFieldsParamsIncludeFieldsUiVisibility                              GetDealFieldsParamsIncludeFields = "ui_visibility"
-	GetDealFieldsParamsIncludeFieldsUiVisibilityimportantFields               GetDealFieldsParamsIncludeFields = "ui_visibility,important_fields"
-	GetDealFieldsParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetDealFieldsParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetDealFieldsParamsIncludeFieldsUiVisibilityrequiredFields                GetDealFieldsParamsIncludeFields = "ui_visibility,required_fields"
+	GetDealFieldsParamsIncludeFieldsImportantFields GetDealFieldsParamsIncludeFields = "important_fields"
+	GetDealFieldsParamsIncludeFieldsRequiredFields  GetDealFieldsParamsIncludeFields = "required_fields"
+	GetDealFieldsParamsIncludeFieldsUiVisibility    GetDealFieldsParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for AddDealFieldJSONBodyFieldType.
@@ -96,13 +92,9 @@ const (
 
 // Defines values for GetDealFieldParamsIncludeFields.
 const (
-	GetDealFieldParamsIncludeFieldsImportantFields                           GetDealFieldParamsIncludeFields = "important_fields"
-	GetDealFieldParamsIncludeFieldsImportantFieldsrequiredFields             GetDealFieldParamsIncludeFields = "important_fields,required_fields"
-	GetDealFieldParamsIncludeFieldsRequiredFields                            GetDealFieldParamsIncludeFields = "required_fields"
-	GetDealFieldParamsIncludeFieldsUiVisibility                              GetDealFieldParamsIncludeFields = "ui_visibility"
-	GetDealFieldParamsIncludeFieldsUiVisibilityimportantFields               GetDealFieldParamsIncludeFields = "ui_visibility,important_fields"
-	GetDealFieldParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetDealFieldParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetDealFieldParamsIncludeFieldsUiVisibilityrequiredFields                GetDealFieldParamsIncludeFields = "ui_visibility,required_fields"
+	GetDealFieldParamsIncludeFieldsImportantFields GetDealFieldParamsIncludeFields = "important_fields"
+	GetDealFieldParamsIncludeFieldsRequiredFields  GetDealFieldParamsIncludeFields = "required_fields"
+	GetDealFieldParamsIncludeFieldsUiVisibility    GetDealFieldParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for UpdateDealFieldJSONBodyRequiredFieldsStatuses.
@@ -1160,7 +1152,7 @@ type UpdateProjectBoardJSONBody struct {
 // GetDealFieldsParams defines parameters for GetDealFields.
 type GetDealFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetDealFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1253,7 +1245,7 @@ type AddDealFieldJSONBody_UiVisibility struct {
 // GetDealFieldParams defines parameters for GetDealField.
 type GetDealFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetDealFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetDealFieldParamsIncludeFields defines parameters for GetDealField.
@@ -1352,7 +1344,7 @@ type GetDealsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1385,10 +1377,10 @@ type GetDealsParams struct {
 	SortDirection *GetDealsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -1487,7 +1479,7 @@ type GetArchivedDealsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1520,10 +1512,10 @@ type GetArchivedDealsParams struct {
 	SortDirection *GetArchivedDealsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetArchivedDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetArchivedDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1634,10 +1626,10 @@ type SearchDealsParamsIncludeFields string
 // GetDealParams defines parameters for GetDeal.
 type GetDealParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetDealParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -10531,7 +10523,7 @@ func NewGetDealFieldsRequest(server string, params *GetDealFieldsParams) (*http.
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10693,7 +10685,7 @@ func NewGetDealFieldRequest(server string, fieldCode string, params *GetDealFiel
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10946,7 +10938,7 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11122,7 +11114,7 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11138,7 +11130,7 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11307,7 +11299,7 @@ func NewGetArchivedDealsRequest(server string, params *GetArchivedDealsParams) (
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11483,7 +11475,7 @@ func NewGetArchivedDealsRequest(server string, params *GetArchivedDealsParams) (
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11499,7 +11491,7 @@ func NewGetArchivedDealsRequest(server string, params *GetArchivedDealsParams) (
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12012,7 +12004,7 @@ func NewGetDealRequest(server string, id int, params *GetDealParams) (*http.Requ
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12028,7 +12020,7 @@ func NewGetDealRequest(server string, id int, params *GetDealParams) (*http.Requ
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err

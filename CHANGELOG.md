@@ -20,8 +20,9 @@ Semantic Versioning.
 
 ### Changed
 
-- Refresh upstream OpenAPI specifications and internal clients for the
-  September 14 drift, including nullable fields and corrected search result types.
+- Refresh upstream OpenAPI specifications and internal clients for nullable
+  fields, corrected search result types, and array query parameters. Existing
+  public options retain comma-separated query encoding and omit empty inputs.
 - Document the required person name and contact sync requirements for person fields.
 
 ## [1.14.0] - 2026-09-09

@@ -1946,7 +1946,13 @@ paths:
           name: ids
           description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
-            type: string
+            type: array
+            uniqueItems: true
+            maxItems: 100
+            items:
+              type: string
+          style: form
+          explode: false
         - in: query
           name: owner_id
           schema:
@@ -2015,29 +2021,40 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional fields to include
           schema:
-            type: string
-            enum:
-              - next_activity_id
-              - last_activity_id
-              - first_won_time
-              - products_count
-              - files_count
-              - notes_count
-              - followers_count
-              - email_messages_count
-              - activities_count
-              - done_activities_count
-              - undone_activities_count
-              - participants_count
-              - last_incoming_mail_time
-              - last_outgoing_mail_time
-              - smart_bcc_email
-              - source_lead_id
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - next_activity_id
+                - last_activity_id
+                - first_won_time
+                - products_count
+                - files_count
+                - notes_count
+                - followers_count
+                - email_messages_count
+                - activities_count
+                - done_activities_count
+                - undone_activities_count
+                - participants_count
+                - last_incoming_mail_time
+                - last_outgoing_mail_time
+                - smart_bcc_email
+                - source_lead_id
+          style: form
+          explode: false
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
           schema:
-            type: string
+            type: array
+            uniqueItems: true
+            maxItems: 15
+            items:
+              type: string
+          style: form
+          explode: false
         - in: query
           name: include_option_labels
           description: 'When provided with a ''true'' value, single option and multiple option custom fields values contain objects in the form of ''{ id: number, label: string }'' instead of plain id'
@@ -2580,7 +2597,13 @@ paths:
           name: ids
           description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
-            type: string
+            type: array
+            uniqueItems: true
+            maxItems: 100
+            items:
+              type: string
+          style: form
+          explode: false
         - in: query
           name: owner_id
           schema:
@@ -2649,29 +2672,40 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional fields to include
           schema:
-            type: string
-            enum:
-              - next_activity_id
-              - last_activity_id
-              - first_won_time
-              - products_count
-              - files_count
-              - notes_count
-              - followers_count
-              - email_messages_count
-              - activities_count
-              - done_activities_count
-              - undone_activities_count
-              - participants_count
-              - last_incoming_mail_time
-              - last_outgoing_mail_time
-              - smart_bcc_email
-              - source_lead_id
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - next_activity_id
+                - last_activity_id
+                - first_won_time
+                - products_count
+                - files_count
+                - notes_count
+                - followers_count
+                - email_messages_count
+                - activities_count
+                - done_activities_count
+                - undone_activities_count
+                - participants_count
+                - last_incoming_mail_time
+                - last_outgoing_mail_time
+                - smart_bcc_email
+                - source_lead_id
+          style: form
+          explode: false
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
           schema:
-            type: string
+            type: array
+            uniqueItems: true
+            maxItems: 15
+            items:
+              type: string
+          style: form
+          explode: false
         - in: query
           name: limit
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
@@ -2959,29 +2993,40 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional fields to include
           schema:
-            type: string
-            enum:
-              - next_activity_id
-              - last_activity_id
-              - first_won_time
-              - products_count
-              - files_count
-              - notes_count
-              - followers_count
-              - email_messages_count
-              - activities_count
-              - done_activities_count
-              - undone_activities_count
-              - participants_count
-              - last_incoming_mail_time
-              - last_outgoing_mail_time
-              - smart_bcc_email
-              - source_lead_id
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - next_activity_id
+                - last_activity_id
+                - first_won_time
+                - products_count
+                - files_count
+                - notes_count
+                - followers_count
+                - email_messages_count
+                - activities_count
+                - done_activities_count
+                - undone_activities_count
+                - participants_count
+                - last_incoming_mail_time
+                - last_outgoing_mail_time
+                - smart_bcc_email
+                - source_lead_id
+          style: form
+          explode: false
         - in: query
           name: custom_fields
           description: 'Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.'
           schema:
-            type: string
+            type: array
+            uniqueItems: true
+            maxItems: 15
+            items:
+              type: string
+          style: form
+          explode: false
         - in: query
           name: include_option_labels
           description: 'When provided with a ''true'' value, single option and multiple option custom fields values contain objects in the form of ''{ id: number, label: string }'' instead of plain id'
@@ -6162,15 +6207,16 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional data namespaces to include in response
           schema:
-            type: string
-            enum:
-              - ui_visibility
-              - important_fields
-              - required_fields
-              - 'ui_visibility,important_fields'
-              - 'ui_visibility,required_fields'
-              - 'important_fields,required_fields'
-              - 'ui_visibility,important_fields,required_fields'
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - ui_visibility
+                - important_fields
+                - required_fields
+          style: form
+          explode: false
         - in: query
           name: limit
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
@@ -6842,15 +6888,16 @@ paths:
           name: include_fields
           description: Optional comma separated string array of additional data namespaces to include in response
           schema:
-            type: string
-            enum:
-              - ui_visibility
-              - important_fields
-              - required_fields
-              - 'ui_visibility,important_fields'
-              - 'ui_visibility,required_fields'
-              - 'important_fields,required_fields'
-              - 'ui_visibility,important_fields,required_fields'
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - ui_visibility
+                - important_fields
+                - required_fields
+          style: form
+          explode: false
       responses:
         '200':
           description: Get one deal field
