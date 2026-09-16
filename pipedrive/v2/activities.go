@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"slices"
 	"time"
 
 	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
@@ -225,12 +226,11 @@ func WithActivityRequestOptions(opts ...pipedrive.RequestOption) ActivityRequest
 
 func WithActivityIncludeFields(fields ...ActivityIncludeField) GetActivityOption {
 	return getActivityOptionFunc(func(cfg *getActivityOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetActivityParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetActivityParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -279,6 +279,9 @@ func WithActivityLeadID(id LeadID) ActivityOption {
 	})
 }
 
+// WithActivityPersonID selects the primary participant, adding the person if absent.
+// It overrides Primary flags set by WithActivityParticipants. Only participants
+// supplied in this request are included.
 func WithActivityPersonID(id PersonID) ActivityOption {
 	return activityFieldOption(func(payload *activityPayload) {
 		payload.personID = &id
@@ -439,22 +442,21 @@ func WithActivitiesSortDirection(direction SortDirection) ListActivitiesOption {
 
 func WithActivitiesIncludeFields(fields ...ActivityIncludeField) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetActivitiesParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetActivitiesParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
 func WithActivitiesIDs(ids ...ActivityID) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 
@@ -739,9 +741,6 @@ func (p activityPayload) toMap() map[string]interface{} {
 	if p.leadID != nil {
 		body["lead_id"] = string(*p.leadID)
 	}
-	if p.personID != nil {
-		body["person_id"] = int(*p.personID)
-	}
 	if p.orgID != nil {
 		body["org_id"] = int(*p.orgID)
 	}
@@ -766,8 +765,20 @@ func (p activityPayload) toMap() map[string]interface{} {
 	if p.location != nil {
 		body["location"] = p.location
 	}
-	if p.participants.set {
-		body["participants"] = p.participants.value
+	if p.participants.set || p.personID != nil {
+		participants := p.participants.value
+		if p.personID != nil {
+			participants = slices.Clone(participants)
+			found := false
+			for i := range participants {
+				participants[i].Primary = participants[i].PersonID != nil && *participants[i].PersonID == *p.personID
+				found = found || participants[i].Primary
+			}
+			if !found {
+				participants = append(participants, ActivityParticipant{PersonID: p.personID, Primary: true})
+			}
+		}
+		body["participants"] = participants
 	}
 	if p.attendees.set {
 		body["attendees"] = p.attendees.value

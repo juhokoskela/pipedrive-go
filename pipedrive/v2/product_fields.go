@@ -162,23 +162,21 @@ func WithProductFieldRequestOptions(opts ...pipedrive.RequestOption) ProductFiel
 
 func WithProductFieldIncludeFields(fields ...FieldIncludeField) GetProductFieldOption {
 	return getProductFieldOptionFunc(func(cfg *getProductFieldOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetProductFieldParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetProductFieldParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
 func WithProductFieldsIncludeFields(fields ...FieldIncludeField) ListProductFieldsOption {
 	return listProductFieldsOptionFunc(func(cfg *listProductFieldsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetProductFieldsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetProductFieldsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 

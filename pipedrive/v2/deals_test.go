@@ -546,7 +546,7 @@ func TestDealsService_Search(t *testing.T) {
 		if got := q.Get("include_fields"); got != "deal.cc_email" {
 			t.Fatalf("unexpected include_fields: %q", got)
 		}
-		if got := q.Get("limit"); got != "1" {
+		if got := q.Get("limit"); got != "2" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
 		if got := q.Get("cursor"); got != "c1" {
@@ -557,7 +557,7 @@ func TestDealsService_Search(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"data":{"items":[{"item":{"id":7,"title":"Deal"}}]},"additional_data":{"next_cursor":null}}`))
+		_, _ = w.Write([]byte(`{"data":{"items":[{"item":{"id":7,"title":"Deal","value":12.5}},{"item":{"id":8,"value":null}}]},"additional_data":{"next_cursor":null}}`))
 	}))
 	t.Cleanup(srv.Close)
 
@@ -578,7 +578,7 @@ func TestDealsService_Search(t *testing.T) {
 		WithDealSearchPersonID(PersonID(5)),
 		WithDealSearchOrganizationID(OrganizationID(6)),
 		WithDealSearchIncludeFields(DealSearchIncludeFieldDealCCEmail),
-		WithDealSearchPageSize(1),
+		WithDealSearchPageSize(2),
 		WithDealSearchCursor("c1"),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "search")),
 	)
@@ -588,8 +588,14 @@ func TestDealsService_Search(t *testing.T) {
 	if next != nil {
 		t.Fatalf("expected nil cursor, got %q", *next)
 	}
-	if len(results.Items) != 1 {
+	if len(results.Items) != 2 {
 		t.Fatalf("unexpected results: %#v", results)
+	}
+	if got := results.Items[0].Item["value"]; got != float64(12.5) {
+		t.Errorf("value = %v, want 12.5", got)
+	}
+	if got, ok := results.Items[1].Item["value"]; !ok || got != nil {
+		t.Errorf("value = %v (present: %t), want null", got, ok)
 	}
 }
 

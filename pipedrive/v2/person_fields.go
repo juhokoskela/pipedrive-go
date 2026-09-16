@@ -162,23 +162,21 @@ func WithPersonFieldRequestOptions(opts ...pipedrive.RequestOption) PersonFieldR
 
 func WithPersonFieldIncludeFields(fields ...FieldIncludeField) GetPersonFieldOption {
 	return getPersonFieldOptionFunc(func(cfg *getPersonFieldOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetPersonFieldParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetPersonFieldParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
 func WithPersonFieldsIncludeFields(fields ...FieldIncludeField) ListPersonFieldsOption {
 	return listPersonFieldsOptionFunc(func(cfg *listPersonFieldsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetPersonFieldsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetPersonFieldsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 

@@ -21,6 +21,57 @@ func TestValidateCSVValues(t *testing.T) {
 	}
 }
 
+func TestListQueryArraysPreserveCSV(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		name string
+		opts []ListDealsOption
+		want map[string]string
+	}{
+		{
+			name: "multiple values omit empty strings",
+			opts: []ListDealsOption{
+				WithDealsIDs(1, 2),
+				WithDealsIncludeFields("", DealIncludeFieldActivitiesCount, "", DealIncludeFieldFilesCount),
+				WithDealsCustomFields("cf_1", "", "cf_2"),
+			},
+			want: map[string]string{"ids": "1,2", "include_fields": "activities_count,files_count", "custom_fields": "cf_1,cf_2"},
+		},
+		{
+			name: "empty values omit parameters",
+			opts: []ListDealsOption{WithDealsIDs(), WithDealsIncludeFields(""), WithDealsCustomFields("")},
+		},
+		{
+			name: "empty options preserve previous values",
+			opts: []ListDealsOption{
+				WithDealsIDs(1), WithDealsIDs(),
+				WithDealsIncludeFields(DealIncludeFieldFilesCount), WithDealsIncludeFields(""),
+				WithDealsCustomFields("cf_1"), WithDealsCustomFields(""),
+			},
+			want: map[string]string{"ids": "1", "include_fields": "files_count", "custom_fields": "cf_1"},
+		},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				query := r.URL.Query()
+				if len(query) != len(tt.want) {
+					t.Errorf("query = %v, want %v", query, tt.want)
+				}
+				for name, want := range tt.want {
+					if got := query[name]; len(got) != 1 || got[0] != want {
+						t.Errorf("query %s = %v, want one value %q", name, got, want)
+					}
+				}
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":[]}`))
+			})
+			if _, _, err := client.Deals.List(t.Context(), tt.opts...); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
 func TestCustomFieldsWithCommaRejected(t *testing.T) {
 	t.Parallel()
 

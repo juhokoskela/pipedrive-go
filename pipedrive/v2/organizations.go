@@ -228,7 +228,7 @@ type getOrganizationFollowersChangelogOptions struct {
 type organizationPayload struct {
 	name          *string
 	ownerID       *UserID
-	address       *OrganizationAddress
+	address       nullableValue[OrganizationAddress]
 	labelIDs      optionalSlice[int]
 	visibleTo     *int
 	website       nullableValue[string]
@@ -329,12 +329,11 @@ func WithOrganizationRequestOptions(opts ...pipedrive.RequestOption) Organizatio
 
 func WithOrganizationIncludeFields(fields ...OrganizationIncludeField) GetOrganizationOption {
 	return getOrganizationOptionFunc(func(cfg *getOrganizationOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetOrganizationParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetOrganizationParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -358,11 +357,11 @@ func WithOrganizationCustomFields(fields ...string) GetOrganizationOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
@@ -380,7 +379,14 @@ func WithOrganizationOwnerID(id UserID) OrganizationOption {
 
 func WithOrganizationAddress(address OrganizationAddress) OrganizationOption {
 	return organizationFieldOption(func(payload *organizationPayload) {
-		payload.address = &address
+		payload.address.assign(address)
+	})
+}
+
+// ClearOrganizationAddress sends an explicit JSON null address.
+func ClearOrganizationAddress() OrganizationOption {
+	return organizationFieldOption(func(payload *organizationPayload) {
+		payload.address.clear()
 	})
 }
 
@@ -512,12 +518,11 @@ func WithOrganizationsSortDirection(direction SortDirection) ListOrganizationsOp
 
 func WithOrganizationsIncludeFields(fields ...OrganizationIncludeField) ListOrganizationsOption {
 	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetOrganizationsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetOrganizationsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -541,21 +546,21 @@ func WithOrganizationsCustomFields(fields ...string) ListOrganizationsOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
 func WithOrganizationsIDs(ids ...OrganizationID) ListOrganizationsOption {
 	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 
@@ -1195,8 +1200,8 @@ func (p organizationPayload) toMap() map[string]interface{} {
 	if p.ownerID != nil {
 		body["owner_id"] = int(*p.ownerID)
 	}
-	if p.address != nil {
-		body["address"] = p.address
+	if p.address.set {
+		body["address"] = p.address.mapValue()
 	}
 	if p.labelIDs.set {
 		body["label_ids"] = p.labelIDs.value

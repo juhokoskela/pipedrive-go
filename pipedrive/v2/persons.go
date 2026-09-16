@@ -276,7 +276,7 @@ type personPayload struct {
 	orgID           *OrganizationID
 	emails          optionalSlice[LabeledValue]
 	phones          optionalSlice[LabeledValue]
-	postalAddress   *PersonAddress
+	postalAddress   nullableValue[PersonAddress]
 	notes           *string
 	im              optionalSlice[LabeledValue]
 	birthday        *string
@@ -381,12 +381,11 @@ func WithPersonRequestOptions(opts ...pipedrive.RequestOption) PersonRequestOpti
 
 func WithPersonIncludeFields(fields ...PersonIncludeField) GetPersonOption {
 	return getPersonOptionFunc(func(cfg *getPersonOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetPersonParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetPersonParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -410,14 +409,15 @@ func WithPersonCustomFields(fields ...string) GetPersonOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
+// WithPersonName sets the person's name. Required when creating a person.
 func WithPersonName(name string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.name = &name
@@ -448,30 +448,48 @@ func WithPersonPhones(phones ...LabeledValue) PersonOption {
 	})
 }
 
+// WithPersonPostalAddress sets the postal address. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonPostalAddress(address PersonAddress) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
-		payload.postalAddress = &address
+		payload.postalAddress.assign(address)
 	})
 }
 
+// ClearPersonPostalAddress sends an explicit JSON null postal address.
+// Requires contact sync; Pipedrive returns 403 when contact sync is disabled.
+func ClearPersonPostalAddress() PersonOption {
+	return personFieldOption(func(payload *personPayload) {
+		payload.postalAddress.clear()
+	})
+}
+
+// WithPersonNotes sets contact sync notes. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonNotes(notes string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.notes = &notes
 	})
 }
 
+// WithPersonIM sets instant messaging accounts. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonIM(accounts ...LabeledValue) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.im.append(accounts...)
 	})
 }
 
+// WithPersonBirthday sets the birthday. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonBirthday(birthday string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.birthday = &birthday
 	})
 }
 
+// WithPersonJobTitle sets the job title. Requires contact sync;
+// Pipedrive returns 403 when contact sync is disabled.
 func WithPersonJobTitle(title string) PersonOption {
 	return personFieldOption(func(payload *personPayload) {
 		payload.jobTitle = &title
@@ -558,12 +576,11 @@ func WithPersonsSortDirection(direction SortDirection) ListPersonsOption {
 
 func WithPersonsIncludeFields(fields ...PersonIncludeField) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetPersonsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetPersonsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -587,21 +604,21 @@ func WithPersonsCustomFields(fields ...string) ListPersonsOption {
 			}
 			return
 		}
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[string](fields)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.CustomFields = &csv
+		cfg.params.CustomFields = &values
 	})
 }
 
 func WithPersonsIDs(ids ...PersonID) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		values := stringIDs(ids)
+		if len(values) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.params.Ids = &values
 	})
 }
 
@@ -1310,8 +1327,8 @@ func (p personPayload) toMap() map[string]interface{} {
 	if p.phones.set {
 		body["phones"] = p.phones.value
 	}
-	if p.postalAddress != nil {
-		body["postal_address"] = p.postalAddress
+	if p.postalAddress.set {
+		body["postal_address"] = p.postalAddress.mapValue()
 	}
 	if p.notes != nil {
 		body["notes"] = *p.notes

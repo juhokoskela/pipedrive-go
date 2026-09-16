@@ -59,13 +59,9 @@ const (
 
 // Defines values for GetDealFieldsParamsIncludeFields.
 const (
-	GetDealFieldsParamsIncludeFieldsImportantFields                           GetDealFieldsParamsIncludeFields = "important_fields"
-	GetDealFieldsParamsIncludeFieldsImportantFieldsrequiredFields             GetDealFieldsParamsIncludeFields = "important_fields,required_fields"
-	GetDealFieldsParamsIncludeFieldsRequiredFields                            GetDealFieldsParamsIncludeFields = "required_fields"
-	GetDealFieldsParamsIncludeFieldsUiVisibility                              GetDealFieldsParamsIncludeFields = "ui_visibility"
-	GetDealFieldsParamsIncludeFieldsUiVisibilityimportantFields               GetDealFieldsParamsIncludeFields = "ui_visibility,important_fields"
-	GetDealFieldsParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetDealFieldsParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetDealFieldsParamsIncludeFieldsUiVisibilityrequiredFields                GetDealFieldsParamsIncludeFields = "ui_visibility,required_fields"
+	GetDealFieldsParamsIncludeFieldsImportantFields GetDealFieldsParamsIncludeFields = "important_fields"
+	GetDealFieldsParamsIncludeFieldsRequiredFields  GetDealFieldsParamsIncludeFields = "required_fields"
+	GetDealFieldsParamsIncludeFieldsUiVisibility    GetDealFieldsParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for AddDealFieldJSONBodyFieldType.
@@ -96,13 +92,9 @@ const (
 
 // Defines values for GetDealFieldParamsIncludeFields.
 const (
-	GetDealFieldParamsIncludeFieldsImportantFields                           GetDealFieldParamsIncludeFields = "important_fields"
-	GetDealFieldParamsIncludeFieldsImportantFieldsrequiredFields             GetDealFieldParamsIncludeFields = "important_fields,required_fields"
-	GetDealFieldParamsIncludeFieldsRequiredFields                            GetDealFieldParamsIncludeFields = "required_fields"
-	GetDealFieldParamsIncludeFieldsUiVisibility                              GetDealFieldParamsIncludeFields = "ui_visibility"
-	GetDealFieldParamsIncludeFieldsUiVisibilityimportantFields               GetDealFieldParamsIncludeFields = "ui_visibility,important_fields"
-	GetDealFieldParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetDealFieldParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetDealFieldParamsIncludeFieldsUiVisibilityrequiredFields                GetDealFieldParamsIncludeFields = "ui_visibility,required_fields"
+	GetDealFieldParamsIncludeFieldsImportantFields GetDealFieldParamsIncludeFields = "important_fields"
+	GetDealFieldParamsIncludeFieldsRequiredFields  GetDealFieldParamsIncludeFields = "required_fields"
+	GetDealFieldParamsIncludeFieldsUiVisibility    GetDealFieldParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for UpdateDealFieldJSONBodyRequiredFieldsStatuses.
@@ -418,13 +410,9 @@ const (
 
 // Defines values for GetOrganizationFieldsParamsIncludeFields.
 const (
-	GetOrganizationFieldsParamsIncludeFieldsImportantFields                           GetOrganizationFieldsParamsIncludeFields = "important_fields"
-	GetOrganizationFieldsParamsIncludeFieldsImportantFieldsrequiredFields             GetOrganizationFieldsParamsIncludeFields = "important_fields,required_fields"
-	GetOrganizationFieldsParamsIncludeFieldsRequiredFields                            GetOrganizationFieldsParamsIncludeFields = "required_fields"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibility                              GetOrganizationFieldsParamsIncludeFields = "ui_visibility"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibilityimportantFields               GetOrganizationFieldsParamsIncludeFields = "ui_visibility,important_fields"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetOrganizationFieldsParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetOrganizationFieldsParamsIncludeFieldsUiVisibilityrequiredFields                GetOrganizationFieldsParamsIncludeFields = "ui_visibility,required_fields"
+	GetOrganizationFieldsParamsIncludeFieldsImportantFields GetOrganizationFieldsParamsIncludeFields = "important_fields"
+	GetOrganizationFieldsParamsIncludeFieldsRequiredFields  GetOrganizationFieldsParamsIncludeFields = "required_fields"
+	GetOrganizationFieldsParamsIncludeFieldsUiVisibility    GetOrganizationFieldsParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for AddOrganizationFieldJSONBodyFieldType.
@@ -449,13 +437,9 @@ const (
 
 // Defines values for GetOrganizationFieldParamsIncludeFields.
 const (
-	GetOrganizationFieldParamsIncludeFieldsImportantFields                           GetOrganizationFieldParamsIncludeFields = "important_fields"
-	GetOrganizationFieldParamsIncludeFieldsImportantFieldsrequiredFields             GetOrganizationFieldParamsIncludeFields = "important_fields,required_fields"
-	GetOrganizationFieldParamsIncludeFieldsRequiredFields                            GetOrganizationFieldParamsIncludeFields = "required_fields"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibility                              GetOrganizationFieldParamsIncludeFields = "ui_visibility"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibilityimportantFields               GetOrganizationFieldParamsIncludeFields = "ui_visibility,important_fields"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetOrganizationFieldParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetOrganizationFieldParamsIncludeFieldsUiVisibilityrequiredFields                GetOrganizationFieldParamsIncludeFields = "ui_visibility,required_fields"
+	GetOrganizationFieldParamsIncludeFieldsImportantFields GetOrganizationFieldParamsIncludeFields = "important_fields"
+	GetOrganizationFieldParamsIncludeFieldsRequiredFields  GetOrganizationFieldParamsIncludeFields = "required_fields"
+	GetOrganizationFieldParamsIncludeFieldsUiVisibility    GetOrganizationFieldParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for GetOrganizationsParamsSortBy.
@@ -527,13 +511,9 @@ const (
 
 // Defines values for GetPersonFieldsParamsIncludeFields.
 const (
-	GetPersonFieldsParamsIncludeFieldsImportantFields                           GetPersonFieldsParamsIncludeFields = "important_fields"
-	GetPersonFieldsParamsIncludeFieldsImportantFieldsrequiredFields             GetPersonFieldsParamsIncludeFields = "important_fields,required_fields"
-	GetPersonFieldsParamsIncludeFieldsRequiredFields                            GetPersonFieldsParamsIncludeFields = "required_fields"
-	GetPersonFieldsParamsIncludeFieldsUiVisibility                              GetPersonFieldsParamsIncludeFields = "ui_visibility"
-	GetPersonFieldsParamsIncludeFieldsUiVisibilityimportantFields               GetPersonFieldsParamsIncludeFields = "ui_visibility,important_fields"
-	GetPersonFieldsParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetPersonFieldsParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetPersonFieldsParamsIncludeFieldsUiVisibilityrequiredFields                GetPersonFieldsParamsIncludeFields = "ui_visibility,required_fields"
+	GetPersonFieldsParamsIncludeFieldsImportantFields GetPersonFieldsParamsIncludeFields = "important_fields"
+	GetPersonFieldsParamsIncludeFieldsRequiredFields  GetPersonFieldsParamsIncludeFields = "required_fields"
+	GetPersonFieldsParamsIncludeFieldsUiVisibility    GetPersonFieldsParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for AddPersonFieldJSONBodyFieldType.
@@ -558,13 +538,9 @@ const (
 
 // Defines values for GetPersonFieldParamsIncludeFields.
 const (
-	GetPersonFieldParamsIncludeFieldsImportantFields                           GetPersonFieldParamsIncludeFields = "important_fields"
-	GetPersonFieldParamsIncludeFieldsImportantFieldsrequiredFields             GetPersonFieldParamsIncludeFields = "important_fields,required_fields"
-	GetPersonFieldParamsIncludeFieldsRequiredFields                            GetPersonFieldParamsIncludeFields = "required_fields"
-	GetPersonFieldParamsIncludeFieldsUiVisibility                              GetPersonFieldParamsIncludeFields = "ui_visibility"
-	GetPersonFieldParamsIncludeFieldsUiVisibilityimportantFields               GetPersonFieldParamsIncludeFields = "ui_visibility,important_fields"
-	GetPersonFieldParamsIncludeFieldsUiVisibilityimportantFieldsrequiredFields GetPersonFieldParamsIncludeFields = "ui_visibility,important_fields,required_fields"
-	GetPersonFieldParamsIncludeFieldsUiVisibilityrequiredFields                GetPersonFieldParamsIncludeFields = "ui_visibility,required_fields"
+	GetPersonFieldParamsIncludeFieldsImportantFields GetPersonFieldParamsIncludeFields = "important_fields"
+	GetPersonFieldParamsIncludeFieldsRequiredFields  GetPersonFieldParamsIncludeFields = "required_fields"
+	GetPersonFieldParamsIncludeFieldsUiVisibility    GetPersonFieldParamsIncludeFields = "ui_visibility"
 )
 
 // Defines values for GetPersonsParamsSortBy.
@@ -843,7 +819,7 @@ type GetActivitiesParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only activities owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -876,7 +852,7 @@ type GetActivitiesParams struct {
 	SortDirection *GetActivitiesParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetActivitiesParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivitiesParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -983,7 +959,7 @@ type AddActivityJSONBody struct {
 	// OwnerId The ID of the user who owns the activity
 	OwnerId *int `json:"owner_id,omitempty"`
 
-	// Participants The participants of the activity
+	// Participants The participants of the activity. Use this to set the activity's person — a primary participant (`primary: true`) sets `person_id` on the activity.
 	Participants *[]struct {
 		// PersonId The ID of the person
 		PersonId *int `json:"person_id,omitempty"`
@@ -991,9 +967,6 @@ type AddActivityJSONBody struct {
 		// Primary Whether the person is the primary participant or not
 		Primary *bool `json:"primary,omitempty"`
 	} `json:"participants,omitempty"`
-
-	// PersonId The ID of the person linked to the activity
-	PersonId *int `json:"person_id,omitempty"`
 
 	// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 	Priority *int `json:"priority,omitempty"`
@@ -1014,7 +987,7 @@ type AddActivityJSONBody struct {
 // GetActivityParams defines parameters for GetActivity.
 type GetActivityParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetActivityParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivityParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetActivityParamsIncludeFields defines parameters for GetActivity.
@@ -1109,7 +1082,7 @@ type UpdateActivityJSONBody struct {
 	// OwnerId The ID of the user who owns the activity
 	OwnerId *int `json:"owner_id,omitempty"`
 
-	// Participants The participants of the activity
+	// Participants The participants of the activity. Use this to set the activity's person — a primary participant (`primary: true`) sets `person_id` on the activity.
 	Participants *[]struct {
 		// PersonId The ID of the person
 		PersonId *int `json:"person_id,omitempty"`
@@ -1117,9 +1090,6 @@ type UpdateActivityJSONBody struct {
 		// Primary Whether the person is the primary participant or not
 		Primary *bool `json:"primary,omitempty"`
 	} `json:"participants,omitempty"`
-
-	// PersonId The ID of the person linked to the activity
-	PersonId *int `json:"person_id,omitempty"`
 
 	// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 	Priority *int `json:"priority,omitempty"`
@@ -1140,7 +1110,7 @@ type UpdateActivityJSONBody struct {
 // GetActivityFieldsParams defines parameters for GetActivityFields.
 type GetActivityFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetActivityFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivityFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1155,7 +1125,7 @@ type GetActivityFieldsParamsIncludeFields string
 // GetActivityFieldParams defines parameters for GetActivityField.
 type GetActivityFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetActivityFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetActivityFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetActivityFieldParamsIncludeFields defines parameters for GetActivityField.
@@ -1182,7 +1152,7 @@ type UpdateProjectBoardJSONBody struct {
 // GetDealFieldsParams defines parameters for GetDealFields.
 type GetDealFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetDealFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1275,7 +1245,7 @@ type AddDealFieldJSONBody_UiVisibility struct {
 // GetDealFieldParams defines parameters for GetDealField.
 type GetDealFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetDealFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetDealFieldParamsIncludeFields defines parameters for GetDealField.
@@ -1374,7 +1344,7 @@ type GetDealsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1407,10 +1377,10 @@ type GetDealsParams struct {
 	SortDirection *GetDealsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -1509,7 +1479,7 @@ type GetArchivedDealsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1542,10 +1512,10 @@ type GetArchivedDealsParams struct {
 	SortDirection *GetArchivedDealsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetArchivedDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetArchivedDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1656,10 +1626,10 @@ type SearchDealsParamsIncludeFields string
 // GetDealParams defines parameters for GetDeal.
 type GetDealParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetDealParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetDealParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2172,7 +2142,7 @@ type ConvertLeadToDealJSONBody struct {
 // GetOrganizationFieldsParams defines parameters for GetOrganizationFields.
 type GetOrganizationFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetOrganizationFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2259,7 +2229,7 @@ type AddOrganizationFieldJSONBody_UiVisibility struct {
 // GetOrganizationFieldParams defines parameters for GetOrganizationField.
 type GetOrganizationFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetOrganizationFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetOrganizationFieldParamsIncludeFields defines parameters for GetOrganizationField.
@@ -2352,7 +2322,7 @@ type GetOrganizationsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only organizations owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2370,10 +2340,10 @@ type GetOrganizationsParams struct {
 	SortDirection *GetOrganizationsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetOrganizationsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2405,35 +2375,35 @@ type AddOrganizationJSONBody struct {
 	// Address The address of the organization
 	Address *struct {
 		// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-		AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+		AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 		// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-		AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+		AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 		// Country Country of the organization
-		Country *string `json:"country,omitempty"`
+		Country *string `json:"country"`
 
 		// Locality Locality (e.g. city) of the organization
-		Locality *string `json:"locality,omitempty"`
+		Locality *string `json:"locality"`
 
 		// PostalCode Postal code of the organization
-		PostalCode *string `json:"postal_code,omitempty"`
+		PostalCode *string `json:"postal_code"`
 
 		// Route Route (e.g. street) of the organization
-		Route *string `json:"route,omitempty"`
+		Route *string `json:"route"`
 
 		// StreetNumber Street number of the organization
-		StreetNumber *string `json:"street_number,omitempty"`
+		StreetNumber *string `json:"street_number"`
 
 		// Sublocality Sublocality (e.g. neighborhood) of the organization
-		Sublocality *string `json:"sublocality,omitempty"`
+		Sublocality *string `json:"sublocality"`
 
 		// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-		Subpremise *string `json:"subpremise,omitempty"`
+		Subpremise *string `json:"subpremise"`
 
 		// Value The full address of the organization
 		Value *string `json:"value,omitempty"`
-	} `json:"address,omitempty"`
+	} `json:"address"`
 
 	// AnnualRevenue The annual revenue of the organization
 	AnnualRevenue *int `json:"annual_revenue"`
@@ -2490,10 +2460,10 @@ type SearchOrganizationParamsFields string
 // GetOrganizationParams defines parameters for GetOrganization.
 type GetOrganizationParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include
-	IncludeFields *GetOrganizationParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetOrganizationParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2510,35 +2480,35 @@ type UpdateOrganizationJSONBody struct {
 	// Address The address of the organization
 	Address *struct {
 		// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-		AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+		AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 		// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-		AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+		AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 		// Country Country of the organization
-		Country *string `json:"country,omitempty"`
+		Country *string `json:"country"`
 
 		// Locality Locality (e.g. city) of the organization
-		Locality *string `json:"locality,omitempty"`
+		Locality *string `json:"locality"`
 
 		// PostalCode Postal code of the organization
-		PostalCode *string `json:"postal_code,omitempty"`
+		PostalCode *string `json:"postal_code"`
 
 		// Route Route (e.g. street) of the organization
-		Route *string `json:"route,omitempty"`
+		Route *string `json:"route"`
 
 		// StreetNumber Street number of the organization
-		StreetNumber *string `json:"street_number,omitempty"`
+		StreetNumber *string `json:"street_number"`
 
 		// Sublocality Sublocality (e.g. neighborhood) of the organization
-		Sublocality *string `json:"sublocality,omitempty"`
+		Sublocality *string `json:"sublocality"`
 
 		// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-		Subpremise *string `json:"subpremise,omitempty"`
+		Subpremise *string `json:"subpremise"`
 
 		// Value The full address of the organization
 		Value *string `json:"value,omitempty"`
-	} `json:"address,omitempty"`
+	} `json:"address"`
 
 	// AnnualRevenue The annual revenue of the organization
 	AnnualRevenue *int `json:"annual_revenue"`
@@ -2598,7 +2568,7 @@ type GetOrganizationFollowersChangelogParams struct {
 // GetPersonFieldsParams defines parameters for GetPersonFields.
 type GetPersonFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetPersonFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2676,7 +2646,7 @@ type AddPersonFieldJSONBody_UiVisibility struct {
 // GetPersonFieldParams defines parameters for GetPersonField.
 type GetPersonFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetPersonFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetPersonFieldParamsIncludeFields defines parameters for GetPersonField.
@@ -2760,7 +2730,7 @@ type GetPersonsParams struct {
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only persons owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2784,10 +2754,10 @@ type GetPersonsParams struct {
 	SortDirection *GetPersonsParamsSortDirection `form:"sort_direction,omitempty" json:"sort_direction,omitempty"`
 
 	// IncludeFields Optional comma separated string array of additional fields to include. `marketing_status` and `doi_status` can only be included if the company has marketing app enabled.
-	IncludeFields *GetPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2816,7 +2786,7 @@ type AddPersonJSONBody struct {
 	// AddTime The creation date and time of the person
 	AddTime *string `json:"add_time,omitempty"`
 
-	// Birthday The birthday of the person, included if contact sync is enabled for the company
+	// Birthday The birthday of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	Birthday *string `json:"birthday,omitempty"`
 
 	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
@@ -2834,7 +2804,7 @@ type AddPersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"emails,omitempty"`
 
-	// Im The instant messaging accounts of the person, included if contact sync is enabled for the company
+	// Im The instant messaging accounts of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	Im *[]struct {
 		// Label The instant messaging account classification label
 		Label *string `json:"label,omitempty"`
@@ -2846,7 +2816,7 @@ type AddPersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"im,omitempty"`
 
-	// JobTitle The job title of the person, included if contact sync is enabled for the company
+	// JobTitle The job title of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	JobTitle *string `json:"job_title,omitempty"`
 
 	// LabelIds The IDs of labels assigned to the person
@@ -2856,9 +2826,9 @@ type AddPersonJSONBody struct {
 	MarketingStatus *AddPersonJSONBodyMarketingStatus `json:"marketing_status,omitempty"`
 
 	// Name The name of the person
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 
-	// Notes Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company
+	// Notes Contact sync notes of the person, maximum 10 000 characters. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	Notes *string `json:"notes,omitempty"`
 
 	// OrgId The ID of the organization linked to the person
@@ -2882,35 +2852,35 @@ type AddPersonJSONBody struct {
 	// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 	PostalAddress *struct {
 		// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-		AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+		AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 		// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-		AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+		AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 		// Country Country of the person
-		Country *string `json:"country,omitempty"`
+		Country *string `json:"country"`
 
 		// Locality Locality (e.g. city) of the person
-		Locality *string `json:"locality,omitempty"`
+		Locality *string `json:"locality"`
 
 		// PostalCode Postal code of the person
-		PostalCode *string `json:"postal_code,omitempty"`
+		PostalCode *string `json:"postal_code"`
 
 		// Route Route (e.g. street) of the person
-		Route *string `json:"route,omitempty"`
+		Route *string `json:"route"`
 
 		// StreetNumber Street number of the person
-		StreetNumber *string `json:"street_number,omitempty"`
+		StreetNumber *string `json:"street_number"`
 
 		// Sublocality Sublocality (e.g. neighborhood) of the person
-		Sublocality *string `json:"sublocality,omitempty"`
+		Sublocality *string `json:"sublocality"`
 
 		// Subpremise Subpremise (e.g. apartment/suite number) of the person
-		Subpremise *string `json:"subpremise,omitempty"`
+		Subpremise *string `json:"subpremise"`
 
 		// Value The full address of the person
 		Value *string `json:"value,omitempty"`
-	} `json:"postal_address,omitempty"`
+	} `json:"postal_address"`
 
 	// VisibleTo The visibility of the person
 	VisibleTo *int `json:"visible_to,omitempty"`
@@ -2952,10 +2922,10 @@ type SearchPersonsParamsIncludeFields string
 // GetPersonParams defines parameters for GetPerson.
 type GetPersonParams struct {
 	// IncludeFields Optional comma separated string array of additional fields to include. `marketing_status` and `doi_status` can only be included if the company has marketing app enabled.
-	IncludeFields *GetPersonParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetPersonParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// IncludeOptionLabels When provided with a 'true' value, single option and multiple option custom fields values contain objects in the form of '{ id: number, label: string }' instead of plain id
 	IncludeOptionLabels *bool `form:"include_option_labels,omitempty" json:"include_option_labels,omitempty"`
@@ -2969,7 +2939,7 @@ type GetPersonParamsIncludeFields string
 
 // UpdatePersonJSONBody defines parameters for UpdatePerson.
 type UpdatePersonJSONBody struct {
-	// Birthday The birthday of the person, included if contact sync is enabled for the company
+	// Birthday The birthday of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	Birthday *string `json:"birthday,omitempty"`
 
 	// CustomFields An object where each key represents a custom field. All custom fields are referenced as randomly generated 40-character hashes. To clear a custom field value, set it to `null`. For multi-option fields (field type `set`), use `null` to clear the selection — sending an empty array `[]` is not supported and will result in a validation error.
@@ -2987,7 +2957,7 @@ type UpdatePersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"emails,omitempty"`
 
-	// Im The instant messaging accounts of the person, included if contact sync is enabled for the company
+	// Im The instant messaging accounts of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	Im *[]struct {
 		// Label The instant messaging account classification label
 		Label *string `json:"label,omitempty"`
@@ -2999,7 +2969,7 @@ type UpdatePersonJSONBody struct {
 		Value *string `json:"value,omitempty"`
 	} `json:"im,omitempty"`
 
-	// JobTitle The job title of the person, included if contact sync is enabled for the company
+	// JobTitle The job title of the person. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	JobTitle *string `json:"job_title,omitempty"`
 
 	// LabelIds The IDs of labels assigned to the person
@@ -3011,7 +2981,7 @@ type UpdatePersonJSONBody struct {
 	// Name The name of the person
 	Name *string `json:"name,omitempty"`
 
-	// Notes Contact sync notes of the person, maximum 10 000 characters, included if contact sync is enabled for the company
+	// Notes Contact sync notes of the person, maximum 10 000 characters. Only accepted when contact sync is enabled for the company; otherwise the request returns 403.
 	Notes *string `json:"notes,omitempty"`
 
 	// OrgId The ID of the organization linked to the person
@@ -3035,35 +3005,35 @@ type UpdatePersonJSONBody struct {
 	// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 	PostalAddress *struct {
 		// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-		AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+		AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 		// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-		AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+		AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 		// Country Country of the person
-		Country *string `json:"country,omitempty"`
+		Country *string `json:"country"`
 
 		// Locality Locality (e.g. city) of the person
-		Locality *string `json:"locality,omitempty"`
+		Locality *string `json:"locality"`
 
 		// PostalCode Postal code of the person
-		PostalCode *string `json:"postal_code,omitempty"`
+		PostalCode *string `json:"postal_code"`
 
 		// Route Route (e.g. street) of the person
-		Route *string `json:"route,omitempty"`
+		Route *string `json:"route"`
 
 		// StreetNumber Street number of the person
-		StreetNumber *string `json:"street_number,omitempty"`
+		StreetNumber *string `json:"street_number"`
 
 		// Sublocality Sublocality (e.g. neighborhood) of the person
-		Sublocality *string `json:"sublocality,omitempty"`
+		Sublocality *string `json:"sublocality"`
 
 		// Subpremise Subpremise (e.g. apartment/suite number) of the person
-		Subpremise *string `json:"subpremise,omitempty"`
+		Subpremise *string `json:"subpremise"`
 
 		// Value The full address of the person
 		Value *string `json:"value,omitempty"`
-	} `json:"postal_address,omitempty"`
+	} `json:"postal_address"`
 
 	// VisibleTo The visibility of the person
 	VisibleTo *int `json:"visible_to,omitempty"`
@@ -3168,7 +3138,7 @@ type UpdatePipelineJSONBody struct {
 // GetProductFieldsParams defines parameters for GetProductFields.
 type GetProductFieldsParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetProductFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetProductFieldsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -3214,7 +3184,7 @@ type AddProductFieldJSONBody_UiVisibility struct {
 // GetProductFieldParams defines parameters for GetProductField.
 type GetProductFieldParams struct {
 	// IncludeFields Optional comma separated string array of additional data namespaces to include in response
-	IncludeFields *GetProductFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]GetProductFieldParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 }
 
 // GetProductFieldParamsIncludeFields defines parameters for GetProductField.
@@ -3266,7 +3236,10 @@ type GetProductsParams struct {
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
 
 	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+
+	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
+	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 
 	// FilterId The ID of the filter to use
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
@@ -3285,9 +3258,6 @@ type GetProductsParams struct {
 
 	// UpdatedSince If set, only products with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.
 	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
-
-	// CustomFields Comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for a smaller response.<br/>A maximum of 15 keys is allowed.
-	CustomFields *string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
 }
 
 // GetProductsParamsSortBy defines parameters for GetProducts.
@@ -9800,7 +9770,7 @@ func NewGetActivitiesRequest(server string, params *GetActivitiesParams) (*http.
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -9976,7 +9946,7 @@ func NewGetActivitiesRequest(server string, params *GetActivitiesParams) (*http.
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10138,7 +10108,7 @@ func NewGetActivityRequest(server string, id int, params *GetActivityParams) (*h
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10234,7 +10204,7 @@ func NewGetActivityFieldsRequest(server string, params *GetActivityFieldsParams)
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10322,7 +10292,7 @@ func NewGetActivityFieldRequest(server string, fieldCode string, params *GetActi
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10553,7 +10523,7 @@ func NewGetDealFieldsRequest(server string, params *GetDealFieldsParams) (*http.
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10715,7 +10685,7 @@ func NewGetDealFieldRequest(server string, fieldCode string, params *GetDealFiel
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10968,7 +10938,7 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11144,7 +11114,7 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11160,7 +11130,7 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11329,7 +11299,7 @@ func NewGetArchivedDealsRequest(server string, params *GetArchivedDealsParams) (
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11505,7 +11475,7 @@ func NewGetArchivedDealsRequest(server string, params *GetArchivedDealsParams) (
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11521,7 +11491,7 @@ func NewGetArchivedDealsRequest(server string, params *GetArchivedDealsParams) (
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12034,7 +12004,7 @@ func NewGetDealRequest(server string, id int, params *GetDealParams) (*http.Requ
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12050,7 +12020,7 @@ func NewGetDealRequest(server string, id int, params *GetDealParams) (*http.Requ
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13671,7 +13641,7 @@ func NewGetOrganizationFieldsRequest(server string, params *GetOrganizationField
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13833,7 +13803,7 @@ func NewGetOrganizationFieldRequest(server string, fieldCode string, params *Get
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14086,7 +14056,7 @@ func NewGetOrganizationsRequest(server string, params *GetOrganizationsParams) (
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14182,7 +14152,7 @@ func NewGetOrganizationsRequest(server string, params *GetOrganizationsParams) (
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14198,7 +14168,7 @@ func NewGetOrganizationsRequest(server string, params *GetOrganizationsParams) (
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14501,7 +14471,7 @@ func NewGetOrganizationRequest(server string, id int, params *GetOrganizationPar
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14517,7 +14487,7 @@ func NewGetOrganizationRequest(server string, id int, params *GetOrganizationPar
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14877,7 +14847,7 @@ func NewGetPersonFieldsRequest(server string, params *GetPersonFieldsParams) (*h
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15039,7 +15009,7 @@ func NewGetPersonFieldRequest(server string, fieldCode string, params *GetPerson
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15292,7 +15262,7 @@ func NewGetPersonsRequest(server string, params *GetPersonsParams) (*http.Reques
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15420,7 +15390,7 @@ func NewGetPersonsRequest(server string, params *GetPersonsParams) (*http.Reques
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15436,7 +15406,7 @@ func NewGetPersonsRequest(server string, params *GetPersonsParams) (*http.Reques
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15771,7 +15741,7 @@ func NewGetPersonRequest(server string, id int, params *GetPersonParams) (*http.
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15787,7 +15757,7 @@ func NewGetPersonRequest(server string, id int, params *GetPersonParams) (*http.
 
 		if params.CustomFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -16633,7 +16603,7 @@ func NewGetProductFieldsRequest(server string, params *GetProductFieldsParams) (
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -16795,7 +16765,7 @@ func NewGetProductFieldRequest(server string, fieldCode string, params *GetProdu
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -17048,7 +17018,23 @@ func NewGetProductsRequest(server string, params *GetProductsParams) (*http.Requ
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CustomFields != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -17145,22 +17131,6 @@ func NewGetProductsRequest(server string, params *GetProductsParams) (*http.Requ
 		if params.UpdatedSince != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_since", runtime.ParamLocationQuery, *params.UpdatedSince); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.CustomFields != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "custom_fields", runtime.ParamLocationQuery, *params.CustomFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -20542,7 +20512,7 @@ type GetActivitiesResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Activities array
@@ -20587,7 +20557,7 @@ type GetActivitiesResponse struct {
 			CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 			// DealId The ID of the deal linked to the activity
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Done Whether the activity is marked as done or not
 			Done *bool `json:"done,omitempty"`
@@ -20596,10 +20566,10 @@ type GetActivitiesResponse struct {
 			DueDate *string `json:"due_date,omitempty"`
 
 			// DueTime The due time of the activity
-			DueTime *string `json:"due_time,omitempty"`
+			DueTime *string `json:"due_time"`
 
 			// Duration The duration of the activity
-			Duration *string `json:"duration,omitempty"`
+			Duration *string `json:"duration"`
 
 			// Id The ID of the activity
 			Id *int `json:"id,omitempty"`
@@ -20608,49 +20578,49 @@ type GetActivitiesResponse struct {
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LeadId The ID of the lead linked to the activity
-			LeadId *string `json:"lead_id,omitempty"`
+			LeadId *string `json:"lead_id"`
 
 			// Location Location of the activity
 			Location *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the activity
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the activity
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the activity
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the activity
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the activity
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the activity
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the activity
 				Value *string `json:"value,omitempty"`
-			} `json:"location,omitempty"`
+			} `json:"location"`
 
 			// MarkedAsDoneTime The date and time when the activity was marked as done
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 			// Note The note of the activity
 			Note *string `json:"note,omitempty"`
 
 			// OrgId The ID of the organization linked to the activity
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 			Outcome *int `json:"outcome"`
@@ -20668,13 +20638,13 @@ type GetActivitiesResponse struct {
 			} `json:"participants,omitempty"`
 
 			// PersonId The ID of the person linked to the activity
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 			Priority *int `json:"priority,omitempty"`
 
 			// ProjectId The ID of the project linked to the activity
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// PublicDescription The public description of the activity
 			PublicDescription *string `json:"public_description,omitempty"`
@@ -20755,7 +20725,7 @@ type AddActivityResponse struct {
 			CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 			// DealId The ID of the deal linked to the activity
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Done Whether the activity is marked as done or not
 			Done *bool `json:"done,omitempty"`
@@ -20764,10 +20734,10 @@ type AddActivityResponse struct {
 			DueDate *string `json:"due_date,omitempty"`
 
 			// DueTime The due time of the activity
-			DueTime *string `json:"due_time,omitempty"`
+			DueTime *string `json:"due_time"`
 
 			// Duration The duration of the activity
-			Duration *string `json:"duration,omitempty"`
+			Duration *string `json:"duration"`
 
 			// Id The ID of the activity
 			Id *int `json:"id,omitempty"`
@@ -20776,49 +20746,49 @@ type AddActivityResponse struct {
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LeadId The ID of the lead linked to the activity
-			LeadId *string `json:"lead_id,omitempty"`
+			LeadId *string `json:"lead_id"`
 
 			// Location Location of the activity
 			Location *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the activity
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the activity
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the activity
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the activity
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the activity
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the activity
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the activity
 				Value *string `json:"value,omitempty"`
-			} `json:"location,omitempty"`
+			} `json:"location"`
 
 			// MarkedAsDoneTime The date and time when the activity was marked as done
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 			// Note The note of the activity
 			Note *string `json:"note,omitempty"`
 
 			// OrgId The ID of the organization linked to the activity
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 			Outcome *int `json:"outcome"`
@@ -20836,13 +20806,13 @@ type AddActivityResponse struct {
 			} `json:"participants,omitempty"`
 
 			// PersonId The ID of the person linked to the activity
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 			Priority *int `json:"priority,omitempty"`
 
 			// ProjectId The ID of the project linked to the activity
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// PublicDescription The public description of the activity
 			PublicDescription *string `json:"public_description,omitempty"`
@@ -20953,7 +20923,7 @@ type GetActivityResponse struct {
 			CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 			// DealId The ID of the deal linked to the activity
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Done Whether the activity is marked as done or not
 			Done *bool `json:"done,omitempty"`
@@ -20962,10 +20932,10 @@ type GetActivityResponse struct {
 			DueDate *string `json:"due_date,omitempty"`
 
 			// DueTime The due time of the activity
-			DueTime *string `json:"due_time,omitempty"`
+			DueTime *string `json:"due_time"`
 
 			// Duration The duration of the activity
-			Duration *string `json:"duration,omitempty"`
+			Duration *string `json:"duration"`
 
 			// Id The ID of the activity
 			Id *int `json:"id,omitempty"`
@@ -20974,49 +20944,49 @@ type GetActivityResponse struct {
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LeadId The ID of the lead linked to the activity
-			LeadId *string `json:"lead_id,omitempty"`
+			LeadId *string `json:"lead_id"`
 
 			// Location Location of the activity
 			Location *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the activity
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the activity
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the activity
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the activity
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the activity
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the activity
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the activity
 				Value *string `json:"value,omitempty"`
-			} `json:"location,omitempty"`
+			} `json:"location"`
 
 			// MarkedAsDoneTime The date and time when the activity was marked as done
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 			// Note The note of the activity
 			Note *string `json:"note,omitempty"`
 
 			// OrgId The ID of the organization linked to the activity
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 			Outcome *int `json:"outcome"`
@@ -21034,13 +21004,13 @@ type GetActivityResponse struct {
 			} `json:"participants,omitempty"`
 
 			// PersonId The ID of the person linked to the activity
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 			Priority *int `json:"priority,omitempty"`
 
 			// ProjectId The ID of the project linked to the activity
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// PublicDescription The public description of the activity
 			PublicDescription *string `json:"public_description,omitempty"`
@@ -21121,7 +21091,7 @@ type UpdateActivityResponse struct {
 			CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 			// DealId The ID of the deal linked to the activity
-			DealId *int `json:"deal_id,omitempty"`
+			DealId *int `json:"deal_id"`
 
 			// Done Whether the activity is marked as done or not
 			Done *bool `json:"done,omitempty"`
@@ -21130,10 +21100,10 @@ type UpdateActivityResponse struct {
 			DueDate *string `json:"due_date,omitempty"`
 
 			// DueTime The due time of the activity
-			DueTime *string `json:"due_time,omitempty"`
+			DueTime *string `json:"due_time"`
 
 			// Duration The duration of the activity
-			Duration *string `json:"duration,omitempty"`
+			Duration *string `json:"duration"`
 
 			// Id The ID of the activity
 			Id *int `json:"id,omitempty"`
@@ -21142,49 +21112,49 @@ type UpdateActivityResponse struct {
 			IsDeleted *bool `json:"is_deleted,omitempty"`
 
 			// LeadId The ID of the lead linked to the activity
-			LeadId *string `json:"lead_id,omitempty"`
+			LeadId *string `json:"lead_id"`
 
 			// Location Location of the activity
 			Location *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the activity
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the activity
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the activity
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the activity
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the activity
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the activity
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the activity
 				Value *string `json:"value,omitempty"`
-			} `json:"location,omitempty"`
+			} `json:"location"`
 
 			// MarkedAsDoneTime The date and time when the activity was marked as done
-			MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+			MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 			// Note The note of the activity
 			Note *string `json:"note,omitempty"`
 
 			// OrgId The ID of the organization linked to the activity
-			OrgId *int `json:"org_id,omitempty"`
+			OrgId *int `json:"org_id"`
 
 			// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 			Outcome *int `json:"outcome"`
@@ -21202,13 +21172,13 @@ type UpdateActivityResponse struct {
 			} `json:"participants,omitempty"`
 
 			// PersonId The ID of the person linked to the activity
-			PersonId *int `json:"person_id,omitempty"`
+			PersonId *int `json:"person_id"`
 
 			// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 			Priority *int `json:"priority,omitempty"`
 
 			// ProjectId The ID of the project linked to the activity
-			ProjectId *int `json:"project_id,omitempty"`
+			ProjectId *int `json:"project_id"`
 
 			// PublicDescription The public description of the activity
 			PublicDescription *string `json:"public_description,omitempty"`
@@ -22277,7 +22247,7 @@ type GetDealsResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Deals array
@@ -22379,7 +22349,7 @@ type GetDealsResponse struct {
 			Title *string `json:"title,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// Value The value of the deal
 			Value *float32 `json:"value,omitempty"`
@@ -22514,7 +22484,7 @@ type AddDealResponse struct {
 			Title *string `json:"title,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// Value The value of the deal
 			Value *float32 `json:"value,omitempty"`
@@ -22554,7 +22524,7 @@ type GetArchivedDealsResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Deals array
@@ -22656,7 +22626,7 @@ type GetArchivedDealsResponse struct {
 			Title *string `json:"title,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// Value The value of the deal
 			Value *float32 `json:"value,omitempty"`
@@ -22739,7 +22709,7 @@ type GetDealsProductsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Array containing data for all products attached to deals
@@ -22857,7 +22827,7 @@ type SearchDealsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *struct {
 			// Items The array of deals
@@ -22913,7 +22883,7 @@ type SearchDealsResponse struct {
 					Type *string `json:"type,omitempty"`
 
 					// Value The value of the deal
-					Value *int `json:"value,omitempty"`
+					Value *float32 `json:"value"`
 
 					// VisibleTo The visibility of the deal
 					VisibleTo *int `json:"visible_to,omitempty"`
@@ -23077,7 +23047,7 @@ type GetDealResponse struct {
 			Title *string `json:"title,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// Value The value of the deal
 			Value *float32 `json:"value,omitempty"`
@@ -23212,7 +23182,7 @@ type UpdateDealResponse struct {
 			Title *string `json:"title,omitempty"`
 
 			// UpdateTime The last updated date and time of the deal
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// Value The value of the deal
 			Value *float32 `json:"value,omitempty"`
@@ -23542,7 +23512,7 @@ type GetDealFollowersResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Followers array
@@ -23615,7 +23585,7 @@ type GetDealFollowersChangelogResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Follower changelogs array
@@ -23839,7 +23809,7 @@ type GetDealProductsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Array containing data for all products attached to deals
@@ -24321,7 +24291,7 @@ type SearchItemResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *struct {
 			// Items The array of found items
@@ -24371,7 +24341,7 @@ type SearchItemByFieldResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data The array of found fields
@@ -24411,7 +24381,7 @@ type SearchLeadsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *struct {
 			// Items The array of leads
@@ -24449,7 +24419,7 @@ type SearchLeadsResponse struct {
 
 						// Name The name of the person the lead is associated with
 						Name *string `json:"name,omitempty"`
-					} `json:"person,omitempty"`
+					} `json:"person"`
 					Phones *[]string `json:"phones,omitempty"`
 
 					// Title The title of the lead
@@ -25256,7 +25226,7 @@ type GetOrganizationsResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Organizations array
@@ -25267,35 +25237,35 @@ type GetOrganizationsResponse struct {
 			// Address The address of the organization
 			Address *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the organization
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the organization
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the organization
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the organization
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the organization
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the organization
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the organization
 				Value *string `json:"value,omitempty"`
-			} `json:"address,omitempty"`
+			} `json:"address"`
 
 			// AnnualRevenue The annual revenue of the organization
 			AnnualRevenue *int `json:"annual_revenue"`
@@ -25328,7 +25298,7 @@ type GetOrganizationsResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the organization
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -25369,35 +25339,35 @@ type AddOrganizationResponse struct {
 			// Address The address of the organization
 			Address *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the organization
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the organization
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the organization
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the organization
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the organization
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the organization
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the organization
 				Value *string `json:"value,omitempty"`
-			} `json:"address,omitempty"`
+			} `json:"address"`
 
 			// AnnualRevenue The annual revenue of the organization
 			AnnualRevenue *int `json:"annual_revenue"`
@@ -25430,7 +25400,7 @@ type AddOrganizationResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the organization
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -25467,14 +25437,14 @@ type SearchOrganizationResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *struct {
 			// Items The array of found items
 			Items *[]struct {
 				Item *struct {
 					// Address The address of the organization
-					Address *string `json:"address,omitempty"`
+					Address *string `json:"address"`
 
 					// CustomFields Custom fields
 					CustomFields *[]string `json:"custom_fields,omitempty"`
@@ -25566,35 +25536,35 @@ type GetOrganizationResponse struct {
 			// Address The address of the organization
 			Address *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the organization
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the organization
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the organization
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the organization
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the organization
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the organization
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the organization
 				Value *string `json:"value,omitempty"`
-			} `json:"address,omitempty"`
+			} `json:"address"`
 
 			// AnnualRevenue The annual revenue of the organization
 			AnnualRevenue *int `json:"annual_revenue"`
@@ -25627,7 +25597,7 @@ type GetOrganizationResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the organization
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -25668,35 +25638,35 @@ type UpdateOrganizationResponse struct {
 			// Address The address of the organization
 			Address *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the organization
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the organization
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the organization
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the organization
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the organization
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the organization
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the organization
 				Value *string `json:"value,omitempty"`
-			} `json:"address,omitempty"`
+			} `json:"address"`
 
 			// AnnualRevenue The annual revenue of the organization
 			AnnualRevenue *int `json:"annual_revenue"`
@@ -25729,7 +25699,7 @@ type UpdateOrganizationResponse struct {
 			OwnerId *int `json:"owner_id,omitempty"`
 
 			// UpdateTime The last updated date and time of the organization
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the organization
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -25766,7 +25736,7 @@ type GetOrganizationFollowersResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Followers array
@@ -25839,7 +25809,7 @@ type GetOrganizationFollowersChangelogResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Follower changelogs array
@@ -26507,7 +26477,7 @@ type GetPersonsResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Persons array
@@ -26588,43 +26558,43 @@ type GetPersonsResponse struct {
 			} `json:"phones,omitempty"`
 
 			// PictureId The ID of the picture associated with the person
-			PictureId *int `json:"picture_id,omitempty"`
+			PictureId *int `json:"picture_id"`
 
 			// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 			PostalAddress *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the person
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the person
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the person
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the person
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the person
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the person
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the person
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the person
 				Value *string `json:"value,omitempty"`
-			} `json:"postal_address,omitempty"`
+			} `json:"postal_address"`
 
 			// UpdateTime The last updated date and time of the person
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the person
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -26732,43 +26702,43 @@ type AddPersonResponse struct {
 			} `json:"phones,omitempty"`
 
 			// PictureId The ID of the picture associated with the person
-			PictureId *int `json:"picture_id,omitempty"`
+			PictureId *int `json:"picture_id"`
 
 			// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 			PostalAddress *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the person
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the person
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the person
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the person
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the person
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the person
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the person
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the person
 				Value *string `json:"value,omitempty"`
-			} `json:"postal_address,omitempty"`
+			} `json:"postal_address"`
 
 			// UpdateTime The last updated date and time of the person
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the person
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -26802,7 +26772,7 @@ type SearchPersonsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *struct {
 			// Items The array of found items
@@ -26981,43 +26951,43 @@ type GetPersonResponse struct {
 			} `json:"phones,omitempty"`
 
 			// PictureId The ID of the picture associated with the person
-			PictureId *int `json:"picture_id,omitempty"`
+			PictureId *int `json:"picture_id"`
 
 			// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 			PostalAddress *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the person
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the person
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the person
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the person
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the person
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the person
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the person
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the person
 				Value *string `json:"value,omitempty"`
-			} `json:"postal_address,omitempty"`
+			} `json:"postal_address"`
 
 			// UpdateTime The last updated date and time of the person
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the person
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -27125,43 +27095,43 @@ type UpdatePersonResponse struct {
 			} `json:"phones,omitempty"`
 
 			// PictureId The ID of the picture associated with the person
-			PictureId *int `json:"picture_id,omitempty"`
+			PictureId *int `json:"picture_id"`
 
 			// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 			PostalAddress *struct {
 				// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-				AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+				AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 				// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-				AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+				AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 				// Country Country of the person
-				Country *string `json:"country,omitempty"`
+				Country *string `json:"country"`
 
 				// Locality Locality (e.g. city) of the person
-				Locality *string `json:"locality,omitempty"`
+				Locality *string `json:"locality"`
 
 				// PostalCode Postal code of the person
-				PostalCode *string `json:"postal_code,omitempty"`
+				PostalCode *string `json:"postal_code"`
 
 				// Route Route (e.g. street) of the person
-				Route *string `json:"route,omitempty"`
+				Route *string `json:"route"`
 
 				// StreetNumber Street number of the person
-				StreetNumber *string `json:"street_number,omitempty"`
+				StreetNumber *string `json:"street_number"`
 
 				// Sublocality Sublocality (e.g. neighborhood) of the person
-				Sublocality *string `json:"sublocality,omitempty"`
+				Sublocality *string `json:"sublocality"`
 
 				// Subpremise Subpremise (e.g. apartment/suite number) of the person
-				Subpremise *string `json:"subpremise,omitempty"`
+				Subpremise *string `json:"subpremise"`
 
 				// Value The full address of the person
 				Value *string `json:"value,omitempty"`
-			} `json:"postal_address,omitempty"`
+			} `json:"postal_address"`
 
 			// UpdateTime The last updated date and time of the person
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 
 			// VisibleTo The visibility of the person
 			VisibleTo *int `json:"visible_to,omitempty"`
@@ -27195,7 +27165,7 @@ type GetPersonFollowersResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Followers array
@@ -27268,7 +27238,7 @@ type GetPersonFollowersChangelogResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Follower changelogs array
@@ -27611,7 +27581,7 @@ type GetPipelinesResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Pipelines array
@@ -28339,7 +28309,7 @@ type GetProductsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Array containing data for all products
@@ -28566,14 +28536,14 @@ type SearchProductsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *struct {
 			// Items The array of found items
 			Items *[]struct {
 				Item *struct {
 					// Code The code of the product
-					Code *int `json:"code,omitempty"`
+					Code *string `json:"code"`
 
 					// CustomFields The custom fields
 					CustomFields *[]string `json:"custom_fields,omitempty"`
@@ -28988,7 +28958,7 @@ type GetProductFollowersResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Followers array
@@ -29061,7 +29031,7 @@ type GetProductFollowersChangelogResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Follower changelogs array
@@ -29294,7 +29264,7 @@ type GetProductVariationsResponse struct {
 		// AdditionalData Pagination related data
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Array containing data for all products
@@ -30004,7 +29974,7 @@ type GetProjectTemplatesResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *[]struct {
 			// AddTime The creation date and time of the project template in ISO 8601 format
@@ -30106,7 +30076,7 @@ type GetProjectsResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Projects array
@@ -30281,7 +30251,7 @@ type GetArchivedProjectsResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Projects array
@@ -30372,7 +30342,7 @@ type SearchProjectsResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *struct {
 			// Items The array of found projects
@@ -30759,7 +30729,7 @@ type GetProjectChangelogResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *[]struct {
 			// ActorUserId The ID of the user who made the change
@@ -30835,7 +30805,7 @@ type GetStagesResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data The array of stages
@@ -30868,7 +30838,7 @@ type GetStagesResponse struct {
 			PipelineId *int `json:"pipeline_id,omitempty"`
 
 			// UpdateTime The stage update time
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -30926,7 +30896,7 @@ type AddStageResponse struct {
 			PipelineId *int `json:"pipeline_id,omitempty"`
 
 			// UpdateTime The stage update time
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -31014,7 +30984,7 @@ type GetStageResponse struct {
 			PipelineId *int `json:"pipeline_id,omitempty"`
 
 			// UpdateTime The stage update time
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -31072,7 +31042,7 @@ type UpdateStageResponse struct {
 			PipelineId *int `json:"pipeline_id,omitempty"`
 
 			// UpdateTime The stage update time
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 
 		// Success If the response is successful or not
@@ -31103,7 +31073,7 @@ type GetTasksResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 		Data *[]struct {
 			// AddTime The creation date and time of the task in ISO 8601 format
@@ -31430,7 +31400,7 @@ type GetUserFollowersResponse struct {
 		// AdditionalData The additional data of the list
 		AdditionalData *struct {
 			// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-			NextCursor *string `json:"next_cursor,omitempty"`
+			NextCursor *string `json:"next_cursor"`
 		} `json:"additional_data,omitempty"`
 
 		// Data Followers array
@@ -33392,7 +33362,7 @@ func ParseGetActivitiesResponse(rsp *http.Response) (*GetActivitiesResponse, err
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Activities array
@@ -33437,7 +33407,7 @@ func ParseGetActivitiesResponse(rsp *http.Response) (*GetActivitiesResponse, err
 				CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 				// DealId The ID of the deal linked to the activity
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Done Whether the activity is marked as done or not
 				Done *bool `json:"done,omitempty"`
@@ -33446,10 +33416,10 @@ func ParseGetActivitiesResponse(rsp *http.Response) (*GetActivitiesResponse, err
 				DueDate *string `json:"due_date,omitempty"`
 
 				// DueTime The due time of the activity
-				DueTime *string `json:"due_time,omitempty"`
+				DueTime *string `json:"due_time"`
 
 				// Duration The duration of the activity
-				Duration *string `json:"duration,omitempty"`
+				Duration *string `json:"duration"`
 
 				// Id The ID of the activity
 				Id *int `json:"id,omitempty"`
@@ -33458,49 +33428,49 @@ func ParseGetActivitiesResponse(rsp *http.Response) (*GetActivitiesResponse, err
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LeadId The ID of the lead linked to the activity
-				LeadId *string `json:"lead_id,omitempty"`
+				LeadId *string `json:"lead_id"`
 
 				// Location Location of the activity
 				Location *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the activity
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the activity
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the activity
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the activity
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the activity
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the activity
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the activity
 					Value *string `json:"value,omitempty"`
-				} `json:"location,omitempty"`
+				} `json:"location"`
 
 				// MarkedAsDoneTime The date and time when the activity was marked as done
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 				// Note The note of the activity
 				Note *string `json:"note,omitempty"`
 
 				// OrgId The ID of the organization linked to the activity
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 				Outcome *int `json:"outcome"`
@@ -33518,13 +33488,13 @@ func ParseGetActivitiesResponse(rsp *http.Response) (*GetActivitiesResponse, err
 				} `json:"participants,omitempty"`
 
 				// PersonId The ID of the person linked to the activity
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 				Priority *int `json:"priority,omitempty"`
 
 				// ProjectId The ID of the project linked to the activity
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// PublicDescription The public description of the activity
 				PublicDescription *string `json:"public_description,omitempty"`
@@ -33609,7 +33579,7 @@ func ParseAddActivityResponse(rsp *http.Response) (*AddActivityResponse, error) 
 				CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 				// DealId The ID of the deal linked to the activity
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Done Whether the activity is marked as done or not
 				Done *bool `json:"done,omitempty"`
@@ -33618,10 +33588,10 @@ func ParseAddActivityResponse(rsp *http.Response) (*AddActivityResponse, error) 
 				DueDate *string `json:"due_date,omitempty"`
 
 				// DueTime The due time of the activity
-				DueTime *string `json:"due_time,omitempty"`
+				DueTime *string `json:"due_time"`
 
 				// Duration The duration of the activity
-				Duration *string `json:"duration,omitempty"`
+				Duration *string `json:"duration"`
 
 				// Id The ID of the activity
 				Id *int `json:"id,omitempty"`
@@ -33630,49 +33600,49 @@ func ParseAddActivityResponse(rsp *http.Response) (*AddActivityResponse, error) 
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LeadId The ID of the lead linked to the activity
-				LeadId *string `json:"lead_id,omitempty"`
+				LeadId *string `json:"lead_id"`
 
 				// Location Location of the activity
 				Location *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the activity
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the activity
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the activity
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the activity
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the activity
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the activity
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the activity
 					Value *string `json:"value,omitempty"`
-				} `json:"location,omitempty"`
+				} `json:"location"`
 
 				// MarkedAsDoneTime The date and time when the activity was marked as done
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 				// Note The note of the activity
 				Note *string `json:"note,omitempty"`
 
 				// OrgId The ID of the organization linked to the activity
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 				Outcome *int `json:"outcome"`
@@ -33690,13 +33660,13 @@ func ParseAddActivityResponse(rsp *http.Response) (*AddActivityResponse, error) 
 				} `json:"participants,omitempty"`
 
 				// PersonId The ID of the person linked to the activity
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 				Priority *int `json:"priority,omitempty"`
 
 				// ProjectId The ID of the project linked to the activity
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// PublicDescription The public description of the activity
 				PublicDescription *string `json:"public_description,omitempty"`
@@ -33815,7 +33785,7 @@ func ParseGetActivityResponse(rsp *http.Response) (*GetActivityResponse, error) 
 				CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 				// DealId The ID of the deal linked to the activity
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Done Whether the activity is marked as done or not
 				Done *bool `json:"done,omitempty"`
@@ -33824,10 +33794,10 @@ func ParseGetActivityResponse(rsp *http.Response) (*GetActivityResponse, error) 
 				DueDate *string `json:"due_date,omitempty"`
 
 				// DueTime The due time of the activity
-				DueTime *string `json:"due_time,omitempty"`
+				DueTime *string `json:"due_time"`
 
 				// Duration The duration of the activity
-				Duration *string `json:"duration,omitempty"`
+				Duration *string `json:"duration"`
 
 				// Id The ID of the activity
 				Id *int `json:"id,omitempty"`
@@ -33836,49 +33806,49 @@ func ParseGetActivityResponse(rsp *http.Response) (*GetActivityResponse, error) 
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LeadId The ID of the lead linked to the activity
-				LeadId *string `json:"lead_id,omitempty"`
+				LeadId *string `json:"lead_id"`
 
 				// Location Location of the activity
 				Location *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the activity
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the activity
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the activity
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the activity
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the activity
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the activity
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the activity
 					Value *string `json:"value,omitempty"`
-				} `json:"location,omitempty"`
+				} `json:"location"`
 
 				// MarkedAsDoneTime The date and time when the activity was marked as done
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 				// Note The note of the activity
 				Note *string `json:"note,omitempty"`
 
 				// OrgId The ID of the organization linked to the activity
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 				Outcome *int `json:"outcome"`
@@ -33896,13 +33866,13 @@ func ParseGetActivityResponse(rsp *http.Response) (*GetActivityResponse, error) 
 				} `json:"participants,omitempty"`
 
 				// PersonId The ID of the person linked to the activity
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 				Priority *int `json:"priority,omitempty"`
 
 				// ProjectId The ID of the project linked to the activity
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// PublicDescription The public description of the activity
 				PublicDescription *string `json:"public_description,omitempty"`
@@ -33987,7 +33957,7 @@ func ParseUpdateActivityResponse(rsp *http.Response) (*UpdateActivityResponse, e
 				CreatorUserId *int `json:"creator_user_id,omitempty"`
 
 				// DealId The ID of the deal linked to the activity
-				DealId *int `json:"deal_id,omitempty"`
+				DealId *int `json:"deal_id"`
 
 				// Done Whether the activity is marked as done or not
 				Done *bool `json:"done,omitempty"`
@@ -33996,10 +33966,10 @@ func ParseUpdateActivityResponse(rsp *http.Response) (*UpdateActivityResponse, e
 				DueDate *string `json:"due_date,omitempty"`
 
 				// DueTime The due time of the activity
-				DueTime *string `json:"due_time,omitempty"`
+				DueTime *string `json:"due_time"`
 
 				// Duration The duration of the activity
-				Duration *string `json:"duration,omitempty"`
+				Duration *string `json:"duration"`
 
 				// Id The ID of the activity
 				Id *int `json:"id,omitempty"`
@@ -34008,49 +33978,49 @@ func ParseUpdateActivityResponse(rsp *http.Response) (*UpdateActivityResponse, e
 				IsDeleted *bool `json:"is_deleted,omitempty"`
 
 				// LeadId The ID of the lead linked to the activity
-				LeadId *string `json:"lead_id,omitempty"`
+				LeadId *string `json:"lead_id"`
 
 				// Location Location of the activity
 				Location *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the activity
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the activity
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the activity
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the activity
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the activity
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the activity
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the activity
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the activity
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the activity
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the activity
 					Value *string `json:"value,omitempty"`
-				} `json:"location,omitempty"`
+				} `json:"location"`
 
 				// MarkedAsDoneTime The date and time when the activity was marked as done
-				MarkedAsDoneTime *string `json:"marked_as_done_time,omitempty"`
+				MarkedAsDoneTime *string `json:"marked_as_done_time"`
 
 				// Note The note of the activity
 				Note *string `json:"note,omitempty"`
 
 				// OrgId The ID of the organization linked to the activity
-				OrgId *int `json:"org_id,omitempty"`
+				OrgId *int `json:"org_id"`
 
 				// Outcome The ID of the Outcome for the activity. The available Outcome values depend on the activity type and can be retrieved using the Activity Fields API.
 				Outcome *int `json:"outcome"`
@@ -34068,13 +34038,13 @@ func ParseUpdateActivityResponse(rsp *http.Response) (*UpdateActivityResponse, e
 				} `json:"participants,omitempty"`
 
 				// PersonId The ID of the person linked to the activity
-				PersonId *int `json:"person_id,omitempty"`
+				PersonId *int `json:"person_id"`
 
 				// Priority The priority of the activity. Mappable to a specific string using activityFields API.
 				Priority *int `json:"priority,omitempty"`
 
 				// ProjectId The ID of the project linked to the activity
-				ProjectId *int `json:"project_id,omitempty"`
+				ProjectId *int `json:"project_id"`
 
 				// PublicDescription The public description of the activity
 				PublicDescription *string `json:"public_description,omitempty"`
@@ -35167,7 +35137,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Deals array
@@ -35269,7 +35239,7 @@ func ParseGetDealsResponse(rsp *http.Response) (*GetDealsResponse, error) {
 				Title *string `json:"title,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// Value The value of the deal
 				Value *float32 `json:"value,omitempty"`
@@ -35408,7 +35378,7 @@ func ParseAddDealResponse(rsp *http.Response) (*AddDealResponse, error) {
 				Title *string `json:"title,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// Value The value of the deal
 				Value *float32 `json:"value,omitempty"`
@@ -35452,7 +35422,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Deals array
@@ -35554,7 +35524,7 @@ func ParseGetArchivedDealsResponse(rsp *http.Response) (*GetArchivedDealsRespons
 				Title *string `json:"title,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// Value The value of the deal
 				Value *float32 `json:"value,omitempty"`
@@ -35645,7 +35615,7 @@ func ParseGetDealsProductsResponse(rsp *http.Response) (*GetDealsProductsRespons
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Array containing data for all products attached to deals
@@ -35764,7 +35734,7 @@ func ParseSearchDealsResponse(rsp *http.Response) (*SearchDealsResponse, error) 
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *struct {
 				// Items The array of deals
@@ -35820,7 +35790,7 @@ func ParseSearchDealsResponse(rsp *http.Response) (*SearchDealsResponse, error) 
 						Type *string `json:"type,omitempty"`
 
 						// Value The value of the deal
-						Value *int `json:"value,omitempty"`
+						Value *float32 `json:"value"`
 
 						// VisibleTo The visibility of the deal
 						VisibleTo *int `json:"visible_to,omitempty"`
@@ -35992,7 +35962,7 @@ func ParseGetDealResponse(rsp *http.Response) (*GetDealResponse, error) {
 				Title *string `json:"title,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// Value The value of the deal
 				Value *float32 `json:"value,omitempty"`
@@ -36131,7 +36101,7 @@ func ParseUpdateDealResponse(rsp *http.Response) (*UpdateDealResponse, error) {
 				Title *string `json:"title,omitempty"`
 
 				// UpdateTime The last updated date and time of the deal
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// Value The value of the deal
 				Value *float32 `json:"value,omitempty"`
@@ -36497,7 +36467,7 @@ func ParseGetDealFollowersResponse(rsp *http.Response) (*GetDealFollowersRespons
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Followers array
@@ -36578,7 +36548,7 @@ func ParseGetDealFollowersChangelogResponse(rsp *http.Response) (*GetDealFollowe
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Follower changelogs array
@@ -36826,7 +36796,7 @@ func ParseGetDealProductsResponse(rsp *http.Response) (*GetDealProductsResponse,
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Array containing data for all products attached to deals
@@ -37316,7 +37286,7 @@ func ParseSearchItemResponse(rsp *http.Response) (*SearchItemResponse, error) {
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *struct {
 				// Items The array of found items
@@ -37370,7 +37340,7 @@ func ParseSearchItemByFieldResponse(rsp *http.Response) (*SearchItemByFieldRespo
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data The array of found fields
@@ -37414,7 +37384,7 @@ func ParseSearchLeadsResponse(rsp *http.Response) (*SearchLeadsResponse, error) 
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *struct {
 				// Items The array of leads
@@ -37452,7 +37422,7 @@ func ParseSearchLeadsResponse(rsp *http.Response) (*SearchLeadsResponse, error) 
 
 							// Name The name of the person the lead is associated with
 							Name *string `json:"name,omitempty"`
-						} `json:"person,omitempty"`
+						} `json:"person"`
 						Phones *[]string `json:"phones,omitempty"`
 
 						// Title The title of the lead
@@ -38290,7 +38260,7 @@ func ParseGetOrganizationsResponse(rsp *http.Response) (*GetOrganizationsRespons
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Organizations array
@@ -38301,35 +38271,35 @@ func ParseGetOrganizationsResponse(rsp *http.Response) (*GetOrganizationsRespons
 				// Address The address of the organization
 				Address *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the organization
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the organization
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the organization
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the organization
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the organization
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the organization
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the organization
 					Value *string `json:"value,omitempty"`
-				} `json:"address,omitempty"`
+				} `json:"address"`
 
 				// AnnualRevenue The annual revenue of the organization
 				AnnualRevenue *int `json:"annual_revenue"`
@@ -38362,7 +38332,7 @@ func ParseGetOrganizationsResponse(rsp *http.Response) (*GetOrganizationsRespons
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the organization
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -38407,35 +38377,35 @@ func ParseAddOrganizationResponse(rsp *http.Response) (*AddOrganizationResponse,
 				// Address The address of the organization
 				Address *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the organization
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the organization
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the organization
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the organization
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the organization
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the organization
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the organization
 					Value *string `json:"value,omitempty"`
-				} `json:"address,omitempty"`
+				} `json:"address"`
 
 				// AnnualRevenue The annual revenue of the organization
 				AnnualRevenue *int `json:"annual_revenue"`
@@ -38468,7 +38438,7 @@ func ParseAddOrganizationResponse(rsp *http.Response) (*AddOrganizationResponse,
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the organization
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -38509,14 +38479,14 @@ func ParseSearchOrganizationResponse(rsp *http.Response) (*SearchOrganizationRes
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *struct {
 				// Items The array of found items
 				Items *[]struct {
 					Item *struct {
 						// Address The address of the organization
-						Address *string `json:"address,omitempty"`
+						Address *string `json:"address"`
 
 						// CustomFields Custom fields
 						CustomFields *[]string `json:"custom_fields,omitempty"`
@@ -38616,35 +38586,35 @@ func ParseGetOrganizationResponse(rsp *http.Response) (*GetOrganizationResponse,
 				// Address The address of the organization
 				Address *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the organization
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the organization
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the organization
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the organization
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the organization
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the organization
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the organization
 					Value *string `json:"value,omitempty"`
-				} `json:"address,omitempty"`
+				} `json:"address"`
 
 				// AnnualRevenue The annual revenue of the organization
 				AnnualRevenue *int `json:"annual_revenue"`
@@ -38677,7 +38647,7 @@ func ParseGetOrganizationResponse(rsp *http.Response) (*GetOrganizationResponse,
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the organization
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -38722,35 +38692,35 @@ func ParseUpdateOrganizationResponse(rsp *http.Response) (*UpdateOrganizationRes
 				// Address The address of the organization
 				Address *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the organization
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the organization
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the organization
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the organization
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the organization
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the organization
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the organization
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the organization
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the organization
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the organization
 					Value *string `json:"value,omitempty"`
-				} `json:"address,omitempty"`
+				} `json:"address"`
 
 				// AnnualRevenue The annual revenue of the organization
 				AnnualRevenue *int `json:"annual_revenue"`
@@ -38783,7 +38753,7 @@ func ParseUpdateOrganizationResponse(rsp *http.Response) (*UpdateOrganizationRes
 				OwnerId *int `json:"owner_id,omitempty"`
 
 				// UpdateTime The last updated date and time of the organization
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the organization
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -38824,7 +38794,7 @@ func ParseGetOrganizationFollowersResponse(rsp *http.Response) (*GetOrganization
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Followers array
@@ -38905,7 +38875,7 @@ func ParseGetOrganizationFollowersChangelogResponse(rsp *http.Response) (*GetOrg
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Follower changelogs array
@@ -39589,7 +39559,7 @@ func ParseGetPersonsResponse(rsp *http.Response) (*GetPersonsResponse, error) {
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Persons array
@@ -39670,43 +39640,43 @@ func ParseGetPersonsResponse(rsp *http.Response) (*GetPersonsResponse, error) {
 				} `json:"phones,omitempty"`
 
 				// PictureId The ID of the picture associated with the person
-				PictureId *int `json:"picture_id,omitempty"`
+				PictureId *int `json:"picture_id"`
 
 				// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 				PostalAddress *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the person
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the person
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the person
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the person
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the person
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the person
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the person
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the person
 					Value *string `json:"value,omitempty"`
-				} `json:"postal_address,omitempty"`
+				} `json:"postal_address"`
 
 				// UpdateTime The last updated date and time of the person
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the person
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -39818,43 +39788,43 @@ func ParseAddPersonResponse(rsp *http.Response) (*AddPersonResponse, error) {
 				} `json:"phones,omitempty"`
 
 				// PictureId The ID of the picture associated with the person
-				PictureId *int `json:"picture_id,omitempty"`
+				PictureId *int `json:"picture_id"`
 
 				// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 				PostalAddress *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the person
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the person
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the person
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the person
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the person
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the person
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the person
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the person
 					Value *string `json:"value,omitempty"`
-				} `json:"postal_address,omitempty"`
+				} `json:"postal_address"`
 
 				// UpdateTime The last updated date and time of the person
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the person
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -39892,7 +39862,7 @@ func ParseSearchPersonsResponse(rsp *http.Response) (*SearchPersonsResponse, err
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *struct {
 				// Items The array of found items
@@ -40079,43 +40049,43 @@ func ParseGetPersonResponse(rsp *http.Response) (*GetPersonResponse, error) {
 				} `json:"phones,omitempty"`
 
 				// PictureId The ID of the picture associated with the person
-				PictureId *int `json:"picture_id,omitempty"`
+				PictureId *int `json:"picture_id"`
 
 				// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 				PostalAddress *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the person
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the person
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the person
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the person
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the person
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the person
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the person
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the person
 					Value *string `json:"value,omitempty"`
-				} `json:"postal_address,omitempty"`
+				} `json:"postal_address"`
 
 				// UpdateTime The last updated date and time of the person
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the person
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -40227,43 +40197,43 @@ func ParseUpdatePersonResponse(rsp *http.Response) (*UpdatePersonResponse, error
 				} `json:"phones,omitempty"`
 
 				// PictureId The ID of the picture associated with the person
-				PictureId *int `json:"picture_id,omitempty"`
+				PictureId *int `json:"picture_id"`
 
 				// PostalAddress Postal address of the person, included if contact sync is enabled for the company
 				PostalAddress *struct {
 					// AdminAreaLevel1 Admin area level 1 (e.g. state) of the person
-					AdminAreaLevel1 *string `json:"admin_area_level_1,omitempty"`
+					AdminAreaLevel1 *string `json:"admin_area_level_1"`
 
 					// AdminAreaLevel2 Admin area level 2 (e.g. county) of the person
-					AdminAreaLevel2 *string `json:"admin_area_level_2,omitempty"`
+					AdminAreaLevel2 *string `json:"admin_area_level_2"`
 
 					// Country Country of the person
-					Country *string `json:"country,omitempty"`
+					Country *string `json:"country"`
 
 					// Locality Locality (e.g. city) of the person
-					Locality *string `json:"locality,omitempty"`
+					Locality *string `json:"locality"`
 
 					// PostalCode Postal code of the person
-					PostalCode *string `json:"postal_code,omitempty"`
+					PostalCode *string `json:"postal_code"`
 
 					// Route Route (e.g. street) of the person
-					Route *string `json:"route,omitempty"`
+					Route *string `json:"route"`
 
 					// StreetNumber Street number of the person
-					StreetNumber *string `json:"street_number,omitempty"`
+					StreetNumber *string `json:"street_number"`
 
 					// Sublocality Sublocality (e.g. neighborhood) of the person
-					Sublocality *string `json:"sublocality,omitempty"`
+					Sublocality *string `json:"sublocality"`
 
 					// Subpremise Subpremise (e.g. apartment/suite number) of the person
-					Subpremise *string `json:"subpremise,omitempty"`
+					Subpremise *string `json:"subpremise"`
 
 					// Value The full address of the person
 					Value *string `json:"value,omitempty"`
-				} `json:"postal_address,omitempty"`
+				} `json:"postal_address"`
 
 				// UpdateTime The last updated date and time of the person
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 
 				// VisibleTo The visibility of the person
 				VisibleTo *int `json:"visible_to,omitempty"`
@@ -40301,7 +40271,7 @@ func ParseGetPersonFollowersResponse(rsp *http.Response) (*GetPersonFollowersRes
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Followers array
@@ -40382,7 +40352,7 @@ func ParseGetPersonFollowersChangelogResponse(rsp *http.Response) (*GetPersonFol
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Follower changelogs array
@@ -40757,7 +40727,7 @@ func ParseGetPipelinesResponse(rsp *http.Response) (*GetPipelinesResponse, error
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Pipelines array
@@ -41513,7 +41483,7 @@ func ParseGetProductsResponse(rsp *http.Response) (*GetProductsResponse, error) 
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Array containing data for all products
@@ -41744,14 +41714,14 @@ func ParseSearchProductsResponse(rsp *http.Response) (*SearchProductsResponse, e
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *struct {
 				// Items The array of found items
 				Items *[]struct {
 					Item *struct {
 						// Code The code of the product
-						Code *int `json:"code,omitempty"`
+						Code *string `json:"code"`
 
 						// CustomFields The custom fields
 						CustomFields *[]string `json:"custom_fields,omitempty"`
@@ -42180,7 +42150,7 @@ func ParseGetProductFollowersResponse(rsp *http.Response) (*GetProductFollowersR
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Followers array
@@ -42261,7 +42231,7 @@ func ParseGetProductFollowersChangelogResponse(rsp *http.Response) (*GetProductF
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Follower changelogs array
@@ -42518,7 +42488,7 @@ func ParseGetProductVariationsResponse(rsp *http.Response) (*GetProductVariation
 			// AdditionalData Pagination related data
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Array containing data for all products
@@ -43252,7 +43222,7 @@ func ParseGetProjectTemplatesResponse(rsp *http.Response) (*GetProjectTemplatesR
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *[]struct {
 				// AddTime The creation date and time of the project template in ISO 8601 format
@@ -43362,7 +43332,7 @@ func ParseGetProjectsResponse(rsp *http.Response) (*GetProjectsResponse, error) 
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Projects array
@@ -43545,7 +43515,7 @@ func ParseGetArchivedProjectsResponse(rsp *http.Response) (*GetArchivedProjectsR
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Projects array
@@ -43640,7 +43610,7 @@ func ParseSearchProjectsResponse(rsp *http.Response) (*SearchProjectsResponse, e
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *struct {
 				// Items The array of found projects
@@ -44047,7 +44017,7 @@ func ParseGetProjectChangelogResponse(rsp *http.Response) (*GetProjectChangelogR
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *[]struct {
 				// ActorUserId The ID of the user who made the change
@@ -44131,7 +44101,7 @@ func ParseGetStagesResponse(rsp *http.Response) (*GetStagesResponse, error) {
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data The array of stages
@@ -44164,7 +44134,7 @@ func ParseGetStagesResponse(rsp *http.Response) (*GetStagesResponse, error) {
 				PipelineId *int `json:"pipeline_id,omitempty"`
 
 				// UpdateTime The stage update time
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -44226,7 +44196,7 @@ func ParseAddStageResponse(rsp *http.Response) (*AddStageResponse, error) {
 				PipelineId *int `json:"pipeline_id,omitempty"`
 
 				// UpdateTime The stage update time
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -44322,7 +44292,7 @@ func ParseGetStageResponse(rsp *http.Response) (*GetStageResponse, error) {
 				PipelineId *int `json:"pipeline_id,omitempty"`
 
 				// UpdateTime The stage update time
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -44384,7 +44354,7 @@ func ParseUpdateStageResponse(rsp *http.Response) (*UpdateStageResponse, error) 
 				PipelineId *int `json:"pipeline_id,omitempty"`
 
 				// UpdateTime The stage update time
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 
 			// Success If the response is successful or not
@@ -44419,7 +44389,7 @@ func ParseGetTasksResponse(rsp *http.Response) (*GetTasksResponse, error) {
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 			Data *[]struct {
 				// AddTime The creation date and time of the task in ISO 8601 format
@@ -44766,7 +44736,7 @@ func ParseGetUserFollowersResponse(rsp *http.Response) (*GetUserFollowersRespons
 			// AdditionalData The additional data of the list
 			AdditionalData *struct {
 				// NextCursor The first item on the next page. The value of the `next_cursor` field will be `null` if you have reached the end of the dataset and there’s no more pages to be returned.
-				NextCursor *string `json:"next_cursor,omitempty"`
+				NextCursor *string `json:"next_cursor"`
 			} `json:"additional_data,omitempty"`
 
 			// Data Followers array

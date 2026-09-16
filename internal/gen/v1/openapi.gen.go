@@ -27602,7 +27602,7 @@ type GetProductDealsResponse struct {
 				Email *string `json:"email,omitempty"`
 
 				// HasPic If the creator has a picture or not
-				HasPic *bool `json:"has_pic,omitempty"`
+				HasPic *int `json:"has_pic,omitempty"`
 
 				// Id The ID of the deal creator
 				Id *int `json:"id,omitempty"`
@@ -28093,7 +28093,7 @@ type GetProductFilesResponse struct {
 
 			// Url The URL to download the file
 			Url *string `json:"url,omitempty"`
-		} `json:"data,omitempty"`
+		} `json:"data"`
 
 		// Success If the response is successful or not
 		Success *bool `json:"success,omitempty"`
@@ -46137,7 +46137,7 @@ func ParseGetProductDealsResponse(rsp *http.Response) (*GetProductDealsResponse,
 					Email *string `json:"email,omitempty"`
 
 					// HasPic If the creator has a picture or not
-					HasPic *bool `json:"has_pic,omitempty"`
+					HasPic *int `json:"has_pic,omitempty"`
 
 					// Id The ID of the deal creator
 					Id *int `json:"id,omitempty"`
@@ -46632,7 +46632,7 @@ func ParseGetProductFilesResponse(rsp *http.Response) (*GetProductFilesResponse,
 
 				// Url The URL to download the file
 				Url *string `json:"url,omitempty"`
-			} `json:"data,omitempty"`
+			} `json:"data"`
 
 			// Success If the response is successful or not
 			Success *bool `json:"success,omitempty"`

@@ -7,6 +7,27 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+### Added
+
+- Add `ClearOrganizationAddress` and `ClearPersonPostalAddress` to send explicit
+  JSON null addresses while preserving omission for unset fields.
+
+### Fixed
+
+- Make `WithActivityPersonID` select the primary participant in activity create
+  and update requests. It overrides supplied primary flags, preserves other
+  participants supplied in the request, and no longer sends top-level `person_id`.
+
+### Changed
+
+- Refresh upstream OpenAPI specifications and internal clients for nullable
+  fields, corrected search result types, and array query parameters. Existing
+  public options retain comma-separated query encoding and omit empty inputs.
+- Document the required person name and contact sync requirements for person fields.
+- Bump the preferred Go toolchain, CI, and drift checks to Go 1.27.1 while
+  retaining Go 1.25 compatibility. Update golangci-lint, gosec, and govulncheck for
+  Go 1.27 support.
+
 ## [1.14.0] - 2026-09-09
 
 ### Added

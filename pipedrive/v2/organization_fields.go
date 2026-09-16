@@ -162,23 +162,21 @@ func WithOrganizationFieldRequestOptions(opts ...pipedrive.RequestOption) Organi
 
 func WithOrganizationFieldIncludeFields(fields ...FieldIncludeField) GetOrganizationFieldOption {
 	return getOrganizationFieldOptionFunc(func(cfg *getOrganizationFieldOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetOrganizationFieldParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetOrganizationFieldParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
 func WithOrganizationFieldsIncludeFields(fields ...FieldIncludeField) ListOrganizationFieldsOption {
 	return listOrganizationFieldsOptionFunc(func(cfg *listOrganizationFieldsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.GetOrganizationFieldsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetOrganizationFieldsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 

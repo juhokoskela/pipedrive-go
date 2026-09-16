@@ -427,14 +427,14 @@ func TestProductsService_Search(t *testing.T) {
 		if got := q.Get("exact_match"); got != "true" {
 			t.Fatalf("unexpected exact_match: %q", got)
 		}
-		if got := q.Get("limit"); got != "1" {
+		if got := q.Get("limit"); got != "2" {
 			t.Fatalf("unexpected limit: %q", got)
 		}
 		if got := q.Get("cursor"); got != "c2" {
 			t.Fatalf("unexpected cursor: %q", got)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"data":{"items":[{"result_score":0.9,"item":{"id":1}}]},"additional_data":{"next_cursor":null}}`))
+		_, _ = w.Write([]byte(`{"data":{"items":[{"result_score":0.9,"item":{"id":1,"code":"SKU-01"}},{"item":{"id":2,"code":null}}]},"additional_data":{"next_cursor":null}}`))
 	}))
 	t.Cleanup(srv.Close)
 
@@ -448,7 +448,7 @@ func TestProductsService_Search(t *testing.T) {
 		"wid",
 		WithProductSearchFields(ProductSearchFieldName, ProductSearchFieldCode),
 		WithProductSearchExactMatch(true),
-		WithProductSearchPageSize(1),
+		WithProductSearchPageSize(2),
 		WithProductSearchCursor("c2"),
 	)
 	if err != nil {
@@ -457,8 +457,14 @@ func TestProductsService_Search(t *testing.T) {
 	if next != nil {
 		t.Fatalf("expected nil cursor, got %q", *next)
 	}
-	if len(results.Items) != 1 {
+	if len(results.Items) != 2 {
 		t.Fatalf("unexpected results: %#v", results)
+	}
+	if got := results.Items[0].Item["code"]; got != "SKU-01" {
+		t.Errorf("code = %v, want SKU-01", got)
+	}
+	if got, ok := results.Items[1].Item["code"]; !ok || got != nil {
+		t.Errorf("code = %v (present: %t), want null", got, ok)
 	}
 }
 
