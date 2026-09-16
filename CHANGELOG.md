@@ -7,6 +7,14 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-09-16
+
+### Compatibility
+
+Go 1.26 or newer is required. The SDK supports the two most recent Go release
+lines. v1.14.0 was the last release to support Go 1.25; projects that still use
+Go 1.25 should pin that version.
+
 ### Added
 
 - Add `ClearOrganizationAddress` and `ClearPersonPostalAddress` to send explicit
@@ -24,8 +32,6 @@ Semantic Versioning.
   fields, corrected search result types, and array query parameters. Existing
   public options retain comma-separated query encoding and omit empty inputs.
 - Document the required person name and contact sync requirements for person fields.
-- Require Go 1.26 or newer and support the two most recent Go release lines.
-  v1.14.0 was the last release to support Go 1.25.
 - Update `golang.org/x/oauth2` from v0.36.0 to v0.37.0.
 - Bump the preferred Go toolchain, CI, and drift checks to Go 1.27.1. Update
   golangci-lint, gosec, and govulncheck for Go 1.27 support.
