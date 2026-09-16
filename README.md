@@ -28,15 +28,16 @@ Endpoint tables:
 go get github.com/juhokoskela/pipedrive-go@latest
 ```
 
-Go 1.25+ is required.
+Go 1.26+ is required. We support the two most recent Go release lines.
 
 The repository prefers Go 1.27.1 locally via the `toolchain` directive in
 `go.mod`.
 
-To pin a specific version:
+v1.14.0 was the last release to support Go 1.25. Projects that still use Go 1.25
+can pin that version:
 
 ```sh
-go get github.com/juhokoskela/pipedrive-go@v1.13.1
+go get github.com/juhokoskela/pipedrive-go@v1.14.0
 ```
 
 ## Quickstart (API token)
