@@ -1362,7 +1362,7 @@ type GetDealsParams struct {
 	StageId *int `form:"stage_id,omitempty" json:"stage_id,omitempty"`
 
 	// Status Only fetch deals with a specific status. If omitted, all not deleted deals are returned. If set to deleted, deals that have been deleted up to 30 days ago will be included. Multiple statuses can be included as a comma separated array. If filter_id is provided, this is ignored.
-	Status *GetDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
+	Status *[]GetDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// UpdatedSince If set, only deals with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.
 	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
@@ -1497,7 +1497,7 @@ type GetArchivedDealsParams struct {
 	StageId *int `form:"stage_id,omitempty" json:"stage_id,omitempty"`
 
 	// Status Only fetch deals with a specific status. If omitted, all not deleted deals are returned. If set to deleted, deals that have been deleted up to 30 days ago will be included. Multiple statuses can be included as a comma separated array. If filter_id is provided, this is ignored.
-	Status *GetArchivedDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
+	Status *[]GetArchivedDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// UpdatedSince If set, only deals with an `update_time` later than or equal to this time are returned. In RFC3339 format, e.g. 2025-01-01T10:20:00Z.
 	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
@@ -1590,7 +1590,7 @@ type SearchDealsParams struct {
 	Term string `form:"term" json:"term"`
 
 	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.
-	Fields *SearchDealsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+	Fields *[]SearchDealsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
 
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
@@ -1602,10 +1602,10 @@ type SearchDealsParams struct {
 	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
 
 	// Status Will filter deals by the provided specific status. open = Open, won = Won, lost = Lost. The upper limit of found deals associated with the status is 2000.
-	Status *SearchDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
+	Status *[]SearchDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// IncludeFields Supports including optional fields in the results which are not provided by default
-	IncludeFields *SearchDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]SearchDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -1788,7 +1788,7 @@ type UpdateInstallmentJSONBody struct {
 // DeleteManyDealProductsParams defines parameters for DeleteManyDealProducts.
 type DeleteManyDealProductsParams struct {
 	// Ids Comma-separated list of deal product IDs to delete. If not provided, all deal products will be deleted up to 100 items. Maximum 100 IDs allowed.
-	Ids *string `form:"ids,omitempty" json:"ids,omitempty"`
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 }
 
 // GetDealProductsParams defines parameters for GetDealProducts.
@@ -2040,10 +2040,10 @@ type SearchItemParams struct {
 	Term string `form:"term" json:"term"`
 
 	// ItemTypes A comma-separated string array. The type of items to perform the search from. Defaults to all.
-	ItemTypes *SearchItemParamsItemTypes `form:"item_types,omitempty" json:"item_types,omitempty"`
+	ItemTypes *[]SearchItemParamsItemTypes `form:"item_types,omitempty" json:"item_types,omitempty"`
 
 	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all. Relevant for each item type are:<br> <table> <tr><th><b>Item type</b></th><th><b>Field</b></th></tr> <tr><td>Deal</td><td>`custom_fields`, `notes`, `title`</td></tr> <tr><td>Person</td><td>`custom_fields`, `email`, `name`, `notes`, `phone`</td></tr> <tr><td>Organization</td><td>`address`, `custom_fields`, `name`, `notes`</td></tr> <tr><td>Product</td><td>`code`, `custom_fields`, `name`</td></tr> <tr><td>Lead</td><td>`custom_fields`, `notes`, `title`</td></tr> <tr><td>File</td><td>`name`</td></tr> <tr><td>Mail attachment</td><td>`name`</td></tr> <tr><td>Project</td><td> `custom_fields`, `notes`, `title`, `description` </td></tr> </table> <br> Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.
-	Fields *SearchItemParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+	Fields *[]SearchItemParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
 
 	// SearchForRelatedItems When enabled, the response will include up to 100 newest related leads and 100 newest related deals for each found person and organization and up to 100 newest related persons for each found organization
 	SearchForRelatedItems *bool `form:"search_for_related_items,omitempty" json:"search_for_related_items,omitempty"`
@@ -2052,7 +2052,7 @@ type SearchItemParams struct {
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
 
 	// IncludeFields A comma-separated string array. Supports including optional fields in the results which are not provided by default.
-	IncludeFields *SearchItemParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]SearchItemParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2103,7 +2103,7 @@ type SearchLeadsParams struct {
 	Term string `form:"term" json:"term"`
 
 	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all of them.
-	Fields *SearchLeadsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+	Fields *[]SearchLeadsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
 
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
@@ -2115,7 +2115,7 @@ type SearchLeadsParams struct {
 	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
 
 	// IncludeFields Supports including optional fields in the results which are not provided by default
-	IncludeFields *SearchLeadsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]SearchLeadsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2442,7 +2442,7 @@ type SearchOrganizationParams struct {
 	Term string `form:"term" json:"term"`
 
 	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.
-	Fields *SearchOrganizationParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+	Fields *[]SearchOrganizationParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
 
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
@@ -2895,7 +2895,7 @@ type SearchPersonsParams struct {
 	Term string `form:"term" json:"term"`
 
 	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.
-	Fields *SearchPersonsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+	Fields *[]SearchPersonsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
 
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
@@ -2904,7 +2904,7 @@ type SearchPersonsParams struct {
 	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
 
 	// IncludeFields Supports including optional fields in the results which are not provided by default
-	IncludeFields *SearchPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]SearchPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -3347,13 +3347,13 @@ type SearchProductsParams struct {
 	Term string `form:"term" json:"term"`
 
 	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.
-	Fields *SearchProductsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+	Fields *[]SearchProductsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
 
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
 
 	// IncludeFields Supports including optional fields in the results which are not provided by default
-	IncludeFields *SearchProductsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
+	IncludeFields *[]SearchProductsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
 	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
@@ -3740,7 +3740,7 @@ type SearchProjectsParams struct {
 	Term string `form:"term" json:"term"`
 
 	// Fields A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.
-	Fields *SearchProjectsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
+	Fields *[]SearchProjectsParamsFields `form:"fields,omitempty" json:"fields,omitempty"`
 
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
@@ -11034,7 +11034,7 @@ func NewGetDealsRequest(server string, params *GetDealsParams) (*http.Request, e
 
 		if params.Status != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11395,7 +11395,7 @@ func NewGetArchivedDealsRequest(server string, params *GetArchivedDealsParams) (
 
 		if params.Status != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11802,7 +11802,7 @@ func NewSearchDealsRequest(server string, params *SearchDealsParams) (*http.Requ
 
 		if params.Fields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11866,7 +11866,7 @@ func NewSearchDealsRequest(server string, params *SearchDealsParams) (*http.Requ
 
 		if params.Status != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11882,7 +11882,7 @@ func NewSearchDealsRequest(server string, params *SearchDealsParams) (*http.Requ
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12780,7 +12780,7 @@ func NewDeleteManyDealProductsRequest(server string, id int, params *DeleteManyD
 
 		if params.Ids != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, *params.Ids); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13134,7 +13134,7 @@ func NewSearchItemRequest(server string, params *SearchItemParams) (*http.Reques
 
 		if params.ItemTypes != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "item_types", runtime.ParamLocationQuery, *params.ItemTypes); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "item_types", runtime.ParamLocationQuery, *params.ItemTypes); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13150,7 +13150,7 @@ func NewSearchItemRequest(server string, params *SearchItemParams) (*http.Reques
 
 		if params.Fields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13198,7 +13198,7 @@ func NewSearchItemRequest(server string, params *SearchItemParams) (*http.Reques
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13408,7 +13408,7 @@ func NewSearchLeadsRequest(server string, params *SearchLeadsParams) (*http.Requ
 
 		if params.Fields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13472,7 +13472,7 @@ func NewSearchLeadsRequest(server string, params *SearchLeadsParams) (*http.Requ
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -14333,7 +14333,7 @@ func NewSearchOrganizationRequest(server string, params *SearchOrganizationParam
 
 		if params.Fields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15571,7 +15571,7 @@ func NewSearchPersonsRequest(server string, params *SearchPersonsParams) (*http.
 
 		if params.Fields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15619,7 +15619,7 @@ func NewSearchPersonsRequest(server string, params *SearchPersonsParams) (*http.
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -17231,7 +17231,7 @@ func NewSearchProductsRequest(server string, params *SearchProductsParams) (*htt
 
 		if params.Fields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -17263,7 +17263,7 @@ func NewSearchProductsRequest(server string, params *SearchProductsParams) (*htt
 
 		if params.IncludeFields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "include_fields", runtime.ParamLocationQuery, *params.IncludeFields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -18865,7 +18865,7 @@ func NewSearchProjectsRequest(server string, params *SearchProjectsParams) (*htt
 
 		if params.Fields != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "fields", runtime.ParamLocationQuery, *params.Fields); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err

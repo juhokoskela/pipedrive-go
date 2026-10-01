@@ -1611,6 +1611,8 @@ paths:
                             - billing_frequency
                             - projects_board
                             - projects_phase
+                            - participants
+                            - attendees
                         options:
                           type: array
                           nullable: true
@@ -1847,6 +1849,8 @@ paths:
                           - billing_frequency
                           - projects_board
                           - projects_phase
+                          - participants
+                          - attendees
                       options:
                         type: array
                         nullable: true
@@ -1981,12 +1985,17 @@ paths:
         - in: query
           name: status
           schema:
-            type: string
-            enum:
-              - open
-              - won
-              - lost
-              - deleted
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - open
+                - won
+                - lost
+                - deleted
+          style: form
+          explode: false
           description: 'Only fetch deals with a specific status. If omitted, all not deleted deals are returned. If set to deleted, deals that have been deleted up to 30 days ago will be included. Multiple statuses can be included as a comma separated array. If filter_id is provided, this is ignored.'
         - in: query
           name: updated_since
@@ -2632,12 +2641,17 @@ paths:
         - in: query
           name: status
           schema:
-            type: string
-            enum:
-              - open
-              - won
-              - lost
-              - deleted
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - open
+                - won
+                - lost
+                - deleted
+          style: form
+          explode: false
           description: 'Only fetch deals with a specific status. If omitted, all not deleted deals are returned. If set to deleted, deals that have been deleted up to 30 days ago will be included. Multiple statuses can be included as a comma separated array. If filter_id is provided, this is ignored.'
         - in: query
           name: updated_since
@@ -4051,11 +4065,16 @@ paths:
         - in: query
           name: fields
           schema:
-            type: string
-            enum:
-              - custom_fields
-              - notes
-              - title
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - custom_fields
+                - notes
+                - title
+          style: form
+          explode: false
           description: 'A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.'
         - in: query
           name: exact_match
@@ -4075,18 +4094,28 @@ paths:
         - in: query
           name: status
           schema:
-            type: string
-            enum:
-              - open
-              - won
-              - lost
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - open
+                - won
+                - lost
+          style: form
+          explode: false
           description: 'Will filter deals by the provided specific status. open = Open, won = Won, lost = Lost. The upper limit of found deals associated with the status is 2000.'
         - in: query
           name: include_fields
           schema:
-            type: string
-            enum:
-              - deal.cc_email
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - deal.cc_email
+          style: form
+          explode: false
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
@@ -4772,8 +4801,17 @@ paths:
           required: false
           description: 'Comma-separated list of deal product IDs to delete. If not provided, all deal products will be deleted up to 100 items. Maximum 100 IDs allowed.'
           schema:
-            type: string
-            example: '1,2,3'
+            type: array
+            uniqueItems: true
+            maxItems: 100
+            items:
+              type: integer
+            example:
+              - 1
+              - 2
+              - 3
+          style: form
+          explode: false
       responses:
         '200':
           description: Delete many products from a deal
@@ -14619,11 +14657,16 @@ paths:
         - in: query
           name: fields
           schema:
-            type: string
-            enum:
-              - code
-              - custom_fields
-              - name
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - code
+                - custom_fields
+                - name
+          style: form
+          explode: false
           description: 'A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.'
         - in: query
           name: exact_match
@@ -14633,9 +14676,14 @@ paths:
         - in: query
           name: include_fields
           schema:
-            type: string
-            enum:
-              - product.price
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - product.price
+          style: form
+          explode: false
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
@@ -17088,11 +17136,16 @@ paths:
         - in: query
           name: fields
           schema:
-            type: string
-            enum:
-              - custom_fields
-              - notes
-              - title
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - custom_fields
+                - notes
+                - title
+          style: form
+          explode: false
           description: A comma-separated string array. The fields to perform the search from. Defaults to all of them.
         - in: query
           name: exact_match
@@ -17112,9 +17165,14 @@ paths:
         - in: query
           name: include_fields
           schema:
-            type: string
-            enum:
-              - lead.was_seen
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - lead.was_seen
+          style: form
+          explode: false
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
@@ -17490,12 +17548,17 @@ paths:
         - in: query
           name: fields
           schema:
-            type: string
-            enum:
-              - address
-              - custom_fields
-              - notes
-              - name
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - address
+                - custom_fields
+                - notes
+                - name
+          style: form
+          explode: false
           description: 'A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.'
         - in: query
           name: exact_match
@@ -17626,13 +17689,18 @@ paths:
         - in: query
           name: fields
           schema:
-            type: string
-            enum:
-              - custom_fields
-              - email
-              - notes
-              - phone
-              - name
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - custom_fields
+                - email
+                - notes
+                - phone
+                - name
+          style: form
+          explode: false
           description: 'A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.'
         - in: query
           name: exact_match
@@ -17647,9 +17715,14 @@ paths:
         - in: query
           name: include_fields
           schema:
-            type: string
-            enum:
-              - person.picture
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - person.picture
+          style: form
+          explode: false
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
@@ -17795,31 +17868,41 @@ paths:
         - in: query
           name: item_types
           schema:
-            type: string
-            enum:
-              - deal
-              - person
-              - organization
-              - product
-              - lead
-              - file
-              - mail_attachment
-              - project
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - deal
+                - person
+                - organization
+                - product
+                - lead
+                - file
+                - mail_attachment
+                - project
+          style: form
+          explode: false
           description: A comma-separated string array. The type of items to perform the search from. Defaults to all.
         - in: query
           name: fields
           schema:
-            type: string
-            enum:
-              - address
-              - code
-              - custom_fields
-              - email
-              - name
-              - notes
-              - phone
-              - title
-              - description
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - address
+                - code
+                - custom_fields
+                - email
+                - name
+                - notes
+                - phone
+                - title
+                - description
+          style: form
+          explode: false
           description: 'A comma-separated string array. The fields to perform the search from. Defaults to all. Relevant for each item type are:<br> <table> <tr><th><b>Item type</b></th><th><b>Field</b></th></tr> <tr><td>Deal</td><td>`custom_fields`, `notes`, `title`</td></tr> <tr><td>Person</td><td>`custom_fields`, `email`, `name`, `notes`, `phone`</td></tr> <tr><td>Organization</td><td>`address`, `custom_fields`, `name`, `notes`</td></tr> <tr><td>Product</td><td>`code`, `custom_fields`, `name`</td></tr> <tr><td>Lead</td><td>`custom_fields`, `notes`, `title`</td></tr> <tr><td>File</td><td>`name`</td></tr> <tr><td>Mail attachment</td><td>`name`</td></tr> <tr><td>Project</td><td> `custom_fields`, `notes`, `title`, `description` </td></tr> </table> <br> Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.'
         - in: query
           name: search_for_related_items
@@ -17834,11 +17917,16 @@ paths:
         - in: query
           name: include_fields
           schema:
-            type: string
-            enum:
-              - deal.cc_email
-              - person.picture
-              - product.price
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - deal.cc_email
+                - person.picture
+                - product.price
+          style: form
+          explode: false
           description: A comma-separated string array. Supports including optional fields in the results which are not provided by default.
         - in: query
           name: limit
@@ -19060,6 +19148,7 @@ paths:
                             - billing_frequency
                             - projects_board
                             - projects_phase
+                            - orgs
                         options:
                           type: array
                           nullable: true
@@ -19346,6 +19435,7 @@ paths:
                           - billing_frequency
                           - projects_board
                           - projects_phase
+                          - orgs
                       options:
                         type: array
                         nullable: true
@@ -19535,6 +19625,7 @@ paths:
                           - billing_frequency
                           - projects_board
                           - projects_phase
+                          - orgs
                       options:
                         type: array
                         nullable: true
@@ -19765,6 +19856,7 @@ paths:
                           - billing_frequency
                           - projects_board
                           - projects_phase
+                          - orgs
                       options:
                         type: array
                         nullable: true
@@ -21257,12 +21349,17 @@ paths:
         - in: query
           name: fields
           schema:
-            type: string
-            enum:
-              - custom_fields
-              - notes
-              - title
-              - description
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - custom_fields
+                - notes
+                - title
+                - description
+          style: form
+          explode: false
           description: 'A comma-separated string array. The fields to perform the search from. Defaults to all of them. Only the following custom field types are searchable: `address`, `varchar`, `text`, `varchar_auto`, `double`, `monetary` and `phone`. Read more about searching by custom fields <a href="https://support.pipedrive.com/en/article/search-finding-what-you-need#searching-by-custom-fields" target="_blank" rel="noopener noreferrer">here</a>.'
         - in: query
           name: exact_match
