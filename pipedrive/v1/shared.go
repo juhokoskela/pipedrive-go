@@ -2,8 +2,6 @@ package v1
 
 import (
 	"net/http"
-	"strconv"
-	"strings"
 	"time"
 
 	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
@@ -39,15 +37,12 @@ func validateIDs[T ~int64](ids []T, label string) error {
 	return nil
 }
 
-func joinIDs[T ~int64](ids []T) string {
-	if len(ids) == 0 {
-		return ""
-	}
-	out := make([]string, 0, len(ids))
+func intIDs[T ~int64](ids []T) []int {
+	out := make([]int, 0, len(ids))
 	for _, id := range ids {
-		out = append(out, strconv.FormatInt(int64(id), 10))
+		out = append(out, int(id))
 	}
-	return strings.Join(out, ",")
+	return out
 }
 
 func formatV1Time(t time.Time) string {

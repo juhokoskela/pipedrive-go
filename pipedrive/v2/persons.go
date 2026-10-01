@@ -642,12 +642,11 @@ func WithPersonsCursor(cursor string) ListPersonsOption {
 
 func WithPersonSearchFields(fields ...PersonSearchField) SearchPersonsOption {
 	return searchPersonsOptionFunc(func(cfg *searchPersonsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchPersonsParamsFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchPersonsParamsFields(csv)
-		cfg.params.Fields = &value
+		cfg.params.Fields = &values
 	})
 }
 
@@ -666,12 +665,11 @@ func WithPersonSearchOrganizationID(id OrganizationID) SearchPersonsOption {
 
 func WithPersonSearchIncludeFields(fields ...PersonSearchIncludeField) SearchPersonsOption {
 	return searchPersonsOptionFunc(func(cfg *searchPersonsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchPersonsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchPersonsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 

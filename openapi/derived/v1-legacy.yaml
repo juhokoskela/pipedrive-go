@@ -4260,7 +4260,12 @@ paths:
                   name: items
                   description: 'A comma-separated string for filtering out item specific updates. (Possible values - call, activity, plannedActivity, change, note, deal, file, dealChange, personChange, organizationChange, follower, dealFollower, personFollower, organizationFollower, participant, comment, mailMessage, mailMessageWithAttachment, invoice, document, marketing_campaign_stat, marketing_status_change).'
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: string
+                  style: form
+                  explode: false
             responses:
                 '200':
                     description: Get the deal updates
@@ -7209,7 +7214,12 @@ paths:
                 - in: query
                   name: ids
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: integer
+                  style: form
+                  explode: false
                   required: true
                   description: The comma-separated field IDs to delete
             responses:
@@ -8493,7 +8503,12 @@ paths:
                   name: ids
                   required: true
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: integer
+                  style: form
+                  explode: false
                   description: The comma-separated filter IDs to delete
             responses:
                 '200':
@@ -17614,7 +17629,12 @@ paths:
                   name: items
                   description: 'A comma-separated string for filtering out item specific updates. (Possible values - activity, plannedActivity, note, file, change, deal, follower, participant, mailMessage, mailMessageWithAttachment, invoice, activityFile, document).'
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: string
+                  style: form
+                  explode: false
             responses:
                 '200':
                     description: Get the organization updates
@@ -18435,7 +18455,12 @@ paths:
                 - in: query
                   name: ids
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: integer
+                  style: form
+                  explode: false
                   required: true
                   description: The comma-separated field IDs to delete
             responses:
@@ -19945,7 +19970,12 @@ paths:
                   name: items
                   description: 'A comma-separated string for filtering out item specific updates. (Possible values - call, activity, plannedActivity, change, note, deal, file, dealChange, personChange, organizationChange, follower, dealFollower, personFollower, organizationFollower, participant, comment, mailMessage, mailMessageWithAttachment, invoice, document, marketing_campaign_stat, marketing_status_change).'
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: string
+                  style: form
+                  explode: false
             responses:
                 '200':
                     description: Get the person updates
@@ -21653,7 +21683,12 @@ paths:
                 - in: query
                   name: ids
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: integer
+                  style: form
+                  explode: false
                   required: true
                   description: The comma-separated field IDs to delete
             responses:
@@ -23489,7 +23524,12 @@ paths:
                   name: ids
                   required: true
                   schema:
-                    type: string
+                    type: array
+                    uniqueItems: true
+                    items:
+                        type: integer
+                  style: form
+                  explode: false
                   description: The comma-separated field IDs to delete
             responses:
                 '200':

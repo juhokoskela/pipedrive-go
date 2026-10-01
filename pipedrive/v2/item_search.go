@@ -130,34 +130,31 @@ func WithItemSearchRequestOptions(opts ...pipedrive.RequestOption) ItemSearchReq
 
 func WithItemSearchTypes(types ...ItemSearchType) SearchItemsOption {
 	return searchItemsOptionFunc(func(cfg *searchItemsOptions) {
-		csv := joinCSV(types)
-		if csv == "" {
+		values := queryValues[genv2.SearchItemParamsItemTypes](types)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchItemParamsItemTypes(csv)
-		cfg.params.ItemTypes = &value
+		cfg.params.ItemTypes = &values
 	})
 }
 
 func WithItemSearchFields(fields ...ItemSearchField) SearchItemsOption {
 	return searchItemsOptionFunc(func(cfg *searchItemsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchItemParamsFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchItemParamsFields(csv)
-		cfg.params.Fields = &value
+		cfg.params.Fields = &values
 	})
 }
 
 func WithItemSearchIncludeFields(fields ...ItemSearchIncludeField) SearchItemsOption {
 	return searchItemsOptionFunc(func(cfg *searchItemsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchItemParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchItemParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 

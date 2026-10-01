@@ -65,7 +65,7 @@ func (s *DealFieldsService) Delete(ctx context.Context, ids []FieldID, opts ...D
 	cfg := newDeleteDealFieldsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	params := genv1.DeleteDealFieldsParams{Ids: joinIDs(ids)}
+	params := genv1.DeleteDealFieldsParams{Ids: intIDs(ids)}
 	resp, err := s.client.gen.DeleteDealFields(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err

@@ -870,7 +870,7 @@ type GetCurrenciesParams struct {
 // DeleteDealFieldsParams defines parameters for DeleteDealFields.
 type DeleteDealFieldsParams struct {
 	// Ids The comma-separated field IDs to delete
-	Ids string `form:"ids" json:"ids"`
+	Ids []int `form:"ids" json:"ids"`
 }
 
 // GetDealsSummaryParams defines parameters for GetDealsSummary.
@@ -1020,7 +1020,7 @@ type GetDealUpdatesParams struct {
 	AllChanges *string `form:"all_changes,omitempty" json:"all_changes,omitempty"`
 
 	// Items A comma-separated string for filtering out item specific updates. (Possible values - call, activity, plannedActivity, change, note, deal, file, dealChange, personChange, organizationChange, follower, dealFollower, personFollower, organizationFollower, participant, comment, mailMessage, mailMessageWithAttachment, invoice, document, marketing_campaign_stat, marketing_status_change).
-	Items *string `form:"items,omitempty" json:"items,omitempty"`
+	Items *[]string `form:"items,omitempty" json:"items,omitempty"`
 }
 
 // GetDealMailMessagesParams defines parameters for GetDealMailMessages.
@@ -1167,7 +1167,7 @@ type UpdateFileFormdataBody struct {
 // DeleteFiltersParams defines parameters for DeleteFilters.
 type DeleteFiltersParams struct {
 	// Ids The comma-separated filter IDs to delete
-	Ids string `form:"ids" json:"ids"`
+	Ids []int `form:"ids" json:"ids"`
 }
 
 // GetFiltersParams defines parameters for GetFilters.
@@ -1954,7 +1954,7 @@ type RefreshTokensFormdataBodyGrantType string
 // DeleteOrganizationFieldsParams defines parameters for DeleteOrganizationFields.
 type DeleteOrganizationFieldsParams struct {
 	// Ids The comma-separated field IDs to delete
-	Ids string `form:"ids" json:"ids"`
+	Ids []int `form:"ids" json:"ids"`
 }
 
 // GetOrganizationRelationshipsParams defines parameters for GetOrganizationRelationships.
@@ -2038,7 +2038,7 @@ type GetOrganizationUpdatesParams struct {
 	AllChanges *string `form:"all_changes,omitempty" json:"all_changes,omitempty"`
 
 	// Items A comma-separated string for filtering out item specific updates. (Possible values - activity, plannedActivity, note, file, change, deal, follower, participant, mailMessage, mailMessageWithAttachment, invoice, activityFile, document).
-	Items *string `form:"items,omitempty" json:"items,omitempty"`
+	Items *[]string `form:"items,omitempty" json:"items,omitempty"`
 }
 
 // GetOrganizationMailMessagesParams defines parameters for GetOrganizationMailMessages.
@@ -2083,7 +2083,7 @@ type GetPermissionSetAssignmentsParams struct {
 // DeletePersonFieldsParams defines parameters for DeletePersonFields.
 type DeletePersonFieldsParams struct {
 	// Ids The comma-separated field IDs to delete
-	Ids string `form:"ids" json:"ids"`
+	Ids []int `form:"ids" json:"ids"`
 }
 
 // GetPersonChangelogParams defines parameters for GetPersonChangelog.
@@ -2119,7 +2119,7 @@ type GetPersonUpdatesParams struct {
 	AllChanges *string `form:"all_changes,omitempty" json:"all_changes,omitempty"`
 
 	// Items A comma-separated string for filtering out item specific updates. (Possible values - call, activity, plannedActivity, change, note, deal, file, dealChange, personChange, organizationChange, follower, dealFollower, personFollower, organizationFollower, participant, comment, mailMessage, mailMessageWithAttachment, invoice, document, marketing_campaign_stat, marketing_status_change).
-	Items *string `form:"items,omitempty" json:"items,omitempty"`
+	Items *[]string `form:"items,omitempty" json:"items,omitempty"`
 }
 
 // GetPersonMailMessagesParams defines parameters for GetPersonMailMessages.
@@ -2230,7 +2230,7 @@ type GetPipelineMovementStatisticsParams struct {
 // DeleteProductFieldsParams defines parameters for DeleteProductFields.
 type DeleteProductFieldsParams struct {
 	// Ids The comma-separated field IDs to delete
-	Ids string `form:"ids" json:"ids"`
+	Ids []int `form:"ids" json:"ids"`
 }
 
 // GetProductDealsParams defines parameters for GetProductDeals.
@@ -6612,7 +6612,7 @@ func NewDeleteDealFieldsRequest(server string, params *DeleteDealFieldsParams) (
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -7456,7 +7456,7 @@ func NewGetDealUpdatesRequest(server string, id int, params *GetDealUpdatesParam
 
 		if params.Items != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "items", runtime.ParamLocationQuery, *params.Items); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "items", runtime.ParamLocationQuery, *params.Items); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -8243,7 +8243,7 @@ func NewDeleteFiltersRequest(server string, params *DeleteFiltersParams) (*http.
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -11463,7 +11463,7 @@ func NewDeleteOrganizationFieldsRequest(server string, params *DeleteOrganizatio
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -11947,7 +11947,7 @@ func NewGetOrganizationUpdatesRequest(server string, id int, params *GetOrganiza
 
 		if params.Items != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "items", runtime.ParamLocationQuery, *params.Items); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "items", runtime.ParamLocationQuery, *params.Items); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12318,7 +12318,7 @@ func NewDeletePersonFieldsRequest(server string, params *DeletePersonFieldsParam
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -12580,7 +12580,7 @@ func NewGetPersonUpdatesRequest(server string, id int, params *GetPersonUpdatesP
 
 		if params.Items != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "items", runtime.ParamLocationQuery, *params.Items); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "items", runtime.ParamLocationQuery, *params.Items); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -13266,7 +13266,7 @@ func NewDeleteProductFieldsRequest(server string, params *DeleteProductFieldsPar
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ids", runtime.ParamLocationQuery, params.Ids); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err

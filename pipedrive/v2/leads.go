@@ -121,12 +121,11 @@ func WithLeadRequestOptions(opts ...pipedrive.RequestOption) LeadRequestOption {
 
 func WithLeadSearchFields(fields ...LeadSearchField) SearchLeadsOption {
 	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchLeadsParamsFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchLeadsParamsFields(csv)
-		cfg.params.Fields = &value
+		cfg.params.Fields = &values
 	})
 }
 
@@ -152,12 +151,11 @@ func WithLeadSearchOrganizationID(id OrganizationID) SearchLeadsOption {
 
 func WithLeadSearchIncludeFields(fields ...LeadSearchIncludeField) SearchLeadsOption {
 	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchLeadsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchLeadsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 

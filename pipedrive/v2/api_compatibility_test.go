@@ -9,6 +9,89 @@ import (
 	"time"
 )
 
+func TestDeleteProductsQueryOptions(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		opts []DeleteDealProductsOption
+		want string
+	}{
+		{name: "omitted"},
+		{name: "empty", opts: []DeleteDealProductsOption{WithDealProductAttachmentIDs()}},
+		{name: "empty preserves selection", opts: []DeleteDealProductsOption{WithDealProductAttachmentIDs(15, 16), WithDealProductAttachmentIDs()}, want: "15,16"},
+		{name: "last selection wins", opts: []DeleteDealProductsOption{WithDealProductAttachmentIDs(15, 16), WithDealProductAttachmentIDs(17)}, want: "17"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				values := r.URL.Query()["ids"]
+				if tt.want == "" {
+					if len(values) != 0 {
+						t.Errorf("ids should be omitted, got %q", values)
+					}
+				} else if len(values) != 1 || values[0] != tt.want {
+					t.Errorf("ids = %q, want a single value %q", values, tt.want)
+				}
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":{"ids":[]}}`))
+			})
+			if _, err := client.Deals.DeleteProducts(context.Background(), 7, tt.opts...); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
+func TestDeleteProductsRejectsInvalidAttachmentIDs(t *testing.T) {
+	t.Parallel()
+
+	for _, tt := range []struct {
+		name string
+		id   DealProductAttachmentID
+	}{
+		{name: "zero", id: 0},
+		{name: "negative", id: -1},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				t.Error("unexpected deletion request")
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":{"ids":[]}}`))
+			})
+			result, err := client.Deals.DeleteProducts(context.Background(), 7, WithDealProductAttachmentIDs(15, tt.id))
+			if result != nil || err == nil {
+				t.Fatalf("DeleteProducts = %#v, %v; want an error", result, err)
+			}
+		})
+	}
+}
+
+func TestEmptySearchQueryOptionsRemainOmitted(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query()
+		for _, key := range []string{"item_types", "fields", "include_fields"} {
+			if query.Has(key) {
+				t.Errorf("%s should be omitted, got %q", key, query[key])
+			}
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"items":[]}}`))
+	})
+	_, _, err := client.ItemSearch.Search(context.Background(), "deal",
+		WithItemSearchTypes("", ""),
+		WithItemSearchFields("", ""),
+		WithItemSearchIncludeFields("", ""),
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestFieldOption_UnmarshalJSONIdentifierKinds(t *testing.T) {
 	t.Parallel()
 

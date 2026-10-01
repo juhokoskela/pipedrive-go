@@ -584,12 +584,11 @@ func WithOrganizationsCursor(cursor string) ListOrganizationsOption {
 
 func WithOrganizationSearchFields(fields ...OrganizationSearchField) SearchOrganizationsOption {
 	return searchOrganizationsOptionFunc(func(cfg *searchOrganizationsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchOrganizationParamsFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchOrganizationParamsFields(csv)
-		cfg.params.Fields = &value
+		cfg.params.Fields = &values
 	})
 }
 

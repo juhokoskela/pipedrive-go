@@ -65,7 +65,7 @@ func (s *ProductFieldsService) Delete(ctx context.Context, ids []FieldID, opts .
 	cfg := newDeleteProductFieldsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	params := genv1.DeleteProductFieldsParams{Ids: joinIDs(ids)}
+	params := genv1.DeleteProductFieldsParams{Ids: intIDs(ids)}
 	resp, err := s.client.gen.DeleteProductFields(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err

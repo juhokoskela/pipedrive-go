@@ -534,7 +534,7 @@ func (s *FiltersService) DeleteBulk(ctx context.Context, ids []FilterID, opts ..
 	cfg := newDeleteFiltersOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	params := genv1.DeleteFiltersParams{Ids: joinIDs(ids)}
+	params := genv1.DeleteFiltersParams{Ids: intIDs(ids)}
 	resp, err := s.client.gen.DeleteFilters(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
