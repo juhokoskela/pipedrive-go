@@ -7,6 +7,27 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.16.0] - 2026-10-01
+
+### Added
+
+- Add `WithDealSearchStatuses` to search multiple deal statuses while preserving
+  the existing `WithDealSearchStatus` signature.
+- Add named field types for `participants`, `attendees`, and `orgs`.
+
+### Fixed
+
+- Reject invalid product attachment IDs in bulk deal-product deletion before
+  sending a request.
+
+### Changed
+
+- Refresh upstream OpenAPI specifications and internal clients for array query
+  parameters. Existing public signatures, comma-separated query encoding, and
+  empty-option behavior are preserved.
+- Update CodeQL actions to v4.38.2 and group future CodeQL updates in Dependabot
+  to keep initialization and analysis on the same version.
+
 ## [1.15.0] - 2026-09-16
 
 ### Compatibility
