@@ -65,7 +65,7 @@ func (s *OrganizationFieldsService) Delete(ctx context.Context, ids []FieldID, o
 	cfg := newDeleteOrganizationFieldsOptions(opts)
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	params := genv1.DeleteOrganizationFieldsParams{Ids: joinIDs(ids)}
+	params := genv1.DeleteOrganizationFieldsParams{Ids: intIDs(ids)}
 	resp, err := s.client.gen.DeleteOrganizationFields(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
