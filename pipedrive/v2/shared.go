@@ -133,10 +133,6 @@ func validateCSVValues(values []string, label string) error {
 	return nil
 }
 
-func joinIDs[T ~int64](ids []T) string {
-	return strings.Join(stringIDs(ids), ",")
-}
-
 func stringIDs[T ~int64](ids []T) []string {
 	out := make([]string, 0, len(ids))
 	for _, id := range ids {

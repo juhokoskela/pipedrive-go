@@ -162,14 +162,3 @@ func TestRequestEditorConversionSkipsNil(t *testing.T) {
 		t.Fatalf("unexpected edited header: %q", got)
 	}
 }
-
-func TestJoinIDs(t *testing.T) {
-	t.Parallel()
-
-	if got := joinIDs([]FieldID{}); got != "" {
-		t.Fatalf("empty joinIDs = %q", got)
-	}
-	if got := joinIDs([]FieldID{1, 2}); got != "1,2" {
-		t.Fatalf("joinIDs = %q", got)
-	}
-}

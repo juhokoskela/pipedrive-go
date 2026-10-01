@@ -9,6 +9,71 @@ import (
 	"time"
 )
 
+func TestFieldResponsesAcceptNewFieldTypes(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		value     string
+		fieldType FieldType
+		get       func(*Client) (*Field, error)
+	}{
+		{"participants", FieldTypeParticipants, func(c *Client) (*Field, error) { return c.ActivityFields.Get(context.Background(), "participants") }},
+		{"attendees", FieldTypeAttendees, func(c *Client) (*Field, error) { return c.ActivityFields.Get(context.Background(), "attendees") }},
+		{"orgs", FieldTypeOrgs, func(c *Client) (*Field, error) { return c.ProjectFields.Get(context.Background(), "orgs") }},
+	}
+	for _, tt := range tests {
+		t.Run(tt.value, func(t *testing.T) {
+			t.Parallel()
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":{"field_type":"` + tt.value + `"}}`))
+			})
+			field, err := tt.get(client)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if field.FieldType != tt.fieldType {
+				t.Fatalf("field type = %q, want %q", field.FieldType, tt.fieldType)
+			}
+		})
+	}
+}
+
+func TestDeleteProductsQueryOptions(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		opts []DeleteDealProductsOption
+		want string
+	}{
+		{name: "omitted"},
+		{name: "empty", opts: []DeleteDealProductsOption{WithDealProductAttachmentIDs()}},
+		{name: "empty preserves selection", opts: []DeleteDealProductsOption{WithDealProductAttachmentIDs(15, 16), WithDealProductAttachmentIDs()}, want: "15,16"},
+		{name: "last selection wins", opts: []DeleteDealProductsOption{WithDealProductAttachmentIDs(15, 16), WithDealProductAttachmentIDs(17)}, want: "17"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				values := r.URL.Query()["ids"]
+				if tt.want == "" {
+					if len(values) != 0 {
+						t.Errorf("ids should be omitted, got %q", values)
+					}
+				} else if len(values) != 1 || values[0] != tt.want {
+					t.Errorf("ids = %q, want a single value %q", values, tt.want)
+				}
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":{"ids":[]}}`))
+			})
+			if _, err := client.Deals.DeleteProducts(context.Background(), 7, tt.opts...); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
 func TestFieldOption_UnmarshalJSONIdentifierKinds(t *testing.T) {
 	t.Parallel()
 
