@@ -514,6 +514,41 @@ func TestDealsService_Delete(t *testing.T) {
 	}
 }
 
+func TestDealsService_SearchStatuses(t *testing.T) {
+	t.Parallel()
+
+	for _, tt := range []struct {
+		name string
+		opts []SearchDealsOption
+		want string
+	}{
+		{name: "multiple statuses", opts: []SearchDealsOption{WithDealSearchStatus("", DealSearchStatusOpen, "", DealSearchStatusWon)}, want: "open,won"},
+		{name: "empty", opts: []SearchDealsOption{WithDealSearchStatus()}},
+		{name: "empty strings", opts: []SearchDealsOption{WithDealSearchStatus("", "")}},
+		{name: "empty preserves selection", opts: []SearchDealsOption{WithDealSearchStatus(DealSearchStatusOpen), WithDealSearchStatus()}, want: "open"},
+		{name: "last selection wins", opts: []SearchDealsOption{WithDealSearchStatus(DealSearchStatusOpen), WithDealSearchStatus(DealSearchStatusWon, DealSearchStatusLost)}, want: "won,lost"},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				values := r.URL.Query()["status"]
+				if tt.want == "" {
+					if len(values) != 0 {
+						t.Errorf("status should be omitted, got %q", values)
+					}
+				} else if len(values) != 1 || values[0] != tt.want {
+					t.Errorf("status = %q, want a single value %q", values, tt.want)
+				}
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":{"items":[]}}`))
+			})
+			if _, _, err := client.Deals.Search(context.Background(), "deal", tt.opts...); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
 func TestDealsService_Search(t *testing.T) {
 	t.Parallel()
 
