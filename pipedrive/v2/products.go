@@ -685,12 +685,11 @@ func ClearProductBillingFrequencyCycles() ProductOption {
 
 func WithProductSearchFields(fields ...ProductSearchField) SearchProductsOption {
 	return searchProductsOptionFunc(func(cfg *searchProductsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchProductsParamsFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchProductsParamsFields(csv)
-		cfg.params.Fields = &value
+		cfg.params.Fields = &values
 	})
 }
 

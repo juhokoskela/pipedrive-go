@@ -509,7 +509,7 @@ type deleteDealProductOptions struct {
 }
 
 type deleteDealProductsOptions struct {
-	params         genv2.DeleteManyDealProductsParams
+	ids            []DealProductAttachmentID
 	requestOptions []pipedrive.RequestOption
 }
 
@@ -876,12 +876,11 @@ func WithDealsStageID(id StageID) ListDealsOption {
 
 func WithDealsStatus(statuses ...DealStatus) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		csv := joinCSV(statuses)
-		if csv == "" {
+		values := queryValues[genv2.GetDealsParamsStatus](statuses)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetDealsParamsStatus(csv)
-		cfg.params.Status = &value
+		cfg.params.Status = &values
 	})
 }
 
@@ -1022,12 +1021,11 @@ func WithArchivedDealsStageID(id StageID) ListArchivedDealsOption {
 
 func WithArchivedDealsStatus(statuses ...DealStatus) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		csv := joinCSV(statuses)
-		if csv == "" {
+		values := queryValues[genv2.GetArchivedDealsParamsStatus](statuses)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.GetArchivedDealsParamsStatus(csv)
-		cfg.params.Status = &value
+		cfg.params.Status = &values
 	})
 }
 
@@ -1346,12 +1344,11 @@ func WithDealChannelID(channelID string) DealOption {
 
 func WithDealSearchFields(fields ...DealSearchField) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchDealsParamsFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchDealsParamsFields(csv)
-		cfg.params.Fields = &value
+		cfg.params.Fields = &values
 	})
 }
 
@@ -1377,19 +1374,18 @@ func WithDealSearchOrganizationID(id OrganizationID) SearchDealsOption {
 
 func WithDealSearchStatus(status DealSearchStatus) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
-		value := genv2.SearchDealsParamsStatus(status)
-		cfg.params.Status = &value
+		values := []genv2.SearchDealsParamsStatus{genv2.SearchDealsParamsStatus(status)}
+		cfg.params.Status = &values
 	})
 }
 
 func WithDealSearchIncludeFields(fields ...DealSearchIncludeField) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
-		csv := joinCSV(fields)
-		if csv == "" {
+		values := queryValues[genv2.SearchDealsParamsIncludeFields](fields)
+		if len(values) == 0 {
 			return
 		}
-		value := genv2.SearchDealsParamsIncludeFields(csv)
-		cfg.params.IncludeFields = &value
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -1597,11 +1593,10 @@ func WithDealProductBillingStartDate(date string) DealProductOption {
 
 func WithDealProductAttachmentIDs(ids ...DealProductAttachmentID) DeleteDealProductsOption {
 	return deleteDealProductsOptionFunc(func(cfg *deleteDealProductsOptions) {
-		csv := joinIDs(ids)
-		if csv == "" {
+		if len(ids) == 0 {
 			return
 		}
-		cfg.params.Ids = &csv
+		cfg.ids = append([]DealProductAttachmentID(nil), ids...)
 	})
 }
 
@@ -2645,9 +2640,17 @@ func (s *DealsService) DeleteProducts(ctx context.Context, id DealID, opts ...De
 		return nil, err
 	}
 	cfg := newDeleteDealProductsOptions(opts)
+	ids, err := intIDs(cfg.ids, "product attachment id")
+	if err != nil {
+		return nil, err
+	}
+	params := genv2.DeleteManyDealProductsParams{}
+	if len(ids) != 0 {
+		params.Ids = &ids
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	resp, err := s.client.gen.DeleteManyDealProducts(ctx, int(id), &cfg.params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.DeleteManyDealProducts(ctx, int(id), &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
