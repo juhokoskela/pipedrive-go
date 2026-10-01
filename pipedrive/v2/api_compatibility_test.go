@@ -74,6 +74,31 @@ func TestDeleteProductsQueryOptions(t *testing.T) {
 	}
 }
 
+func TestDeleteProductsRejectsInvalidAttachmentIDs(t *testing.T) {
+	t.Parallel()
+
+	for _, tt := range []struct {
+		name string
+		id   DealProductAttachmentID
+	}{
+		{name: "zero", id: 0},
+		{name: "negative", id: -1},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				t.Error("unexpected deletion request")
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":{"ids":[]}}`))
+			})
+			result, err := client.Deals.DeleteProducts(context.Background(), 7, WithDealProductAttachmentIDs(15, tt.id))
+			if result != nil || err == nil {
+				t.Fatalf("DeleteProducts = %#v, %v; want an error", result, err)
+			}
+		})
+	}
+}
+
 func TestFieldOption_UnmarshalJSONIdentifierKinds(t *testing.T) {
 	t.Parallel()
 
