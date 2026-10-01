@@ -522,11 +522,11 @@ func TestDealsService_SearchStatuses(t *testing.T) {
 		opts []SearchDealsOption
 		want string
 	}{
-		{name: "multiple statuses", opts: []SearchDealsOption{WithDealSearchStatus("", DealSearchStatusOpen, "", DealSearchStatusWon)}, want: "open,won"},
-		{name: "empty", opts: []SearchDealsOption{WithDealSearchStatus()}},
-		{name: "empty strings", opts: []SearchDealsOption{WithDealSearchStatus("", "")}},
-		{name: "empty preserves selection", opts: []SearchDealsOption{WithDealSearchStatus(DealSearchStatusOpen), WithDealSearchStatus()}, want: "open"},
-		{name: "last selection wins", opts: []SearchDealsOption{WithDealSearchStatus(DealSearchStatusOpen), WithDealSearchStatus(DealSearchStatusWon, DealSearchStatusLost)}, want: "won,lost"},
+		{name: "multiple statuses", opts: []SearchDealsOption{WithDealSearchStatuses("", DealSearchStatusOpen, "", DealSearchStatusWon)}, want: "open,won"},
+		{name: "empty", opts: []SearchDealsOption{WithDealSearchStatuses()}},
+		{name: "empty strings", opts: []SearchDealsOption{WithDealSearchStatuses("", "")}},
+		{name: "empty preserves selection", opts: []SearchDealsOption{WithDealSearchStatuses(DealSearchStatusOpen), WithDealSearchStatuses()}, want: "open"},
+		{name: "last selection wins", opts: []SearchDealsOption{WithDealSearchStatuses(DealSearchStatusOpen), WithDealSearchStatuses(DealSearchStatusWon, DealSearchStatusLost)}, want: "won,lost"},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -604,12 +604,13 @@ func TestDealsService_Search(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
+	var statusOption func(DealSearchStatus) SearchDealsOption = WithDealSearchStatus
 	results, next, err := client.Deals.Search(
 		context.Background(),
 		"deal",
 		WithDealSearchFields(DealSearchFieldTitle),
 		WithDealSearchExactMatch(true),
-		WithDealSearchStatus(DealSearchStatusOpen),
+		statusOption(DealSearchStatusOpen),
 		WithDealSearchPersonID(PersonID(5)),
 		WithDealSearchOrganizationID(OrganizationID(6)),
 		WithDealSearchIncludeFields(DealSearchIncludeFieldDealCCEmail),

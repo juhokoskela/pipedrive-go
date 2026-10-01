@@ -1372,7 +1372,14 @@ func WithDealSearchOrganizationID(id OrganizationID) SearchDealsOption {
 	})
 }
 
-func WithDealSearchStatus(statuses ...DealSearchStatus) SearchDealsOption {
+func WithDealSearchStatus(status DealSearchStatus) SearchDealsOption {
+	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
+		values := []genv2.SearchDealsParamsStatus{genv2.SearchDealsParamsStatus(status)}
+		cfg.params.Status = &values
+	})
+}
+
+func WithDealSearchStatuses(statuses ...DealSearchStatus) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
 		values := queryValues[genv2.SearchDealsParamsStatus](statuses)
 		if len(values) == 0 {
