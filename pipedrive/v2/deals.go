@@ -1596,7 +1596,7 @@ func WithDealProductAttachmentIDs(ids ...DealProductAttachmentID) DeleteDealProd
 		if len(ids) == 0 {
 			return
 		}
-		cfg.ids = append([]DealProductAttachmentID(nil), ids...)
+		cfg.ids = ids
 	})
 }
 
@@ -2644,7 +2644,7 @@ func (s *DealsService) DeleteProducts(ctx context.Context, id DealID, opts ...De
 	if err != nil {
 		return nil, err
 	}
-	params := genv2.DeleteManyDealProductsParams{}
+	var params genv2.DeleteManyDealProductsParams
 	if len(ids) != 0 {
 		params.Ids = &ids
 	}

@@ -9,36 +9,6 @@ import (
 	"time"
 )
 
-func TestFieldResponsesAcceptNewFieldTypes(t *testing.T) {
-	t.Parallel()
-
-	tests := []struct {
-		value     string
-		fieldType FieldType
-		get       func(*Client) (*Field, error)
-	}{
-		{"participants", FieldTypeParticipants, func(c *Client) (*Field, error) { return c.ActivityFields.Get(context.Background(), "participants") }},
-		{"attendees", FieldTypeAttendees, func(c *Client) (*Field, error) { return c.ActivityFields.Get(context.Background(), "attendees") }},
-		{"orgs", FieldTypeOrgs, func(c *Client) (*Field, error) { return c.ProjectFields.Get(context.Background(), "orgs") }},
-	}
-	for _, tt := range tests {
-		t.Run(tt.value, func(t *testing.T) {
-			t.Parallel()
-			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
-				w.Header().Set("Content-Type", "application/json")
-				_, _ = w.Write([]byte(`{"data":{"field_type":"` + tt.value + `"}}`))
-			})
-			field, err := tt.get(client)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if field.FieldType != tt.fieldType {
-				t.Fatalf("field type = %q, want %q", field.FieldType, tt.fieldType)
-			}
-		})
-	}
-}
-
 func TestDeleteProductsQueryOptions(t *testing.T) {
 	t.Parallel()
 

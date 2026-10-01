@@ -344,9 +344,10 @@ func (o projectListCursorOption) applyListArchivedProjects(cfg *listArchivedProj
 func WithProjectSearchFields(fields ...ProjectSearchField) SearchProjectsOption {
 	return searchProjectsOptionFunc(func(cfg *searchProjectsOptions) {
 		values := queryValues[genv2.SearchProjectsParamsFields](fields)
-		if len(values) != 0 {
-			cfg.params.Fields = &values
+		if len(values) == 0 {
+			return
 		}
+		cfg.params.Fields = &values
 	})
 }
 
