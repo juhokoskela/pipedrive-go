@@ -549,6 +549,8 @@ func TestDealsService_SearchStatuses(t *testing.T) {
 	}
 }
 
+var _ func(DealSearchStatus) SearchDealsOption = WithDealSearchStatus
+
 func TestDealsService_Search(t *testing.T) {
 	t.Parallel()
 
@@ -604,13 +606,12 @@ func TestDealsService_Search(t *testing.T) {
 		t.Fatalf("NewClient error: %v", err)
 	}
 
-	var statusOption func(DealSearchStatus) SearchDealsOption = WithDealSearchStatus
 	results, next, err := client.Deals.Search(
 		context.Background(),
 		"deal",
 		WithDealSearchFields(DealSearchFieldTitle),
 		WithDealSearchExactMatch(true),
-		statusOption(DealSearchStatusOpen),
+		WithDealSearchStatus(DealSearchStatusOpen),
 		WithDealSearchPersonID(PersonID(5)),
 		WithDealSearchOrganizationID(OrganizationID(6)),
 		WithDealSearchIncludeFields(DealSearchIncludeFieldDealCCEmail),
