@@ -99,6 +99,29 @@ func TestDeleteProductsRejectsInvalidAttachmentIDs(t *testing.T) {
 	}
 }
 
+func TestEmptySearchQueryOptionsRemainOmitted(t *testing.T) {
+	t.Parallel()
+
+	client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query()
+		for _, key := range []string{"item_types", "fields", "include_fields"} {
+			if query.Has(key) {
+				t.Errorf("%s should be omitted, got %q", key, query[key])
+			}
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":{"items":[]}}`))
+	})
+	_, _, err := client.ItemSearch.Search(context.Background(), "deal",
+		WithItemSearchTypes("", ""),
+		WithItemSearchFields("", ""),
+		WithItemSearchIncludeFields("", ""),
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestFieldOption_UnmarshalJSONIdentifierKinds(t *testing.T) {
 	t.Parallel()
 
