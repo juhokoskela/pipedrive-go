@@ -7,6 +7,12 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+### Changed
+
+- Bump the preferred Go toolchain, CI, and drift checks to Go 1.27.2, which
+  fixes standard library vulnerabilities reported by govulncheck in Go 1.27.1.
+  The minimum supported Go version remains 1.26.
+
 ## [1.16.0] - 2026-10-01
 
 ### Added
