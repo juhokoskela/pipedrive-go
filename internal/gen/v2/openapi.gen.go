@@ -818,8 +818,8 @@ type GetActivitiesParams struct {
 	// FilterId If supplied, only activities matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only activities owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1343,8 +1343,8 @@ type GetDealsParams struct {
 	// FilterId If supplied, only deals matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1478,8 +1478,8 @@ type GetArchivedDealsParams struct {
 	// FilterId If supplied, only deals matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1602,12 +1602,12 @@ type SearchDealsParams struct {
 	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
 
 	// Status Will filter deals by the provided specific status. open = Open, won = Won, lost = Lost. The upper limit of found deals associated with the status is 2000.
-	Status *[]SearchDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
+	Status *SearchDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2117,7 +2117,7 @@ type SearchLeadsParams struct {
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchLeadsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2321,8 +2321,8 @@ type GetOrganizationsParams struct {
 	// FilterId If supplied, only organizations matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only organizations owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2447,7 +2447,7 @@ type SearchOrganizationParams struct {
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2729,8 +2729,8 @@ type GetPersonsParams struct {
 	// FilterId If supplied, only persons matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only persons owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2906,7 +2906,7 @@ type SearchPersonsParams struct {
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -3235,8 +3235,8 @@ type GetProductsParams struct {
 	// OwnerId If supplied, only products owned by the given user will be returned
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
@@ -3355,7 +3355,7 @@ type SearchProductsParams struct {
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchProductsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -3751,7 +3751,7 @@ type SearchProjectsParams struct {
 	// OrganizationId Will filter projects by the provided organization ID
 	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -11866,7 +11866,7 @@ func NewSearchDealsRequest(server string, params *SearchDealsParams) (*http.Requ
 
 		if params.Status != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
