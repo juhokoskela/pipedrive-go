@@ -244,8 +244,7 @@ func WithLeadsFilterID(id int) ListLeadsOption {
 
 func WithLeadsSort(sort string) ListLeadsOption {
 	return listLeadsOptionFunc(func(cfg *listLeadsOptions) {
-		value := genv1.GetLeadsParamsSort(sort)
-		cfg.params.Sort = &value
+		cfg.params.Sort = &sort
 	})
 }
 
