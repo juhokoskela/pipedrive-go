@@ -32,6 +32,25 @@ func TestValidateID(t *testing.T) {
 	}
 }
 
+func TestQueryIntIDs(t *testing.T) {
+	t.Parallel()
+
+	got, err := queryIntIDs([]DealID{-1, 0, 7}, "deal id")
+	if err != nil || len(got) != 3 || got[0] != -1 || got[1] != 0 || got[2] != 7 {
+		t.Fatalf("queryIntIDs = %v, %v", got, err)
+	}
+	// Representable on 64-bit platforms, rejected where int is 32 bits.
+	for _, id := range []DealID{math.MaxInt64, math.MinInt64} {
+		_, err := queryIntIDs([]DealID{id}, "deal id")
+		if math.MaxInt == math.MaxInt64 && err != nil {
+			t.Fatalf("unexpected error on 64-bit platform: %v", err)
+		}
+		if math.MaxInt != math.MaxInt64 && err == nil {
+			t.Fatalf("expected overflow error for %d where int is 32 bits", int64(id))
+		}
+	}
+}
+
 func TestNonPositiveIDsRejectedClientSide(t *testing.T) {
 	t.Parallel()
 

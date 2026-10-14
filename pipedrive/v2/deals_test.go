@@ -527,6 +527,7 @@ func TestDealsService_SearchStatuses(t *testing.T) {
 		{name: "empty strings", opts: []SearchDealsOption{WithDealSearchStatuses("", "")}},
 		{name: "empty preserves selection", opts: []SearchDealsOption{WithDealSearchStatuses(DealSearchStatusOpen), WithDealSearchStatuses()}, want: "open"},
 		{name: "last selection wins", opts: []SearchDealsOption{WithDealSearchStatuses(DealSearchStatusOpen), WithDealSearchStatuses(DealSearchStatusWon, DealSearchStatusLost)}, want: "won,lost"},
+		{name: "single status replaces multiple", opts: []SearchDealsOption{WithDealSearchStatuses(DealSearchStatusOpen, DealSearchStatusWon), WithDealSearchStatus(DealSearchStatusLost)}, want: "lost"},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -550,6 +551,7 @@ func TestDealsService_SearchStatuses(t *testing.T) {
 }
 
 var _ func(DealSearchStatus) SearchDealsOption = WithDealSearchStatus
+var _ func(...DealSearchStatus) SearchDealsOption = WithDealSearchStatuses
 
 func TestDealsService_Search(t *testing.T) {
 	t.Parallel()
