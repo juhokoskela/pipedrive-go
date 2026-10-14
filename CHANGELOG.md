@@ -7,8 +7,18 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+### Added
+
+- Add `Lead.ArchiveReason` and `WithLeadArchiveReason` for the v1 lead
+  `archive_reason` field.
+
 ### Changed
 
+- Refresh upstream OpenAPI specifications and internal clients for integer
+  `ids` list parameters, the single-value deal search `status`, free-form v1
+  lead sorting, and new `limit` bounds. Existing public signatures and query
+  encoding are preserved, including comma-separated values for
+  `WithDealSearchStatuses`.
 - Bump the preferred Go toolchain, CI, and drift checks to Go 1.27.2, which
   fixes standard library vulnerabilities reported by govulncheck in Go 1.27.1.
   The minimum supported Go version remains 1.26.

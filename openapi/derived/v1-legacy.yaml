@@ -10364,19 +10364,9 @@ paths:
                     example: '2025-01-01T10:20:00Z'
                 - in: query
                   name: sort
-                  description: 'The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys).'
+                  description: 'The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys). Supported fields: id, title, owner_id, creator_id, label_ids, value, source_name, was_seen, expected_close_date, next_activity_id, add_time, update_time, visible_to, and custom fields.'
                   schema:
                     type: string
-                    enum:
-                        - id
-                        - title
-                        - owner_id
-                        - creator_id
-                        - was_seen
-                        - expected_close_date
-                        - next_activity_id
-                        - add_time
-                        - update_time
             responses:
                 '200':
                     description: Successful response containing payload in the `data` field
@@ -10447,6 +10437,10 @@ paths:
                                                 is_archived:
                                                     type: boolean
                                                     description: A flag indicating whether the lead is archived or not
+                                                archive_reason:
+                                                    type: string
+                                                    nullable: true
+                                                    description: The reason for archiving the lead. Automatically cleared when the lead is unarchived.
                                                 was_seen:
                                                     type: boolean
                                                     description: A flag indicating whether the lead was seen by someone in the Pipedrive UI
@@ -10523,6 +10517,7 @@ paths:
                                       channel: 52
                                       channel_id: Jun23 Billboards
                                       is_archived: false
+                                      archive_reason: null
                                       was_seen: false
                                       value:
                                         amount: 999
@@ -10680,6 +10675,10 @@ paths:
                                             is_archived:
                                                 type: boolean
                                                 description: A flag indicating whether the lead is archived or not
+                                            archive_reason:
+                                                type: string
+                                                nullable: true
+                                                description: The reason for archiving the lead. Automatically cleared when the lead is unarchived.
                                             was_seen:
                                                 type: boolean
                                                 description: A flag indicating whether the lead was seen by someone in the Pipedrive UI
@@ -10743,6 +10742,7 @@ paths:
                                     channel: 52
                                     channel_id: Jun23 Billboards
                                     is_archived: false
+                                    archive_reason: null
                                     was_seen: false
                                     value:
                                         amount: 999
@@ -10889,6 +10889,10 @@ paths:
                                                 is_archived:
                                                     type: boolean
                                                     description: A flag indicating whether the lead is archived or not
+                                                archive_reason:
+                                                    type: string
+                                                    nullable: true
+                                                    description: The reason for archiving the lead. Automatically cleared when the lead is unarchived.
                                                 was_seen:
                                                     type: boolean
                                                     description: A flag indicating whether the lead was seen by someone in the Pipedrive UI
@@ -10965,6 +10969,7 @@ paths:
                                       channel: 52
                                       channel_id: Jun23 Billboards
                                       is_archived: true
+                                      archive_reason: Not a good fit
                                       was_seen: false
                                       value:
                                         amount: 999
@@ -11064,6 +11069,10 @@ paths:
                                             is_archived:
                                                 type: boolean
                                                 description: A flag indicating whether the lead is archived or not
+                                            archive_reason:
+                                                type: string
+                                                nullable: true
+                                                description: The reason for archiving the lead. Automatically cleared when the lead is unarchived.
                                             was_seen:
                                                 type: boolean
                                                 description: A flag indicating whether the lead was seen by someone in the Pipedrive UI
@@ -11127,6 +11136,7 @@ paths:
                                     channel: 52
                                     channel_id: Jun23 Billboards
                                     is_archived: false
+                                    archive_reason: null
                                     was_seen: false
                                     value:
                                         amount: 999
@@ -11219,6 +11229,11 @@ paths:
                                 is_archived:
                                     type: boolean
                                     description: A flag indicating whether the lead is archived or not
+                                archive_reason:
+                                    type: string
+                                    nullable: true
+                                    description: |
+                                        The reason for archiving the lead. Can only be provided when `is_archived` is being set to `true` in the same request, or when updating a lead that's already archived — providing it otherwise will return a 400 error. Automatically cleared when the lead is unarchived. If archiving with a reason is required for your company, archiving a lead without providing one will also return a 400 error.
                                 value:
                                     type: object
                                     nullable: true
@@ -11325,6 +11340,10 @@ paths:
                                             is_archived:
                                                 type: boolean
                                                 description: A flag indicating whether the lead is archived or not
+                                            archive_reason:
+                                                type: string
+                                                nullable: true
+                                                description: The reason for archiving the lead. Automatically cleared when the lead is unarchived.
                                             was_seen:
                                                 type: boolean
                                                 description: A flag indicating whether the lead was seen by someone in the Pipedrive UI
@@ -11388,6 +11407,7 @@ paths:
                                     channel: 52
                                     channel_id: Jun23 Billboards
                                     is_archived: false
+                                    archive_reason: null
                                     was_seen: false
                                     value:
                                         amount: 999
@@ -15548,13 +15568,11 @@ paths:
                                                 deal:
                                                     type: object
                                                     nullable: true
-                                                    allOf:
-                                                        - type: object
-                                                          description: The deal this note is attached to
-                                                          properties:
-                                                            title:
-                                                                type: string
-                                                                description: The title of the deal this note is attached to
+                                                    description: The deal this note is attached to
+                                                    properties:
+                                                        title:
+                                                            type: string
+                                                            description: The title of the deal this note is attached to
                                                 lead_id:
                                                     type: string
                                                     format: uuid
@@ -15844,13 +15862,11 @@ paths:
                                             deal:
                                                 type: object
                                                 nullable: true
-                                                allOf:
-                                                    - type: object
-                                                      description: The deal this note is attached to
-                                                      properties:
-                                                        title:
-                                                            type: string
-                                                            description: The title of the deal this note is attached to
+                                                description: The deal this note is attached to
+                                                properties:
+                                                    title:
+                                                        type: string
+                                                        description: The title of the deal this note is attached to
                                             lead_id:
                                                 type: string
                                                 format: uuid
@@ -16073,13 +16089,11 @@ paths:
                                             deal:
                                                 type: object
                                                 nullable: true
-                                                allOf:
-                                                    - type: object
-                                                      description: The deal this note is attached to
-                                                      properties:
-                                                        title:
-                                                            type: string
-                                                            description: The title of the deal this note is attached to
+                                                description: The deal this note is attached to
+                                                properties:
+                                                    title:
+                                                        type: string
+                                                        description: The title of the deal this note is attached to
                                             lead_id:
                                                 type: string
                                                 format: uuid
@@ -16351,13 +16365,11 @@ paths:
                                             deal:
                                                 type: object
                                                 nullable: true
-                                                allOf:
-                                                    - type: object
-                                                      description: The deal this note is attached to
-                                                      properties:
-                                                        title:
-                                                            type: string
-                                                            description: The title of the deal this note is attached to
+                                                description: The deal this note is attached to
+                                                properties:
+                                                    title:
+                                                        type: string
+                                                        description: The title of the deal this note is attached to
                                             lead_id:
                                                 type: string
                                                 format: uuid
@@ -22615,90 +22627,88 @@ paths:
                                                                         type: integer
                                                                         description: The ID of the user
                                                         person_id:
+                                                            title: dealPersonDataWithId
                                                             type: object
                                                             nullable: true
                                                             allOf:
-                                                                - title: dealPersonDataWithId
-                                                                  allOf:
-                                                                    - type: object
-                                                                      description: The person who is associated with the deal
-                                                                      properties:
-                                                                        active_flag:
-                                                                            type: boolean
-                                                                            description: Whether the associated person is active or not
-                                                                        name:
-                                                                            type: string
-                                                                            description: The name of the person associated with the deal
-                                                                        email:
-                                                                            type: array
-                                                                            description: The emails of the person associated with the deal
-                                                                            items:
-                                                                                type: object
-                                                                                properties:
-                                                                                    label:
-                                                                                        type: string
-                                                                                        description: The type of the email
-                                                                                    value:
-                                                                                        type: string
-                                                                                        description: The email of the associated person
-                                                                                    primary:
-                                                                                        type: boolean
-                                                                                        description: If this is the primary email or not
-                                                                        phone:
-                                                                            type: array
-                                                                            description: The phone numbers of the person associated with the deal
-                                                                            items:
-                                                                                type: object
-                                                                                properties:
-                                                                                    label:
-                                                                                        type: string
-                                                                                        description: The type of the phone number
-                                                                                    value:
-                                                                                        type: string
-                                                                                        description: The phone number of the person associated with the deal
-                                                                                    primary:
-                                                                                        type: boolean
-                                                                                        description: If this is the primary phone number or not
-                                                                        owner_id:
-                                                                            type: integer
-                                                                            description: The ID of the owner of the person that is associated with the deal
-                                                                    - type: object
-                                                                      properties:
-                                                                        value:
-                                                                            type: integer
-                                                                            description: The ID of the person associated with the deal
+                                                                - type: object
+                                                                  description: The person who is associated with the deal
+                                                                  properties:
+                                                                    active_flag:
+                                                                        type: boolean
+                                                                        description: Whether the associated person is active or not
+                                                                    name:
+                                                                        type: string
+                                                                        description: The name of the person associated with the deal
+                                                                    email:
+                                                                        type: array
+                                                                        description: The emails of the person associated with the deal
+                                                                        items:
+                                                                            type: object
+                                                                            properties:
+                                                                                label:
+                                                                                    type: string
+                                                                                    description: The type of the email
+                                                                                value:
+                                                                                    type: string
+                                                                                    description: The email of the associated person
+                                                                                primary:
+                                                                                    type: boolean
+                                                                                    description: If this is the primary email or not
+                                                                    phone:
+                                                                        type: array
+                                                                        description: The phone numbers of the person associated with the deal
+                                                                        items:
+                                                                            type: object
+                                                                            properties:
+                                                                                label:
+                                                                                    type: string
+                                                                                    description: The type of the phone number
+                                                                                value:
+                                                                                    type: string
+                                                                                    description: The phone number of the person associated with the deal
+                                                                                primary:
+                                                                                    type: boolean
+                                                                                    description: If this is the primary phone number or not
+                                                                    owner_id:
+                                                                        type: integer
+                                                                        description: The ID of the owner of the person that is associated with the deal
+                                                                - type: object
+                                                                  properties:
+                                                                    value:
+                                                                        type: integer
+                                                                        description: The ID of the person associated with the deal
                                                         org_id:
+                                                            title: DealOrganizationDataWithId
                                                             type: object
                                                             nullable: true
                                                             allOf:
-                                                                - title: DealOrganizationDataWithId
-                                                                  allOf:
-                                                                    - type: object
-                                                                      description: The organization which is associated with the deal
-                                                                      properties:
-                                                                        name:
-                                                                            type: string
-                                                                            description: The name of the organization associated with the deal
-                                                                        people_count:
-                                                                            type: integer
-                                                                            description: The number of people connected with the organization that is associated with the deal
-                                                                        owner_id:
-                                                                            type: integer
-                                                                            description: The ID of the owner of the organization that is associated with the deal
-                                                                        address:
-                                                                            type: string
-                                                                            description: The address of the organization that is associated with the deal
-                                                                        active_flag:
-                                                                            type: boolean
-                                                                            description: Whether the associated organization is active or not
-                                                                        cc_email:
-                                                                            type: string
-                                                                            description: The BCC email of the organization associated with the deal
-                                                                    - type: object
-                                                                      properties:
-                                                                        value:
-                                                                            type: integer
-                                                                            description: The ID of the organization associated with the deal
+                                                                - type: object
+                                                                  description: The organization which is associated with the deal
+                                                                  properties:
+                                                                    name:
+                                                                        type: string
+                                                                        description: The name of the organization associated with the deal
+                                                                    people_count:
+                                                                        type: integer
+                                                                        description: The number of people connected with the organization that is associated with the deal
+                                                                    owner_id:
+                                                                        type: integer
+                                                                        description: The ID of the owner of the organization that is associated with the deal
+                                                                    address:
+                                                                        type: string
+                                                                        description: The address of the organization that is associated with the deal
+                                                                    active_flag:
+                                                                        type: boolean
+                                                                        description: Whether the associated organization is active or not
+                                                                    cc_email:
+                                                                        type: string
+                                                                        description: The BCC email of the organization associated with the deal
+                                                                - type: object
+                                                                  properties:
+                                                                    value:
+                                                                        type: integer
+                                                                        description: The ID of the organization associated with the deal
                                                     - title: baseDeal
                                                       type: object
                                                       properties:
@@ -25003,13 +25013,11 @@ paths:
                                                             deal:
                                                                 type: object
                                                                 nullable: true
-                                                                allOf:
-                                                                    - type: object
-                                                                      description: The deal this note is attached to
-                                                                      properties:
-                                                                        title:
-                                                                            type: string
-                                                                            description: The title of the deal this note is attached to
+                                                                description: The deal this note is attached to
+                                                                properties:
+                                                                    title:
+                                                                        type: string
+                                                                        description: The title of the deal this note is attached to
                                                             lead_id:
                                                                 type: string
                                                                 format: uuid

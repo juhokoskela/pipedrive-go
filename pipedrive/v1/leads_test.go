@@ -304,6 +304,9 @@ func TestLeadsService_Update(t *testing.T) {
 		if payload["is_archived"] != true {
 			t.Fatalf("unexpected is_archived: %#v", payload["is_archived"])
 		}
+		if payload["archive_reason"] != "Not a good fit" {
+			t.Fatalf("unexpected archive_reason: %#v", payload["archive_reason"])
+		}
 		if payload["owner_id"] != float64(7) {
 			t.Fatalf("unexpected owner_id: %#v", payload["owner_id"])
 		}
@@ -318,7 +321,7 @@ func TestLeadsService_Update(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":{"id":"` + id + `","title":"Updated","is_archived":true}}`))
+		_, _ = w.Write([]byte(`{"success":true,"data":{"id":"` + id + `","title":"Updated","is_archived":true,"archive_reason":"Not a good fit"}}`))
 	}))
 	t.Cleanup(srv.Close)
 
@@ -336,6 +339,7 @@ func TestLeadsService_Update(t *testing.T) {
 		WithLeadChannel(2),
 		WithLeadChannelID("channel-1"),
 		WithLeadArchived(true),
+		WithLeadArchiveReason("Not a good fit"),
 		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
@@ -343,6 +347,9 @@ func TestLeadsService_Update(t *testing.T) {
 	}
 	if lead.Title != "Updated" || !lead.IsArchived {
 		t.Fatalf("unexpected lead: %#v", lead)
+	}
+	if lead.ArchiveReason == nil || *lead.ArchiveReason != "Not a good fit" {
+		t.Fatalf("unexpected archive reason: %#v", lead.ArchiveReason)
 	}
 }
 

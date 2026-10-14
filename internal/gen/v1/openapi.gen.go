@@ -306,19 +306,6 @@ const (
 	UpdateLeadLabelJSONBodyColorYellow   UpdateLeadLabelJSONBodyColor = "yellow"
 )
 
-// Defines values for GetLeadsParamsSort.
-const (
-	GetLeadsParamsSortAddTime           GetLeadsParamsSort = "add_time"
-	GetLeadsParamsSortCreatorId         GetLeadsParamsSort = "creator_id"
-	GetLeadsParamsSortExpectedCloseDate GetLeadsParamsSort = "expected_close_date"
-	GetLeadsParamsSortId                GetLeadsParamsSort = "id"
-	GetLeadsParamsSortNextActivityId    GetLeadsParamsSort = "next_activity_id"
-	GetLeadsParamsSortOwnerId           GetLeadsParamsSort = "owner_id"
-	GetLeadsParamsSortTitle             GetLeadsParamsSort = "title"
-	GetLeadsParamsSortUpdateTime        GetLeadsParamsSort = "update_time"
-	GetLeadsParamsSortWasSeen           GetLeadsParamsSort = "was_seen"
-)
-
 // Defines values for AddLeadJSONBodyVisibleTo.
 const (
 	AddLeadJSONBodyVisibleToN1 AddLeadJSONBodyVisibleTo = "1"
@@ -364,10 +351,10 @@ const (
 
 // Defines values for GetUserTeamsParamsOrderBy.
 const (
-	GetUserTeamsParamsOrderByActiveFlag GetUserTeamsParamsOrderBy = "active_flag"
-	GetUserTeamsParamsOrderById         GetUserTeamsParamsOrderBy = "id"
-	GetUserTeamsParamsOrderByManagerId  GetUserTeamsParamsOrderBy = "manager_id"
-	GetUserTeamsParamsOrderByName       GetUserTeamsParamsOrderBy = "name"
+	ActiveFlag GetUserTeamsParamsOrderBy = "active_flag"
+	Id         GetUserTeamsParamsOrderBy = "id"
+	ManagerId  GetUserTeamsParamsOrderBy = "manager_id"
+	Name       GetUserTeamsParamsOrderBy = "name"
 )
 
 // Defines values for GetUserTeamsParamsSkipUsers.
@@ -1385,12 +1372,9 @@ type GetLeadsParams struct {
 	// UpdatedSince If set, only leads with an `update_time` later than or equal to this time are returned. In ISO 8601 format, e.g. 2025-01-01T10:20:00Z.
 	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
 
-	// Sort The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys).
-	Sort *GetLeadsParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+	// Sort The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys). Supported fields: id, title, owner_id, creator_id, label_ids, value, source_name, was_seen, expected_close_date, next_activity_id, add_time, update_time, visible_to, and custom fields.
+	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
 }
-
-// GetLeadsParamsSort defines parameters for GetLeads.
-type GetLeadsParamsSort string
 
 // AddLeadJSONBody defines parameters for AddLead.
 type AddLeadJSONBody struct {
@@ -1466,6 +1450,9 @@ type GetArchivedLeadsParamsSort string
 
 // UpdateLeadJSONBody defines parameters for UpdateLead.
 type UpdateLeadJSONBody struct {
+	// ArchiveReason The reason for archiving the lead. Can only be provided when `is_archived` is being set to `true` in the same request, or when updating a lead that's already archived — providing it otherwise will return a 400 error. Automatically cleared when the lead is unarchived. If archiving with a reason is required for your company, archiving a lead without providing one will also return a 400 error.
+	ArchiveReason *string `json:"archive_reason"`
+
 	// Channel The ID of Marketing channel this lead was created from. Provided value must be one of the channels configured for your company which you can fetch with <a href="https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField" target="_blank" rel="noopener noreferrer">GET /v1/dealFields</a>.
 	Channel *int `json:"channel"`
 
@@ -21500,6 +21487,9 @@ type GetLeadsResponse struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
 
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
+
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
 
@@ -21594,6 +21584,9 @@ type AddLeadResponse struct {
 		Data *struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
+
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
 
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
@@ -21700,6 +21693,9 @@ type GetArchivedLeadsResponse struct {
 		Data *[]struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
+
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
 
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
@@ -21834,6 +21830,9 @@ type GetLeadResponse struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
 
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
+
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
 
@@ -21939,6 +21938,9 @@ type UpdateLeadResponse struct {
 		Data *struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
+
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
 
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
@@ -23782,7 +23784,9 @@ type GetNotesResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -23906,7 +23910,9 @@ type AddNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -24058,7 +24064,9 @@ type GetNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -24182,7 +24190,9 @@ type UpdateNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -29143,7 +29153,9 @@ type GetRecents200Data5 struct {
 
 		// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 		Content *string `json:"content,omitempty"`
-		Deal    *struct {
+
+		// Deal The deal this note is attached to
+		Deal *struct {
 			// Title The title of the deal this note is attached to
 			Title *string `json:"title,omitempty"`
 		} `json:"deal"`
@@ -39794,6 +39806,9 @@ func ParseGetLeadsResponse(rsp *http.Response) (*GetLeadsResponse, error) {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
 
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
+
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
 
@@ -39891,6 +39906,9 @@ func ParseAddLeadResponse(rsp *http.Response) (*AddLeadResponse, error) {
 			Data *struct {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
+
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
 
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
@@ -40000,6 +40018,9 @@ func ParseGetArchivedLeadsResponse(rsp *http.Response) (*GetArchivedLeadsRespons
 			Data *[]struct {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
+
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
 
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
@@ -40147,6 +40168,9 @@ func ParseGetLeadResponse(rsp *http.Response) (*GetLeadResponse, error) {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
 
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
+
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
 
@@ -40261,6 +40285,9 @@ func ParseUpdateLeadResponse(rsp *http.Response) (*UpdateLeadResponse, error) {
 			Data *struct {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
+
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
 
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
@@ -42177,7 +42204,9 @@ func ParseGetNotesResponse(rsp *http.Response) (*GetNotesResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`
@@ -42305,7 +42334,9 @@ func ParseAddNoteResponse(rsp *http.Response) (*AddNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`
@@ -42465,7 +42496,9 @@ func ParseGetNoteResponse(rsp *http.Response) (*GetNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`
@@ -42593,7 +42626,9 @@ func ParseUpdateNoteResponse(rsp *http.Response) (*UpdateNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`

@@ -554,3 +554,59 @@ func indexByte(value string, target byte) int {
 	}
 	return -1
 }
+
+func TestListIDsOptionsPreserveAcceptedValues(t *testing.T) {
+	t.Parallel()
+
+	for _, tt := range []struct {
+		name string
+		list func(context.Context, *Client) error
+		want string
+	}{
+		{name: "activities zero", want: "0", list: func(ctx context.Context, c *Client) error {
+			_, _, err := c.Activities.List(ctx, WithActivitiesIDs(0))
+			return err
+		}},
+		{name: "activities pager later option wins", want: "5", list: func(ctx context.Context, c *Client) error {
+			return c.Activities.ForEach(ctx, func(Activity) error { return nil }, WithActivitiesIDs(-1), WithActivitiesIDs(5))
+		}},
+		{name: "deals zero", want: "0", list: func(ctx context.Context, c *Client) error {
+			_, _, err := c.Deals.List(ctx, WithDealsIDs(0))
+			return err
+		}},
+		{name: "deals later option wins", want: "5", list: func(ctx context.Context, c *Client) error {
+			_, _, err := c.Deals.List(ctx, WithDealsIDs(0), WithDealsIDs(5))
+			return err
+		}},
+		{name: "archived deals negative", want: "-1,2", list: func(ctx context.Context, c *Client) error {
+			_, _, err := c.Deals.ListArchived(ctx, WithArchivedDealsIDs(-1, 2))
+			return err
+		}},
+		{name: "persons zero", want: "0", list: func(ctx context.Context, c *Client) error {
+			_, _, err := c.Persons.List(ctx, WithPersonsIDs(0))
+			return err
+		}},
+		{name: "organizations zero", want: "0", list: func(ctx context.Context, c *Client) error {
+			_, _, err := c.Organizations.List(ctx, WithOrganizationsIDs(0))
+			return err
+		}},
+		{name: "products zero", want: "0", list: func(ctx context.Context, c *Client) error {
+			_, _, err := c.Products.List(ctx, WithProductsIDs(0))
+			return err
+		}},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				if got := r.URL.Query()["ids"]; len(got) != 1 || got[0] != tt.want {
+					t.Errorf("ids = %q, want a single value %q", got, tt.want)
+				}
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":[]}`))
+			})
+			if err := tt.list(context.Background(), client); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}

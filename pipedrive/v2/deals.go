@@ -831,7 +831,13 @@ func WithDealsFilterID(id int) ListDealsOption {
 
 func WithDealsIDs(ids ...DealID) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		values := stringIDs(ids)
+		values, err := queryIntIDs(ids, "deal id")
+		if err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		if len(values) == 0 {
 			return
 		}
@@ -976,7 +982,13 @@ func WithArchivedDealsFilterID(id int) ListArchivedDealsOption {
 
 func WithArchivedDealsIDs(ids ...DealID) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		values := stringIDs(ids)
+		values, err := queryIntIDs(ids, "deal id")
+		if err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		if len(values) == 0 {
 			return
 		}
@@ -1374,18 +1386,22 @@ func WithDealSearchOrganizationID(id OrganizationID) SearchDealsOption {
 
 func WithDealSearchStatus(status DealSearchStatus) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
-		values := []genv2.SearchDealsParamsStatus{genv2.SearchDealsParamsStatus(status)}
-		cfg.params.Status = &values
+		value := genv2.SearchDealsParamsStatus(status)
+		cfg.params.Status = &value
 	})
 }
 
+// WithDealSearchStatuses sends the statuses as one comma-separated status
+// value. Pipedrive's API documents status as a single value, so a request with
+// more than one status may be rejected; use WithDealSearchStatus for one.
 func WithDealSearchStatuses(statuses ...DealSearchStatus) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
-		values := queryValues[genv2.SearchDealsParamsStatus](statuses)
-		if len(values) == 0 {
+		csv := joinCSV(statuses)
+		if csv == "" {
 			return
 		}
-		cfg.params.Status = &values
+		value := genv2.SearchDealsParamsStatus(csv)
+		cfg.params.Status = &value
 	})
 }
 

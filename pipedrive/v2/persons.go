@@ -614,7 +614,13 @@ func WithPersonsCustomFields(fields ...string) ListPersonsOption {
 
 func WithPersonsIDs(ids ...PersonID) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
-		values := stringIDs(ids)
+		values, err := queryIntIDs(ids, "person id")
+		if err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		if len(values) == 0 {
 			return
 		}

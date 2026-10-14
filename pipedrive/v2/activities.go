@@ -135,6 +135,7 @@ type getActivityOptions struct {
 type listActivitiesOptions struct {
 	params         genv2.GetActivitiesParams
 	requestOptions []pipedrive.RequestOption
+	err            error
 }
 
 type createActivityOptions struct {
@@ -452,7 +453,13 @@ func WithActivitiesIncludeFields(fields ...ActivityIncludeField) ListActivitiesO
 
 func WithActivitiesIDs(ids ...ActivityID) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		values := stringIDs(ids)
+		values, err := queryIntIDs(ids, "activity id")
+		if err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		if len(values) == 0 {
 			return
 		}
@@ -566,6 +573,9 @@ func (s *ActivitiesService) Get(ctx context.Context, id ActivityID, opts ...GetA
 
 func (s *ActivitiesService) List(ctx context.Context, opts ...ListActivitiesOption) ([]Activity, *string, error) {
 	cfg := newListActivitiesOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -575,6 +585,9 @@ func (s *ActivitiesService) ListPager(opts ...ListActivitiesOption) *pipedrive.C
 	cfg.params.Cursor = nil
 
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Activity, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
