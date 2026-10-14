@@ -30,6 +30,7 @@ type Lead struct {
 	Channel           *int            `json:"channel,omitempty"`
 	ChannelID         *string         `json:"channel_id,omitempty"`
 	IsArchived        bool            `json:"is_archived,omitempty"`
+	ArchiveReason     *string         `json:"archive_reason,omitempty"`
 	WasSeen           bool            `json:"was_seen,omitempty"`
 	Value             *LeadValue      `json:"value,omitempty"`
 	ExpectedCloseDate *string         `json:"expected_close_date,omitempty"`
@@ -143,6 +144,7 @@ type leadPayload struct {
 	channel           *int
 	channelID         *string
 	isArchived        *bool
+	archiveReason     *string
 }
 
 type leadsRequestOptions struct {
@@ -369,6 +371,15 @@ func WithLeadChannelID(id string) LeadOption {
 func WithLeadArchived(archived bool) UpdateLeadOption {
 	return leadFieldOption(func(cfg *leadPayload) {
 		cfg.isArchived = &archived
+	})
+}
+
+// WithLeadArchiveReason sets why the lead is archived. Pipedrive accepts it
+// only together with WithLeadArchived(true) or for a lead that is already
+// archived.
+func WithLeadArchiveReason(reason string) UpdateLeadOption {
+	return leadFieldOption(func(cfg *leadPayload) {
+		cfg.archiveReason = &reason
 	})
 }
 
@@ -742,6 +753,9 @@ func (p leadPayload) toMap(includeUpdateFields bool) map[string]interface{} {
 	}
 	if includeUpdateFields && p.isArchived != nil {
 		body["is_archived"] = *p.isArchived
+	}
+	if includeUpdateFields && p.archiveReason != nil {
+		body["archive_reason"] = *p.archiveReason
 	}
 	return body
 }
