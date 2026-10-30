@@ -306,19 +306,6 @@ const (
 	UpdateLeadLabelJSONBodyColorYellow   UpdateLeadLabelJSONBodyColor = "yellow"
 )
 
-// Defines values for GetLeadsParamsSort.
-const (
-	GetLeadsParamsSortAddTime           GetLeadsParamsSort = "add_time"
-	GetLeadsParamsSortCreatorId         GetLeadsParamsSort = "creator_id"
-	GetLeadsParamsSortExpectedCloseDate GetLeadsParamsSort = "expected_close_date"
-	GetLeadsParamsSortId                GetLeadsParamsSort = "id"
-	GetLeadsParamsSortNextActivityId    GetLeadsParamsSort = "next_activity_id"
-	GetLeadsParamsSortOwnerId           GetLeadsParamsSort = "owner_id"
-	GetLeadsParamsSortTitle             GetLeadsParamsSort = "title"
-	GetLeadsParamsSortUpdateTime        GetLeadsParamsSort = "update_time"
-	GetLeadsParamsSortWasSeen           GetLeadsParamsSort = "was_seen"
-)
-
 // Defines values for AddLeadJSONBodyVisibleTo.
 const (
 	AddLeadJSONBodyVisibleToN1 AddLeadJSONBodyVisibleTo = "1"
@@ -364,10 +351,10 @@ const (
 
 // Defines values for GetUserTeamsParamsOrderBy.
 const (
-	GetUserTeamsParamsOrderByActiveFlag GetUserTeamsParamsOrderBy = "active_flag"
-	GetUserTeamsParamsOrderById         GetUserTeamsParamsOrderBy = "id"
-	GetUserTeamsParamsOrderByManagerId  GetUserTeamsParamsOrderBy = "manager_id"
-	GetUserTeamsParamsOrderByName       GetUserTeamsParamsOrderBy = "name"
+	ActiveFlag GetUserTeamsParamsOrderBy = "active_flag"
+	Id         GetUserTeamsParamsOrderBy = "id"
+	ManagerId  GetUserTeamsParamsOrderBy = "manager_id"
+	Name       GetUserTeamsParamsOrderBy = "name"
 )
 
 // Defines values for GetUserTeamsParamsSkipUsers.
@@ -1385,12 +1372,9 @@ type GetLeadsParams struct {
 	// UpdatedSince If set, only leads with an `update_time` later than or equal to this time are returned. In ISO 8601 format, e.g. 2025-01-01T10:20:00Z.
 	UpdatedSince *string `form:"updated_since,omitempty" json:"updated_since,omitempty"`
 
-	// Sort The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys).
-	Sort *GetLeadsParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+	// Sort The field names and sorting mode separated by a comma (`field_name_1 ASC`, `field_name_2 DESC`). Only first-level field keys are supported (no nested keys). Supported fields: id, title, owner_id, creator_id, label_ids, value, source_name, was_seen, expected_close_date, next_activity_id, add_time, update_time, visible_to, and custom fields.
+	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
 }
-
-// GetLeadsParamsSort defines parameters for GetLeads.
-type GetLeadsParamsSort string
 
 // AddLeadJSONBody defines parameters for AddLead.
 type AddLeadJSONBody struct {
@@ -1466,6 +1450,9 @@ type GetArchivedLeadsParamsSort string
 
 // UpdateLeadJSONBody defines parameters for UpdateLead.
 type UpdateLeadJSONBody struct {
+	// ArchiveReason The reason for archiving the lead. Can only be provided when `is_archived` is being set to `true` in the same request, or when updating a lead that's already archived — providing it otherwise will return a 400 error. Automatically cleared when the lead is unarchived. If archiving with a reason is required for your company, archiving a lead without providing one will also return a 400 error.
+	ArchiveReason *string `json:"archive_reason"`
+
 	// Channel The ID of Marketing channel this lead was created from. Provided value must be one of the channels configured for your company which you can fetch with <a href="https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField" target="_blank" rel="noopener noreferrer">GET /v1/dealFields</a>.
 	Channel *int `json:"channel"`
 
@@ -1632,10 +1619,10 @@ type UpdateMailThreadDetailsFormdataBody struct {
 	ArchivedFlag *UpdateMailThreadDetailsFormdataBodyArchivedFlag `form:"archived_flag,omitempty" json:"archived_flag,omitempty"`
 
 	// DealId The ID of the deal this thread is associated with
-	DealId *int `form:"deal_id,omitempty" json:"deal_id,omitempty"`
+	DealId *int `form:"deal_id" json:"deal_id"`
 
 	// LeadId The ID of the lead this thread is associated with
-	LeadId *openapi_types.UUID `form:"lead_id,omitempty" json:"lead_id,omitempty"`
+	LeadId *openapi_types.UUID `form:"lead_id" json:"lead_id"`
 
 	// ReadFlag Whether this thread is read or unread
 	ReadFlag *UpdateMailThreadDetailsFormdataBodyReadFlag `form:"read_flag,omitempty" json:"read_flag,omitempty"`
@@ -18046,10 +18033,10 @@ type GetDealMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -18073,10 +18060,10 @@ type GetDealMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -18092,7 +18079,7 @@ type GetDealMailMessagesResponse struct {
 				DeletedFlag *GetDealMailMessages200DataDataDeletedFlag `json:"deleted_flag,omitempty"`
 
 				// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-				Draft *string `json:"draft,omitempty"`
+				Draft *string `json:"draft"`
 
 				// DraftFlag Whether the mail message is a draft or not
 				DraftFlag *GetDealMailMessages200DataDataDraftFlag `json:"draft_flag,omitempty"`
@@ -18109,10 +18096,10 @@ type GetDealMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -18185,7 +18172,7 @@ type GetDealMailMessagesResponse struct {
 				SyncedFlag *GetDealMailMessages200DataDataSyncedFlag `json:"synced_flag,omitempty"`
 
 				// TemplateId The ID of the mail template
-				TemplateId *int `json:"template_id,omitempty"`
+				TemplateId *int `json:"template_id"`
 
 				// Timestamp The add date and time of the Mail Message
 				Timestamp *string `json:"timestamp,omitempty"`
@@ -18199,10 +18186,10 @@ type GetDealMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -21500,6 +21487,9 @@ type GetLeadsResponse struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
 
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
+
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
 
@@ -21594,6 +21584,9 @@ type AddLeadResponse struct {
 		Data *struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
+
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
 
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
@@ -21700,6 +21693,9 @@ type GetArchivedLeadsResponse struct {
 		Data *[]struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
+
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
 
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
@@ -21834,6 +21830,9 @@ type GetLeadResponse struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
 
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
+
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
 
@@ -21939,6 +21938,9 @@ type UpdateLeadResponse struct {
 		Data *struct {
 			// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 			AddTime *time.Time `json:"add_time,omitempty"`
+
+			// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+			ArchiveReason *string `json:"archive_reason"`
 
 			// CcEmail The BCC email of the lead
 			CcEmail *string `json:"cc_email,omitempty"`
@@ -22513,10 +22515,10 @@ type GetMailMessageResponse struct {
 				Id *int `json:"id,omitempty"`
 
 				// LinkedPersonId ID of the linked person to the mail message
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
 				// LinkedPersonName Name of the linked person to the mail message
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message participant
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -22540,10 +22542,10 @@ type GetMailMessageResponse struct {
 				Id *int `json:"id,omitempty"`
 
 				// LinkedPersonId ID of the linked person to the mail message
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
 				// LinkedPersonName Name of the linked person to the mail message
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message participant
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -22556,7 +22558,7 @@ type GetMailMessageResponse struct {
 			DeletedFlag *GetMailMessage200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
 			// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-			Draft *string `json:"draft,omitempty"`
+			Draft *string `json:"draft"`
 
 			// DraftFlag Whether the mail message is a draft or not
 			DraftFlag *GetMailMessage200DataDraftFlag `json:"draft_flag,omitempty"`
@@ -22570,10 +22572,10 @@ type GetMailMessageResponse struct {
 				Id *int `json:"id,omitempty"`
 
 				// LinkedPersonId ID of the linked person to the mail message
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
 				// LinkedPersonName Name of the linked person to the mail message
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message participant
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -22639,10 +22641,10 @@ type GetMailMessageResponse struct {
 				Id *int `json:"id,omitempty"`
 
 				// LinkedPersonId ID of the linked person to the mail message
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
 				// LinkedPersonName Name of the linked person to the mail message
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message participant
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -22716,8 +22718,8 @@ type GetMailThreadsResponse struct {
 			// AllMessagesSentFlag Whether all the mail thread messages have been sent
 			AllMessagesSentFlag *GetMailThreads200DataAllMessagesSentFlag `json:"all_messages_sent_flag,omitempty"`
 
-			// ArchivedFlag Whether the mail thread is archived
-			ArchivedFlag *GetMailThreads200DataArchivedFlag `json:"archived_flag,omitempty"`
+			// ArchivedFlag Whether the mail thread is archived. `null` if the mail thread has not been explicitly archived or unarchived in Pipedrive.
+			ArchivedFlag *GetMailThreads200DataArchivedFlag `json:"archived_flag"`
 
 			// DealId The ID of the deal
 			DealId *int `json:"deal_id"`
@@ -22728,8 +22730,8 @@ type GetMailThreadsResponse struct {
 			// DeletedFlag Whether the mail thread is deleted
 			DeletedFlag *GetMailThreads200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
-			// DraftsParties Parties of the drafted mail thread
-			DraftsParties *[]map[string]interface{} `json:"drafts_parties,omitempty"`
+			// DraftsParties Parties of the drafted mail thread. `null` if the mail thread has no drafts.
+			DraftsParties *[]map[string]interface{} `json:"drafts_parties"`
 
 			// ExternalDeletedFlag Whether the mail thread has been deleted externally
 			ExternalDeletedFlag *GetMailThreads200DataExternalDeletedFlag `json:"external_deleted_flag,omitempty"`
@@ -22762,7 +22764,7 @@ type GetMailThreadsResponse struct {
 			Id *int `json:"id,omitempty"`
 
 			// LastMessageReceivedTimestamp The last time when the mail thread has had a message received
-			LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp,omitempty"`
+			LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp"`
 
 			// LastMessageSentTimestamp The last time when the mail thread has had a message sent
 			LastMessageSentTimestamp *time.Time `json:"last_message_sent_timestamp"`
@@ -22799,10 +22801,10 @@ type GetMailThreadsResponse struct {
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -22829,10 +22831,10 @@ type GetMailThreadsResponse struct {
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -22861,7 +22863,7 @@ type GetMailThreadsResponse struct {
 			SnippetDraft *string `json:"snippet_draft"`
 
 			// SnippetSent A snippet from a message sent
-			SnippetSent *string `json:"snippet_sent,omitempty"`
+			SnippetSent *string `json:"snippet_sent"`
 
 			// Subject The subject
 			Subject *string `json:"subject,omitempty"`
@@ -22884,7 +22886,7 @@ type GetMailThreadsResponse struct {
 	}
 }
 type GetMailThreads200DataAllMessagesSentFlag float32
-type GetMailThreads200DataArchivedFlag float32
+type GetMailThreads200DataArchivedFlag int
 type GetMailThreads200DataDeletedFlag float32
 type GetMailThreads200DataExternalDeletedFlag float32
 type GetMailThreads200DataFirstMessageToMeFlag float32
@@ -22960,8 +22962,8 @@ type GetMailThreadResponse struct {
 			// AllMessagesSentFlag Whether all the mail thread messages have been sent
 			AllMessagesSentFlag *GetMailThread200DataAllMessagesSentFlag `json:"all_messages_sent_flag,omitempty"`
 
-			// ArchivedFlag Whether the mail thread is archived
-			ArchivedFlag *GetMailThread200DataArchivedFlag `json:"archived_flag,omitempty"`
+			// ArchivedFlag Whether the mail thread is archived. `null` if the mail thread has not been explicitly archived or unarchived in Pipedrive.
+			ArchivedFlag *GetMailThread200DataArchivedFlag `json:"archived_flag"`
 
 			// DealId The ID of the deal
 			DealId *int `json:"deal_id"`
@@ -22972,8 +22974,8 @@ type GetMailThreadResponse struct {
 			// DeletedFlag Whether the mail thread is deleted
 			DeletedFlag *GetMailThread200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
-			// DraftsParties Parties of the drafted mail thread
-			DraftsParties *[]map[string]interface{} `json:"drafts_parties,omitempty"`
+			// DraftsParties Parties of the drafted mail thread. `null` if the mail thread has no drafts.
+			DraftsParties *[]map[string]interface{} `json:"drafts_parties"`
 
 			// ExternalDeletedFlag Whether the mail thread has been deleted externally
 			ExternalDeletedFlag *GetMailThread200DataExternalDeletedFlag `json:"external_deleted_flag,omitempty"`
@@ -23006,7 +23008,7 @@ type GetMailThreadResponse struct {
 			Id *int `json:"id,omitempty"`
 
 			// LastMessageReceivedTimestamp The last time when the mail thread has had a message received
-			LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp,omitempty"`
+			LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp"`
 
 			// LastMessageSentTimestamp The last time when the mail thread has had a message sent
 			LastMessageSentTimestamp *time.Time `json:"last_message_sent_timestamp"`
@@ -23043,10 +23045,10 @@ type GetMailThreadResponse struct {
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23073,10 +23075,10 @@ type GetMailThreadResponse struct {
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23105,7 +23107,7 @@ type GetMailThreadResponse struct {
 			SnippetDraft *string `json:"snippet_draft"`
 
 			// SnippetSent A snippet from a message sent
-			SnippetSent *string `json:"snippet_sent,omitempty"`
+			SnippetSent *string `json:"snippet_sent"`
 
 			// Subject The subject
 			Subject *string `json:"subject,omitempty"`
@@ -23128,7 +23130,7 @@ type GetMailThreadResponse struct {
 	}
 }
 type GetMailThread200DataAllMessagesSentFlag float32
-type GetMailThread200DataArchivedFlag float32
+type GetMailThread200DataArchivedFlag int
 type GetMailThread200DataDeletedFlag float32
 type GetMailThread200DataExternalDeletedFlag float32
 type GetMailThread200DataFirstMessageToMeFlag float32
@@ -23174,8 +23176,8 @@ type UpdateMailThreadDetailsResponse struct {
 			// AllMessagesSentFlag Whether all the mail thread messages have been sent
 			AllMessagesSentFlag *UpdateMailThreadDetails200DataAllMessagesSentFlag `json:"all_messages_sent_flag,omitempty"`
 
-			// ArchivedFlag Whether the mail thread is archived
-			ArchivedFlag *UpdateMailThreadDetails200DataArchivedFlag `json:"archived_flag,omitempty"`
+			// ArchivedFlag Whether the mail thread is archived. `null` if the mail thread has not been explicitly archived or unarchived in Pipedrive.
+			ArchivedFlag *UpdateMailThreadDetails200DataArchivedFlag `json:"archived_flag"`
 
 			// DealId The ID of the deal
 			DealId *int `json:"deal_id"`
@@ -23186,8 +23188,8 @@ type UpdateMailThreadDetailsResponse struct {
 			// DeletedFlag Whether the mail thread is deleted
 			DeletedFlag *UpdateMailThreadDetails200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
-			// DraftsParties Parties of the drafted mail thread
-			DraftsParties *[]map[string]interface{} `json:"drafts_parties,omitempty"`
+			// DraftsParties Parties of the drafted mail thread. `null` if the mail thread has no drafts.
+			DraftsParties *[]map[string]interface{} `json:"drafts_parties"`
 
 			// ExternalDeletedFlag Whether the mail thread has been deleted externally
 			ExternalDeletedFlag *UpdateMailThreadDetails200DataExternalDeletedFlag `json:"external_deleted_flag,omitempty"`
@@ -23220,7 +23222,7 @@ type UpdateMailThreadDetailsResponse struct {
 			Id *int `json:"id,omitempty"`
 
 			// LastMessageReceivedTimestamp The last time when the mail thread has had a message received
-			LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp,omitempty"`
+			LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp"`
 
 			// LastMessageSentTimestamp The last time when the mail thread has had a message sent
 			LastMessageSentTimestamp *time.Time `json:"last_message_sent_timestamp"`
@@ -23257,10 +23259,10 @@ type UpdateMailThreadDetailsResponse struct {
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23287,10 +23289,10 @@ type UpdateMailThreadDetailsResponse struct {
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23319,7 +23321,7 @@ type UpdateMailThreadDetailsResponse struct {
 			SnippetDraft *string `json:"snippet_draft"`
 
 			// SnippetSent A snippet from a message sent
-			SnippetSent *string `json:"snippet_sent,omitempty"`
+			SnippetSent *string `json:"snippet_sent"`
 
 			// Subject The subject
 			Subject *string `json:"subject,omitempty"`
@@ -23342,7 +23344,7 @@ type UpdateMailThreadDetailsResponse struct {
 	}
 }
 type UpdateMailThreadDetails200DataAllMessagesSentFlag float32
-type UpdateMailThreadDetails200DataArchivedFlag float32
+type UpdateMailThreadDetails200DataArchivedFlag int
 type UpdateMailThreadDetails200DataDeletedFlag float32
 type UpdateMailThreadDetails200DataExternalDeletedFlag float32
 type UpdateMailThreadDetails200DataFirstMessageToMeFlag float32
@@ -23400,10 +23402,10 @@ type GetMailThreadMessagesResponse struct {
 				LinkedOrganizationId *int `json:"linked_organization_id"`
 
 				// LinkedPersonId ID of the linked person
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
-				// LinkedPersonName Email of the linked person
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				// LinkedPersonName Name of the linked person
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message party
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23433,10 +23435,10 @@ type GetMailThreadMessagesResponse struct {
 				LinkedOrganizationId *int `json:"linked_organization_id"`
 
 				// LinkedPersonId ID of the linked person
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
-				// LinkedPersonName Email of the linked person
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				// LinkedPersonName Name of the linked person
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message party
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23469,10 +23471,10 @@ type GetMailThreadMessagesResponse struct {
 				LinkedOrganizationId *int `json:"linked_organization_id"`
 
 				// LinkedPersonId ID of the linked person
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
-				// LinkedPersonName Email of the linked person
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				// LinkedPersonName Name of the linked person
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message party
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23547,10 +23549,10 @@ type GetMailThreadMessagesResponse struct {
 				LinkedOrganizationId *int `json:"linked_organization_id"`
 
 				// LinkedPersonId ID of the linked person
-				LinkedPersonId *int `json:"linked_person_id,omitempty"`
+				LinkedPersonId *int `json:"linked_person_id"`
 
-				// LinkedPersonName Email of the linked person
-				LinkedPersonName *string `json:"linked_person_name,omitempty"`
+				// LinkedPersonName Name of the linked person
+				LinkedPersonName *string `json:"linked_person_name"`
 
 				// MailMessagePartyId ID of the mail message party
 				MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -23782,7 +23784,9 @@ type GetNotesResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -23906,7 +23910,9 @@ type AddNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -24058,7 +24064,9 @@ type GetNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -24182,7 +24190,9 @@ type UpdateNoteResponse struct {
 
 			// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 			Content *string `json:"content,omitempty"`
-			Deal    *struct {
+
+			// Deal The deal this note is attached to
+			Deal *struct {
 				// Title The title of the deal this note is attached to
 				Title *string `json:"title,omitempty"`
 			} `json:"deal"`
@@ -25478,10 +25488,10 @@ type GetOrganizationMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -25505,10 +25515,10 @@ type GetOrganizationMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -25524,7 +25534,7 @@ type GetOrganizationMailMessagesResponse struct {
 				DeletedFlag *GetOrganizationMailMessages200DataDataDeletedFlag `json:"deleted_flag,omitempty"`
 
 				// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-				Draft *string `json:"draft,omitempty"`
+				Draft *string `json:"draft"`
 
 				// DraftFlag Whether the mail message is a draft or not
 				DraftFlag *GetOrganizationMailMessages200DataDataDraftFlag `json:"draft_flag,omitempty"`
@@ -25541,10 +25551,10 @@ type GetOrganizationMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -25617,7 +25627,7 @@ type GetOrganizationMailMessagesResponse struct {
 				SyncedFlag *GetOrganizationMailMessages200DataDataSyncedFlag `json:"synced_flag,omitempty"`
 
 				// TemplateId The ID of the mail template
-				TemplateId *int `json:"template_id,omitempty"`
+				TemplateId *int `json:"template_id"`
 
 				// Timestamp The add date and time of the Mail Message
 				Timestamp *string `json:"timestamp,omitempty"`
@@ -25631,10 +25641,10 @@ type GetOrganizationMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -26282,10 +26292,10 @@ type GetPersonMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -26309,10 +26319,10 @@ type GetPersonMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -26328,7 +26338,7 @@ type GetPersonMailMessagesResponse struct {
 				DeletedFlag *GetPersonMailMessages200DataDataDeletedFlag `json:"deleted_flag,omitempty"`
 
 				// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-				Draft *string `json:"draft,omitempty"`
+				Draft *string `json:"draft"`
 
 				// DraftFlag Whether the mail message is a draft or not
 				DraftFlag *GetPersonMailMessages200DataDataDraftFlag `json:"draft_flag,omitempty"`
@@ -26345,10 +26355,10 @@ type GetPersonMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -26421,7 +26431,7 @@ type GetPersonMailMessagesResponse struct {
 				SyncedFlag *GetPersonMailMessages200DataDataSyncedFlag `json:"synced_flag,omitempty"`
 
 				// TemplateId The ID of the mail template
-				TemplateId *int `json:"template_id,omitempty"`
+				TemplateId *int `json:"template_id"`
 
 				// Timestamp The add date and time of the Mail Message
 				Timestamp *string `json:"timestamp,omitempty"`
@@ -26435,10 +26445,10 @@ type GetPersonMailMessagesResponse struct {
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -29143,7 +29153,9 @@ type GetRecents200Data5 struct {
 
 		// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 		Content *string `json:"content,omitempty"`
-		Deal    *struct {
+
+		// Deal The deal this note is attached to
+		Deal *struct {
 			// Title The title of the deal this note is attached to
 			Title *string `json:"title,omitempty"`
 		} `json:"deal"`
@@ -36238,10 +36250,10 @@ func ParseGetDealMailMessagesResponse(rsp *http.Response) (*GetDealMailMessagesR
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -36265,10 +36277,10 @@ func ParseGetDealMailMessagesResponse(rsp *http.Response) (*GetDealMailMessagesR
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -36284,7 +36296,7 @@ func ParseGetDealMailMessagesResponse(rsp *http.Response) (*GetDealMailMessagesR
 					DeletedFlag *GetDealMailMessages200DataDataDeletedFlag `json:"deleted_flag,omitempty"`
 
 					// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-					Draft *string `json:"draft,omitempty"`
+					Draft *string `json:"draft"`
 
 					// DraftFlag Whether the mail message is a draft or not
 					DraftFlag *GetDealMailMessages200DataDataDraftFlag `json:"draft_flag,omitempty"`
@@ -36301,10 +36313,10 @@ func ParseGetDealMailMessagesResponse(rsp *http.Response) (*GetDealMailMessagesR
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -36377,7 +36389,7 @@ func ParseGetDealMailMessagesResponse(rsp *http.Response) (*GetDealMailMessagesR
 					SyncedFlag *GetDealMailMessages200DataDataSyncedFlag `json:"synced_flag,omitempty"`
 
 					// TemplateId The ID of the mail template
-					TemplateId *int `json:"template_id,omitempty"`
+					TemplateId *int `json:"template_id"`
 
 					// Timestamp The add date and time of the Mail Message
 					Timestamp *string `json:"timestamp,omitempty"`
@@ -36391,10 +36403,10 @@ func ParseGetDealMailMessagesResponse(rsp *http.Response) (*GetDealMailMessagesR
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -39794,6 +39806,9 @@ func ParseGetLeadsResponse(rsp *http.Response) (*GetLeadsResponse, error) {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
 
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
+
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
 
@@ -39891,6 +39906,9 @@ func ParseAddLeadResponse(rsp *http.Response) (*AddLeadResponse, error) {
 			Data *struct {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
+
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
 
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
@@ -40000,6 +40018,9 @@ func ParseGetArchivedLeadsResponse(rsp *http.Response) (*GetArchivedLeadsRespons
 			Data *[]struct {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
+
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
 
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
@@ -40147,6 +40168,9 @@ func ParseGetLeadResponse(rsp *http.Response) (*GetLeadResponse, error) {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
 
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
+
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
 
@@ -40261,6 +40285,9 @@ func ParseUpdateLeadResponse(rsp *http.Response) (*UpdateLeadResponse, error) {
 			Data *struct {
 				// AddTime The date and time of when the lead was created. In ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
 				AddTime *time.Time `json:"add_time,omitempty"`
+
+				// ArchiveReason The reason for archiving the lead. Automatically cleared when the lead is unarchived.
+				ArchiveReason *string `json:"archive_reason"`
 
 				// CcEmail The BCC email of the lead
 				CcEmail *string `json:"cc_email,omitempty"`
@@ -40924,10 +40951,10 @@ func ParseGetMailMessageResponse(rsp *http.Response) (*GetMailMessageResponse, e
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -40951,10 +40978,10 @@ func ParseGetMailMessageResponse(rsp *http.Response) (*GetMailMessageResponse, e
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -40967,7 +40994,7 @@ func ParseGetMailMessageResponse(rsp *http.Response) (*GetMailMessageResponse, e
 				DeletedFlag *GetMailMessage200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
 				// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-				Draft *string `json:"draft,omitempty"`
+				Draft *string `json:"draft"`
 
 				// DraftFlag Whether the mail message is a draft or not
 				DraftFlag *GetMailMessage200DataDraftFlag `json:"draft_flag,omitempty"`
@@ -40981,10 +41008,10 @@ func ParseGetMailMessageResponse(rsp *http.Response) (*GetMailMessageResponse, e
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41050,10 +41077,10 @@ func ParseGetMailMessageResponse(rsp *http.Response) (*GetMailMessageResponse, e
 					Id *int `json:"id,omitempty"`
 
 					// LinkedPersonId ID of the linked person to the mail message
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
 					// LinkedPersonName Name of the linked person to the mail message
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message participant
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41118,8 +41145,8 @@ func ParseGetMailThreadsResponse(rsp *http.Response) (*GetMailThreadsResponse, e
 				// AllMessagesSentFlag Whether all the mail thread messages have been sent
 				AllMessagesSentFlag *GetMailThreads200DataAllMessagesSentFlag `json:"all_messages_sent_flag,omitempty"`
 
-				// ArchivedFlag Whether the mail thread is archived
-				ArchivedFlag *GetMailThreads200DataArchivedFlag `json:"archived_flag,omitempty"`
+				// ArchivedFlag Whether the mail thread is archived. `null` if the mail thread has not been explicitly archived or unarchived in Pipedrive.
+				ArchivedFlag *GetMailThreads200DataArchivedFlag `json:"archived_flag"`
 
 				// DealId The ID of the deal
 				DealId *int `json:"deal_id"`
@@ -41130,8 +41157,8 @@ func ParseGetMailThreadsResponse(rsp *http.Response) (*GetMailThreadsResponse, e
 				// DeletedFlag Whether the mail thread is deleted
 				DeletedFlag *GetMailThreads200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
-				// DraftsParties Parties of the drafted mail thread
-				DraftsParties *[]map[string]interface{} `json:"drafts_parties,omitempty"`
+				// DraftsParties Parties of the drafted mail thread. `null` if the mail thread has no drafts.
+				DraftsParties *[]map[string]interface{} `json:"drafts_parties"`
 
 				// ExternalDeletedFlag Whether the mail thread has been deleted externally
 				ExternalDeletedFlag *GetMailThreads200DataExternalDeletedFlag `json:"external_deleted_flag,omitempty"`
@@ -41164,7 +41191,7 @@ func ParseGetMailThreadsResponse(rsp *http.Response) (*GetMailThreadsResponse, e
 				Id *int `json:"id,omitempty"`
 
 				// LastMessageReceivedTimestamp The last time when the mail thread has had a message received
-				LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp,omitempty"`
+				LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp"`
 
 				// LastMessageSentTimestamp The last time when the mail thread has had a message sent
 				LastMessageSentTimestamp *time.Time `json:"last_message_sent_timestamp"`
@@ -41201,10 +41228,10 @@ func ParseGetMailThreadsResponse(rsp *http.Response) (*GetMailThreadsResponse, e
 						LinkedOrganizationId *int `json:"linked_organization_id"`
 
 						// LinkedPersonId ID of the linked person
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
-						// LinkedPersonName Email of the linked person
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						// LinkedPersonName Name of the linked person
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message party
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41231,10 +41258,10 @@ func ParseGetMailThreadsResponse(rsp *http.Response) (*GetMailThreadsResponse, e
 						LinkedOrganizationId *int `json:"linked_organization_id"`
 
 						// LinkedPersonId ID of the linked person
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
-						// LinkedPersonName Email of the linked person
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						// LinkedPersonName Name of the linked person
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message party
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41263,7 +41290,7 @@ func ParseGetMailThreadsResponse(rsp *http.Response) (*GetMailThreadsResponse, e
 				SnippetDraft *string `json:"snippet_draft"`
 
 				// SnippetSent A snippet from a message sent
-				SnippetSent *string `json:"snippet_sent,omitempty"`
+				SnippetSent *string `json:"snippet_sent"`
 
 				// Subject The subject
 				Subject *string `json:"subject,omitempty"`
@@ -41355,8 +41382,8 @@ func ParseGetMailThreadResponse(rsp *http.Response) (*GetMailThreadResponse, err
 				// AllMessagesSentFlag Whether all the mail thread messages have been sent
 				AllMessagesSentFlag *GetMailThread200DataAllMessagesSentFlag `json:"all_messages_sent_flag,omitempty"`
 
-				// ArchivedFlag Whether the mail thread is archived
-				ArchivedFlag *GetMailThread200DataArchivedFlag `json:"archived_flag,omitempty"`
+				// ArchivedFlag Whether the mail thread is archived. `null` if the mail thread has not been explicitly archived or unarchived in Pipedrive.
+				ArchivedFlag *GetMailThread200DataArchivedFlag `json:"archived_flag"`
 
 				// DealId The ID of the deal
 				DealId *int `json:"deal_id"`
@@ -41367,8 +41394,8 @@ func ParseGetMailThreadResponse(rsp *http.Response) (*GetMailThreadResponse, err
 				// DeletedFlag Whether the mail thread is deleted
 				DeletedFlag *GetMailThread200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
-				// DraftsParties Parties of the drafted mail thread
-				DraftsParties *[]map[string]interface{} `json:"drafts_parties,omitempty"`
+				// DraftsParties Parties of the drafted mail thread. `null` if the mail thread has no drafts.
+				DraftsParties *[]map[string]interface{} `json:"drafts_parties"`
 
 				// ExternalDeletedFlag Whether the mail thread has been deleted externally
 				ExternalDeletedFlag *GetMailThread200DataExternalDeletedFlag `json:"external_deleted_flag,omitempty"`
@@ -41401,7 +41428,7 @@ func ParseGetMailThreadResponse(rsp *http.Response) (*GetMailThreadResponse, err
 				Id *int `json:"id,omitempty"`
 
 				// LastMessageReceivedTimestamp The last time when the mail thread has had a message received
-				LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp,omitempty"`
+				LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp"`
 
 				// LastMessageSentTimestamp The last time when the mail thread has had a message sent
 				LastMessageSentTimestamp *time.Time `json:"last_message_sent_timestamp"`
@@ -41438,10 +41465,10 @@ func ParseGetMailThreadResponse(rsp *http.Response) (*GetMailThreadResponse, err
 						LinkedOrganizationId *int `json:"linked_organization_id"`
 
 						// LinkedPersonId ID of the linked person
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
-						// LinkedPersonName Email of the linked person
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						// LinkedPersonName Name of the linked person
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message party
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41468,10 +41495,10 @@ func ParseGetMailThreadResponse(rsp *http.Response) (*GetMailThreadResponse, err
 						LinkedOrganizationId *int `json:"linked_organization_id"`
 
 						// LinkedPersonId ID of the linked person
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
-						// LinkedPersonName Email of the linked person
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						// LinkedPersonName Name of the linked person
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message party
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41500,7 +41527,7 @@ func ParseGetMailThreadResponse(rsp *http.Response) (*GetMailThreadResponse, err
 				SnippetDraft *string `json:"snippet_draft"`
 
 				// SnippetSent A snippet from a message sent
-				SnippetSent *string `json:"snippet_sent,omitempty"`
+				SnippetSent *string `json:"snippet_sent"`
 
 				// Subject The subject
 				Subject *string `json:"subject,omitempty"`
@@ -41558,8 +41585,8 @@ func ParseUpdateMailThreadDetailsResponse(rsp *http.Response) (*UpdateMailThread
 				// AllMessagesSentFlag Whether all the mail thread messages have been sent
 				AllMessagesSentFlag *UpdateMailThreadDetails200DataAllMessagesSentFlag `json:"all_messages_sent_flag,omitempty"`
 
-				// ArchivedFlag Whether the mail thread is archived
-				ArchivedFlag *UpdateMailThreadDetails200DataArchivedFlag `json:"archived_flag,omitempty"`
+				// ArchivedFlag Whether the mail thread is archived. `null` if the mail thread has not been explicitly archived or unarchived in Pipedrive.
+				ArchivedFlag *UpdateMailThreadDetails200DataArchivedFlag `json:"archived_flag"`
 
 				// DealId The ID of the deal
 				DealId *int `json:"deal_id"`
@@ -41570,8 +41597,8 @@ func ParseUpdateMailThreadDetailsResponse(rsp *http.Response) (*UpdateMailThread
 				// DeletedFlag Whether the mail thread is deleted
 				DeletedFlag *UpdateMailThreadDetails200DataDeletedFlag `json:"deleted_flag,omitempty"`
 
-				// DraftsParties Parties of the drafted mail thread
-				DraftsParties *[]map[string]interface{} `json:"drafts_parties,omitempty"`
+				// DraftsParties Parties of the drafted mail thread. `null` if the mail thread has no drafts.
+				DraftsParties *[]map[string]interface{} `json:"drafts_parties"`
 
 				// ExternalDeletedFlag Whether the mail thread has been deleted externally
 				ExternalDeletedFlag *UpdateMailThreadDetails200DataExternalDeletedFlag `json:"external_deleted_flag,omitempty"`
@@ -41604,7 +41631,7 @@ func ParseUpdateMailThreadDetailsResponse(rsp *http.Response) (*UpdateMailThread
 				Id *int `json:"id,omitempty"`
 
 				// LastMessageReceivedTimestamp The last time when the mail thread has had a message received
-				LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp,omitempty"`
+				LastMessageReceivedTimestamp *time.Time `json:"last_message_received_timestamp"`
 
 				// LastMessageSentTimestamp The last time when the mail thread has had a message sent
 				LastMessageSentTimestamp *time.Time `json:"last_message_sent_timestamp"`
@@ -41641,10 +41668,10 @@ func ParseUpdateMailThreadDetailsResponse(rsp *http.Response) (*UpdateMailThread
 						LinkedOrganizationId *int `json:"linked_organization_id"`
 
 						// LinkedPersonId ID of the linked person
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
-						// LinkedPersonName Email of the linked person
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						// LinkedPersonName Name of the linked person
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message party
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41671,10 +41698,10 @@ func ParseUpdateMailThreadDetailsResponse(rsp *http.Response) (*UpdateMailThread
 						LinkedOrganizationId *int `json:"linked_organization_id"`
 
 						// LinkedPersonId ID of the linked person
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
-						// LinkedPersonName Email of the linked person
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						// LinkedPersonName Name of the linked person
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message party
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41703,7 +41730,7 @@ func ParseUpdateMailThreadDetailsResponse(rsp *http.Response) (*UpdateMailThread
 				SnippetDraft *string `json:"snippet_draft"`
 
 				// SnippetSent A snippet from a message sent
-				SnippetSent *string `json:"snippet_sent,omitempty"`
+				SnippetSent *string `json:"snippet_sent"`
 
 				// Subject The subject
 				Subject *string `json:"subject,omitempty"`
@@ -41773,10 +41800,10 @@ func ParseGetMailThreadMessagesResponse(rsp *http.Response) (*GetMailThreadMessa
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41806,10 +41833,10 @@ func ParseGetMailThreadMessagesResponse(rsp *http.Response) (*GetMailThreadMessa
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41842,10 +41869,10 @@ func ParseGetMailThreadMessagesResponse(rsp *http.Response) (*GetMailThreadMessa
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -41920,10 +41947,10 @@ func ParseGetMailThreadMessagesResponse(rsp *http.Response) (*GetMailThreadMessa
 					LinkedOrganizationId *int `json:"linked_organization_id"`
 
 					// LinkedPersonId ID of the linked person
-					LinkedPersonId *int `json:"linked_person_id,omitempty"`
+					LinkedPersonId *int `json:"linked_person_id"`
 
-					// LinkedPersonName Email of the linked person
-					LinkedPersonName *string `json:"linked_person_name,omitempty"`
+					// LinkedPersonName Name of the linked person
+					LinkedPersonName *string `json:"linked_person_name"`
 
 					// MailMessagePartyId ID of the mail message party
 					MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -42177,7 +42204,9 @@ func ParseGetNotesResponse(rsp *http.Response) (*GetNotesResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`
@@ -42305,7 +42334,9 @@ func ParseAddNoteResponse(rsp *http.Response) (*AddNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`
@@ -42465,7 +42496,9 @@ func ParseGetNoteResponse(rsp *http.Response) (*GetNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`
@@ -42593,7 +42626,9 @@ func ParseUpdateNoteResponse(rsp *http.Response) (*UpdateNoteResponse, error) {
 
 				// Content The content of the note in HTML format. Subject to sanitization on the back-end.
 				Content *string `json:"content,omitempty"`
-				Deal    *struct {
+
+				// Deal The deal this note is attached to
+				Deal *struct {
 					// Title The title of the deal this note is attached to
 					Title *string `json:"title,omitempty"`
 				} `json:"deal"`
@@ -43952,10 +43987,10 @@ func ParseGetOrganizationMailMessagesResponse(rsp *http.Response) (*GetOrganizat
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -43979,10 +44014,10 @@ func ParseGetOrganizationMailMessagesResponse(rsp *http.Response) (*GetOrganizat
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -43998,7 +44033,7 @@ func ParseGetOrganizationMailMessagesResponse(rsp *http.Response) (*GetOrganizat
 					DeletedFlag *GetOrganizationMailMessages200DataDataDeletedFlag `json:"deleted_flag,omitempty"`
 
 					// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-					Draft *string `json:"draft,omitempty"`
+					Draft *string `json:"draft"`
 
 					// DraftFlag Whether the mail message is a draft or not
 					DraftFlag *GetOrganizationMailMessages200DataDataDraftFlag `json:"draft_flag,omitempty"`
@@ -44015,10 +44050,10 @@ func ParseGetOrganizationMailMessagesResponse(rsp *http.Response) (*GetOrganizat
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -44091,7 +44126,7 @@ func ParseGetOrganizationMailMessagesResponse(rsp *http.Response) (*GetOrganizat
 					SyncedFlag *GetOrganizationMailMessages200DataDataSyncedFlag `json:"synced_flag,omitempty"`
 
 					// TemplateId The ID of the mail template
-					TemplateId *int `json:"template_id,omitempty"`
+					TemplateId *int `json:"template_id"`
 
 					// Timestamp The add date and time of the Mail Message
 					Timestamp *string `json:"timestamp,omitempty"`
@@ -44105,10 +44140,10 @@ func ParseGetOrganizationMailMessagesResponse(rsp *http.Response) (*GetOrganizat
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -44791,10 +44826,10 @@ func ParseGetPersonMailMessagesResponse(rsp *http.Response) (*GetPersonMailMessa
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -44818,10 +44853,10 @@ func ParseGetPersonMailMessagesResponse(rsp *http.Response) (*GetPersonMailMessa
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -44837,7 +44872,7 @@ func ParseGetPersonMailMessagesResponse(rsp *http.Response) (*GetPersonMailMessa
 					DeletedFlag *GetPersonMailMessages200DataDataDeletedFlag `json:"deleted_flag,omitempty"`
 
 					// Draft If the mail message has a draft status then the value is the mail message object as JSON formatted string, otherwise `null`.
-					Draft *string `json:"draft,omitempty"`
+					Draft *string `json:"draft"`
 
 					// DraftFlag Whether the mail message is a draft or not
 					DraftFlag *GetPersonMailMessages200DataDataDraftFlag `json:"draft_flag,omitempty"`
@@ -44854,10 +44889,10 @@ func ParseGetPersonMailMessagesResponse(rsp *http.Response) (*GetPersonMailMessa
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
@@ -44930,7 +44965,7 @@ func ParseGetPersonMailMessagesResponse(rsp *http.Response) (*GetPersonMailMessa
 					SyncedFlag *GetPersonMailMessages200DataDataSyncedFlag `json:"synced_flag,omitempty"`
 
 					// TemplateId The ID of the mail template
-					TemplateId *int `json:"template_id,omitempty"`
+					TemplateId *int `json:"template_id"`
 
 					// Timestamp The add date and time of the Mail Message
 					Timestamp *string `json:"timestamp,omitempty"`
@@ -44944,10 +44979,10 @@ func ParseGetPersonMailMessagesResponse(rsp *http.Response) (*GetPersonMailMessa
 						Id *int `json:"id,omitempty"`
 
 						// LinkedPersonId ID of the linked person to the mail message
-						LinkedPersonId *int `json:"linked_person_id,omitempty"`
+						LinkedPersonId *int `json:"linked_person_id"`
 
 						// LinkedPersonName Name of the linked person to the mail message
-						LinkedPersonName *string `json:"linked_person_name,omitempty"`
+						LinkedPersonName *string `json:"linked_person_name"`
 
 						// MailMessagePartyId ID of the mail message participant
 						MailMessagePartyId *int `json:"mail_message_party_id,omitempty"`
