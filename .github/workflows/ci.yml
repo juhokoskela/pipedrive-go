@@ -46,6 +46,13 @@ jobs:
       - name: Test
         run: go test ./...
 
+      - name: Test 32-bit query ID overflow
+        if: matrix.go == '1.26.0'
+        env:
+          GOARCH: "386"
+          CGO_ENABLED: "0"
+        run: go test ./pipedrive/v2 -run '^TestListIDsRejectOverflowBeforeRequest$' -count=1 -v
+
       - name: SDK coverage
         # Keep line coverage comparable across preferred-toolchain upgrades.
         if: matrix.go == '1.26.0'

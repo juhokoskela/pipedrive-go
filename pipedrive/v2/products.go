@@ -535,7 +535,13 @@ func WithProductsOwnerID(id UserID) ListProductsOption {
 
 func WithProductsIDs(ids ...ProductID) ListProductsOption {
 	return listProductsOptionFunc(func(cfg *listProductsOptions) {
-		values := stringIDs(ids)
+		values, err := queryIntIDs(ids, "product id")
+		if err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		if len(values) == 0 {
 			return
 		}

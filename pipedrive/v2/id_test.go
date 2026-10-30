@@ -5,6 +5,7 @@ import (
 	"math"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -29,6 +30,66 @@ func TestValidateID(t *testing.T) {
 	}
 	if math.MaxInt != math.MaxInt64 && err == nil {
 		t.Fatal("expected overflow error where int is 32 bits")
+	}
+}
+
+func TestListIDsRejectOverflowBeforeRequest(t *testing.T) {
+	if strconv.IntSize != 32 {
+		t.Skip("query ID overflow requires a 32-bit target")
+	}
+	t.Parallel()
+
+	for _, id := range []int64{int64(math.MaxInt32) + 1, int64(math.MinInt32) - 1} {
+		t.Run(strconv.FormatInt(id, 10), func(t *testing.T) {
+			t.Parallel()
+
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				t.Errorf("overflowing ID reached the server: %s %s", r.Method, r.URL)
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":[]}`))
+			})
+			ctx := context.Background()
+			for _, tt := range []struct {
+				name string
+				call func() error
+			}{
+				{"Activities.List", func() error {
+					_, _, err := client.Activities.List(ctx, WithActivitiesIDs(1, ActivityID(id)))
+					return err
+				}},
+				{"Activities.ListPager", func() error {
+					pager := client.Activities.ListPager(WithActivitiesIDs(1, ActivityID(id)))
+					pager.Next(ctx)
+					return pager.Err()
+				}},
+				{"Deals.List", func() error {
+					_, _, err := client.Deals.List(ctx, WithDealsIDs(1, DealID(id)))
+					return err
+				}},
+				{"Deals.ListArchived", func() error {
+					_, _, err := client.Deals.ListArchived(ctx, WithArchivedDealsIDs(1, DealID(id)))
+					return err
+				}},
+				{"Organizations.List", func() error {
+					_, _, err := client.Organizations.List(ctx, WithOrganizationsIDs(1, OrganizationID(id)))
+					return err
+				}},
+				{"Persons.List", func() error {
+					_, _, err := client.Persons.List(ctx, WithPersonsIDs(1, PersonID(id)))
+					return err
+				}},
+				{"Products.List", func() error {
+					_, _, err := client.Products.List(ctx, WithProductsIDs(1, ProductID(id)))
+					return err
+				}},
+			} {
+				t.Run(tt.name, func(t *testing.T) {
+					if err := tt.call(); err == nil || !strings.Contains(err.Error(), "overflows int") {
+						t.Errorf("expected an ID overflow error, got %v", err)
+					}
+				})
+			}
+		})
 	}
 }
 

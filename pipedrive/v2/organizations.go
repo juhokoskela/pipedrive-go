@@ -556,7 +556,13 @@ func WithOrganizationsCustomFields(fields ...string) ListOrganizationsOption {
 
 func WithOrganizationsIDs(ids ...OrganizationID) ListOrganizationsOption {
 	return listOrganizationsOptionFunc(func(cfg *listOrganizationsOptions) {
-		values := stringIDs(ids)
+		values, err := queryIntIDs(ids, "organization id")
+		if err != nil {
+			if cfg.err == nil {
+				cfg.err = err
+			}
+			return
+		}
 		if len(values) == 0 {
 			return
 		}

@@ -818,8 +818,8 @@ type GetActivitiesParams struct {
 	// FilterId If supplied, only activities matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only activities owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1343,8 +1343,8 @@ type GetDealsParams struct {
 	// FilterId If supplied, only deals matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1478,8 +1478,8 @@ type GetArchivedDealsParams struct {
 	// FilterId If supplied, only deals matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only deals owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -1602,12 +1602,12 @@ type SearchDealsParams struct {
 	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
 
 	// Status Will filter deals by the provided specific status. open = Open, won = Won, lost = Lost. The upper limit of found deals associated with the status is 2000.
-	Status *[]SearchDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
+	Status *SearchDealsParamsStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchDealsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2117,7 +2117,7 @@ type SearchLeadsParams struct {
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchLeadsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2321,8 +2321,8 @@ type GetOrganizationsParams struct {
 	// FilterId If supplied, only organizations matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only organizations owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2447,7 +2447,7 @@ type SearchOrganizationParams struct {
 	// ExactMatch When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.
 	ExactMatch *bool `form:"exact_match,omitempty" json:"exact_match,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -2729,8 +2729,8 @@ type GetPersonsParams struct {
 	// FilterId If supplied, only persons matching the specified filter are returned
 	FilterId *int `form:"filter_id,omitempty" json:"filter_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// OwnerId If supplied, only persons owned by the specified user are returned. If filter_id is provided, this is ignored.
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
@@ -2906,7 +2906,7 @@ type SearchPersonsParams struct {
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchPersonsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -3235,8 +3235,8 @@ type GetProductsParams struct {
 	// OwnerId If supplied, only products owned by the given user will be returned
 	OwnerId *int `form:"owner_id,omitempty" json:"owner_id,omitempty"`
 
-	// Ids Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
-	Ids *[]string `form:"ids,omitempty" json:"ids,omitempty"`
+	// Ids Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.
+	Ids *[]int `form:"ids,omitempty" json:"ids,omitempty"`
 
 	// CustomFields Optional comma separated string array of custom fields keys to include. If you are only interested in a particular set of custom fields, please use this parameter for faster results and smaller response.<br/>A maximum of 15 keys is allowed.
 	CustomFields *[]string `form:"custom_fields,omitempty" json:"custom_fields,omitempty"`
@@ -3355,7 +3355,7 @@ type SearchProductsParams struct {
 	// IncludeFields Supports including optional fields in the results which are not provided by default
 	IncludeFields *[]SearchProductsParamsIncludeFields `form:"include_fields,omitempty" json:"include_fields,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -3493,8 +3493,23 @@ type AddProductVariationJSONBody struct {
 	// Name The name of the product variation. The maximum length is 255 characters.
 	Name string `json:"name"`
 
-	// Prices Array of objects, each containing: currency (string), price (number), cost (number, optional), direct_cost (number, optional), notes (string, optional). When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user's default currency will be assigned.
-	Prices *[]map[string]interface{} `json:"prices,omitempty"`
+	// Prices Array of prices of the product variation. When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user's default currency will be assigned.
+	Prices *[]struct {
+		// Cost The cost of the product variation
+		Cost *float32 `json:"cost,omitempty"`
+
+		// Currency The currency of the price
+		Currency string `json:"currency"`
+
+		// DirectCost The direct cost of the product variation
+		DirectCost *float32 `json:"direct_cost,omitempty"`
+
+		// Notes The notes about the price
+		Notes *string `json:"notes,omitempty"`
+
+		// Price The price of the product variation
+		Price float32 `json:"price"`
+	} `json:"prices,omitempty"`
 }
 
 // UpdateProductVariationJSONBody defines parameters for UpdateProductVariation.
@@ -3502,8 +3517,23 @@ type UpdateProductVariationJSONBody struct {
 	// Name The name of the product variation. The maximum length is 255 characters.
 	Name *string `json:"name,omitempty"`
 
-	// Prices Array of objects, each containing: currency (string), price (number), cost (number, optional), direct_cost (number, optional), notes (string, optional). When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user's default currency will be assigned.
-	Prices *[]map[string]interface{} `json:"prices,omitempty"`
+	// Prices Array of prices of the product variation. When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user's default currency will be assigned.
+	Prices *[]struct {
+		// Cost The cost of the product variation
+		Cost *float32 `json:"cost,omitempty"`
+
+		// Currency The currency of the price
+		Currency string `json:"currency"`
+
+		// DirectCost The direct cost of the product variation
+		DirectCost *float32 `json:"direct_cost,omitempty"`
+
+		// Notes The notes about the price
+		Notes *string `json:"notes,omitempty"`
+
+		// Price The price of the product variation
+		Price float32 `json:"price"`
+	} `json:"prices,omitempty"`
 }
 
 // GetProjectFieldsParams defines parameters for GetProjectFields.
@@ -3751,7 +3781,7 @@ type SearchProjectsParams struct {
 	// OrganizationId Will filter projects by the provided organization ID
 	OrganizationId *int `form:"organization_id,omitempty" json:"organization_id,omitempty"`
 
-	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.
+	// Limit For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Cursor For pagination, the marker (an opaque string value) representing the first item on the next page
@@ -11866,7 +11896,7 @@ func NewSearchDealsRequest(server string, params *SearchDealsParams) (*http.Requ
 
 		if params.Status != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status", runtime.ParamLocationQuery, *params.Status); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -29275,8 +29305,26 @@ type GetProductVariationsResponse struct {
 			// Name The name of the product variation
 			Name *string `json:"name,omitempty"`
 
-			// Prices Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)
-			Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// Prices Array of prices of the product variation
+			Prices *[]struct {
+				// Cost The cost of the product variation
+				Cost *float32 `json:"cost,omitempty"`
+
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product variation
+				DirectCost *float32 `json:"direct_cost,omitempty"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product variation
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductVariationId The ID of the product variation
+				ProductVariationId *int `json:"product_variation_id,omitempty"`
+			} `json:"prices,omitempty"`
 
 			// ProductId The ID of the product
 			ProductId *int `json:"product_id,omitempty"`
@@ -29314,8 +29362,26 @@ type AddProductVariationResponse struct {
 			// Name The name of the product variation
 			Name *string `json:"name,omitempty"`
 
-			// Prices Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)
-			Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// Prices Array of prices of the product variation
+			Prices *[]struct {
+				// Cost The cost of the product variation
+				Cost *float32 `json:"cost,omitempty"`
+
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product variation
+				DirectCost *float32 `json:"direct_cost,omitempty"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product variation
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductVariationId The ID of the product variation
+				ProductVariationId *int `json:"product_variation_id,omitempty"`
+			} `json:"prices,omitempty"`
 
 			// ProductId The ID of the product
 			ProductId *int `json:"product_id,omitempty"`
@@ -29383,8 +29449,26 @@ type UpdateProductVariationResponse struct {
 			// Name The name of the product variation
 			Name *string `json:"name,omitempty"`
 
-			// Prices Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)
-			Prices *[]map[string]interface{} `json:"prices,omitempty"`
+			// Prices Array of prices of the product variation
+			Prices *[]struct {
+				// Cost The cost of the product variation
+				Cost *float32 `json:"cost,omitempty"`
+
+				// Currency The currency of the price
+				Currency *string `json:"currency,omitempty"`
+
+				// DirectCost The direct cost of the product variation
+				DirectCost *float32 `json:"direct_cost,omitempty"`
+
+				// Notes The notes about the price
+				Notes *string `json:"notes,omitempty"`
+
+				// Price The price of the product variation
+				Price *float32 `json:"price,omitempty"`
+
+				// ProductVariationId The ID of the product variation
+				ProductVariationId *int `json:"product_variation_id,omitempty"`
+			} `json:"prices,omitempty"`
 
 			// ProductId The ID of the product
 			ProductId *int `json:"product_id,omitempty"`
@@ -42499,8 +42583,26 @@ func ParseGetProductVariationsResponse(rsp *http.Response) (*GetProductVariation
 				// Name The name of the product variation
 				Name *string `json:"name,omitempty"`
 
-				// Prices Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// Prices Array of prices of the product variation
+				Prices *[]struct {
+					// Cost The cost of the product variation
+					Cost *float32 `json:"cost,omitempty"`
+
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product variation
+					DirectCost *float32 `json:"direct_cost,omitempty"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product variation
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductVariationId The ID of the product variation
+					ProductVariationId *int `json:"product_variation_id,omitempty"`
+				} `json:"prices,omitempty"`
 
 				// ProductId The ID of the product
 				ProductId *int `json:"product_id,omitempty"`
@@ -42542,8 +42644,26 @@ func ParseAddProductVariationResponse(rsp *http.Response) (*AddProductVariationR
 				// Name The name of the product variation
 				Name *string `json:"name,omitempty"`
 
-				// Prices Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// Prices Array of prices of the product variation
+				Prices *[]struct {
+					// Cost The cost of the product variation
+					Cost *float32 `json:"cost,omitempty"`
+
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product variation
+					DirectCost *float32 `json:"direct_cost,omitempty"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product variation
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductVariationId The ID of the product variation
+					ProductVariationId *int `json:"product_variation_id,omitempty"`
+				} `json:"prices,omitempty"`
 
 				// ProductId The ID of the product
 				ProductId *int `json:"product_id,omitempty"`
@@ -42619,8 +42739,26 @@ func ParseUpdateProductVariationResponse(rsp *http.Response) (*UpdateProductVari
 				// Name The name of the product variation
 				Name *string `json:"name,omitempty"`
 
-				// Prices Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)
-				Prices *[]map[string]interface{} `json:"prices,omitempty"`
+				// Prices Array of prices of the product variation
+				Prices *[]struct {
+					// Cost The cost of the product variation
+					Cost *float32 `json:"cost,omitempty"`
+
+					// Currency The currency of the price
+					Currency *string `json:"currency,omitempty"`
+
+					// DirectCost The direct cost of the product variation
+					DirectCost *float32 `json:"direct_cost,omitempty"`
+
+					// Notes The notes about the price
+					Notes *string `json:"notes,omitempty"`
+
+					// Price The price of the product variation
+					Price *float32 `json:"price,omitempty"`
+
+					// ProductVariationId The ID of the product variation
+					ProductVariationId *int `json:"product_variation_id,omitempty"`
+				} `json:"prices,omitempty"`
 
 				// ProductId The ID of the product
 				ProductId *int `json:"product_id,omitempty"`

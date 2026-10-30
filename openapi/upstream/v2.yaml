@@ -99,13 +99,13 @@ paths:
           description: 'If supplied, only activities matching the specified filter are returned'
         - in: query
           name: ids
-          description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
+          description: 'Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
             type: array
             uniqueItems: true
             maxItems: 100
             items:
-              type: string
+              type: integer
           style: form
           explode: false
         - in: query
@@ -185,6 +185,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -1539,6 +1541,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -1948,13 +1952,13 @@ paths:
           description: 'If supplied, only deals matching the specified filter are returned'
         - in: query
           name: ids
-          description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
+          description: 'Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
             type: array
             uniqueItems: true
             maxItems: 100
             items:
-              type: string
+              type: integer
           style: form
           explode: false
         - in: query
@@ -2079,6 +2083,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -2604,13 +2610,13 @@ paths:
           description: 'If supplied, only deals matching the specified filter are returned'
         - in: query
           name: ids
-          description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
+          description: 'Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
             type: array
             uniqueItems: true
             maxItems: 100
             items:
-              type: string
+              type: integer
           style: form
           explode: false
         - in: query
@@ -2725,6 +2731,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -3566,6 +3574,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -3704,6 +3714,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -4094,16 +4106,11 @@ paths:
         - in: query
           name: status
           schema:
-            type: array
-            uniqueItems: true
-            items:
-              type: string
-              enum:
-                - open
-                - won
-                - lost
-          style: form
-          explode: false
+            type: string
+            enum:
+              - open
+              - won
+              - lost
           description: 'Will filter deals by the provided specific status. open = Open, won = Won, lost = Lost. The upper limit of found deals associated with the status is 2000.'
         - in: query
           name: include_fields
@@ -4119,9 +4126,11 @@ paths:
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
-          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
+          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
             example: 100
         - in: query
           name: cursor
@@ -6260,6 +6269,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -7870,13 +7881,13 @@ paths:
           description: 'If supplied, only persons matching the specified filter are returned'
         - in: query
           name: ids
-          description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
+          description: 'Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
             type: array
             uniqueItems: true
             maxItems: 100
             items:
-              type: string
+              type: integer
           style: form
           explode: false
         - in: query
@@ -7984,6 +7995,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -9338,6 +9351,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -9474,6 +9489,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -9692,6 +9709,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -11001,13 +11020,13 @@ paths:
           description: 'If supplied, only organizations matching the specified filter are returned'
         - in: query
           name: ids
-          description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
+          description: 'Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
             type: array
             uniqueItems: true
             maxItems: 100
             items:
-              type: string
+              type: integer
           style: form
           explode: false
         - in: query
@@ -11100,6 +11119,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -12063,6 +12084,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -12199,6 +12222,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -12341,6 +12366,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -13818,13 +13845,13 @@ paths:
           description: 'If supplied, only products owned by the given user will be returned'
         - in: query
           name: ids
-          description: 'Optional comma separated string array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
+          description: 'Optional comma separated array of up to 100 entity ids to fetch. If filter_id is provided, this is ignored. If any of the requested entities do not exist or are not visible, they are not included in the response.'
           schema:
             type: array
             uniqueItems: true
             maxItems: 100
             items:
-              type: string
+              type: integer
           style: form
           explode: false
         - in: query
@@ -13995,33 +14022,30 @@ paths:
                               type: array
                               description: The prices of the product in different currencies
                               items:
-                                allOf:
-                                  - type: object
-                                    title: ProductPriceBase
-                                    properties:
-                                      price:
-                                        type: number
-                                        description: The price of the product
-                                      cost:
-                                        type: number
-                                        description: The cost of the product
-                                  - type: object
-                                    properties:
-                                      product_id:
-                                        type: integer
-                                        nullable: true
-                                        description: The ID of the product
-                                      currency:
-                                        type: string
-                                        nullable: true
-                                        description: The currency of the price
-                                      direct_cost:
-                                        type: number
-                                        nullable: true
-                                        description: The direct cost of the product
-                                      notes:
-                                        type: string
-                                        description: The notes about the price
+                                type: object
+                                title: ProductPrice
+                                properties:
+                                  price:
+                                    type: number
+                                    description: The price of the product
+                                  cost:
+                                    type: number
+                                    description: The cost of the product
+                                  product_id:
+                                    type: integer
+                                    nullable: true
+                                    description: The ID of the product
+                                  currency:
+                                    type: string
+                                    nullable: true
+                                    description: The currency of the price
+                                  direct_cost:
+                                    type: number
+                                    nullable: true
+                                    description: The direct cost of the product
+                                  notes:
+                                    type: string
+                                    description: The notes about the price
                   additional_data:
                     type: object
                     description: Pagination related data
@@ -14130,30 +14154,27 @@ paths:
                       type: array
                       description: 'The prices of the product in different currencies. Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
                       items:
-                        allOf:
-                          - type: object
-                            title: ProductPriceBase
-                            properties:
-                              price:
-                                type: number
-                                description: The price of the product
-                              cost:
-                                type: number
-                                description: The cost of the product
-                          - type: object
-                            required:
-                              - price
-                              - currency
-                            properties:
-                              currency:
-                                type: string
-                                description: The currency of the price
-                              direct_cost:
-                                type: number
-                                description: The direct cost of the product
-                              notes:
-                                type: string
-                                description: The notes about the price
+                        type: object
+                        title: ProductPriceRequest
+                        required:
+                          - price
+                          - currency
+                        properties:
+                          price:
+                            type: number
+                            description: The price of the product
+                          cost:
+                            type: number
+                            description: The cost of the product
+                          currency:
+                            type: string
+                            description: The currency of the price
+                          direct_cost:
+                            type: number
+                            description: The direct cost of the product
+                          notes:
+                            type: string
+                            description: The notes about the price
                     custom_fields:
                       type: object
                       additionalProperties: true
@@ -14304,33 +14325,30 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              allOf:
-                                - type: object
-                                  title: ProductPriceBase
-                                  properties:
-                                    price:
-                                      type: number
-                                      description: The price of the product
-                                    cost:
-                                      type: number
-                                      description: The cost of the product
-                                - type: object
-                                  properties:
-                                    product_id:
-                                      type: integer
-                                      nullable: true
-                                      description: The ID of the product
-                                    currency:
-                                      type: string
-                                      nullable: true
-                                      description: The currency of the price
-                                    direct_cost:
-                                      type: number
-                                      nullable: true
-                                      description: The direct cost of the product
-                                    notes:
-                                      type: string
-                                      description: The notes about the price
+                              type: object
+                              title: ProductPrice
+                              properties:
+                                price:
+                                  type: number
+                                  description: The price of the product
+                                cost:
+                                  type: number
+                                  description: The cost of the product
+                                product_id:
+                                  type: integer
+                                  nullable: true
+                                  description: The ID of the product
+                                currency:
+                                  type: string
+                                  nullable: true
+                                  description: The currency of the price
+                                direct_cost:
+                                  type: number
+                                  nullable: true
+                                  description: The direct cost of the product
+                                notes:
+                                  type: string
+                                  description: The notes about the price
               example:
                 success: true
                 data:
@@ -14390,6 +14408,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -14526,6 +14546,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -14687,9 +14709,11 @@ paths:
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
-          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
+          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
             example: 100
         - in: query
           name: cursor
@@ -14951,33 +14975,30 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              allOf:
-                                - type: object
-                                  title: ProductPriceBase
-                                  properties:
-                                    price:
-                                      type: number
-                                      description: The price of the product
-                                    cost:
-                                      type: number
-                                      description: The cost of the product
-                                - type: object
-                                  properties:
-                                    product_id:
-                                      type: integer
-                                      nullable: true
-                                      description: The ID of the product
-                                    currency:
-                                      type: string
-                                      nullable: true
-                                      description: The currency of the price
-                                    direct_cost:
-                                      type: number
-                                      nullable: true
-                                      description: The direct cost of the product
-                                    notes:
-                                      type: string
-                                      description: The notes about the price
+                              type: object
+                              title: ProductPrice
+                              properties:
+                                price:
+                                  type: number
+                                  description: The price of the product
+                                cost:
+                                  type: number
+                                  description: The cost of the product
+                                product_id:
+                                  type: integer
+                                  nullable: true
+                                  description: The ID of the product
+                                currency:
+                                  type: string
+                                  nullable: true
+                                  description: The currency of the price
+                                direct_cost:
+                                  type: number
+                                  nullable: true
+                                  description: The direct cost of the product
+                                notes:
+                                  type: string
+                                  description: The notes about the price
               example:
                 success: true
                 data:
@@ -15081,30 +15102,27 @@ paths:
                       type: array
                       description: 'The prices of the product in different currencies. Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and the user''s default currency will be assigned.'
                       items:
-                        allOf:
-                          - type: object
-                            title: ProductPriceBase
-                            properties:
-                              price:
-                                type: number
-                                description: The price of the product
-                              cost:
-                                type: number
-                                description: The cost of the product
-                          - type: object
-                            required:
-                              - price
-                              - currency
-                            properties:
-                              currency:
-                                type: string
-                                description: The currency of the price
-                              direct_cost:
-                                type: number
-                                description: The direct cost of the product
-                              notes:
-                                type: string
-                                description: The notes about the price
+                        type: object
+                        title: ProductPriceRequest
+                        required:
+                          - price
+                          - currency
+                        properties:
+                          price:
+                            type: number
+                            description: The price of the product
+                          cost:
+                            type: number
+                            description: The cost of the product
+                          currency:
+                            type: string
+                            description: The currency of the price
+                          direct_cost:
+                            type: number
+                            description: The direct cost of the product
+                          notes:
+                            type: string
+                            description: The notes about the price
                     custom_fields:
                       type: object
                       additionalProperties: true
@@ -15253,33 +15271,30 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              allOf:
-                                - type: object
-                                  title: ProductPriceBase
-                                  properties:
-                                    price:
-                                      type: number
-                                      description: The price of the product
-                                    cost:
-                                      type: number
-                                      description: The cost of the product
-                                - type: object
-                                  properties:
-                                    product_id:
-                                      type: integer
-                                      nullable: true
-                                      description: The ID of the product
-                                    currency:
-                                      type: string
-                                      nullable: true
-                                      description: The currency of the price
-                                    direct_cost:
-                                      type: number
-                                      nullable: true
-                                      description: The direct cost of the product
-                                    notes:
-                                      type: string
-                                      description: The notes about the price
+                              type: object
+                              title: ProductPrice
+                              properties:
+                                price:
+                                  type: number
+                                  description: The price of the product
+                                cost:
+                                  type: number
+                                  description: The cost of the product
+                                product_id:
+                                  type: integer
+                                  nullable: true
+                                  description: The ID of the product
+                                currency:
+                                  type: string
+                                  nullable: true
+                                  description: The currency of the price
+                                direct_cost:
+                                  type: number
+                                  nullable: true
+                                  description: The direct cost of the product
+                                notes:
+                                  type: string
+                                  description: The notes about the price
               example:
                 success: true
                 data:
@@ -15445,33 +15460,30 @@ paths:
                             type: array
                             description: The prices of the product in different currencies
                             items:
-                              allOf:
-                                - type: object
-                                  title: ProductPriceBase
-                                  properties:
-                                    price:
-                                      type: number
-                                      description: The price of the product
-                                    cost:
-                                      type: number
-                                      description: The cost of the product
-                                - type: object
-                                  properties:
-                                    product_id:
-                                      type: integer
-                                      nullable: true
-                                      description: The ID of the product
-                                    currency:
-                                      type: string
-                                      nullable: true
-                                      description: The currency of the price
-                                    direct_cost:
-                                      type: number
-                                      nullable: true
-                                      description: The direct cost of the product
-                                    notes:
-                                      type: string
-                                      description: The notes about the price
+                              type: object
+                              title: ProductPrice
+                              properties:
+                                price:
+                                  type: number
+                                  description: The price of the product
+                                cost:
+                                  type: number
+                                  description: The cost of the product
+                                product_id:
+                                  type: integer
+                                  nullable: true
+                                  description: The ID of the product
+                                currency:
+                                  type: string
+                                  nullable: true
+                                  description: The currency of the price
+                                direct_cost:
+                                  type: number
+                                  nullable: true
+                                  description: The direct cost of the product
+                                notes:
+                                  type: string
+                                  description: The notes about the price
               example:
                 success: true
                 data:
@@ -15568,8 +15580,32 @@ paths:
                         prices:
                           type: array
                           items:
-                            type: object
-                          description: 'Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)'
+                            title: ProductVariationPrice
+                            allOf:
+                              - type: object
+                                properties:
+                                  product_variation_id:
+                                    type: integer
+                                    description: The ID of the product variation
+                              - title: BaseProductVariationPrice
+                                type: object
+                                properties:
+                                  price:
+                                    type: number
+                                    description: The price of the product variation
+                                  cost:
+                                    type: number
+                                    description: The cost of the product variation
+                                  currency:
+                                    type: string
+                                    description: The currency of the price
+                                  direct_cost:
+                                    type: number
+                                    description: The direct cost of the product variation
+                                  notes:
+                                    type: string
+                                    description: The notes about the price
+                          description: Array of prices of the product variation
                   additional_data:
                     type: object
                     description: Pagination related data
@@ -15626,8 +15662,31 @@ paths:
                 prices:
                   type: array
                   items:
-                    type: object
-                  description: 'Array of objects, each containing: currency (string), price (number), cost (number, optional), direct_cost (number, optional), notes (string, optional). When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user''s default currency will be assigned.'
+                    title: ProductVariationPriceRequest
+                    allOf:
+                      - type: object
+                        required:
+                          - price
+                          - currency
+                      - title: BaseProductVariationPrice
+                        type: object
+                        properties:
+                          price:
+                            type: number
+                            description: The price of the product variation
+                          cost:
+                            type: number
+                            description: The cost of the product variation
+                          currency:
+                            type: string
+                            description: The currency of the price
+                          direct_cost:
+                            type: number
+                            description: The direct cost of the product variation
+                          notes:
+                            type: string
+                            description: The notes about the price
+                  description: 'Array of prices of the product variation. When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user''s default currency will be assigned.'
       responses:
         '201':
           description: Add a product variation
@@ -15655,8 +15714,32 @@ paths:
                       prices:
                         type: array
                         items:
-                          type: object
-                        description: 'Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)'
+                          title: ProductVariationPrice
+                          allOf:
+                            - type: object
+                              properties:
+                                product_variation_id:
+                                  type: integer
+                                  description: The ID of the product variation
+                            - title: BaseProductVariationPrice
+                              type: object
+                              properties:
+                                price:
+                                  type: number
+                                  description: The price of the product variation
+                                cost:
+                                  type: number
+                                  description: The cost of the product variation
+                                currency:
+                                  type: string
+                                  description: The currency of the price
+                                direct_cost:
+                                  type: number
+                                  description: The direct cost of the product variation
+                                notes:
+                                  type: string
+                                  description: The notes about the price
+                        description: Array of prices of the product variation
               example:
                 success: true
                 data:
@@ -15708,8 +15791,31 @@ paths:
                 prices:
                   type: array
                   items:
-                    type: object
-                  description: 'Array of objects, each containing: currency (string), price (number), cost (number, optional), direct_cost (number, optional), notes (string, optional). When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user''s default currency will be assigned.'
+                    title: ProductVariationPriceRequest
+                    allOf:
+                      - type: object
+                        required:
+                          - price
+                          - currency
+                      - title: BaseProductVariationPrice
+                        type: object
+                        properties:
+                          price:
+                            type: number
+                            description: The price of the product variation
+                          cost:
+                            type: number
+                            description: The cost of the product variation
+                          currency:
+                            type: string
+                            description: The currency of the price
+                          direct_cost:
+                            type: number
+                            description: The direct cost of the product variation
+                          notes:
+                            type: string
+                            description: The notes about the price
+                  description: 'Array of prices of the product variation. When prices is omitted altogether, a default price of 0, a default cost of 0, a default direct_cost of 0 and the user''s default currency will be assigned.'
       responses:
         '200':
           description: Update product variation data
@@ -15737,8 +15843,32 @@ paths:
                       prices:
                         type: array
                         items:
-                          type: object
-                        description: 'Array of objects, each containing: product_variation_id (number), currency (string), price (number), cost (number), direct_cost (number) , notes (string)'
+                          title: ProductVariationPrice
+                          allOf:
+                            - type: object
+                              properties:
+                                product_variation_id:
+                                  type: integer
+                                  description: The ID of the product variation
+                            - title: BaseProductVariationPrice
+                              type: object
+                              properties:
+                                price:
+                                  type: number
+                                  description: The price of the product variation
+                                cost:
+                                  type: number
+                                  description: The cost of the product variation
+                                currency:
+                                  type: string
+                                  description: The currency of the price
+                                direct_cost:
+                                  type: number
+                                  description: The direct cost of the product variation
+                                notes:
+                                  type: string
+                                  description: The notes about the price
+                        description: Array of prices of the product variation
               example:
                 success: true
                 data:
@@ -16067,6 +16197,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -17176,9 +17308,11 @@ paths:
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
-          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
+          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
             example: 100
         - in: query
           name: cursor
@@ -17567,9 +17701,11 @@ paths:
           description: 'When enabled, only full exact matches against the given term are returned. It is <b>not</b> case sensitive.'
         - in: query
           name: limit
-          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
+          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
             example: 100
         - in: query
           name: cursor
@@ -17726,9 +17862,11 @@ paths:
           description: Supports including optional fields in the results which are not provided by default
         - in: query
           name: limit
-          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
+          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
             example: 100
         - in: query
           name: cursor
@@ -17933,6 +18071,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
             example: 100
         - in: query
           name: cursor
@@ -18164,6 +18304,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -18262,6 +18404,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -18707,6 +18851,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -19076,6 +19222,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -20291,6 +20439,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -20656,6 +20806,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -21192,6 +21344,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
       responses:
         '200':
@@ -21378,9 +21532,11 @@ paths:
           description: Will filter projects by the provided organization ID
         - in: query
           name: limit
-          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
+          description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 100 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
             example: 100
         - in: query
           name: cursor
@@ -21755,6 +21911,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
@@ -21858,6 +22016,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: is_done
@@ -23159,6 +23319,8 @@ paths:
           description: 'For pagination, the limit of entries to be returned. If not provided, 100 items will be returned. Please note that a maximum value of 500 is allowed.'
           schema:
             type: integer
+            minimum: 1
+            maximum: 500
             example: 100
         - in: query
           name: cursor
