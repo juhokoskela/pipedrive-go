@@ -283,66 +283,104 @@ func TestLeadsService_Update(t *testing.T) {
 	t.Parallel()
 
 	id := "adf21080-0e10-11eb-879b-05d71fb426ec"
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPatch {
-			t.Fatalf("unexpected method: %s", r.Method)
-		}
-		if r.URL.Path != "/leads/"+id {
-			t.Fatalf("unexpected path: %s", r.URL.Path)
-		}
-		if got := r.Header.Get("X-Test"); got != "update" {
-			t.Fatalf("unexpected header X-Test: %q", got)
-		}
+	reason := "No longer interested"
+	for _, tt := range []struct {
+		name   string
+		reason *string
+	}{
+		{name: "without archive reason"},
+		{name: "with archive reason", reason: &reason},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-		var payload map[string]interface{}
-		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-			t.Fatalf("decode body: %v", err)
-		}
-		if payload["title"] != "Updated" {
-			t.Fatalf("unexpected title: %#v", payload["title"])
-		}
-		if payload["is_archived"] != true {
-			t.Fatalf("unexpected is_archived: %#v", payload["is_archived"])
-		}
-		if payload["owner_id"] != float64(7) {
-			t.Fatalf("unexpected owner_id: %#v", payload["owner_id"])
-		}
-		if payload["organization_id"] != float64(11) {
-			t.Fatalf("unexpected organization_id: %#v", payload["organization_id"])
-		}
-		if payload["channel"] != float64(2) {
-			t.Fatalf("unexpected channel: %#v", payload["channel"])
-		}
-		if payload["channel_id"] != "channel-1" {
-			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
-		}
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.Method != http.MethodPatch {
+					t.Errorf("unexpected method: %s", r.Method)
+				}
+				if r.URL.Path != "/leads/"+id {
+					t.Errorf("unexpected path: %s", r.URL.Path)
+				}
+				if got := r.Header.Get("X-Test"); got != "update" {
+					t.Errorf("unexpected header X-Test: %q", got)
+				}
 
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":{"id":"` + id + `","title":"Updated","is_archived":true}}`))
-	}))
-	t.Cleanup(srv.Close)
+				var payload map[string]interface{}
+				if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+					t.Errorf("decode body: %v", err)
+					w.WriteHeader(http.StatusBadRequest)
+					return
+				}
+				if payload["title"] != "Updated" {
+					t.Errorf("unexpected title: %#v", payload["title"])
+				}
+				if payload["is_archived"] != true {
+					t.Errorf("unexpected is_archived: %#v", payload["is_archived"])
+				}
+				if payload["owner_id"] != float64(7) {
+					t.Errorf("unexpected owner_id: %#v", payload["owner_id"])
+				}
+				if payload["organization_id"] != float64(11) {
+					t.Errorf("unexpected organization_id: %#v", payload["organization_id"])
+				}
+				if payload["channel"] != float64(2) {
+					t.Errorf("unexpected channel: %#v", payload["channel"])
+				}
+				if payload["channel_id"] != "channel-1" {
+					t.Errorf("unexpected channel_id: %#v", payload["channel_id"])
+				}
+				if got, present := payload["archive_reason"]; tt.reason == nil {
+					if present {
+						t.Errorf("archive_reason should be omitted, got %#v", got)
+					}
+				} else if got != *tt.reason {
+					t.Errorf("archive_reason = %#v, want %q", got, *tt.reason)
+				}
 
-	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
-	if err != nil {
-		t.Fatalf("NewClient error: %v", err)
-	}
+				w.Header().Set("Content-Type", "application/json")
+				if err := json.NewEncoder(w).Encode(map[string]interface{}{
+					"success": true,
+					"data": map[string]interface{}{
+						"id": id, "title": "Updated", "is_archived": true, "archive_reason": tt.reason,
+					},
+				}); err != nil {
+					t.Errorf("encode response: %v", err)
+				}
+			}))
+			t.Cleanup(srv.Close)
 
-	lead, err := client.Leads.Update(
-		context.Background(),
-		LeadID(id),
-		WithLeadTitle("Updated"),
-		WithLeadOwnerID(UserID(7)),
-		WithLeadOrganizationID(OrganizationID(11)),
-		WithLeadChannel(2),
-		WithLeadChannelID("channel-1"),
-		WithLeadArchived(true),
-		WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
-	)
-	if err != nil {
-		t.Fatalf("Update error: %v", err)
-	}
-	if lead.Title != "Updated" || !lead.IsArchived {
-		t.Fatalf("unexpected lead: %#v", lead)
+			client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+			if err != nil {
+				t.Fatalf("NewClient error: %v", err)
+			}
+
+			opts := []UpdateLeadOption{
+				WithLeadTitle("Updated"),
+				WithLeadOwnerID(UserID(7)),
+				WithLeadOrganizationID(OrganizationID(11)),
+				WithLeadChannel(2),
+				WithLeadChannelID("channel-1"),
+				WithLeadArchived(true),
+				WithLeadsRequestOptions(pipedrive.WithHeader("X-Test", "update")),
+			}
+			if tt.reason != nil {
+				opts = append(opts, WithLeadArchiveReason(*tt.reason))
+			}
+			lead, err := client.Leads.Update(context.Background(), LeadID(id), opts...)
+			if err != nil {
+				t.Fatalf("Update error: %v", err)
+			}
+			if lead.Title != "Updated" || !lead.IsArchived {
+				t.Fatalf("unexpected lead: %#v", lead)
+			}
+			if tt.reason == nil {
+				if lead.ArchiveReason != nil {
+					t.Errorf("expected nil archive reason, got %q", *lead.ArchiveReason)
+				}
+			} else if lead.ArchiveReason == nil || *lead.ArchiveReason != *tt.reason {
+				t.Errorf("unexpected archive reason: %#v", lead.ArchiveReason)
+			}
+		})
 	}
 }
 
