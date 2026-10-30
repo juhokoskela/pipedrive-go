@@ -6,7 +6,6 @@ import (
 	"io"
 	"math"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
@@ -111,6 +110,19 @@ func intIDs[T ~int64](ids []T, label string) ([]int, error) {
 	return out, nil
 }
 
+// queryIntIDs preserves query filter values, including zero and negative IDs.
+// It rejects only values that overflow int on this platform.
+func queryIntIDs[T ~int64](ids []T, label string) ([]int, error) {
+	out := make([]int, 0, len(ids))
+	for _, id := range ids {
+		if int64(int(id)) != int64(id) {
+			return nil, fmt.Errorf("%s %d overflows int on this platform", label, int64(id))
+		}
+		out = append(out, int(id))
+	}
+	return out, nil
+}
+
 // validateIntIDs validates every ID in a slice already represented as int.
 func validateIntIDs(ids []int, label string) error {
 	for _, id := range ids {
@@ -131,12 +143,4 @@ func validateCSVValues(values []string, label string) error {
 		}
 	}
 	return nil
-}
-
-func stringIDs[T ~int64](ids []T) []string {
-	out := make([]string, 0, len(ids))
-	for _, id := range ids {
-		out = append(out, strconv.FormatInt(int64(id), 10))
-	}
-	return out
 }
