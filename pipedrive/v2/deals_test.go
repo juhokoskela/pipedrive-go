@@ -355,7 +355,7 @@ func TestDealsService_Create(t *testing.T) {
 		if payload["is_archived"] != true {
 			t.Fatalf("unexpected is_archived: %#v", payload["is_archived"])
 		}
-		if payload["is_deleted"] != false {
+		if _, ok := payload["is_deleted"]; ok {
 			t.Fatalf("unexpected is_deleted: %#v", payload["is_deleted"])
 		}
 		if payload["archive_time"] != "2024-06-11T10:00:00Z" {
@@ -372,6 +372,9 @@ func TestDealsService_Create(t *testing.T) {
 		}
 		if payload["channel_id"] != "my-integration" {
 			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
+		}
+		if payload["channel"] != float64(4) || payload["origin_id"] != "integration-1" {
+			t.Fatalf("unexpected channel/origin: %#v", payload)
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -405,12 +408,13 @@ func TestDealsService_Create(t *testing.T) {
 		WithDealLabelIDs(10, 11),
 		WithDealCustomFieldsMap(map[string]interface{}{"cf_key": "value"}),
 		WithDealArchived(true),
-		WithDealDeleted(false),
 		WithDealArchiveTime("2024-06-11T10:00:00Z"),
 		WithDealCloseTime("2024-06-12T10:00:00Z"),
 		WithDealLostTime("2024-06-13T10:00:00Z"),
 		WithDealWonTime("2024-06-14T10:00:00Z"),
 		WithDealChannelID("my-integration"),
+		WithDealChannel(4),
+		WithDealOriginID("integration-1"),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
@@ -445,6 +449,12 @@ func TestDealsService_Update(t *testing.T) {
 		if payload["channel_id"] != "my-integration-updated" {
 			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
 		}
+		if payload["channel"] != float64(5) || payload["is_deleted"] != false {
+			t.Fatalf("unexpected channel/restoration: %#v", payload)
+		}
+		if _, ok := payload["origin_id"]; ok {
+			t.Fatalf("unexpected origin_id: %#v", payload["origin_id"])
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":7,"title":"Updated Deal"}}`))
@@ -464,6 +474,9 @@ func TestDealsService_Update(t *testing.T) {
 		DealID(7),
 		WithDealTitle("Updated Deal"),
 		WithDealChannelID("my-integration-updated"),
+		WithDealChannel(5),
+		WithDealDeleted(true),
+		WithDealDeleted(false),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {
@@ -471,6 +484,45 @@ func TestDealsService_Update(t *testing.T) {
 	}
 	if deal.ID != 7 || deal.Title != "Updated Deal" {
 		t.Fatalf("unexpected deal: %#v", deal)
+	}
+}
+
+func TestDealsService_RejectInvalidDeletion(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		name   string
+		create bool
+		opts   []DealOption
+		want   string
+	}{
+		{name: "create false", create: true, opts: []DealOption{WithDealDeleted(false)}, want: "is_deleted is not supported when creating a deal"},
+		{name: "create true", create: true, opts: []DealOption{WithDealDeleted(true)}, want: "is_deleted is not supported when creating a deal"},
+		{name: "update true", opts: []DealOption{WithDealDeleted(false), WithDealDeleted(true)}, want: "is_deleted must be false to restore a deal; use Delete to delete it"},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				t.Error("unexpected HTTP request")
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(`{"data":{"id":1}}`))
+			})
+			var err error
+			if tt.create {
+				opts := []CreateDealOption{WithDealTitle("Deal")}
+				for _, opt := range tt.opts {
+					opts = append(opts, opt)
+				}
+				_, err = client.Deals.Create(t.Context(), opts...)
+			} else {
+				var opts []UpdateDealOption
+				for _, opt := range tt.opts {
+					opts = append(opts, opt)
+				}
+				_, err = client.Deals.Update(t.Context(), 1, opts...)
+			}
+			if err == nil || err.Error() != tt.want {
+				t.Fatalf("error = %v, want %q", err, tt.want)
+			}
+		})
 	}
 }
 

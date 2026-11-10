@@ -572,7 +572,9 @@ type dealPayload struct {
 	closeTime         nullableValue[string]
 	lostTime          *string
 	wonTime           *string
+	channel           *int
 	channelID         *string
+	originID          *string
 }
 
 type dealProductPayload struct {
@@ -1284,6 +1286,8 @@ func WithDealArchived(isArchived bool) DealOption {
 	})
 }
 
+// WithDealDeleted(false) restores a deleted deal on update. It cannot be used
+// when creating a deal. Use DealsService.Delete to delete a deal.
 func WithDealDeleted(isDeleted bool) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
 		payload.isDeleted = &isDeleted
@@ -1340,17 +1344,25 @@ func WithDealWonTime(value string) DealOption {
 	})
 }
 
-// WithDealChannelID labels which integration or channel created the deal using
-// free text. Pipedrive accepts channel_id when creating and updating v2 deals,
-// although its v2 OpenAPI spec omits the field from both request schemas.
-// Pipedrive support confirmed this behavior in August 2026. Deal origin and
-// origin_id are system-generated in v2 and cannot be set by API clients.
+func WithDealChannel(channel int) DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.channel = &channel
+	})
+}
+
+// WithDealChannelID further identifies the marketing channel with free text.
 func WithDealChannelID(channelID string) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
 		if channelID == "" {
 			return
 		}
 		payload.channelID = &channelID
+	})
+}
+
+func WithDealOriginID(originID string) CreateDealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.originID = &originID
 	})
 }
 
@@ -2120,6 +2132,9 @@ func (s *DealsService) ForEachArchived(ctx context.Context, fn func(Deal) error,
 
 func (s *DealsService) Create(ctx context.Context, opts ...CreateDealOption) (*Deal, error) {
 	cfg := newCreateDealOptions(opts)
+	if cfg.payload.isDeleted != nil {
+		return nil, fmt.Errorf("is_deleted is not supported when creating a deal")
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	body, err := json.Marshal(cfg.payload.toMap())
@@ -2156,6 +2171,9 @@ func (s *DealsService) Update(ctx context.Context, id DealID, opts ...UpdateDeal
 		return nil, err
 	}
 	cfg := newUpdateDealOptions(opts)
+	if cfg.payload.isDeleted != nil && *cfg.payload.isDeleted {
+		return nil, fmt.Errorf("is_deleted must be false to restore a deal; use Delete to delete it")
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	body, err := json.Marshal(cfg.payload.toMap())
@@ -3313,6 +3331,12 @@ func (p dealPayload) toMap() map[string]interface{} {
 	}
 	if p.channelID != nil {
 		body["channel_id"] = *p.channelID
+	}
+	if p.channel != nil {
+		body["channel"] = *p.channel
+	}
+	if p.originID != nil {
+		body["origin_id"] = *p.originID
 	}
 	return body
 }
