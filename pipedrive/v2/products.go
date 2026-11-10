@@ -156,7 +156,7 @@ func (p *ProductImage) UnmarshalJSON(data []byte) error {
 	if aux.AddTime != nil {
 		// Live image responses use offset-less UTC; the spec declares a date.
 		var parseErr error
-		for _, layout := range []string{time.RFC3339Nano, "2006-01-02 15:04:05", time.DateOnly} {
+		for _, layout := range []string{time.RFC3339Nano, time.DateTime, time.DateOnly} {
 			parsed, err := time.Parse(layout, *aux.AddTime)
 			if err == nil {
 				aux.imageAlias.AddTime = &parsed

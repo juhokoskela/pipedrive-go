@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -69,7 +68,6 @@ func (users *userList) UnmarshalJSON(data []byte) error {
 		decoded = make(userList, len(entries))
 	}
 	for i, entry := range entries {
-		entry = bytes.TrimSpace(entry)
 		if len(entry) > 0 && entry[0] == '{' {
 			if err := json.Unmarshal(entry, &decoded[i]); err != nil {
 				return err

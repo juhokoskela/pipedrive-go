@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -63,7 +62,6 @@ func (d *Deal) UnmarshalJSON(data []byte) error {
 }
 
 func decodeRelatedID[T ~int64](data json.RawMessage) (*T, error) {
-	data = bytes.TrimSpace(data)
 	if len(data) == 0 {
 		return nil, nil
 	}

@@ -12,7 +12,7 @@ import (
 func TestListUsersAcceptsIDOnlyResponses(t *testing.T) {
 	t.Parallel()
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, _ = w.Write([]byte(`{"data":[123,456]}`))
+		_, _ = w.Write([]byte(`{"data":[ 123 , 456 ]}`))
 	}))
 	t.Cleanup(srv.Close)
 	c, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
@@ -45,7 +45,7 @@ func TestListUsersAcceptsIDOnlyResponses(t *testing.T) {
 func TestProductDealsAcceptExpandedRelatedIDs(t *testing.T) {
 	t.Parallel()
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, _ = w.Write([]byte(`{"data":[{"id":1,"title":"Example","user_id":{"id":10,"value":10},"person_id":{"value":20,"name":"Person"},"org_id":{"value":30,"name":"Organization"}},{"id":2,"user_id":11,"person_id":21,"org_id":31},{"id":3,"user_id":null,"person_id":null,"org_id":null}]}`))
+		_, _ = w.Write([]byte(`{"data":[{"id":1,"title":"Example","user_id": {"id":10,"value":10} ,"person_id": {"value":20,"name":"Person"} ,"org_id": {"value":30,"name":"Organization"}},{"id":2,"user_id":11,"person_id":21,"org_id":31},{"id":3,"user_id":null,"person_id":null,"org_id":null}]}`))
 	}))
 	t.Cleanup(srv.Close)
 	c, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
