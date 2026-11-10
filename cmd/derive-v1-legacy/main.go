@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/juhokoskela/pipedrive-go/internal/specdiff"
+	"github.com/juhokoskela/pipedrive-go/v2/internal/specdiff"
 )
 
 func main() {
