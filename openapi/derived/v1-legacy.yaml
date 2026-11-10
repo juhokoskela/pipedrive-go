@@ -10190,6 +10190,13 @@ paths:
                     format: date
                   description: |
                     The end date of the period for which to find the goal's progress. Format: YYYY-MM-DD. This date must be the same or before the goal duration end date.
+                - in: query
+                  name: timezone
+                  required: false
+                  schema:
+                    type: string
+                  description: |
+                    The IANA timezone to use when evaluating period boundaries (e.g. `America/Sao_Paulo`). The start and end of the period are interpreted in this timezone. If omitted, defaults to the timezone of the user making the request.
             responses:
                 '200':
                     description: Successful response containing payload in the `data.goal` object
@@ -18670,6 +18677,7 @@ paths:
                                                                 description: The creation date and time of the relationship
                                                             update_time:
                                                                 type: string
+                                                                nullable: true
                                                                 description: The last updated date and time of the relationship
                                                             active_flag:
                                                                 type: string
@@ -18899,6 +18907,7 @@ paths:
                                                     description: The creation date and time of the relationship
                                                 update_time:
                                                     type: string
+                                                    nullable: true
                                                     description: The last updated date and time of the relationship
                                                 active_flag:
                                                     type: string
@@ -19129,6 +19138,7 @@ paths:
                                                         description: The creation date and time of the relationship
                                                     update_time:
                                                         type: string
+                                                        nullable: true
                                                         description: The last updated date and time of the relationship
                                                     active_flag:
                                                         type: string
@@ -19337,6 +19347,7 @@ paths:
                                                     description: The creation date and time of the relationship
                                                 update_time:
                                                     type: string
+                                                    nullable: true
                                                     description: The last updated date and time of the relationship
                                                 active_flag:
                                                     type: string
@@ -25541,6 +25552,7 @@ paths:
                                                                     description: The visibility group ID of who can see the organization
                                                                 label:
                                                                     type: integer
+                                                                    nullable: true
                                                                     description: 'The label assigned to the organization. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.'
                                                                 label_ids:
                                                                     type: array
@@ -25589,36 +25601,47 @@ paths:
                                                                       properties:
                                                                         address:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The full address of the organization
                                                                         address_subpremise:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The sub-premise of the organization location
                                                                         address_street_number:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The street number of the organization location
                                                                         address_route:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The route of the organization location
                                                                         address_sublocality:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The sub-locality of the organization location
                                                                         address_locality:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The locality of the organization location
                                                                         address_admin_area_level_1:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The level 1 admin area of the organization location
                                                                         address_admin_area_level_2:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The level 2 admin area of the organization location
                                                                         address_country:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The country of the organization location
                                                                         address_postal_code:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The postal code of the organization location
                                                                         address_formatted_address:
                                                                             type: string
+                                                                            nullable: true
                                                                             description: The formatted organization location
                                                                 - type: object
                                                                   title: dealsCountAndActivityInfo
@@ -25726,12 +25749,15 @@ paths:
                                                                 description: The name of the product
                                                             code:
                                                                 type: string
+                                                                nullable: true
                                                                 description: The product code
                                                             description:
                                                                 type: string
+                                                                nullable: true
                                                                 description: The description of the product
                                                             unit:
                                                                 type: string
+                                                                nullable: true
                                                                 description: The unit in which this product is sold
                                                             tax:
                                                                 type: number
@@ -25739,6 +25765,7 @@ paths:
                                                                 default: 0
                                                             category:
                                                                 type: string
+                                                                nullable: true
                                                                 description: The category of the product
                                                             active_flag:
                                                                 type: boolean

@@ -1314,6 +1314,9 @@ type GetGoalResultParams struct {
 
 	// PeriodEnd The end date of the period for which to find the goal's progress. Format: YYYY-MM-DD. This date must be the same or before the goal duration end date.
 	PeriodEnd openapi_types.Date `form:"period.end" json:"period.end"`
+
+	// Timezone The IANA timezone to use when evaluating period boundaries (e.g. `America/Sao_Paulo`). The start and end of the period are interpreted in this timezone. If omitted, defaults to the timezone of the user making the request.
+	Timezone *string `form:"timezone,omitempty" json:"timezone,omitempty"`
 }
 
 // GetLeadFieldsParams defines parameters for GetLeadFields.
@@ -8963,6 +8966,22 @@ func NewGetGoalResultRequest(server string, id string, params *GetGoalResultPara
 					queryValues.Add(k, v2)
 				}
 			}
+		}
+
+		if params.Timezone != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "timezone", runtime.ParamLocationQuery, *params.Timezone); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
 		}
 
 		queryURL.RawQuery = queryValues.Encode()
@@ -24786,7 +24805,7 @@ type GetOrganizationRelationshipsResponse struct {
 			Type *string `json:"type,omitempty"`
 
 			// UpdateTime The last updated date and time of the relationship
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 		RelatedObjects *struct {
 			Organization *struct {
@@ -24890,7 +24909,7 @@ type AddOrganizationRelationshipResponse struct {
 			Type *string `json:"type,omitempty"`
 
 			// UpdateTime The last updated date and time of the relationship
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 		RelatedObjects *struct {
 			Organization *struct {
@@ -25030,7 +25049,7 @@ type GetOrganizationRelationshipResponse struct {
 			Type *string `json:"type,omitempty"`
 
 			// UpdateTime The last updated date and time of the relationship
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 		RelatedObjects *struct {
 			Organization *struct {
@@ -25134,7 +25153,7 @@ type UpdateOrganizationRelationshipResponse struct {
 			Type *string `json:"type,omitempty"`
 
 			// UpdateTime The last updated date and time of the relationship
-			UpdateTime *string `json:"update_time,omitempty"`
+			UpdateTime *string `json:"update_time"`
 		} `json:"data,omitempty"`
 		RelatedObjects *struct {
 			Organization *struct {
@@ -29445,37 +29464,37 @@ type GetRecents200Data7 struct {
 		AddTime *string `json:"add_time,omitempty"`
 
 		// Address The full address of the organization
-		Address *string `json:"address,omitempty"`
+		Address *string `json:"address"`
 
 		// AddressAdminAreaLevel1 The level 1 admin area of the organization location
-		AddressAdminAreaLevel1 *string `json:"address_admin_area_level_1,omitempty"`
+		AddressAdminAreaLevel1 *string `json:"address_admin_area_level_1"`
 
 		// AddressAdminAreaLevel2 The level 2 admin area of the organization location
-		AddressAdminAreaLevel2 *string `json:"address_admin_area_level_2,omitempty"`
+		AddressAdminAreaLevel2 *string `json:"address_admin_area_level_2"`
 
 		// AddressCountry The country of the organization location
-		AddressCountry *string `json:"address_country,omitempty"`
+		AddressCountry *string `json:"address_country"`
 
 		// AddressFormattedAddress The formatted organization location
-		AddressFormattedAddress *string `json:"address_formatted_address,omitempty"`
+		AddressFormattedAddress *string `json:"address_formatted_address"`
 
 		// AddressLocality The locality of the organization location
-		AddressLocality *string `json:"address_locality,omitempty"`
+		AddressLocality *string `json:"address_locality"`
 
 		// AddressPostalCode The postal code of the organization location
-		AddressPostalCode *string `json:"address_postal_code,omitempty"`
+		AddressPostalCode *string `json:"address_postal_code"`
 
 		// AddressRoute The route of the organization location
-		AddressRoute *string `json:"address_route,omitempty"`
+		AddressRoute *string `json:"address_route"`
 
 		// AddressStreetNumber The street number of the organization location
-		AddressStreetNumber *string `json:"address_street_number,omitempty"`
+		AddressStreetNumber *string `json:"address_street_number"`
 
 		// AddressSublocality The sub-locality of the organization location
-		AddressSublocality *string `json:"address_sublocality,omitempty"`
+		AddressSublocality *string `json:"address_sublocality"`
 
 		// AddressSubpremise The sub-premise of the organization location
-		AddressSubpremise *string `json:"address_subpremise,omitempty"`
+		AddressSubpremise *string `json:"address_subpremise"`
 
 		// CcEmail The BCC email associated with the organization
 		CcEmail *string `json:"cc_email,omitempty"`
@@ -29508,7 +29527,7 @@ type GetRecents200Data7 struct {
 		Id *int `json:"id,omitempty"`
 
 		// Label The label assigned to the organization. When the `label` field is updated, the `label_ids` field value will be overwritten by the `label` field value.
-		Label *int `json:"label,omitempty"`
+		Label *int `json:"label"`
 
 		// LabelIds The IDs of labels assigned to the organization. When the `label_ids` field is updated, the `label` field value will be set to the first value of the `label_ids` field.
 		LabelIds *[]int `json:"label_ids,omitempty"`
@@ -29664,13 +29683,13 @@ type GetRecents200Data9 struct {
 		AddTime *string `json:"add_time,omitempty"`
 
 		// Category The category of the product
-		Category *string `json:"category,omitempty"`
+		Category *string `json:"category"`
 
 		// Code The product code
-		Code *string `json:"code,omitempty"`
+		Code *string `json:"code"`
 
 		// Description The description of the product
-		Description *string `json:"description,omitempty"`
+		Description *string `json:"description"`
 
 		// FilesCount The count of files
 		FilesCount *int `json:"files_count,omitempty"`
@@ -29697,7 +29716,7 @@ type GetRecents200Data9 struct {
 		Tax *float32 `json:"tax,omitempty"`
 
 		// Unit The unit in which this product is sold
-		Unit *string `json:"unit,omitempty"`
+		Unit *string `json:"unit"`
 
 		// UpdateTime The date and time when the product was updated to the deal
 		UpdateTime *string `json:"update_time,omitempty"`
@@ -43253,7 +43272,7 @@ func ParseGetOrganizationRelationshipsResponse(rsp *http.Response) (*GetOrganiza
 				Type *string `json:"type,omitempty"`
 
 				// UpdateTime The last updated date and time of the relationship
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 			RelatedObjects *struct {
 				Organization *struct {
@@ -43361,7 +43380,7 @@ func ParseAddOrganizationRelationshipResponse(rsp *http.Response) (*AddOrganizat
 				Type *string `json:"type,omitempty"`
 
 				// UpdateTime The last updated date and time of the relationship
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 			RelatedObjects *struct {
 				Organization *struct {
@@ -43509,7 +43528,7 @@ func ParseGetOrganizationRelationshipResponse(rsp *http.Response) (*GetOrganizat
 				Type *string `json:"type,omitempty"`
 
 				// UpdateTime The last updated date and time of the relationship
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 			RelatedObjects *struct {
 				Organization *struct {
@@ -43617,7 +43636,7 @@ func ParseUpdateOrganizationRelationshipResponse(rsp *http.Response) (*UpdateOrg
 				Type *string `json:"type,omitempty"`
 
 				// UpdateTime The last updated date and time of the relationship
-				UpdateTime *string `json:"update_time,omitempty"`
+				UpdateTime *string `json:"update_time"`
 			} `json:"data,omitempty"`
 			RelatedObjects *struct {
 				Organization *struct {

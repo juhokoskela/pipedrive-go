@@ -1412,6 +1412,12 @@ type AddDealJSONBody struct {
 	// ArchiveTime The optional date and time of archiving the deal in UTC. Format: YYYY-MM-DD HH:MM:SS. If omitted and `is_archived` is true, it will be set to the current date and time.
 	ArchiveTime *string `json:"archive_time"`
 
+	// Channel The ID of Marketing channel this deal was created from. Provided value must be one of the channels configured for your company. You can fetch allowed values with <a href="https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField" target="_blank" rel="noopener noreferrer">GET /v1/dealFields</a>.
+	Channel *int `json:"channel"`
+
+	// ChannelId The optional ID to further distinguish the Marketing channel.
+	ChannelId *string `json:"channel_id"`
+
 	// CloseTime The date and time of closing the deal. Can only be set if deal status is won or lost.
 	CloseTime *string `json:"close_time,omitempty"`
 
@@ -1427,9 +1433,6 @@ type AddDealJSONBody struct {
 	// IsArchived Whether the deal is archived or not
 	IsArchived *bool `json:"is_archived,omitempty"`
 
-	// IsDeleted Whether the deal is deleted or not
-	IsDeleted *bool `json:"is_deleted,omitempty"`
-
 	// LabelIds The IDs of labels assigned to the deal
 	LabelIds *[]int `json:"label_ids,omitempty"`
 
@@ -1441,6 +1444,9 @@ type AddDealJSONBody struct {
 
 	// OrgId The ID of the organization linked to the deal
 	OrgId *int `json:"org_id"`
+
+	// OriginId The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this deal. If omitted, `origin_id` will be set to null.
+	OriginId *string `json:"origin_id"`
 
 	// OwnerId The ID of the user who owns the deal
 	OwnerId *int `json:"owner_id,omitempty"`
@@ -1646,6 +1652,12 @@ type UpdateDealJSONBody struct {
 	// ArchiveTime The optional date and time of archiving the deal in UTC. Format: YYYY-MM-DD HH:MM:SS. If omitted and `is_archived` is true, it will be set to the current date and time.
 	ArchiveTime *string `json:"archive_time"`
 
+	// Channel The ID of Marketing channel this deal was created from. Provided value must be one of the channels configured for your company. You can fetch allowed values with <a href="https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField" target="_blank" rel="noopener noreferrer">GET /v1/dealFields</a>.
+	Channel *int `json:"channel"`
+
+	// ChannelId The optional ID to further distinguish the Marketing channel.
+	ChannelId *string `json:"channel_id"`
+
 	// CloseTime The date and time of closing the deal. Can only be set if deal status is won or lost.
 	CloseTime *string `json:"close_time,omitempty"`
 
@@ -1661,7 +1673,7 @@ type UpdateDealJSONBody struct {
 	// IsArchived Whether the deal is archived or not
 	IsArchived *bool `json:"is_archived,omitempty"`
 
-	// IsDeleted Whether the deal is deleted or not
+	// IsDeleted Only used to restore a previously deleted deal. The only accepted value is `false`; omit the field otherwise.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 
 	// LabelIds The IDs of labels assigned to the deal

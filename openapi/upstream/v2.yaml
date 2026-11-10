@@ -2317,9 +2317,9 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               required:
                 - title
-              type: object
               properties:
                 title:
                   type: string
@@ -2347,9 +2347,6 @@ paths:
                 currency:
                   type: string
                   description: The currency associated with the deal
-                is_deleted:
-                  type: boolean
-                  description: Whether the deal is deleted or not
                 is_archived:
                   type: boolean
                   description: Whether the deal is archived or not
@@ -2387,6 +2384,18 @@ paths:
                   description: The IDs of labels assigned to the deal
                   items:
                     type: integer
+                channel:
+                  type: integer
+                  nullable: true
+                  description: 'The ID of Marketing channel this deal was created from. Provided value must be one of the channels configured for your company. You can fetch allowed values with <a href="https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField" target="_blank" rel="noopener noreferrer">GET /v1/dealFields</a>.'
+                channel_id:
+                  type: string
+                  nullable: true
+                  description: The optional ID to further distinguish the Marketing channel.
+                origin_id:
+                  type: string
+                  nullable: true
+                  description: 'The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this deal. If omitted, `origin_id` will be set to null.'
                 custom_fields:
                   type: object
                   additionalProperties: true
@@ -3309,7 +3318,7 @@ paths:
                   description: The currency associated with the deal
                 is_deleted:
                   type: boolean
-                  description: Whether the deal is deleted or not
+                  description: Only used to restore a previously deleted deal. The only accepted value is `false`; omit the field otherwise.
                 is_archived:
                   type: boolean
                   description: Whether the deal is archived or not
@@ -3347,6 +3356,14 @@ paths:
                   description: The IDs of labels assigned to the deal
                   items:
                     type: integer
+                channel:
+                  type: integer
+                  nullable: true
+                  description: 'The ID of Marketing channel this deal was created from. Provided value must be one of the channels configured for your company. You can fetch allowed values with <a href="https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField" target="_blank" rel="noopener noreferrer">GET /v1/dealFields</a>.'
+                channel_id:
+                  type: string
+                  nullable: true
+                  description: The optional ID to further distinguish the Marketing channel.
                 custom_fields:
                   type: object
                   additionalProperties: true
@@ -4073,6 +4090,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
         - in: query
           name: fields
@@ -14675,6 +14693,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
         - in: query
           name: fields
@@ -17264,6 +17283,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
         - in: query
           name: fields
@@ -17678,6 +17698,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
         - in: query
           name: fields
@@ -17821,6 +17842,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
         - in: query
           name: fields
@@ -18002,6 +18024,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
         - in: query
           name: item_types
@@ -18269,6 +18292,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if `match` is `exact`). Please note that the search term has to be URL encoded.
         - in: query
           name: entity_type
@@ -21499,6 +21523,7 @@ paths:
           required: true
           schema:
             type: string
+            maxLength: 100
           description: The search term to look for. Minimum 2 characters (or 1 if using `exact_match`). Please note that the search term has to be URL encoded.
         - in: query
           name: fields
