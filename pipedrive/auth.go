@@ -123,6 +123,9 @@ func authMiddleware(auth AuthProvider, origin *authOrigin) Middleware {
 				// cross-origin credential leak.
 				cloned := req.Clone(req.Context())
 				if err := auth.Apply(cloned); err != nil {
+					if req.Body != nil {
+						_ = req.Body.Close()
+					}
 					return nil, err
 				}
 				req = cloned

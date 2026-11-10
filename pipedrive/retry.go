@@ -50,6 +50,10 @@ type retryTransportOptions struct {
 	now   func() time.Time
 }
 
+func (t *retryTransport) CloseIdleConnections() {
+	closeIdleConnections(t.next)
+}
+
 func newRetryTransport(next http.RoundTripper, policy RetryPolicy, opts retryTransportOptions) http.RoundTripper {
 	if next == nil {
 		next = http.DefaultTransport
