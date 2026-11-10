@@ -41,6 +41,10 @@ const (
 	ProductSearchFieldName         ProductSearchField = "name"
 )
 
+type ProductSearchIncludeField string
+
+const ProductSearchIncludeFieldPrice ProductSearchIncludeField = "product.price"
+
 type ProductPrice struct {
 	ProductID          *ProductID          `json:"product_id,omitempty"`
 	ProductVariationID *ProductVariationID `json:"product_variation_id,omitempty"`
@@ -138,6 +142,34 @@ type ProductImage struct {
 	AddTime   *time.Time     `json:"add_time,omitempty"`
 	MimeType  *string        `json:"mime_type,omitempty"`
 	Name      *string        `json:"name,omitempty"`
+}
+
+func (p *ProductImage) UnmarshalJSON(data []byte) error {
+	type imageAlias ProductImage
+	var aux struct {
+		imageAlias
+		AddTime *string `json:"add_time"`
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("decode product image: %w", err)
+	}
+	if aux.AddTime != nil {
+		// Live image responses use offset-less UTC; the spec declares a date.
+		var parseErr error
+		for _, layout := range []string{time.RFC3339Nano, "2006-01-02 15:04:05", time.DateOnly} {
+			parsed, err := time.Parse(layout, *aux.AddTime)
+			if err == nil {
+				aux.imageAlias.AddTime = &parsed
+				break
+			}
+			parseErr = err
+		}
+		if aux.imageAlias.AddTime == nil {
+			return fmt.Errorf("decode product image add_time: %w", parseErr)
+		}
+	}
+	*p = ProductImage(aux.imageAlias)
+	return nil
 }
 
 type ProductDeleteResult struct {
@@ -528,8 +560,7 @@ func WithProductRequestOptions(opts ...pipedrive.RequestOption) ProductRequestOp
 
 func WithProductsOwnerID(id UserID) ListProductsOption {
 	return listProductsOptionFunc(func(cfg *listProductsOptions) {
-		value := int(id)
-		cfg.params.OwnerId = &value
+		cfg.params.OwnerId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -696,6 +727,16 @@ func WithProductSearchFields(fields ...ProductSearchField) SearchProductsOption 
 			return
 		}
 		cfg.params.Fields = &values
+	})
+}
+
+func WithProductSearchIncludeFields(fields ...ProductSearchIncludeField) SearchProductsOption {
+	return searchProductsOptionFunc(func(cfg *searchProductsOptions) {
+		values := queryValues[genv2.SearchProductsParamsIncludeFields](fields)
+		if len(values) == 0 {
+			return
+		}
+		cfg.params.IncludeFields = &values
 	})
 }
 
@@ -1786,7 +1827,7 @@ func (p productPayload) toMap() map[string]interface{} {
 		body["category"] = *p.category
 	}
 	if p.ownerID != nil {
-		body["owner_id"] = int(*p.ownerID)
+		body["owner_id"] = *p.ownerID
 	}
 	if p.isLinkable != nil {
 		body["is_linkable"] = *p.isLinkable

@@ -1114,6 +1114,9 @@ func TestProductsService_UploadImage(t *testing.T) {
 		if err != nil {
 			t.Fatalf("multipart part: %v", err)
 		}
+		if got := part.Header.Get("Content-Type"); got != "image/png" {
+			t.Errorf("file Content-Type = %q, want image/png", got)
+		}
 		if part.FormName() != "data" {
 			t.Fatalf("unexpected form name: %q", part.FormName())
 		}
@@ -1176,6 +1179,9 @@ func TestProductsService_UpdateImage(t *testing.T) {
 		part, err := reader.NextPart()
 		if err != nil {
 			t.Fatalf("multipart part: %v", err)
+		}
+		if got := part.Header.Get("Content-Type"); got != "image/png" {
+			t.Errorf("file Content-Type = %q, want image/png", got)
 		}
 		if part.FormName() != "data" {
 			t.Fatalf("unexpected form name: %q", part.FormName())
