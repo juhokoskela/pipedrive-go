@@ -1,7 +1,8 @@
 # Releasing
 
 This module follows semantic versioning. The Pipedrive API version (v1/v2)
-is part of the package path, not the module version.
+is part of the package path, independently of the SDK major version. SDK v2
+uses the module path `github.com/juhokoskela/pipedrive-go/v2`.
 
 ## Release process
 

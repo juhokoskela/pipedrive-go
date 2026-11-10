@@ -1,4 +1,4 @@
-module github.com/juhokoskela/pipedrive-go
+module github.com/juhokoskela/pipedrive-go/v2
 
 go 1.26.0
 

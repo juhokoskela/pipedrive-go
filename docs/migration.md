@@ -1,7 +1,29 @@
-# Unreleased breaking changes
+# Migrating to SDK v2.0.0
 
-These changes require a major SDK release. Existing v1.17.x consumers are not
-changed until they upgrade.
+SDK v2.0.0 introduces the changes below. Existing v1.17.x consumers keep their
+current dependency until they change module and import paths.
+
+## Update the module and imports
+
+Install the new major version:
+
+```sh
+go get github.com/juhokoskela/pipedrive-go/v2@v2.0.0
+```
+
+Insert `/v2` after `pipedrive-go` in imports:
+
+```go
+import (
+    "github.com/juhokoskela/pipedrive-go/v2/pipedrive"
+    v1 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v1"
+    v2 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v2"
+)
+```
+
+The first `/v2` selects the SDK major version. The final `/v1` or `/v2` selects
+the Pipedrive API. After updating imports and the calls listed below, run
+`go mod tidy` to remove the old module if nothing still uses it.
 
 ## Use v2 for overlapping operations
 

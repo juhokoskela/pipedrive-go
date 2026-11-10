@@ -27,7 +27,7 @@ Endpoint tables:
 ## Install
 
 ```sh
-go get github.com/juhokoskela/pipedrive-go@latest
+go get github.com/juhokoskela/pipedrive-go/v2@latest
 ```
 
 Go 1.26+ is required. We support the two most recent Go release lines.
@@ -53,8 +53,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
-	v2 "github.com/juhokoskela/pipedrive-go/pipedrive/v2"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
+	v2 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v2"
 )
 
 func main() {
@@ -147,9 +147,9 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
-	v1 "github.com/juhokoskela/pipedrive-go/pipedrive/v1"
-	v2 "github.com/juhokoskela/pipedrive-go/pipedrive/v2"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
+	v1 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v1"
+	v2 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v2"
 )
 
 ctx := context.Background()
@@ -294,9 +294,10 @@ See the runnable examples in `examples/`:
 
 ## Versioning
 
-The module follows semantic versioning and does not encode Pipedrive API
-versioning in the module path. The v1/v2 distinction is in the package path,
-not the module version.
+The SDK follows semantic versioning. Its module path ends in `/v2` for SDK
+version 2. The packages `pipedrive/v1` and `pipedrive/v2` select the Pipedrive
+API version independently. For example, `github.com/juhokoskela/pipedrive-go/v2/pipedrive/v1`
+is the legacy Pipedrive API wrapper in SDK version 2.
 See `RELEASING.md` for release steps.
 
 ## Development
