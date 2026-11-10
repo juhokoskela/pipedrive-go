@@ -28,7 +28,6 @@ Semantic Versioning.
 - Send file MIME types in multipart uploads so Pipedrive accepts product images.
 - Decode product-image timestamps in the live UTC format and the documented
   date-only format while retaining RFC3339 support.
-
 - Preserve request-header replacement across casing, close request bodies on
   authentication errors, and forward idle-connection cleanup through middleware.
 - Respect `Retry-After` on all retryable responses and avoid retry-delay overflow.
