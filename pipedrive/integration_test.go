@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
-	v1 "github.com/juhokoskela/pipedrive-go/pipedrive/v1"
-	v2 "github.com/juhokoskela/pipedrive-go/pipedrive/v2"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
+	v1 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v1"
+	v2 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v2"
 )
 
 const integrationTimeout = 20 * time.Second
