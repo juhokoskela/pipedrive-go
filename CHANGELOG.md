@@ -24,6 +24,7 @@ Semantic Versioning.
   Existing public signatures and query encoding are preserved, including
   comma-separated values for `WithDealSearchStatuses`. IDs that do not fit in
   `int` on 32-bit platforms now return an error instead of being sent.
+- Update `github.com/oapi-codegen/runtime` from v1.7.0 to v1.8.0.
 - Bump the preferred Go toolchain, CI, and drift checks to Go 1.27.3 for
   the latest standard library security fixes.
   The minimum supported Go version remains 1.26.
