@@ -186,7 +186,7 @@ func (s *OrganizationsService) ListUsers(ctx context.Context, id OrganizationID,
 	path := fmt.Sprintf("/organizations/%d/permittedUsers", id)
 
 	var payload struct {
-		Data []User `json:"data"`
+		Data userList `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
 		return nil, err

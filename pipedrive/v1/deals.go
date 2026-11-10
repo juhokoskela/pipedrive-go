@@ -1,7 +1,9 @@
 package v1
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -30,6 +32,55 @@ type DealsSummaryValues struct {
 	ValueConverted          float64 `json:"value_converted,omitempty"`
 	ValueConvertedFormatted string  `json:"value_converted_formatted,omitempty"`
 	ValueFormatted          string  `json:"value_formatted,omitempty"`
+}
+
+func (d *Deal) UnmarshalJSON(data []byte) error {
+	type dealAlias Deal
+	var wire struct {
+		dealAlias
+		OwnerID  json.RawMessage `json:"user_id"`
+		PersonID json.RawMessage `json:"person_id"`
+		OrgID    json.RawMessage `json:"org_id"`
+	}
+	if err := json.Unmarshal(data, &wire); err != nil {
+		return err
+	}
+	var err error
+	wire.dealAlias.OwnerID, err = decodeRelatedID[UserID](wire.OwnerID)
+	if err != nil {
+		return fmt.Errorf("decode deal user_id: %w", err)
+	}
+	wire.dealAlias.PersonID, err = decodeRelatedID[PersonID](wire.PersonID)
+	if err != nil {
+		return fmt.Errorf("decode deal person_id: %w", err)
+	}
+	wire.dealAlias.OrgID, err = decodeRelatedID[OrganizationID](wire.OrgID)
+	if err != nil {
+		return fmt.Errorf("decode deal org_id: %w", err)
+	}
+	*d = Deal(wire.dealAlias)
+	return nil
+}
+
+func decodeRelatedID[T ~int64](data json.RawMessage) (*T, error) {
+	data = bytes.TrimSpace(data)
+	if len(data) == 0 {
+		return nil, nil
+	}
+	if data[0] == '{' {
+		var related struct {
+			Value *T `json:"value"`
+		}
+		if err := json.Unmarshal(data, &related); err != nil {
+			return nil, err
+		}
+		return related.Value, nil
+	}
+	var id *T
+	if err := json.Unmarshal(data, &id); err != nil {
+		return nil, err
+	}
+	return id, nil
 }
 
 type DealsSummaryWeightedValues struct {
@@ -335,7 +386,7 @@ func (s *DealsService) ListUsers(ctx context.Context, id DealID, opts ...DealsOp
 	path := fmt.Sprintf("/deals/%d/permittedUsers", id)
 
 	var payload struct {
-		Data []User `json:"data"`
+		Data userList `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
 		return nil, err

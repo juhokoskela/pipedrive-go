@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -53,6 +54,32 @@ type User struct {
 type UserLanguage struct {
 	LanguageCode string `json:"language_code,omitempty"`
 	CountryCode  string `json:"country_code,omitempty"`
+}
+
+// Permission endpoints return user IDs rather than full user objects.
+type userList []User
+
+func (users *userList) UnmarshalJSON(data []byte) error {
+	var entries []json.RawMessage
+	if err := json.Unmarshal(data, &entries); err != nil {
+		return err
+	}
+	var decoded userList
+	if entries != nil {
+		decoded = make(userList, len(entries))
+	}
+	for i, entry := range entries {
+		entry = bytes.TrimSpace(entry)
+		if len(entry) > 0 && entry[0] == '{' {
+			if err := json.Unmarshal(entry, &decoded[i]); err != nil {
+				return err
+			}
+		} else if err := json.Unmarshal(entry, &decoded[i].ID); err != nil {
+			return err
+		}
+	}
+	*users = decoded
+	return nil
 }
 
 type CurrentUser struct {
