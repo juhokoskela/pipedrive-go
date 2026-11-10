@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 
 	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
@@ -36,18 +37,23 @@ func (s *CurrenciesService) List(ctx context.Context, req ListCurrenciesRequest,
 		params = &genv1.GetCurrenciesParams{Term: &term}
 	}
 
-	resp, err := s.client.gen.GetCurrenciesWithResponse(ctx, params, toRequestEditors(editors)...)
+	resp, err := s.client.gen.GetCurrencies(ctx, params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, err
 	}
-	if resp.HTTPResponse.StatusCode < 200 || resp.HTTPResponse.StatusCode > 299 {
-		return nil, errorFromResponse(resp.HTTPResponse, resp.Body)
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("read response: %w", err)
+	}
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errorFromResponse(resp, body)
 	}
 
 	var payload struct {
 		Data []Currency `json:"data"`
 	}
-	if err := json.Unmarshal(resp.Body, &payload); err != nil {
+	if err := json.Unmarshal(body, &payload); err != nil {
 		return nil, fmt.Errorf("decode response: %w", err)
 	}
 	return payload.Data, nil

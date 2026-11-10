@@ -11,7 +11,7 @@ type Client struct {
 	Raw   *pipedrive.RawClient
 	OAuth *OAuthService
 
-	gen *genv1.ClientWithResponses
+	gen *genv1.Client
 
 	Currencies                *CurrenciesService
 	ActivityTypes             *ActivityTypesService
@@ -69,7 +69,7 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 		return nil, err
 	}
 
-	gen, err := genv1.NewClientWithResponses(baseURL, genv1.WithHTTPClient(httpClient))
+	gen, err := genv1.NewClient(baseURL, genv1.WithHTTPClient(httpClient))
 	if err != nil {
 		return nil, err
 	}
