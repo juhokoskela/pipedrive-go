@@ -18,19 +18,18 @@ Semantic Versioning.
 
 ### Changed
 
-- Refresh upstream OpenAPI specifications and internal clients for integer
-  `ids` filters, single-value deal search `status`, free-form lead sorting,
-  typed product variation prices, mail field corrections, and pagination bounds.
-  Existing public signatures and query encoding are preserved, including
-  comma-separated values for `WithDealSearchStatuses`. IDs that do not fit in
-  `int` on 32-bit platforms now return an error instead of being sent.
+- Refresh upstream OpenAPI specifications and internal clients. Existing public
+  signatures and query encoding are preserved, including comma-separated values
+  for `WithDealSearchStatuses`.
+- ID filter values that do not fit in `int` on 32-bit platforms now return an
+  error instead of being sent.
+- Document that Pipedrive may reject `WithDealSearchStatuses` requests with more
+  than one status.
 - Update `github.com/oapi-codegen/runtime` from v1.7.0 to v1.8.0.
-- Bump the preferred Go toolchain, CI, and drift checks to Go 1.27.3 for
-  the latest standard library security fixes.
-  The minimum supported Go version remains 1.26.
-- Update golangci-lint to v2.14.0 and gosec to an unreleased commit, because
-  the previous versions cannot read Go 1.27.2 export data. Pin gosec back to a
-  tagged release once one supports Go 1.27.2.
+- Bump the preferred Go toolchain to Go 1.27.3 for standard library security
+  fixes. The minimum supported Go version remains 1.26.
+- Update golangci-lint to v2.14.0 and gosec to a pinned commit compatible with
+  Go 1.27 export data.
 
 ## [1.16.0] - 2026-10-01
 
