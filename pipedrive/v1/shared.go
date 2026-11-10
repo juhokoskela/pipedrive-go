@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -46,5 +47,17 @@ func intIDs[T ~int64](ids []T) []int {
 }
 
 func formatV1Time(t time.Time) string {
-	return t.Format(v1DateTimeLayout)
+	return t.UTC().Format(v1DateTimeLayout)
+}
+
+// checkedIntID preserves filter values but rejects platform-sized integer overflow.
+func checkedIntID[T ~int64](id T, optionErr *error) *int {
+	value := int(id)
+	if int64(value) != int64(id) {
+		if *optionErr == nil {
+			*optionErr = fmt.Errorf("id %d overflows int on this platform", id)
+		}
+		return nil
+	}
+	return &value
 }
