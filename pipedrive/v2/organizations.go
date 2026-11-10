@@ -1203,7 +1203,7 @@ func (p organizationPayload) toMap() map[string]interface{} {
 		body["name"] = *p.name
 	}
 	if p.ownerID != nil {
-		body["owner_id"] = int(*p.ownerID)
+		body["owner_id"] = *p.ownerID
 	}
 	if p.address.set {
 		body["address"] = p.address.mapValue()

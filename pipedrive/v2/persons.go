@@ -244,6 +244,7 @@ type deletePersonOptions struct {
 }
 
 type searchPersonsOptions struct {
+	err            error
 	params         genv2.SearchPersonsParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -534,15 +535,13 @@ func WithPersonsOwnerID(id int) ListPersonsOption {
 
 func WithPersonsOrgID(id OrganizationID) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
-		value := int(id)
-		cfg.params.OrgId = &value
+		cfg.params.OrgId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithPersonsDealID(id DealID) ListPersonsOption {
 	return listPersonsOptionFunc(func(cfg *listPersonsOptions) {
-		value := int(id)
-		cfg.params.DealId = &value
+		cfg.params.DealId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -664,8 +663,7 @@ func WithPersonSearchExactMatch(enabled bool) SearchPersonsOption {
 
 func WithPersonSearchOrganizationID(id OrganizationID) SearchPersonsOption {
 	return searchPersonsOptionFunc(func(cfg *searchPersonsOptions) {
-		value := int(id)
-		cfg.params.OrganizationId = &value
+		cfg.params.OrganizationId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -1021,6 +1019,9 @@ func (s *PersonsService) Delete(ctx context.Context, id PersonID, opts ...Delete
 
 func (s *PersonsService) Search(ctx context.Context, term string, opts ...SearchPersonsOption) (*PersonSearchResults, *string, error) {
 	cfg := newSearchPersonsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	cfg.params.Term = term
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -1320,10 +1321,10 @@ func (p personPayload) toMap() map[string]interface{} {
 		body["name"] = *p.name
 	}
 	if p.ownerID != nil {
-		body["owner_id"] = int(*p.ownerID)
+		body["owner_id"] = *p.ownerID
 	}
 	if p.orgID != nil {
-		body["org_id"] = int(*p.orgID)
+		body["org_id"] = *p.orgID
 	}
 	if p.emails.set {
 		body["emails"] = p.emails.value

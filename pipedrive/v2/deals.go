@@ -450,6 +450,7 @@ type deleteDealOptions struct {
 }
 
 type searchDealsOptions struct {
+	err            error
 	params         genv2.SearchDealsParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -848,36 +849,31 @@ func WithDealsIDs(ids ...DealID) ListDealsOption {
 
 func WithDealsOwnerID(id UserID) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		value := int(id)
-		cfg.params.OwnerId = &value
+		cfg.params.OwnerId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithDealsPersonID(id PersonID) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithDealsOrganizationID(id OrganizationID) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		value := int(id)
-		cfg.params.OrgId = &value
+		cfg.params.OrgId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithDealsPipelineID(id PipelineID) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		value := int(id)
-		cfg.params.PipelineId = &value
+		cfg.params.PipelineId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithDealsStageID(id StageID) ListDealsOption {
 	return listDealsOptionFunc(func(cfg *listDealsOptions) {
-		value := int(id)
-		cfg.params.StageId = &value
+		cfg.params.StageId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -999,36 +995,31 @@ func WithArchivedDealsIDs(ids ...DealID) ListArchivedDealsOption {
 
 func WithArchivedDealsOwnerID(id UserID) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		value := int(id)
-		cfg.params.OwnerId = &value
+		cfg.params.OwnerId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithArchivedDealsPersonID(id PersonID) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithArchivedDealsOrganizationID(id OrganizationID) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		value := int(id)
-		cfg.params.OrgId = &value
+		cfg.params.OrgId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithArchivedDealsPipelineID(id PipelineID) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		value := int(id)
-		cfg.params.PipelineId = &value
+		cfg.params.PipelineId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithArchivedDealsStageID(id StageID) ListArchivedDealsOption {
 	return listArchivedDealsOptionFunc(func(cfg *listArchivedDealsOptions) {
-		value := int(id)
-		cfg.params.StageId = &value
+		cfg.params.StageId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -1378,15 +1369,13 @@ func WithDealSearchExactMatch(enabled bool) SearchDealsOption {
 
 func WithDealSearchPersonID(id PersonID) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithDealSearchOrganizationID(id OrganizationID) SearchDealsOption {
 	return searchDealsOptionFunc(func(cfg *searchDealsOptions) {
-		value := int(id)
-		cfg.params.OrganizationId = &value
+		cfg.params.OrganizationId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -2226,6 +2215,9 @@ func (s *DealsService) Delete(ctx context.Context, id DealID, opts ...DeleteDeal
 
 func (s *DealsService) Search(ctx context.Context, term string, opts ...SearchDealsOption) (*DealSearchResults, *string, error) {
 	cfg := newSearchDealsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	cfg.params.Term = term
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -3264,7 +3256,7 @@ func (p dealPayload) toMap() map[string]interface{} {
 		body["currency"] = *p.currency
 	}
 	if p.ownerID != nil {
-		body["owner_id"] = int(*p.ownerID)
+		body["owner_id"] = *p.ownerID
 	}
 	if p.personID.set {
 		body["person_id"] = p.personID.mapValue()
@@ -3273,10 +3265,10 @@ func (p dealPayload) toMap() map[string]interface{} {
 		body["org_id"] = p.orgID.mapValue()
 	}
 	if p.stageID != nil {
-		body["stage_id"] = int(*p.stageID)
+		body["stage_id"] = *p.stageID
 	}
 	if p.pipelineID != nil {
-		body["pipeline_id"] = int(*p.pipelineID)
+		body["pipeline_id"] = *p.pipelineID
 	}
 	if p.status != nil {
 		body["status"] = string(*p.status)
@@ -3329,10 +3321,10 @@ func (p dealPayload) toMap() map[string]interface{} {
 func (p dealProductPayload) toMap() map[string]interface{} {
 	body := map[string]interface{}{}
 	if p.productID != nil {
-		body["product_id"] = int(*p.productID)
+		body["product_id"] = *p.productID
 	}
 	if p.productVariationID != nil {
-		body["product_variation_id"] = int(*p.productVariationID)
+		body["product_variation_id"] = *p.productVariationID
 	}
 	if p.itemPrice != nil {
 		body["item_price"] = *p.itemPrice

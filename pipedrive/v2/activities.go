@@ -381,8 +381,7 @@ func WithActivitiesOwnerID(id int) ListActivitiesOption {
 
 func WithActivitiesDealID(id DealID) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		value := int(id)
-		cfg.params.DealId = &value
+		cfg.params.DealId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -395,15 +394,13 @@ func WithActivitiesLeadID(id LeadID) ListActivitiesOption {
 
 func WithActivitiesPersonID(id PersonID) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithActivitiesOrgID(id OrganizationID) ListActivitiesOption {
 	return listActivitiesOptionFunc(func(cfg *listActivitiesOptions) {
-		value := int(id)
-		cfg.params.OrgId = &value
+		cfg.params.OrgId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -746,19 +743,19 @@ func (p activityPayload) toMap() map[string]interface{} {
 		body["type"] = *p.activityType
 	}
 	if p.ownerID != nil {
-		body["owner_id"] = int(*p.ownerID)
+		body["owner_id"] = *p.ownerID
 	}
 	if p.dealID != nil {
-		body["deal_id"] = int(*p.dealID)
+		body["deal_id"] = *p.dealID
 	}
 	if p.leadID != nil {
 		body["lead_id"] = string(*p.leadID)
 	}
 	if p.orgID != nil {
-		body["org_id"] = int(*p.orgID)
+		body["org_id"] = *p.orgID
 	}
 	if p.projectID != nil {
-		body["project_id"] = int(*p.projectID)
+		body["project_id"] = *p.projectID
 	}
 	if p.dueDate != nil {
 		body["due_date"] = *p.dueDate
