@@ -221,7 +221,7 @@ func (s *RolesService) DeleteAssignment(ctx context.Context, id RoleID, userID U
 	return *payload.Success, nil
 }
 
-func (s *RolesService) ListPipelines(ctx context.Context, id RoleID, opts ...RolesOption) ([]map[string]any, error) {
+func (s *RolesService) ListPipelines(ctx context.Context, id RoleID, opts ...RolesOption) (map[string]any, error) {
 	if err := validateID(id, "role id"); err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func (s *RolesService) ListPipelines(ctx context.Context, id RoleID, opts ...Rol
 	path := fmt.Sprintf("/roles/%d/pipelines", id)
 
 	var payload struct {
-		Data []map[string]any `json:"data"`
+		Data map[string]any `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
 		return nil, err
@@ -259,7 +259,7 @@ func (s *RolesService) UpdatePipelines(ctx context.Context, id RoleID, payload m
 	return resp.Data, nil
 }
 
-func (s *RolesService) ListSettings(ctx context.Context, id RoleID, opts ...RolesOption) ([]map[string]any, error) {
+func (s *RolesService) ListSettings(ctx context.Context, id RoleID, opts ...RolesOption) (map[string]any, error) {
 	if err := validateID(id, "role id"); err != nil {
 		return nil, err
 	}
@@ -267,7 +267,7 @@ func (s *RolesService) ListSettings(ctx context.Context, id RoleID, opts ...Role
 	path := fmt.Sprintf("/roles/%d/settings", id)
 
 	var payload struct {
-		Data []map[string]any `json:"data"`
+		Data map[string]any `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
 		return nil, err

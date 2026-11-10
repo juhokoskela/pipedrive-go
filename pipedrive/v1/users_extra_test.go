@@ -142,14 +142,14 @@ func TestUsersService_ListRoleSettings(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"key":"deal_default_visibility"}]}`))
+		_, _ = w.Write([]byte(`{"success":true,"data":{"deal_default_visibility":1}}`))
 	})
 
 	settings, err := client.Users.ListRoleSettings(context.Background(), UserID(4))
 	if err != nil {
 		t.Fatalf("ListRoleSettings error: %v", err)
 	}
-	if len(settings) != 1 {
+	if settings["deal_default_visibility"] != float64(1) {
 		t.Fatalf("unexpected settings: %#v", settings)
 	}
 }

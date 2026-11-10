@@ -316,7 +316,7 @@ func TestRolesService_ListPipelines(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"pipeline_id":1}]}`))
+		_, _ = w.Write([]byte(`{"success":true,"data":{"pipeline_ids":[1]}}`))
 	})
 
 	pipelines, err := client.Roles.ListPipelines(
@@ -327,7 +327,7 @@ func TestRolesService_ListPipelines(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ListPipelines error: %v", err)
 	}
-	if len(pipelines) != 1 {
+	if len(pipelines) != 1 || pipelines["pipeline_ids"].([]any)[0] != float64(1) {
 		t.Fatalf("unexpected pipelines: %#v", pipelines)
 	}
 }
@@ -387,7 +387,7 @@ func TestRolesService_ListSettings(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"success":true,"data":[{"key":"deal_default_visibility"}]}`))
+		_, _ = w.Write([]byte(`{"success":true,"data":{"deal_default_visibility":1}}`))
 	})
 
 	settings, err := client.Roles.ListSettings(
@@ -398,7 +398,7 @@ func TestRolesService_ListSettings(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ListSettings error: %v", err)
 	}
-	if len(settings) != 1 {
+	if settings["deal_default_visibility"] != float64(1) {
 		t.Fatalf("unexpected settings: %#v", settings)
 	}
 }
