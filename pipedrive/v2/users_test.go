@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func TestUsersService_ListFollowers(t *testing.T) {
