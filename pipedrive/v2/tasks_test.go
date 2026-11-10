@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func TestTasksService_AllOperations(t *testing.T) {

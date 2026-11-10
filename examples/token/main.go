@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
-	v2 "github.com/juhokoskela/pipedrive-go/pipedrive/v2"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
+	v2 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v2"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 type ProjectBoard struct {

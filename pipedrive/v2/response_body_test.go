@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func TestResponseBodyCloseError_PreservesAPIError(t *testing.T) {

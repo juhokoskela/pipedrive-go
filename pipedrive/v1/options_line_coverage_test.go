@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func requireOneV1RequestOption(t *testing.T, name string, opts []pipedrive.RequestOption) {

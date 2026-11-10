@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 const DefaultOAuthBaseURL = "https://oauth.pipedrive.com"

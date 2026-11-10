@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func TestTeamsService_List(t *testing.T) {

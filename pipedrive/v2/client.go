@@ -1,8 +1,8 @@
 package v2
 
 import (
-	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	genv2 "github.com/juhokoskela/pipedrive-go/v2/internal/gen/v2"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 const DefaultBaseURL = "https://api.pipedrive.com/api/v2"

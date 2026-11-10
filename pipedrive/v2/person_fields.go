@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	genv2 "github.com/juhokoskela/pipedrive-go/internal/gen/v2"
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	genv2 "github.com/juhokoskela/pipedrive-go/v2/internal/gen/v2"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 type PersonFieldsService struct {

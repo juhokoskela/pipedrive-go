@@ -8,8 +8,8 @@ import (
 	"io"
 	"strconv"
 
-	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	genv1 "github.com/juhokoskela/pipedrive-go/v2/internal/gen/v1"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 type FilterType string

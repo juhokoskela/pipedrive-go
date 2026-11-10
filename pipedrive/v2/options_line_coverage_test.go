@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func requireOneRequestOption(t *testing.T, name string, opts []pipedrive.RequestOption) {
