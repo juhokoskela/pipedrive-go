@@ -77,6 +77,7 @@ type getStageOptions struct {
 }
 
 type listStagesOptions struct {
+	err            error
 	params         genv2.GetStagesParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -149,8 +150,7 @@ func WithStageRequestOptions(opts ...pipedrive.RequestOption) StageRequestOption
 
 func WithStagesPipelineID(id PipelineID) ListStagesOption {
 	return listStagesOptionFunc(func(cfg *listStagesOptions) {
-		value := int(id)
-		cfg.params.PipelineId = &value
+		cfg.params.PipelineId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -280,6 +280,9 @@ func newDeleteStageOptions(opts []DeleteStageOption) deleteStageOptions {
 
 func (s *StagesService) List(ctx context.Context, opts ...ListStagesOption) ([]Stage, *string, error) {
 	cfg := newListStagesOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -289,6 +292,9 @@ func (s *StagesService) ListPager(opts ...ListStagesOption) *pipedrive.CursorPag
 	cfg.params.Cursor = nil
 
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Stage, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -474,7 +480,7 @@ func (p stagePayload) toMap() map[string]interface{} {
 		body["name"] = *p.name
 	}
 	if p.pipelineID != nil {
-		body["pipeline_id"] = int(*p.pipelineID)
+		body["pipeline_id"] = *p.pipelineID
 	}
 	if p.dealProbability != nil {
 		body["deal_probability"] = *p.dealProbability
