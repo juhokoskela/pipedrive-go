@@ -494,10 +494,10 @@ func (s *CallLogsService) list(ctx context.Context, params genv1.GetUserCallLogs
 func (p callLogPayload) toMap() map[string]interface{} {
 	body := map[string]interface{}{}
 	if p.userID != nil {
-		body["user_id"] = int(*p.userID)
+		body["user_id"] = *p.userID
 	}
 	if p.activityID != nil {
-		body["activity_id"] = int(*p.activityID)
+		body["activity_id"] = *p.activityID
 	}
 	if p.subject != nil {
 		body["subject"] = *p.subject
@@ -521,13 +521,13 @@ func (p callLogPayload) toMap() map[string]interface{} {
 		body["end_time"] = formatV1Time(*p.endTime)
 	}
 	if p.personID != nil {
-		body["person_id"] = int(*p.personID)
+		body["person_id"] = *p.personID
 	}
 	if p.orgID != nil {
-		body["org_id"] = int(*p.orgID)
+		body["org_id"] = *p.orgID
 	}
 	if p.dealID != nil {
-		body["deal_id"] = int(*p.dealID)
+		body["deal_id"] = *p.dealID
 	}
 	if p.leadID != nil {
 		body["lead_id"] = string(*p.leadID)

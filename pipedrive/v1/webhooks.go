@@ -415,7 +415,7 @@ func (p webhookPayload) toMap() map[string]interface{} {
 		body["name"] = *p.name
 	}
 	if p.userID != nil {
-		body["user_id"] = int(*p.userID)
+		body["user_id"] = *p.userID
 	}
 	if p.httpAuthUser != nil {
 		body["http_auth_user"] = *p.httpAuthUser
