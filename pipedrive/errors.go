@@ -113,7 +113,7 @@ func parseRetryAfter(value string, now time.Time) time.Duration {
 	if value == "" {
 		return 0
 	}
-	if secs, err := strconv.Atoi(value); err == nil && secs >= 0 {
+	if secs, err := strconv.ParseInt(value, 10, 64); err == nil && secs >= 0 {
 		// Saturate instead of letting secs*time.Second wrap int64.
 		if int64(secs) > math.MaxInt64/int64(time.Second) {
 			return time.Duration(math.MaxInt64)
