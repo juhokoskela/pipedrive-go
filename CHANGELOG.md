@@ -31,6 +31,8 @@ Semantic Versioning.
 - Preserve request-header replacement across casing, close request bodies on
   authentication errors, and forward idle-connection cleanup through middleware.
 - Respect `Retry-After` on all retryable responses and avoid retry-delay overflow.
+  `MaxRetryAfter` caps each server-requested delay at one minute by default;
+  context cancellation can end the wait earlier.
 - Preserve large JSON IDs and reject overflowing query IDs on 32-bit systems.
 - Decode expanded v1 deal relationships, numeric filter visibility, and ID-only
   user lists. Format offset-less v1 request timestamps in UTC.
