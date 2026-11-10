@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
 	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
@@ -41,6 +42,26 @@ type Filter struct {
 
 type FilterDeleteResult struct {
 	ID FilterID `json:"id"`
+}
+
+func (f *Filter) UnmarshalJSON(data []byte) error {
+	type filterAlias Filter
+	var wire struct {
+		filterAlias
+		VisibleTo json.Number `json:"visible_to"`
+	}
+	if err := json.Unmarshal(data, &wire); err != nil {
+		return err
+	}
+	if wire.VisibleTo != "" {
+		value, err := strconv.Atoi(string(wire.VisibleTo))
+		if err != nil {
+			return fmt.Errorf("decode filter visibility: %w", err)
+		}
+		wire.filterAlias.VisibleTo = value
+	}
+	*f = Filter(wire.filterAlias)
+	return nil
 }
 
 type FiltersDeleteResult struct {

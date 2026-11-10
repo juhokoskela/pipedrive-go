@@ -389,3 +389,23 @@ func TestFiltersService_MissingDataErrors(t *testing.T) {
 		t.Fatalf("expected DeleteBulk missing data error")
 	}
 }
+
+func TestFiltersService_ListStringVisibility(t *testing.T) {
+	t.Parallel()
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"id":1,"name":"Shared","visible_to":"7"},{"id":2,"visible_to":1},{"id":3,"visible_to":null}]}`))
+	}))
+	t.Cleanup(srv.Close)
+	client, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	filters, err := client.Filters.List(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(filters) != 3 || filters[0].VisibleTo != 7 || filters[0].Name != "Shared" || filters[1].VisibleTo != 1 || filters[2].VisibleTo != 0 {
+		t.Fatalf("filters = %#v", filters)
+	}
+}
