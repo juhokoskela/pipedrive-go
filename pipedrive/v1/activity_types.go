@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 type ActivityType struct {
