@@ -43,15 +43,19 @@ jobs:
         if: matrix.go == '1.27.3'
         run: make lint
 
+      - name: Workflow lint
+        if: matrix.go == '1.27.3'
+        run: make workflow-lint
+
       - name: Test
         run: go test ./...
 
-      - name: Test 32-bit query ID overflow
+      - name: Test 32-bit SDK behavior
         if: matrix.go == '1.26.0'
         env:
           GOARCH: "386"
           CGO_ENABLED: "0"
-        run: go test ./pipedrive/v2 -run '^TestListIDsRejectOverflowBeforeRequest$' -count=1 -v
+        run: go test ./pipedrive ./pipedrive/v1 ./pipedrive/v2 -count=1
 
       - name: SDK coverage
         # Keep line coverage comparable across preferred-toolchain upgrades.
