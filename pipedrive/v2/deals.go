@@ -2126,9 +2126,6 @@ func (s *DealsService) ForEachArchived(ctx context.Context, fn func(Deal) error,
 
 func (s *DealsService) Create(ctx context.Context, opts ...CreateDealOption) (*Deal, error) {
 	cfg := newCreateDealOptions(opts)
-	if cfg.payload.isDeleted != nil {
-		return nil, fmt.Errorf("is_deleted is not supported when creating a deal")
-	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	body, err := json.Marshal(cfg.payload.toMap())
@@ -2165,9 +2162,6 @@ func (s *DealsService) Update(ctx context.Context, id DealID, opts ...UpdateDeal
 		return nil, err
 	}
 	cfg := newUpdateDealOptions(opts)
-	if cfg.payload.isDeleted != nil && *cfg.payload.isDeleted {
-		return nil, fmt.Errorf("is_deleted must be false to restore a deal; use Delete to delete it")
-	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	body, err := json.Marshal(cfg.payload.toMap())

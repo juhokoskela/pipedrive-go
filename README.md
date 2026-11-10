@@ -247,13 +247,10 @@ err := client.Raw.Do(context.Background(), http.MethodGet, "/pipelines", nil, ni
   exposed via `Product.CategoryName`, while numeric IDs remain in
   `Product.Category`.
 - In August 2026, Pipedrive support confirmed that v2 deal creation silently
-  discards `origin_id` and updates reject it. The November 2026 specification
-  now includes `origin_id` on creation, but server acceptance has not been
-  reverified. The SDK therefore keeps deal origin fields read-only. To attribute
-  deals to your integration, use `WithDealChannelID` for the free-text
-  `channel_id`, or `WithDealChannel` for a configured marketing channel option
-  ID. Both channel fields are now documented for v2 creation and updates.
-  Leads are unaffected (`WithLeadOriginID` still works).
+  discards `origin_id` and updates reject it. The SDK keeps deal origin fields
+  read-only until that behavior is rechecked. Use `WithDealChannelID` for
+  free-text attribution or `WithDealChannel` for a configured marketing channel
+  option ID instead.
 
 The September 2026 [upstream OpenAPI specification](https://developers.pipedrive.com/docs/api/v1/openapi-v2.yaml)
 no longer marks deal `probability`, `lost_reason`, or `close_time` as nullable.
