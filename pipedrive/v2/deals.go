@@ -574,7 +574,6 @@ type dealPayload struct {
 	wonTime           *string
 	channel           *int
 	channelID         *string
-	originID          *string
 }
 
 type dealProductPayload struct {
@@ -1344,6 +1343,7 @@ func WithDealWonTime(value string) DealOption {
 	})
 }
 
+// WithDealChannel sets the marketing channel option ID configured in dealFields.
 func WithDealChannel(channel int) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
 		payload.channel = &channel
@@ -1357,12 +1357,6 @@ func WithDealChannelID(channelID string) DealOption {
 			return
 		}
 		payload.channelID = &channelID
-	})
-}
-
-func WithDealOriginID(originID string) CreateDealOption {
-	return dealFieldOption(func(payload *dealPayload) {
-		payload.originID = &originID
 	})
 }
 
@@ -3334,9 +3328,6 @@ func (p dealPayload) toMap() map[string]interface{} {
 	}
 	if p.channel != nil {
 		body["channel"] = *p.channel
-	}
-	if p.originID != nil {
-		body["origin_id"] = *p.originID
 	}
 	return body
 }

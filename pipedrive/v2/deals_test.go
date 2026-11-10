@@ -373,8 +373,8 @@ func TestDealsService_Create(t *testing.T) {
 		if payload["channel_id"] != "my-integration" {
 			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
 		}
-		if payload["channel"] != float64(4) || payload["origin_id"] != "integration-1" {
-			t.Fatalf("unexpected channel/origin: %#v", payload)
+		if payload["channel"] != float64(4) {
+			t.Fatalf("unexpected channel: %#v", payload["channel"])
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -414,7 +414,6 @@ func TestDealsService_Create(t *testing.T) {
 		WithDealWonTime("2024-06-14T10:00:00Z"),
 		WithDealChannelID("my-integration"),
 		WithDealChannel(4),
-		WithDealOriginID("integration-1"),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
@@ -449,11 +448,11 @@ func TestDealsService_Update(t *testing.T) {
 		if payload["channel_id"] != "my-integration-updated" {
 			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
 		}
-		if payload["channel"] != float64(5) || payload["is_deleted"] != false {
-			t.Fatalf("unexpected channel/restoration: %#v", payload)
+		if payload["channel"] != float64(5) {
+			t.Fatalf("unexpected channel: %#v", payload["channel"])
 		}
-		if _, ok := payload["origin_id"]; ok {
-			t.Fatalf("unexpected origin_id: %#v", payload["origin_id"])
+		if payload["is_deleted"] != false {
+			t.Fatalf("unexpected is_deleted: %#v", payload["is_deleted"])
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -490,14 +489,14 @@ func TestDealsService_Update(t *testing.T) {
 func TestDealsService_RejectInvalidDeletion(t *testing.T) {
 	t.Parallel()
 	for _, tt := range []struct {
-		name   string
-		create bool
-		opts   []DealOption
-		want   string
+		name    string
+		create  bool
+		deleted bool
+		want    string
 	}{
-		{name: "create false", create: true, opts: []DealOption{WithDealDeleted(false)}, want: "is_deleted is not supported when creating a deal"},
-		{name: "create true", create: true, opts: []DealOption{WithDealDeleted(true)}, want: "is_deleted is not supported when creating a deal"},
-		{name: "update true", opts: []DealOption{WithDealDeleted(false), WithDealDeleted(true)}, want: "is_deleted must be false to restore a deal; use Delete to delete it"},
+		{name: "create false", create: true, want: "is_deleted is not supported when creating a deal"},
+		{name: "create true", create: true, deleted: true, want: "is_deleted is not supported when creating a deal"},
+		{name: "update true", deleted: true, want: "is_deleted must be false to restore a deal; use Delete to delete it"},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
 			client := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
@@ -507,17 +506,9 @@ func TestDealsService_RejectInvalidDeletion(t *testing.T) {
 			})
 			var err error
 			if tt.create {
-				opts := []CreateDealOption{WithDealTitle("Deal")}
-				for _, opt := range tt.opts {
-					opts = append(opts, opt)
-				}
-				_, err = client.Deals.Create(t.Context(), opts...)
+				_, err = client.Deals.Create(t.Context(), WithDealTitle("Deal"), WithDealDeleted(tt.deleted))
 			} else {
-				var opts []UpdateDealOption
-				for _, opt := range tt.opts {
-					opts = append(opts, opt)
-				}
-				_, err = client.Deals.Update(t.Context(), 1, opts...)
+				_, err = client.Deals.Update(t.Context(), 1, WithDealDeleted(tt.deleted))
 			}
 			if err == nil || err.Error() != tt.want {
 				t.Fatalf("error = %v, want %q", err, tt.want)

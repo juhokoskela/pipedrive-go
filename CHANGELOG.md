@@ -9,11 +9,18 @@ Semantic Versioning.
 
 ### Added
 
+- Add `WithGoalResultTimezone` for goal-result period boundaries and
+  `WithDealChannel` for configured marketing channel option IDs.
 - Add `Lead.ArchiveReason` and `WithLeadArchiveReason` for the v1 lead
   `archive_reason` field.
 
 ### Changed
 
+- Refresh upstream specifications and internal clients for goal-result timezones,
+  deal channel fields, nullable v1 responses, and search-term length limits.
+- Reject `WithDealDeleted` on creation and `WithDealDeleted(true)` on updates
+  before sending a request. Use `WithDealDeleted(false)` on updates to restore a
+  deleted deal, or `DealsService.Delete` to delete it. Public signatures are unchanged.
 - Refresh upstream OpenAPI specifications and internal clients for integer
   `ids` filters, single-value deal search `status`, free-form lead sorting,
   typed product variation prices, mail field corrections, and pagination bounds.
