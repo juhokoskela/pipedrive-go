@@ -131,6 +131,7 @@ type GoalOption interface {
 }
 
 type listGoalsOptions struct {
+	err            error
 	params         genv1.GetGoalsParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -294,8 +295,7 @@ func WithGoalsExpectedOutcomeTrackingMetric(metric GoalTrackingMetric) ListGoals
 
 func WithGoalsExpectedOutcomeCurrencyID(id CurrencyID) ListGoalsOption {
 	return listGoalsOptionFunc(func(cfg *listGoalsOptions) {
-		value := int(id)
-		cfg.params.ExpectedOutcomeCurrencyId = &value
+		cfg.params.ExpectedOutcomeCurrencyId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -306,7 +306,11 @@ func WithGoalsTypePipelineIDs(ids ...PipelineID) ListGoalsOption {
 		}
 		values := make([]int, 0, len(ids))
 		for _, id := range ids {
-			values = append(values, int(id))
+			value := checkedIntID(id, &cfg.err)
+			if value == nil {
+				return
+			}
+			values = append(values, *value)
 		}
 		cfg.params.TypeParamsPipelineId = &values
 	})
@@ -314,8 +318,7 @@ func WithGoalsTypePipelineIDs(ids ...PipelineID) ListGoalsOption {
 
 func WithGoalsTypeStageID(id StageID) ListGoalsOption {
 	return listGoalsOptionFunc(func(cfg *listGoalsOptions) {
-		value := int(id)
-		cfg.params.TypeParamsStageId = &value
+		cfg.params.TypeParamsStageId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -326,7 +329,11 @@ func WithGoalsTypeActivityTypeIDs(ids ...ActivityTypeID) ListGoalsOption {
 		}
 		values := make([]int, 0, len(ids))
 		for _, id := range ids {
-			values = append(values, int(id))
+			value := checkedIntID(id, &cfg.err)
+			if value == nil {
+				return
+			}
+			values = append(values, *value)
 		}
 		cfg.params.TypeParamsActivityTypeId = &values
 	})
@@ -645,6 +652,9 @@ func (p goalPayload) toMap() map[string]interface{} {
 
 func (s *GoalsService) List(ctx context.Context, opts ...ListGoalsOption) ([]Goal, error) {
 	cfg := newListGoalsOptions(opts)
+	if cfg.err != nil {
+		return nil, cfg.err
+	}
 	if (cfg.params.PeriodStart == nil) != (cfg.params.PeriodEnd == nil) {
 		return nil, fmt.Errorf("period start and end must be provided together")
 	}

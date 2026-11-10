@@ -142,6 +142,10 @@ func (s *MeetingsService) CreateUserProviderLink(ctx context.Context, opts ...Cr
 		return nil, fmt.Errorf("marketplace client ID is required")
 	}
 
+	if err := validateID(*cfg.payload.userID, "user id"); err != nil {
+		return nil, err
+	}
+
 	userProviderID, err := parseUUID(string(*cfg.payload.userProviderID), "user provider id")
 	if err != nil {
 		return nil, err
