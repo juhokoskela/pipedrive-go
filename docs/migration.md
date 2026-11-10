@@ -1,7 +1,9 @@
 # Migrating to SDK v2.0.0
 
 SDK v2.0.0 introduces the changes below. Existing v1.17.x consumers keep their
-current dependency until they change module and import paths.
+current dependency until they change module and import paths. Under the existing
+[security policy](../SECURITY.md), only the latest release receives security
+updates, so v1 releases are no longer supported once v2.0.0 ships.
 
 ## Update the module and imports
 
@@ -15,9 +17,9 @@ Insert `/v2` after `pipedrive-go` in imports:
 
 ```go
 import (
-    "github.com/juhokoskela/pipedrive-go/v2/pipedrive"
-    v1 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v1"
-    v2 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v2"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
+	v1 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v1"
+	v2 "github.com/juhokoskela/pipedrive-go/v2/pipedrive/v2"
 )
 ```
 
