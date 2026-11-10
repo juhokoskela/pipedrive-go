@@ -7,6 +7,8 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.17.0] - 2026-11-10
+
 ### Added
 
 - Add `WithGoalResultTimezone` for goal-result period boundaries.
