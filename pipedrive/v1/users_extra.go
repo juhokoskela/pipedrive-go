@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func (s *UsersService) Create(ctx context.Context, payload map[string]any, opts ...pipedrive.RequestOption) (*User, error) {
