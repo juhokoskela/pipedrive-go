@@ -41,7 +41,7 @@ func NewFileWithFields(fieldName, fileName string, src io.Reader, fields url.Val
 		contentType = "application/octet-stream"
 	}
 	header := make(textproto.MIMEHeader)
-	header.Set("Content-Disposition", mime.FormatMediaType("form-data", map[string]string{"name": fieldName, "filename": fileName}))
+	header.Set("Content-Disposition", multipart.FileContentDisposition(fieldName, fileName))
 	header.Set("Content-Type", contentType)
 	part, err := writer.CreatePart(header)
 	if err != nil {
