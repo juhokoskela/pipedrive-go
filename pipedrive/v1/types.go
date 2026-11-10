@@ -52,13 +52,7 @@ type PipelineID int64
 
 type ProjectID int64
 
-type ProjectBoardID int64
-
 type ProjectGroupID int64
-
-type ProjectPhaseID int64
-
-type ProjectTemplateID int64
 
 type ProjectPlanActivityID int64
 

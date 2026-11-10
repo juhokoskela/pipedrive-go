@@ -39,10 +39,8 @@ type Client struct {
 	Mailbox                   *MailboxService
 	Meetings                  *MeetingsService
 	Projects                  *ProjectsService
-	ProjectTemplates          *ProjectTemplatesService
 	Roles                     *RolesService
 	Teams                     *TeamsService
-	Tasks                     *TasksService
 	Webhooks                  *WebhooksService
 	UserConnections           *UserConnectionsService
 	UserSettings              *UserSettingsService
@@ -119,10 +117,8 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.Mailbox = &MailboxService{client: c}
 	c.Meetings = &MeetingsService{client: c}
 	c.Projects = &ProjectsService{client: c}
-	c.ProjectTemplates = &ProjectTemplatesService{client: c}
 	c.Roles = &RolesService{client: c}
 	c.Teams = &TeamsService{client: c}
-	c.Tasks = &TasksService{client: c}
 	c.Webhooks = &WebhooksService{client: c}
 	c.UserConnections = &UserConnectionsService{client: c}
 	c.UserSettings = &UserSettingsService{client: c}
