@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"time"
 
 	genv1 "github.com/juhokoskela/pipedrive-go/internal/gen/v1"
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
@@ -99,11 +100,13 @@ type LeadOption interface {
 }
 
 type listLeadsOptions struct {
+	err            error
 	params         genv1.GetLeadsParams
 	requestOptions []pipedrive.RequestOption
 }
 
 type listArchivedLeadsOptions struct {
+	err            error
 	params         genv1.GetArchivedLeadsParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -219,28 +222,32 @@ func WithLeadsStart(start int) ListLeadsOption {
 
 func WithLeadsOwnerID(id UserID) ListLeadsOption {
 	return listLeadsOptionFunc(func(cfg *listLeadsOptions) {
-		value := int(id)
-		cfg.params.OwnerId = &value
+		cfg.params.OwnerId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithLeadsPersonID(id PersonID) ListLeadsOption {
 	return listLeadsOptionFunc(func(cfg *listLeadsOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithLeadsOrganizationID(id OrganizationID) ListLeadsOption {
 	return listLeadsOptionFunc(func(cfg *listLeadsOptions) {
-		value := int(id)
-		cfg.params.OrganizationId = &value
+		cfg.params.OrganizationId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithLeadsFilterID(id int) ListLeadsOption {
 	return listLeadsOptionFunc(func(cfg *listLeadsOptions) {
 		cfg.params.FilterId = &id
+	})
+}
+
+func WithLeadsUpdatedSince(since time.Time) ListLeadsOption {
+	return listLeadsOptionFunc(func(cfg *listLeadsOptions) {
+		value := since.Format(time.RFC3339)
+		cfg.params.UpdatedSince = &value
 	})
 }
 
@@ -264,22 +271,19 @@ func WithArchivedLeadsStart(start int) ListArchivedLeadsOption {
 
 func WithArchivedLeadsOwnerID(id UserID) ListArchivedLeadsOption {
 	return listArchivedLeadsOptionFunc(func(cfg *listArchivedLeadsOptions) {
-		value := int(id)
-		cfg.params.OwnerId = &value
+		cfg.params.OwnerId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithArchivedLeadsPersonID(id PersonID) ListArchivedLeadsOption {
 	return listArchivedLeadsOptionFunc(func(cfg *listArchivedLeadsOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithArchivedLeadsOrganizationID(id OrganizationID) ListArchivedLeadsOption {
 	return listArchivedLeadsOptionFunc(func(cfg *listArchivedLeadsOptions) {
-		value := int(id)
-		cfg.params.OrganizationId = &value
+		cfg.params.OrganizationId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -462,11 +466,17 @@ func newListLeadUsersOptions(opts []ListLeadUsersOption) listLeadUsersOptions {
 
 func (s *LeadsService) List(ctx context.Context, opts ...ListLeadsOption) ([]Lead, *LeadPagination, error) {
 	cfg := newListLeadsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
 func (s *LeadsService) ListArchived(ctx context.Context, opts ...ListArchivedLeadsOption) ([]Lead, *LeadPagination, error) {
 	cfg := newListArchivedLeadsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.listArchived(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -712,7 +722,7 @@ func (p leadPayload) toMap(includeUpdateFields bool) map[string]interface{} {
 		body["title"] = *p.title
 	}
 	if p.ownerID != nil {
-		body["owner_id"] = int(*p.ownerID)
+		body["owner_id"] = *p.ownerID
 	}
 	if len(p.labelIDs) > 0 {
 		labels := make([]string, 0, len(p.labelIDs))
@@ -722,10 +732,10 @@ func (p leadPayload) toMap(includeUpdateFields bool) map[string]interface{} {
 		body["label_ids"] = labels
 	}
 	if p.personID != nil {
-		body["person_id"] = int(*p.personID)
+		body["person_id"] = *p.personID
 	}
 	if p.orgID != nil {
-		body["organization_id"] = int(*p.orgID)
+		body["organization_id"] = *p.orgID
 	}
 	if p.value != nil {
 		body["value"] = map[string]interface{}{

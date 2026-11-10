@@ -157,6 +157,7 @@ type NoteCommentOption interface {
 }
 
 type listNotesOptions struct {
+	err            error
 	params         genv1.GetNotesParams
 	leadID         *LeadID
 	requestOptions []pipedrive.RequestOption
@@ -329,8 +330,7 @@ func WithNotesRequestOptions(opts ...pipedrive.RequestOption) NotesRequestOption
 
 func WithNotesUserID(id UserID) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
-		value := int(id)
-		cfg.params.UserId = &value
+		cfg.params.UserId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -342,36 +342,31 @@ func WithNotesLeadID(id LeadID) ListNotesOption {
 
 func WithNotesDealID(id DealID) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
-		value := int(id)
-		cfg.params.DealId = &value
+		cfg.params.DealId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithNotesPersonID(id PersonID) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithNotesOrganizationID(id OrganizationID) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
-		value := int(id)
-		cfg.params.OrgId = &value
+		cfg.params.OrgId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithNotesProjectID(id ProjectID) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
-		value := int(id)
-		cfg.params.ProjectId = &value
+		cfg.params.ProjectId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithNotesTaskID(id TaskID) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
-		value := int(id)
-		cfg.params.TaskId = &value
+		cfg.params.TaskId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -384,6 +379,12 @@ func WithNotesStart(start int) ListNotesOption {
 func WithNotesLimit(limit int) ListNotesOption {
 	return listNotesOptionFunc(func(cfg *listNotesOptions) {
 		cfg.params.Limit = &limit
+	})
+}
+
+func WithNotesUpdatedSince(since time.Time) ListNotesOption {
+	return listNotesOptionFunc(func(cfg *listNotesOptions) {
+		cfg.params.UpdatedSince = &since
 	})
 }
 
@@ -655,6 +656,9 @@ func newDeleteNoteCommentOptions(opts []DeleteNoteCommentOption) deleteNoteComme
 
 func (s *NotesService) List(ctx context.Context, opts ...ListNotesOption) ([]Note, *NotesAdditionalData, error) {
 	cfg := newListNotesOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	if cfg.leadID != nil {
 		leadUUID, err := parseUUID(string(*cfg.leadID), "lead id")
 		if err != nil {
