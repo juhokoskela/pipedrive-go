@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func TestProductsService_List(t *testing.T) {
