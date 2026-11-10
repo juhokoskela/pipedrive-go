@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/juhokoskela/pipedrive-go/pipedrive"
+	"github.com/juhokoskela/pipedrive-go/v2/pipedrive"
 )
 
 func TestProjectsService_AllOperations(t *testing.T) {
