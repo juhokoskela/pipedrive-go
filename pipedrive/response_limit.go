@@ -61,6 +61,10 @@ type responseLimitTransport struct {
 	defaultLimit int64
 }
 
+func (t *responseLimitTransport) CloseIdleConnections() {
+	closeIdleConnections(t.next)
+}
+
 func newResponseLimitTransport(next http.RoundTripper, defaultLimit int64) http.RoundTripper {
 	if next == nil {
 		next = http.DefaultTransport

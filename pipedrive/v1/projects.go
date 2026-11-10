@@ -9,25 +9,6 @@ import (
 	"github.com/juhokoskela/pipedrive-go/pipedrive"
 )
 
-type Project struct {
-	ID         ProjectID `json:"id,omitempty"`
-	Title      string    `json:"title,omitempty"`
-	Status     string    `json:"status,omitempty"`
-	OwnerID    *UserID   `json:"owner_id,omitempty"`
-	AddTime    *DateTime `json:"add_time,omitempty"`
-	UpdateTime *DateTime `json:"update_time,omitempty"`
-}
-
-type ProjectBoard struct {
-	ID   ProjectBoardID `json:"id,omitempty"`
-	Name string         `json:"name,omitempty"`
-}
-
-type ProjectPhase struct {
-	ID   ProjectPhaseID `json:"id,omitempty"`
-	Name string         `json:"name,omitempty"`
-}
-
 type ProjectGroup struct {
 	ID   ProjectGroupID `json:"id,omitempty"`
 	Name string         `json:"name,omitempty"`
@@ -80,186 +61,6 @@ func newProjectsOptions(opts []ProjectsOption) projectsOptions {
 	return cfg
 }
 
-func (s *ProjectsService) List(ctx context.Context, opts ...ProjectsOption) ([]Project, *Pagination, error) {
-	cfg := newProjectsOptions(opts)
-
-	var payload struct {
-		Data           []Project `json:"data"`
-		AdditionalData *struct {
-			Pagination *Pagination `json:"pagination"`
-		} `json:"additional_data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, "/projects", cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, nil, err
-	}
-	var page *Pagination
-	if payload.AdditionalData != nil {
-		page = payload.AdditionalData.Pagination
-	}
-	return payload.Data, page, nil
-}
-
-func (s *ProjectsService) Create(ctx context.Context, payload map[string]any, opts ...ProjectsOption) (*Project, error) {
-	cfg := newProjectsOptions(opts)
-	if len(payload) == 0 {
-		return nil, fmt.Errorf("project payload is required")
-	}
-
-	var resp struct {
-		Data *Project `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodPost, "/projects", cfg.query, payload, &resp, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	if resp.Data == nil {
-		return nil, fmt.Errorf("missing project data in response")
-	}
-	return resp.Data, nil
-}
-
-func (s *ProjectsService) Get(ctx context.Context, id ProjectID, opts ...ProjectsOption) (*Project, error) {
-	if err := validateID(id, "project id"); err != nil {
-		return nil, err
-	}
-	cfg := newProjectsOptions(opts)
-	path := fmt.Sprintf("/projects/%d", id)
-
-	var resp struct {
-		Data *Project `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &resp, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	if resp.Data == nil {
-		return nil, fmt.Errorf("missing project data in response")
-	}
-	return resp.Data, nil
-}
-
-func (s *ProjectsService) Update(ctx context.Context, id ProjectID, payload map[string]any, opts ...ProjectsOption) (*Project, error) {
-	if err := validateID(id, "project id"); err != nil {
-		return nil, err
-	}
-	cfg := newProjectsOptions(opts)
-	if len(payload) == 0 {
-		return nil, fmt.Errorf("project payload is required")
-	}
-	path := fmt.Sprintf("/projects/%d", id)
-
-	var resp struct {
-		Data *Project `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodPut, path, cfg.query, payload, &resp, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	if resp.Data == nil {
-		return nil, fmt.Errorf("missing project update data in response")
-	}
-	return resp.Data, nil
-}
-
-func (s *ProjectsService) Delete(ctx context.Context, id ProjectID, opts ...ProjectsOption) (ProjectID, error) {
-	if err := validateID(id, "project id"); err != nil {
-		return 0, err
-	}
-	cfg := newProjectsOptions(opts)
-	path := fmt.Sprintf("/projects/%d", id)
-
-	var resp struct {
-		Data *struct {
-			ID ProjectID `json:"id"`
-		} `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodDelete, path, cfg.query, nil, &resp, cfg.requestOptions...); err != nil {
-		return 0, err
-	}
-	if resp.Data == nil {
-		return 0, fmt.Errorf("missing project delete data in response")
-	}
-	return resp.Data.ID, nil
-}
-
-func (s *ProjectsService) Archive(ctx context.Context, id ProjectID, opts ...ProjectsOption) (*Project, error) {
-	if err := validateID(id, "project id"); err != nil {
-		return nil, err
-	}
-	cfg := newProjectsOptions(opts)
-	path := fmt.Sprintf("/projects/%d/archive", id)
-
-	var resp struct {
-		Data *Project `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodPost, path, cfg.query, nil, &resp, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	if resp.Data == nil {
-		return nil, fmt.Errorf("missing archived project data in response")
-	}
-	return resp.Data, nil
-}
-
-func (s *ProjectsService) ListBoards(ctx context.Context, opts ...ProjectsOption) ([]ProjectBoard, error) {
-	cfg := newProjectsOptions(opts)
-
-	var payload struct {
-		Data []ProjectBoard `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, "/projects/boards", cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	return payload.Data, nil
-}
-
-func (s *ProjectsService) GetBoard(ctx context.Context, id ProjectBoardID, opts ...ProjectsOption) (*ProjectBoard, error) {
-	if err := validateID(id, "project board id"); err != nil {
-		return nil, err
-	}
-	cfg := newProjectsOptions(opts)
-	path := fmt.Sprintf("/projects/boards/%d", id)
-
-	var payload struct {
-		Data *ProjectBoard `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	if payload.Data == nil {
-		return nil, fmt.Errorf("missing project board data in response")
-	}
-	return payload.Data, nil
-}
-
-func (s *ProjectsService) ListPhases(ctx context.Context, opts ...ProjectsOption) ([]ProjectPhase, error) {
-	cfg := newProjectsOptions(opts)
-
-	var payload struct {
-		Data []ProjectPhase `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, "/projects/phases", cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	return payload.Data, nil
-}
-
-func (s *ProjectsService) GetPhase(ctx context.Context, id ProjectPhaseID, opts ...ProjectsOption) (*ProjectPhase, error) {
-	if err := validateID(id, "project phase id"); err != nil {
-		return nil, err
-	}
-	cfg := newProjectsOptions(opts)
-	path := fmt.Sprintf("/projects/phases/%d", id)
-
-	var payload struct {
-		Data *ProjectPhase `json:"data"`
-	}
-	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
-		return nil, err
-	}
-	if payload.Data == nil {
-		return nil, fmt.Errorf("missing project phase data in response")
-	}
-	return payload.Data, nil
-}
-
 func (s *ProjectsService) ListActivities(ctx context.Context, id ProjectID, opts ...ProjectsOption) ([]Activity, *Pagination, error) {
 	if err := validateID(id, "project id"); err != nil {
 		return nil, nil, err
@@ -299,7 +100,7 @@ func (s *ProjectsService) ListGroups(ctx context.Context, id ProjectID, opts ...
 	return payload.Data, nil
 }
 
-func (s *ProjectsService) GetPlan(ctx context.Context, id ProjectID, opts ...ProjectsOption) (map[string]any, error) {
+func (s *ProjectsService) GetPlan(ctx context.Context, id ProjectID, opts ...ProjectsOption) ([]map[string]any, error) {
 	if err := validateID(id, "project id"); err != nil {
 		return nil, err
 	}
@@ -307,7 +108,7 @@ func (s *ProjectsService) GetPlan(ctx context.Context, id ProjectID, opts ...Pro
 	path := fmt.Sprintf("/projects/%d/plan", id)
 
 	var payload struct {
-		Data map[string]any `json:"data"`
+		Data []map[string]any `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
 		return nil, err

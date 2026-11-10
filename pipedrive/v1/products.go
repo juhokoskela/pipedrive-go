@@ -115,7 +115,7 @@ func (s *ProductsService) ListUsers(ctx context.Context, id ProductID, opts ...P
 	path := fmt.Sprintf("/products/%d/permittedUsers", id)
 
 	var payload struct {
-		Data []User `json:"data"`
+		Data userList `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
 		return nil, err

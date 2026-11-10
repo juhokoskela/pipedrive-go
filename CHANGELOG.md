@@ -7,6 +7,40 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+### Breaking changes
+
+- Remove 17 v1 project, task, and project-template methods that overlap with v2,
+  along with their unused models, options, service fields, and ID types.
+  See [migration notes](docs/migration.md) for exact replacements.
+- Return objects from v1 `Roles.ListPipelines`, `Roles.ListSettings`, and
+  `Users.ListRoleSettings`, matching the API payloads.
+- Return a list of plan items from v1 `Projects.GetPlan`.
+
+### Added
+
+- Add `WithNotesUpdatedSince`, `WithLeadsUpdatedSince`, and
+  `WithProductSearchIncludeFields`.
+- Check handwritten SDK operation coverage against both OpenAPI specs in tests.
+- Lint GitHub Actions workflows with pinned actionlint tooling in CI.
+
+### Fixed
+
+- Send file MIME types in multipart uploads so Pipedrive accepts product images.
+- Decode product-image timestamps in the live UTC format and the documented
+  date-only format while retaining RFC3339 support.
+- Preserve request-header replacement across casing, close request bodies on
+  authentication errors, and forward idle-connection cleanup through middleware.
+- Respect `Retry-After` on all retryable responses and avoid retry-delay overflow.
+  `MaxRetryAfter` caps each server-requested delay at one minute by default;
+  context cancellation can end the wait earlier.
+- Preserve large JSON IDs and reject overflowing query IDs on 32-bit systems.
+- Decode expanded v1 deal relationships, numeric filter visibility, and ID-only
+  user lists. Format offset-less v1 request timestamps in UTC.
+
+### Removed
+
+- Remove the manually maintained endpoint gap report and unused CodeQL scaffolding.
+
 ## [1.17.0] - 2026-11-10
 
 ### Added

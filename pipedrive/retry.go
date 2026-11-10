@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"io"
-	"math"
 	rand "math/rand/v2"
 	"net/http"
 	"time"
@@ -48,6 +47,10 @@ type retryTransport struct {
 type retryTransportOptions struct {
 	sleep func(context.Context, time.Duration) error
 	now   func() time.Time
+}
+
+func (t *retryTransport) CloseIdleConnections() {
+	closeIdleConnections(t.next)
 }
 
 func newRetryTransport(next http.RoundTripper, policy RetryPolicy, opts retryTransportOptions) http.RoundTripper {
@@ -139,7 +142,7 @@ func (t *retryTransport) shouldRetry(attempt int, req *http.Request, canReplayBo
 }
 
 func (t *retryTransport) nextDelay(attempt int, resp *http.Response, policy RetryPolicy) time.Duration {
-	if resp != nil && resp.StatusCode == 429 {
+	if resp != nil {
 		if ra := parseRetryAfter(resp.Header.Get("Retry-After"), t.opts.now()); ra > 0 {
 			if policy.MaxRetryAfter > 0 && ra > policy.MaxRetryAfter {
 				ra = policy.MaxRetryAfter
@@ -152,10 +155,13 @@ func (t *retryTransport) nextDelay(attempt int, resp *http.Response, policy Retr
 		return 0
 	}
 
-	exp := float64(policy.BaseDelay) * math.Pow(2, float64(attempt-1))
-	delay := time.Duration(exp)
-	if delay > policy.MaxDelay {
-		delay = policy.MaxDelay
+	delay := min(policy.BaseDelay, policy.MaxDelay)
+	for n := 1; n < attempt && delay < policy.MaxDelay; n++ {
+		if delay > policy.MaxDelay/2 {
+			delay = policy.MaxDelay
+			break
+		}
+		delay *= 2
 	}
 	return policy.Jitter(delay)
 }

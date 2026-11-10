@@ -84,11 +84,13 @@ type PipelinesRequestOption interface {
 }
 
 type getPipelineConversionStatisticsOptions struct {
+	err            error
 	params         genv1.GetPipelineConversionStatisticsParams
 	requestOptions []pipedrive.RequestOption
 }
 
 type getPipelineMovementStatisticsOptions struct {
+	err            error
 	params         genv1.GetPipelineMovementStatisticsParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -146,8 +148,7 @@ func WithPipelineConversionEndDate(end time.Time) GetPipelineConversionStatistic
 
 func WithPipelineConversionUserID(userID UserID) GetPipelineConversionStatisticsOption {
 	return getPipelineConversionStatisticsOptionFunc(func(cfg *getPipelineConversionStatisticsOptions) {
-		value := int(userID)
-		cfg.params.UserId = &value
+		cfg.params.UserId = checkedIntID(userID, &cfg.err)
 	})
 }
 
@@ -165,8 +166,7 @@ func WithPipelineMovementEndDate(end time.Time) GetPipelineMovementStatisticsOpt
 
 func WithPipelineMovementUserID(userID UserID) GetPipelineMovementStatisticsOption {
 	return getPipelineMovementStatisticsOptionFunc(func(cfg *getPipelineMovementStatisticsOptions) {
-		value := int(userID)
-		cfg.params.UserId = &value
+		cfg.params.UserId = checkedIntID(userID, &cfg.err)
 	})
 }
 
@@ -220,6 +220,9 @@ func (s *PipelinesService) GetConversionStatistics(ctx context.Context, id Pipel
 		return nil, err
 	}
 	cfg := newGetPipelineConversionStatisticsOptions(opts)
+	if cfg.err != nil {
+		return nil, cfg.err
+	}
 	if cfg.params.StartDate.IsZero() || cfg.params.EndDate.IsZero() {
 		return nil, fmt.Errorf("start and end dates are required")
 	}
@@ -255,6 +258,9 @@ func (s *PipelinesService) GetMovementStatistics(ctx context.Context, id Pipelin
 		return nil, err
 	}
 	cfg := newGetPipelineMovementStatisticsOptions(opts)
+	if cfg.err != nil {
+		return nil, cfg.err
+	}
 	if cfg.params.StartDate.IsZero() || cfg.params.EndDate.IsZero() {
 		return nil, fmt.Errorf("start and end dates are required")
 	}

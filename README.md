@@ -1,7 +1,7 @@
 # pipedrive-go
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/juhokoskela/pipedrive-go)](https://goreportcard.com/report/github.com/juhokoskela/pipedrive-go)
-[![Coverage Status](https://coveralls.io/repos/github/juhokoskela/pipedrive-go/badge.svg?branch=chore/sdk-test-coverage)](https://coveralls.io/github/juhokoskela/pipedrive-go?branch=chore/sdk-test-coverage)
+[![Coverage Status](https://coveralls.io/repos/github/juhokoskela/pipedrive-go/badge.svg?branch=main)](https://coveralls.io/github/juhokoskela/pipedrive-go?branch=main)
 
 Go SDK for the Pipedrive API with a handwritten, stable public surface.
 
@@ -15,8 +15,10 @@ Generated OpenAPI clients are internal-only; use the `pipedrive/v1` and
 
 This SDK is v2-first. Use `pipedrive/v2` for new work and only reach for
 `pipedrive/v1` when an endpoint is not available in v2. The v1 surface is
-derived from the v1 OpenAPI spec with all v2-covered operations removed, so
-endpoints migrate out of v1 automatically as v2 grows.
+derived from the v1 OpenAPI spec with all v2-covered operations removed.
+Tests check handwritten generated-client and raw-client route references against
+each version’s spec. See the [migration guide](docs/migration.md) for removed v1
+wrappers and corrected response types.
 
 Endpoint tables:
 - v2: `docs/endpoints-v2.md`
@@ -139,6 +141,7 @@ pass the access token into a v2 client.
 ```go
 import (
 	"context"
+	"crypto/rand"
 	"encoding/base64"
 	"log"
 
@@ -152,11 +155,14 @@ import (
 ctx := context.Background()
 oauthClient, _ := v1.NewClient(pipedrive.Config{})
 
+// Store this value in the user's session and verify the callback's state
+// before exchanging the authorization code.
+state := rand.Text()
 authURL, err := oauthClient.OAuth.Authorize(
 	ctx,
 	v1.WithOAuthClientID(clientID),
 	v1.WithOAuthRedirectURI(redirectURI),
-	v1.WithOAuthState("state123"),
+	v1.WithOAuthState(state),
 )
 if err != nil {
 	log.Fatal(err)
@@ -183,7 +189,9 @@ apiClient, _ := v2.NewClient(pipedrive.Config{
 
 ## Retries and per-request options
 
-Retries are enabled by default for 429/502/503/504 with backoff and jitter.
+Retries are enabled by default for 429 and for idempotent methods receiving
+502/503/504, provided the request body can be replayed. Server `Retry-After`
+delays take precedence over backoff and jitter, subject to `MaxRetryAfter`.
 Override globally with `RetryPolicy`, or per call with request options:
 
 ```go

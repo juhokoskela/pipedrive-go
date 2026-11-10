@@ -213,7 +213,7 @@ func (s *PersonsService) ListUsers(ctx context.Context, id PersonID, opts ...Per
 	path := fmt.Sprintf("/persons/%d/permittedUsers", id)
 
 	var payload struct {
-		Data []User `json:"data"`
+		Data userList `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, cfg.query, nil, &payload, cfg.requestOptions...); err != nil {
 		return nil, err

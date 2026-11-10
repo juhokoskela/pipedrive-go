@@ -65,12 +65,12 @@ Options are passed down to the internal request pipeline without leaking generat
 All requests flow through a single shared runtime:
 
 1. Build request (path params, query params, JSON body)
-2. Apply auth + headers + user agent
-3. Apply middleware chain (RoundTripper-based)
-4. Execute request
-5. Decode response
-6. Convert errors into typed Go errors
-7. Apply retry policy (when enabled)
+2. Apply request options and editors
+3. Select the retry policy
+4. Run custom middleware, user-agent middleware, and auth for each attempt
+5. Execute the request and limit the response body
+6. Retry eligible HTTP responses before decoding
+7. Decode the final response or convert its status into a typed error
 
 ### Transport + middleware
 Users can supply a custom `http.Client` or transport and provide middleware hooks.
@@ -129,7 +129,7 @@ Pagination helpers should hide API quirks and feel like Go:
 
 ### Explicit pager
 ```go
-pager := client.Deals.ListPager(req)
+pager := client.Deals.ListPager(v2.WithDealsPageSize(100))
 for pager.Next(ctx) {
     deals := pager.Items()
     // ...
@@ -139,9 +139,9 @@ if err := pager.Err(); err != nil { ... }
 
 ### Callback iterator
 ```go
-err := client.Deals.ForEach(ctx, req, func(d Deal) error {
+err := client.Deals.ForEach(ctx, func(d v2.Deal) error {
     return nil
-})
+}, v2.WithDealsPageSize(100))
 ```
 
 Avoid channels by default to keep cancellation semantics simple.
@@ -161,7 +161,7 @@ Strategy:
 
 Even a good SDK cannot cover every use case immediately. Provide a supported escape hatch:
 
-- `Raw().Do(ctx, method, path, query, body, &out)` per API version
+- `client.Raw.Do(ctx, method, path, query, body, &out)` per API version
 
 This avoids forcing users to import internal generated packages.
 
@@ -171,7 +171,15 @@ The v1 façade is intentionally limited. We enforce this mechanically:
 - Derive `openapi/derived/v1-legacy.yaml` by removing operations whose `operationId` exists in v2.
 - Generate `internal/gen/v1` from that derived spec.
 
-When an endpoint appears in v2, it disappears from v1-legacy on the next regeneration.
+`TestSDKOperationCoverage` in `cmd/endpoint-docs` checks handwritten route
+references against the derived v1 and upstream v2 specs during `go test ./...`.
+It fails for missing wrappers, unknown routes, and v1 wrappers that call operations
+removed from the legacy spec, including calls through `Raw.Do`. OAuth URL
+construction and its two token grants are handled explicitly. This is a static
+coverage check; HTTP tests and live checks establish request and response behavior.
+
+When an endpoint moves to v2, regeneration and these tests require the public
+wrapper migration to be handled together. See [migration notes](docs/migration.md).
 
 ## Testing strategy
 

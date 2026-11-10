@@ -9,6 +9,13 @@ GOVULNCHECK := go run golang.org/x/vuln/cmd/govulncheck@$(GOVULNCHECK_VERSION)
 GOSEC_VERSION := v2.29.1-0.20261012130337-71577268350e
 GOSEC := go run github.com/securego/gosec/v2/cmd/gosec@$(GOSEC_VERSION)
 
+ACTIONLINT_VERSION := v1.7.12
+ACTIONLINT := go run github.com/rhysd/actionlint/cmd/actionlint@$(ACTIONLINT_VERSION)
+
+.PHONY: workflow-lint
+workflow-lint:
+	$(ACTIONLINT)
+
 .PHONY: test
 test:
 	go test ./...

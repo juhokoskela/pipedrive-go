@@ -69,6 +69,7 @@ type LeadRequestOption interface {
 }
 
 type searchLeadsOptions struct {
+	err            error
 	params         genv2.SearchLeadsParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -137,15 +138,13 @@ func WithLeadSearchExactMatch(enabled bool) SearchLeadsOption {
 
 func WithLeadSearchPersonID(id PersonID) SearchLeadsOption {
 	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
-		value := int(id)
-		cfg.params.PersonId = &value
+		cfg.params.PersonId = checkedIntID(id, &cfg.err)
 	})
 }
 
 func WithLeadSearchOrganizationID(id OrganizationID) SearchLeadsOption {
 	return searchLeadsOptionFunc(func(cfg *searchLeadsOptions) {
-		value := int(id)
-		cfg.params.OrganizationId = &value
+		cfg.params.OrganizationId = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -224,6 +223,9 @@ func newGetLeadConversionStatusOptions(opts []GetLeadConversionStatusOption) get
 
 func (s *LeadsService) Search(ctx context.Context, term string, opts ...SearchLeadsOption) (*LeadSearchResults, *string, error) {
 	cfg := newSearchLeadsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	cfg.params.Term = term
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
@@ -338,10 +340,10 @@ func (s *LeadsService) ConversionStatus(ctx context.Context, id LeadID, conversi
 func (p leadConversionPayload) toMap() map[string]interface{} {
 	body := map[string]interface{}{}
 	if p.stageID != nil {
-		body["stage_id"] = int(*p.stageID)
+		body["stage_id"] = *p.stageID
 	}
 	if p.pipelineID != nil {
-		body["pipeline_id"] = int(*p.pipelineID)
+		body["pipeline_id"] = *p.pipelineID
 	}
 	return body
 }

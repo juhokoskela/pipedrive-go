@@ -50,6 +50,7 @@ type TaskRequestOption interface {
 }
 
 type listTasksOptions struct {
+	err            error
 	params         genv2.GetTasksParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -128,10 +129,10 @@ func WithTasksMilestone(milestone bool) ListTasksOption {
 	return listTasksOptionFunc(func(cfg *listTasksOptions) { cfg.params.IsMilestone = &milestone })
 }
 func WithTasksAssigneeID(id UserID) ListTasksOption {
-	return listTasksOptionFunc(func(cfg *listTasksOptions) { value := int(id); cfg.params.AssigneeId = &value })
+	return listTasksOptionFunc(func(cfg *listTasksOptions) { cfg.params.AssigneeId = checkedIntID(id, &cfg.err) })
 }
 func WithTasksProjectID(id ProjectID) ListTasksOption {
-	return listTasksOptionFunc(func(cfg *listTasksOptions) { value := int(id); cfg.params.ProjectId = &value })
+	return listTasksOptionFunc(func(cfg *listTasksOptions) { cfg.params.ProjectId = checkedIntID(id, &cfg.err) })
 }
 func WithTasksParentTaskID(id TaskID) ListTasksOption {
 	return listTasksOptionFunc(func(cfg *listTasksOptions) {
@@ -238,7 +239,7 @@ func (p taskPayload) body() map[string]interface{} {
 		body["title"] = *p.title
 	}
 	if p.projectID != nil {
-		body["project_id"] = int(*p.projectID)
+		body["project_id"] = *p.projectID
 	}
 	if p.parentTaskID.set {
 		body["parent_task_id"] = p.parentTaskID.value
@@ -280,6 +281,9 @@ func (p taskPayload) body() map[string]interface{} {
 
 func (s *TasksService) List(ctx context.Context, opts ...ListTasksOption) ([]Task, *string, error) {
 	cfg := newListTasksOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 func (s *TasksService) ListPager(opts ...ListTasksOption) *pipedrive.CursorPager[Task] {
@@ -287,6 +291,9 @@ func (s *TasksService) ListPager(opts ...ListTasksOption) *pipedrive.CursorPager
 	start := cfg.params.Cursor
 	cfg.params.Cursor = nil
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Task, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor

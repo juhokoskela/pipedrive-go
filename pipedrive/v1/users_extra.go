@@ -72,14 +72,14 @@ func (s *UsersService) ListRoleAssignments(ctx context.Context, id UserID, query
 	return payload.Data, nil
 }
 
-func (s *UsersService) ListRoleSettings(ctx context.Context, id UserID, opts ...pipedrive.RequestOption) ([]map[string]any, error) {
+func (s *UsersService) ListRoleSettings(ctx context.Context, id UserID, opts ...pipedrive.RequestOption) (map[string]any, error) {
 	if err := validateID(id, "user id"); err != nil {
 		return nil, err
 	}
 	path := fmt.Sprintf("/users/%d/roleSettings", id)
 
 	var payload struct {
-		Data []map[string]any `json:"data"`
+		Data map[string]any `json:"data"`
 	}
 	if err := s.client.Raw.Do(ctx, http.MethodGet, path, nil, nil, &payload, opts...); err != nil {
 		return nil, err

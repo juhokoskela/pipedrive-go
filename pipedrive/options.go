@@ -24,7 +24,7 @@ func WithHeader(key, value string) RequestOption {
 		if o.headers == nil {
 			o.headers = make(map[string]string)
 		}
-		o.headers[key] = value
+		o.headers[http.CanonicalHeaderKey(key)] = value
 	}
 }
 

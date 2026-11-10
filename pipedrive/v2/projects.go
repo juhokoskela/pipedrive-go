@@ -150,16 +150,19 @@ type ProjectOption interface {
 }
 
 type listProjectsOptions struct {
+	err            error
 	params         genv2.GetProjectsParams
 	requestOptions []pipedrive.RequestOption
 }
 
 type listArchivedProjectsOptions struct {
+	err            error
 	params         genv2.GetArchivedProjectsParams
 	requestOptions []pipedrive.RequestOption
 }
 
 type searchProjectsOptions struct {
+	err            error
 	params         genv2.SearchProjectsParams
 	requestOptions []pipedrive.RequestOption
 }
@@ -283,28 +286,28 @@ func (o projectListStatusOption) applyListArchivedProjects(cfg *listArchivedProj
 }
 
 func WithProjectsPhaseID(id ProjectPhaseID) ProjectListOption {
-	return projectListPhaseOption{id: int(id)}
+	return projectListPhaseOption{id: id}
 }
 
-type projectListPhaseOption struct{ id int }
+type projectListPhaseOption struct{ id ProjectPhaseID }
 
 func (o projectListPhaseOption) applyListProjects(cfg *listProjectsOptions) {
-	cfg.params.PhaseId = &o.id
+	cfg.params.PhaseId = checkedIntID(o.id, &cfg.err)
 }
 func (o projectListPhaseOption) applyListArchivedProjects(cfg *listArchivedProjectsOptions) {
-	cfg.params.PhaseId = &o.id
+	cfg.params.PhaseId = checkedIntID(o.id, &cfg.err)
 }
 
 func WithProjectsDealID(id DealID) ListProjectsOption {
-	return listProjectsOptionFunc(func(cfg *listProjectsOptions) { value := int(id); cfg.params.DealId = &value })
+	return listProjectsOptionFunc(func(cfg *listProjectsOptions) { cfg.params.DealId = checkedIntID(id, &cfg.err) })
 }
 
 func WithProjectsPersonID(id PersonID) ListProjectsOption {
-	return listProjectsOptionFunc(func(cfg *listProjectsOptions) { value := int(id); cfg.params.PersonId = &value })
+	return listProjectsOptionFunc(func(cfg *listProjectsOptions) { cfg.params.PersonId = checkedIntID(id, &cfg.err) })
 }
 
 func WithProjectsOrganizationID(id OrganizationID) ListProjectsOption {
-	return listProjectsOptionFunc(func(cfg *listProjectsOptions) { value := int(id); cfg.params.OrgId = &value })
+	return listProjectsOptionFunc(func(cfg *listProjectsOptions) { cfg.params.OrgId = checkedIntID(id, &cfg.err) })
 }
 
 func WithProjectsPageSize(limit int) ProjectListOption {
@@ -356,11 +359,11 @@ func WithProjectSearchExactMatch(exact bool) SearchProjectsOption {
 }
 
 func WithProjectSearchPersonID(id PersonID) SearchProjectsOption {
-	return searchProjectsOptionFunc(func(cfg *searchProjectsOptions) { value := int(id); cfg.params.PersonId = &value })
+	return searchProjectsOptionFunc(func(cfg *searchProjectsOptions) { cfg.params.PersonId = checkedIntID(id, &cfg.err) })
 }
 
 func WithProjectSearchOrganizationID(id OrganizationID) SearchProjectsOption {
-	return searchProjectsOptionFunc(func(cfg *searchProjectsOptions) { value := int(id); cfg.params.OrganizationId = &value })
+	return searchProjectsOptionFunc(func(cfg *searchProjectsOptions) { cfg.params.OrganizationId = checkedIntID(id, &cfg.err) })
 }
 
 func WithProjectSearchPageSize(limit int) SearchProjectsOption {
@@ -528,13 +531,13 @@ func (p projectPayload) body() map[string]interface{} {
 		body["status"] = string(*p.status)
 	}
 	if p.boardID != nil {
-		body["board_id"] = int(*p.boardID)
+		body["board_id"] = *p.boardID
 	}
 	if p.phaseID != nil {
-		body["phase_id"] = int(*p.phaseID)
+		body["phase_id"] = *p.phaseID
 	}
 	if p.ownerID != nil {
-		body["owner_id"] = int(*p.ownerID)
+		body["owner_id"] = *p.ownerID
 	}
 	if p.startDate != nil {
 		body["start_date"] = *p.startDate
@@ -546,7 +549,7 @@ func (p projectPayload) body() map[string]interface{} {
 		body["health_status"] = *p.healthStatus
 	}
 	if p.templateID != nil {
-		body["template_id"] = int(*p.templateID)
+		body["template_id"] = *p.templateID
 	}
 	if p.dealIDsSet {
 		body["deal_ids"] = p.dealIDs
@@ -568,6 +571,9 @@ func (p projectPayload) body() map[string]interface{} {
 
 func (s *ProjectsService) List(ctx context.Context, opts ...ListProjectsOption) ([]Project, *string, error) {
 	cfg := newListProjectsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.list(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -576,6 +582,9 @@ func (s *ProjectsService) ListPager(opts ...ListProjectsOption) *pipedrive.Curso
 	start := cfg.params.Cursor
 	cfg.params.Cursor = nil
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Project, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -592,6 +601,9 @@ func (s *ProjectsService) ForEach(ctx context.Context, fn func(Project) error, o
 
 func (s *ProjectsService) ListArchived(ctx context.Context, opts ...ListArchivedProjectsOption) ([]Project, *string, error) {
 	cfg := newListArchivedProjectsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.listArchived(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -600,6 +612,9 @@ func (s *ProjectsService) ListArchivedPager(opts ...ListArchivedProjectsOption) 
 	start := cfg.params.Cursor
 	cfg.params.Cursor = nil
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]Project, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor
@@ -616,6 +631,9 @@ func (s *ProjectsService) ForEachArchived(ctx context.Context, fn func(Project) 
 
 func (s *ProjectsService) Search(ctx context.Context, term string, opts ...SearchProjectsOption) ([]ProjectSearchResult, *string, error) {
 	cfg := newSearchProjectsOptions(term, opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	return s.search(ctx, cfg.params, cfg.requestOptions)
 }
 
@@ -624,6 +642,9 @@ func (s *ProjectsService) SearchPager(term string, opts ...SearchProjectsOption)
 	start := cfg.params.Cursor
 	cfg.params.Cursor = nil
 	return pipedrive.NewCursorPager(func(ctx context.Context, cursor *string) ([]ProjectSearchResult, *string, error) {
+		if cfg.err != nil {
+			return nil, nil, cfg.err
+		}
 		params := cfg.params
 		if cursor != nil {
 			params.Cursor = cursor

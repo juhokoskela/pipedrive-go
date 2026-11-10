@@ -92,12 +92,14 @@ type OrganizationRelationshipOption interface {
 }
 
 type listOrganizationRelationshipsOptions struct {
-	orgID          *OrganizationID
+	err            error
+	orgID          *int
 	requestOptions []pipedrive.RequestOption
 }
 
 type getOrganizationRelationshipOptions struct {
-	orgID          *OrganizationID
+	err            error
+	orgID          *int
 	requestOptions []pipedrive.RequestOption
 }
 
@@ -180,7 +182,7 @@ func WithOrganizationRelationshipsRequestOptions(opts ...pipedrive.RequestOption
 
 func WithOrganizationRelationshipsOrgID(id OrganizationID) ListOrganizationRelationshipsOption {
 	return listOrganizationRelationshipsOptionFunc(func(cfg *listOrganizationRelationshipsOptions) {
-		cfg.orgID = &id
+		cfg.orgID = checkedIntID(id, &cfg.err)
 	})
 }
 
@@ -197,7 +199,7 @@ func (o organizationRelationshipOrgIDOption) applyUpdateOrganizationRelationship
 }
 
 func (o organizationRelationshipOrgIDOption) applyGetOrganizationRelationship(cfg *getOrganizationRelationshipOptions) {
-	cfg.orgID = &o.id
+	cfg.orgID = checkedIntID(o.id, &cfg.err)
 }
 
 func WithOrganizationRelationshipOrgID(id OrganizationID) organizationRelationshipOrgIDOption {
@@ -279,12 +281,15 @@ func newDeleteOrganizationRelationshipOptions(opts []DeleteOrganizationRelations
 
 func (s *OrganizationRelationshipsService) List(ctx context.Context, opts ...ListOrganizationRelationshipsOption) ([]OrganizationRelationship, *OrganizationRelationshipsAdditionalData, error) {
 	cfg := newListOrganizationRelationshipsOptions(opts)
+	if cfg.err != nil {
+		return nil, nil, cfg.err
+	}
 	if cfg.orgID == nil {
 		return nil, nil, fmt.Errorf("organization ID is required")
 	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
-	params := genv1.GetOrganizationRelationshipsParams{OrgId: int(*cfg.orgID)}
+	params := genv1.GetOrganizationRelationshipsParams{OrgId: *cfg.orgID}
 	resp, err := s.client.gen.GetOrganizationRelationships(ctx, &params, toRequestEditors(editors)...)
 	if err != nil {
 		return nil, nil, err
@@ -313,11 +318,14 @@ func (s *OrganizationRelationshipsService) Get(ctx context.Context, id Organizat
 		return nil, err
 	}
 	cfg := newGetOrganizationRelationshipOptions(opts)
+	if cfg.err != nil {
+		return nil, cfg.err
+	}
 	ctx, editors := pipedrive.ApplyRequestOptions(ctx, cfg.requestOptions...)
 
 	var params *genv1.GetOrganizationRelationshipParams
 	if cfg.orgID != nil {
-		value := int(*cfg.orgID)
+		value := *cfg.orgID
 		params = &genv1.GetOrganizationRelationshipParams{OrgId: &value}
 	}
 

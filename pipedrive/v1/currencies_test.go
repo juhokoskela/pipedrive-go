@@ -46,3 +46,23 @@ func TestCurrenciesService_List(t *testing.T) {
 		t.Fatalf("unexpected currencies: %#v", currs)
 	}
 }
+
+func TestCurrenciesService_ListPreservesLargeID(t *testing.T) {
+	t.Parallel()
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"data":[{"id":4294967303,"code":"USD"}]}`))
+	}))
+	t.Cleanup(srv.Close)
+	c, err := NewClient(pipedrive.Config{BaseURL: srv.URL, HTTPClient: srv.Client()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	currencies, err := c.Currencies.List(context.Background(), ListCurrenciesRequest{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(currencies) != 1 || currencies[0].ID != 4294967303 {
+		t.Fatalf("currencies = %#v", currencies)
+	}
+}

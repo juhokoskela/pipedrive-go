@@ -11,7 +11,7 @@ type Client struct {
 	Raw   *pipedrive.RawClient
 	OAuth *OAuthService
 
-	gen *genv1.ClientWithResponses
+	gen *genv1.Client
 
 	Currencies                *CurrenciesService
 	ActivityTypes             *ActivityTypesService
@@ -39,10 +39,8 @@ type Client struct {
 	Mailbox                   *MailboxService
 	Meetings                  *MeetingsService
 	Projects                  *ProjectsService
-	ProjectTemplates          *ProjectTemplatesService
 	Roles                     *RolesService
 	Teams                     *TeamsService
-	Tasks                     *TasksService
 	Webhooks                  *WebhooksService
 	UserConnections           *UserConnectionsService
 	UserSettings              *UserSettingsService
@@ -69,7 +67,7 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 		return nil, err
 	}
 
-	gen, err := genv1.NewClientWithResponses(baseURL, genv1.WithHTTPClient(httpClient))
+	gen, err := genv1.NewClient(baseURL, genv1.WithHTTPClient(httpClient))
 	if err != nil {
 		return nil, err
 	}
@@ -119,10 +117,8 @@ func NewClient(cfg pipedrive.Config) (*Client, error) {
 	c.Mailbox = &MailboxService{client: c}
 	c.Meetings = &MeetingsService{client: c}
 	c.Projects = &ProjectsService{client: c}
-	c.ProjectTemplates = &ProjectTemplatesService{client: c}
 	c.Roles = &RolesService{client: c}
 	c.Teams = &TeamsService{client: c}
-	c.Tasks = &TasksService{client: c}
 	c.Webhooks = &WebhooksService{client: c}
 	c.UserConnections = &UserConnectionsService{client: c}
 	c.UserSettings = &UserSettingsService{client: c}

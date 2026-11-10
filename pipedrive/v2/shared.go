@@ -144,3 +144,15 @@ func validateCSVValues(values []string, label string) error {
 	}
 	return nil
 }
+
+// checkedIntID preserves filter values but rejects platform-sized integer overflow.
+func checkedIntID[T ~int64](id T, optionErr *error) *int {
+	value := int(id)
+	if int64(value) != int64(id) {
+		if *optionErr == nil {
+			*optionErr = fmt.Errorf("id %d overflows int on this platform", id)
+		}
+		return nil
+	}
+	return &value
+}

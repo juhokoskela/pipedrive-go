@@ -122,7 +122,7 @@ func (p projectPhasePayload) body() map[string]interface{} {
 		body["name"] = *p.name
 	}
 	if p.boardID != nil {
-		body["board_id"] = int(*p.boardID)
+		body["board_id"] = *p.boardID
 	}
 	if p.order != nil {
 		body["order_nr"] = *p.order
