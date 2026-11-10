@@ -13,7 +13,6 @@ Semantic Versioning.
 
 - Change the module path to `github.com/juhokoskela/pipedrive-go/v2`. Update all
   SDK imports by inserting `/v2` after `pipedrive-go`.
-
 - Remove 17 v1 project, task, and project-template methods that overlap with v2,
   along with their unused models, options, service fields, and ID types.
   See [migration notes](docs/migration.md) for exact replacements.
