@@ -373,6 +373,9 @@ func TestDealsService_Create(t *testing.T) {
 		if payload["channel_id"] != "my-integration" {
 			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
 		}
+		if payload["channel"] != float64(4) {
+			t.Fatalf("unexpected channel: %#v", payload["channel"])
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":7,"title":"New Deal"}}`))
@@ -411,6 +414,7 @@ func TestDealsService_Create(t *testing.T) {
 		WithDealLostTime("2024-06-13T10:00:00Z"),
 		WithDealWonTime("2024-06-14T10:00:00Z"),
 		WithDealChannelID("my-integration"),
+		WithDealChannel(4),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "create")),
 	)
 	if err != nil {
@@ -445,6 +449,12 @@ func TestDealsService_Update(t *testing.T) {
 		if payload["channel_id"] != "my-integration-updated" {
 			t.Fatalf("unexpected channel_id: %#v", payload["channel_id"])
 		}
+		if payload["channel"] != float64(5) {
+			t.Fatalf("unexpected channel: %#v", payload["channel"])
+		}
+		if payload["is_deleted"] != false {
+			t.Fatalf("unexpected is_deleted: %#v", payload["is_deleted"])
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"data":{"id":7,"title":"Updated Deal"}}`))
@@ -464,6 +474,8 @@ func TestDealsService_Update(t *testing.T) {
 		DealID(7),
 		WithDealTitle("Updated Deal"),
 		WithDealChannelID("my-integration-updated"),
+		WithDealChannel(5),
+		WithDealDeleted(false),
 		WithDealRequestOptions(pipedrive.WithHeader("X-Test", "update")),
 	)
 	if err != nil {

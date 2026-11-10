@@ -326,6 +326,9 @@ func TestGoalsService_GetResult(t *testing.T) {
 		if got := q.Get("period.end"); got != "2024-02-28" {
 			t.Fatalf("unexpected period.end: %q", got)
 		}
+		if got := q.Get("timezone"); got != "America/Sao_Paulo" {
+			t.Fatalf("unexpected timezone: %q", got)
+		}
 		if got := r.Header.Get("X-Test"); got != "result" {
 			t.Fatalf("unexpected header X-Test: %q", got)
 		}
@@ -345,6 +348,7 @@ func TestGoalsService_GetResult(t *testing.T) {
 		GoalID("goal-5"),
 		WithGoalResultStartDate(start),
 		WithGoalResultEndDate(end),
+		WithGoalResultTimezone("America/Sao_Paulo"),
 		WithGoalsRequestOptions(pipedrive.WithHeader("X-Test", "result")),
 	)
 	if err != nil {

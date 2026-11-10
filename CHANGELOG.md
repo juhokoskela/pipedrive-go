@@ -9,6 +9,8 @@ Semantic Versioning.
 
 ### Added
 
+- Add `WithGoalResultTimezone` for goal-result period boundaries.
+- Add `WithDealChannel` for configured marketing channel option IDs.
 - Add `Lead.ArchiveReason` and `WithLeadArchiveReason` for the v1 lead
   `archive_reason` field.
 

@@ -447,6 +447,12 @@ func WithGoalResultEndDate(end time.Time) GetGoalResultOption {
 	})
 }
 
+func WithGoalResultTimezone(timezone string) GetGoalResultOption {
+	return getGoalResultOptionFunc(func(cfg *getGoalResultOptions) {
+		cfg.params.Timezone = &timezone
+	})
+}
+
 func newListGoalsOptions(opts []ListGoalsOption) listGoalsOptions {
 	var cfg listGoalsOptions
 	for _, opt := range opts {

@@ -572,6 +572,7 @@ type dealPayload struct {
 	closeTime         nullableValue[string]
 	lostTime          *string
 	wonTime           *string
+	channel           *int
 	channelID         *string
 }
 
@@ -1284,6 +1285,8 @@ func WithDealArchived(isArchived bool) DealOption {
 	})
 }
 
+// WithDealDeleted(false) restores a deleted deal on update. It cannot be used
+// when creating a deal. Use DealsService.Delete to delete a deal.
 func WithDealDeleted(isDeleted bool) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
 		payload.isDeleted = &isDeleted
@@ -1340,11 +1343,14 @@ func WithDealWonTime(value string) DealOption {
 	})
 }
 
-// WithDealChannelID labels which integration or channel created the deal using
-// free text. Pipedrive accepts channel_id when creating and updating v2 deals,
-// although its v2 OpenAPI spec omits the field from both request schemas.
-// Pipedrive support confirmed this behavior in August 2026. Deal origin and
-// origin_id are system-generated in v2 and cannot be set by API clients.
+// WithDealChannel sets the marketing channel option ID configured in dealFields.
+func WithDealChannel(channel int) DealOption {
+	return dealFieldOption(func(payload *dealPayload) {
+		payload.channel = &channel
+	})
+}
+
+// WithDealChannelID further identifies the marketing channel with free text.
 func WithDealChannelID(channelID string) DealOption {
 	return dealFieldOption(func(payload *dealPayload) {
 		if channelID == "" {
@@ -3313,6 +3319,9 @@ func (p dealPayload) toMap() map[string]interface{} {
 	}
 	if p.channelID != nil {
 		body["channel_id"] = *p.channelID
+	}
+	if p.channel != nil {
+		body["channel"] = *p.channel
 	}
 	return body
 }
