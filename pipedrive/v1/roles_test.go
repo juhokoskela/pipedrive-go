@@ -327,7 +327,8 @@ func TestRolesService_ListPipelines(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ListPipelines error: %v", err)
 	}
-	if len(pipelines) != 1 || pipelines["pipeline_ids"].([]any)[0] != float64(1) {
+	ids, ok := pipelines["pipeline_ids"].([]any)
+	if !ok || len(ids) != 1 || ids[0] != float64(1) {
 		t.Fatalf("unexpected pipelines: %#v", pipelines)
 	}
 }
