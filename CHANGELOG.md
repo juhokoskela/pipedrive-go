@@ -7,6 +7,11 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+### Changed
+
+- Bump the preferred Go toolchain, CI, and OpenAPI drift checks to Go 1.27.4.
+  The minimum supported Go version remains 1.26.
+
 ## [2.0.0] - 2026-11-10
 
 ### Breaking changes
