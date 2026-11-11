@@ -32,7 +32,7 @@ go get github.com/juhokoskela/pipedrive-go/v2@latest
 
 Go 1.26+ is required. We support the two most recent Go release lines.
 
-The repository prefers Go 1.27.3 locally via the `toolchain` directive in
+The repository prefers Go 1.27.4 locally via the `toolchain` directive in
 `go.mod`.
 
 v1.14.0 was the last release to support Go 1.25. Projects that still use Go 1.25
