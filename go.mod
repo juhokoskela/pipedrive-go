@@ -7,7 +7,7 @@ toolchain go1.27.4
 require (
 	github.com/google/uuid v1.6.0
 	github.com/oapi-codegen/runtime v1.8.0
-	golang.org/x/oauth2 v0.37.0
+	golang.org/x/oauth2 v0.38.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
